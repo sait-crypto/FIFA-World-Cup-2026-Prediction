@@ -14,7 +14,6 @@
   --side-a:#e74c3c;--side-b:#2980b9;--side-x:#f0ad4e;
   --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.08);
   --max-w:1200px;
-  --highlight:#f5a623;
 }
 html{font-size:17px;scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
@@ -38,29 +37,29 @@ a:hover{text-decoration:underline}
 /* ── Header ── */
 .match-header{
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  color:#fff;padding:14px 20px 28px;position:relative;overflow:hidden;
+  color:#fff;padding:12px 20px 40px;position:relative;overflow:hidden;
 }
 .match-header::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none}
-.match-brand{text-align:center;font-size:11px;opacity:.4;margin-bottom:4px;letter-spacing:4px;text-transform:uppercase}
-.match-meta{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px;font-size:13px;opacity:.85;flex-wrap:wrap}
+.match-brand{text-align:center;font-size:11px;opacity:.4;margin-bottom:6px;letter-spacing:4px;text-transform:uppercase}
+.match-meta{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px;font-size:13px;opacity:.85;flex-wrap:wrap}
 .match-meta .meta-tag{background:rgba(255,255,255,0.18);padding:3px 10px;border-radius:4px;font-weight:600}
 .match-vs-area{display:flex;align-items:center;justify-content:center;gap:24px}
 .team-block{text-align:center;flex:1;max-width:280px}
 .team-flag{width:72px;height:48px;border-radius:4px;margin:0 auto;object-fit:cover;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)}
 .team-flag-placeholder{width:72px;height:48px;border-radius:4px;margin:0 auto;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;border:2px solid rgba(255,255,255,0.3)}
-.team-name{font-size:26px;font-weight:700;margin-top:4px}
-.team-rank{font-size:13px;opacity:.8;margin-top:1px}
+.team-name{font-size:26px;font-weight:700;margin-top:8px}
+.team-rank{font-size:13px;opacity:.8;margin-top:3px}
 .vs-divider{text-align:center;flex-shrink:0}
 .vs-text{font-size:36px;font-weight:800;opacity:.5}
 
 /* ── Prediction Hero ── */
 .prediction-hero{
   background:var(--card);border-radius:var(--radius);
-  box-shadow:0 2px 12px rgba(0,0,0,0.1);padding:20px 24px;margin:-8px auto 0;position:relative;z-index:5;
+  box-shadow:0 2px 12px rgba(0,0,0,0.1);padding:20px 24px;margin:-20px auto 0;position:relative;z-index:5;
   max-width:var(--max-w);
 }
-.pred-hero-label{font-size:22px;color:var(--text);font-weight:800;text-align:center;margin-bottom:12px}
-.pred-hero-content{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pred-hero-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pred-hero-label{font-size:22px;color:var(--text);font-weight:800;text-align:center;width:100%;margin-bottom:4px}
 .pred-hero-result{font-size:28px;font-weight:800;color:var(--primary)}
 .pred-hero-score{font-size:22px;color:var(--text);font-weight:600}
 .pred-hero-conf{display:flex;align-items:center;gap:8px}
@@ -95,12 +94,13 @@ a:hover{text-decoration:underline}
 /* ── Evidence Pool Bar ── */
 .evidence-pool-bar{
   display:flex;align-items:center;gap:12px;
-  padding:12px 18px;
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 20px;
+  background:var(--card);
+  border:2px solid var(--border);border-radius:var(--radius);
   cursor:pointer;font-size:15px;font-weight:700;color:var(--text);
-  transition:all .2s;user-select:none;box-shadow:var(--shadow);
+  transition:all .2s;user-select:none;
 }
-.evidence-pool-bar:hover{border-color:var(--text3)}
+.evidence-pool-bar:hover{box-shadow:0 2px 8px rgba(0,0,0,0.08);border-color:var(--text3)}
 .evidence-pool-bar .bar-arrow{font-size:14px;transition:transform .2s;margin-left:auto}
 .evidence-pool-bar.collapsed .bar-arrow{transform:rotate(-90deg)}
 .evidence-pool-bar .bar-count{font-size:13px;font-weight:500;color:var(--text2)}
@@ -129,7 +129,6 @@ a:hover{text-decoration:underline}
 .analyst-card.side-b{border-left-color:var(--side-b)}
 .analyst-card.side-x{border-left-color:var(--side-x)}
 .analyst-card.changed{border-left-color:var(--orange)}
-.analyst-card.highlighted{box-shadow:0 0 0 3px var(--highlight),0 4px 12px rgba(0,0,0,0.1)}
 .analyst-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .analyst-avatar{width:36px;height:36px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center}
 .analyst-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
@@ -145,7 +144,7 @@ a:hover{text-decoration:underline}
 .analyst-current-opinion.side-x{color:#b8860b;background:#fef9e7}
 .analyst-pred-chain{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin:6px 0;padding:4px 8px;background:var(--divider);border-radius:4px}
 .chain-node{padding:2px 6px;border-radius:4px;font-size:12px;font-weight:500;background:var(--card);color:var(--text2)}
-.chain-node.initial{background:var(--primary-light);color:var(--primary)}
+.chain-node.initial{background:#fff;color:var(--text);font-weight:600}
 .chain-node.changed{background:#fff3e0;color:var(--orange);font-weight:700;border:1px solid #ffe0b2}
 .chain-arrow{color:var(--text3);font-size:11px}
 .confidence-bar{flex:1;height:4px;background:var(--divider);border-radius:2px;overflow:hidden}
@@ -158,7 +157,7 @@ a:hover{text-decoration:underline}
 /* ── Modal ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.active{display:flex}
-body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
+body.modal-open{overflow:hidden;padding-right:var(--scrollbar-width,0)}
 .modal{background:var(--card);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,0.25);max-width:620px;width:100%;max-height:80vh;overflow-y:auto;padding:24px;position:relative;overscroll-behavior:contain}
 .modal-close{position:absolute;top:12px;right:16px;font-size:22px;cursor:pointer;color:var(--text3);line-height:1}
 .modal-close:hover{color:var(--text)}
@@ -166,11 +165,10 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 .modal .modal-perspective{font-size:12px;color:var(--text3);margin-bottom:12px}
 .modal-pred-chain{font-size:13px;padding:10px 14px;background:var(--divider);border-radius:var(--radius);margin-bottom:12px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .modal-pred-chain .chain-node{cursor:pointer;transition:background .15s}
-.modal-pred-chain .chain-node.initial{background:#e0e0e0;color:var(--text)}
-.modal-pred-chain .chain-node:hover{filter:brightness(0.95)}
+.modal-pred-chain .chain-node:hover{background:#d0e4ff}
 .modal-speeches{margin-top:12px}
 .modal-speech{padding:10px 12px;margin-bottom:8px;background:#fafafa;border-radius:6px;border-left:3px solid var(--border);font-size:13px;color:var(--text2);line-height:1.5;transition:background .3s,border-color .3s}
-.modal-speech.highlight{background:#fff8e0;border-left-color:var(--highlight)}
+.modal-speech.highlight{background:#fff8e0;border-left-color:var(--orange);box-shadow:0 0 0 2px rgba(243,156,18,0.3)}
 .modal-speech .speech-opinion{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
 .modal-speech .speech-action{font-weight:600;color:var(--text);font-size:12px;margin-bottom:2px}
 
@@ -188,14 +186,14 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 .verdict-text{font-size:14px;color:var(--text2);line-height:1.6}
 .verdict-final-box{
   margin:12px 0;padding:16px 20px;
-  background:var(--card);border:2px solid var(--border);border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--primary-light),#f0f4ff);
+  border:2px solid var(--primary);border-radius:var(--radius);
+  text-align:center;
 }
-.verdict-final-box .vf-winner{font-size:22px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px}
-.verdict-final-box .vf-score{font-size:18px;font-weight:700;color:var(--text);margin:4px 0}
-.verdict-final-box .vf-conf-row{display:flex;align-items:center;gap:8px;margin-top:6px}
-.verdict-final-box .vf-conf-bar{width:100px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden}
-.verdict-final-box .vf-conf-fill{height:100%;border-radius:4px}
-.verdict-final-box .vf-conf-text{font-size:14px;color:var(--text2);font-weight:600}
+.verdict-final-box .vf-label{font-size:12px;color:var(--text3);margin-bottom:4px;font-weight:600}
+.verdict-final-box .vf-winner{font-size:24px;font-weight:800;color:var(--primary)}
+.verdict-final-box .vf-score{font-size:20px;font-weight:700;color:var(--text);margin:4px 0}
+.verdict-final-box .vf-conf{font-size:14px;color:var(--text2);font-weight:600}
 .summary-text{font-size:14px;color:var(--text2);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--divider)}
 .summary-text h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
 
@@ -205,11 +203,12 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 .evidence-item:hover{background:#fafafa}
 .evidence-header{display:flex;align-items:center;gap:6px}
 .evidence-id{font-size:12px;font-weight:600;color:var(--primary);background:var(--primary-light);padding:2px 5px;border-radius:3px}
-.evidence-source{font-size:11px;color:var(--text3);margin-left:auto}
+.evidence-source{font-size:11px;color:var(--text3)}
 .evidence-confidence{font-size:11px;padding:2px 5px;border-radius:3px}
 .evidence-confidence.high{background:#e8f5e9;color:var(--green)}
 .evidence-confidence.mid{background:#fff8e1;color:var(--orange)}
 .evidence-confidence.low{background:#fce4ec;color:var(--red)}
+.evidence-conf-label{font-size:10px;color:var(--text3);margin-right:2px}
 .evidence-title{font-size:13px;color:var(--text);margin-top:3px;font-weight:500}
 .evidence-content{font-size:13px;color:var(--text2);margin-top:4px;line-height:1.5;display:none}
 .evidence-item.expanded .evidence-content{display:block}
@@ -238,7 +237,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
   .team-name{font-size:20px}
   .team-flag,.team-flag-placeholder{width:56px;height:38px}
   .analyst-grid{grid-template-columns:1fr 1fr}
-  .pred-hero-content{flex-direction:column;align-items:flex-start;gap:8px}
+  .pred-hero-top{flex-direction:column;align-items:flex-start;gap:8px}
   .pred-hero-result{font-size:22px}
   .record-table{font-size:12px}
   .record-table .date-col{width:60px}
@@ -282,15 +281,35 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// ⚙️ 配置参数
+// ⚙️ 配置参数 — 所有可调参数集中在此
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   JSON_FILE: '123.json',
   VIEWER_FILE: 'debate_viewer.html',
   IMAGES_DIR: 'images/',
+
+  // ── 辩手头像图片 ──
+  // 图片放在 images/ 目录下，填写文件名即可
+  // 如果配置了图片则优先显示图片，否则显示数字编号
+  // 此配置会自动传递给动画页面
   AVATAR_IMAGES: {
     // '分析师1': 'images/analyst1.png',
+    // '分析师2': 'images/analyst2.png',
+    // '审核员':   'images/curator.png',
+    // '仲裁者':   'images/arbitrator.png',
+    // '场记':     'images/scribe.png',
   },
+
+  // ── 布局参数 ──
+  HEADER_PAD_BOTTOM: 36,       // 头部底部padding（确保排名可见）
+  PRED_HERO_OFFSET: -20,       // 预测卡片向上偏移
+  SECTION_TITLE_SIZE: 18,      // section标题字号
+  ANALYST_GRID_MIN: 260,       // 分析师卡片最小宽度
+  MODAL_MAX_WIDTH: 620,        // 弹窗最大宽度
+  MODAL_MAX_HEIGHT: 80,        // 弹窗最大高度(vh)
+  MIN_BODY_FONT: 17,           // body最小字号
+  FLAG_W: 72, FLAG_H: 48,     // 头部国旗尺寸
+  FLAG_SM_W: 22, FLAG_SM_H: 15, // 小国旗尺寸
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -318,6 +337,7 @@ function finalPred(a){return a.prediction_history?.[a.prediction_history.length-
 function hasChanged(a){return(a.prediction_history||[]).some((p,i)=>i>0&&p.changed)}
 function sideOf(a,t){const{teamA,teamB}=parseTopic(t);const f=finalPred(a);if(!f.winner)return'x';if(f.winner.includes(teamA))return'a';if(f.winner.includes(teamB))return'b';return'x'}
 
+// ── Flag Images ──
 function flagImgHtml(name,cls=''){
   const url=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.webp';
   const fb=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.png';
@@ -328,9 +348,13 @@ function smallFlagHtml(name){
   const fb=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.png';
   return `<img class="team-flag-sm" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='inline-flex'}" alt="${esc(name)}"><span class="team-flag-sm-placeholder" style="display:none">${esc(name.charAt(0))}</span>`;
 }
+
+// ── Avatar Image Helper ──
 function avatarHtml(name,idx,cls='analyst-avatar'){
   const img=CONFIG.AVATAR_IMAGES[name];
-  if(img) return `<div class="${cls}" style="background-image:url('${img}')"></div>`;
+  if(img){
+    return `<div class="${cls}" style="background-image:url('${img}')"></div>`;
+  }
   const num=name.replace(/[^\d]/g,'')||'?';
   return `<div class="${cls}"><span>${num}</span></div>`;
 }
@@ -357,6 +381,7 @@ function render(){
   renderHeader();renderPredictionHero();renderContext();renderAnalysts();renderVerdict();renderEvidence();renderFooter();
 }
 
+// ── Pass config & data to viewer ──
 function passDataToViewer(){
   try{
     if(DATA) localStorage.setItem('debate_arena_data',JSON.stringify(DATA));
@@ -370,11 +395,13 @@ function renderHeader(){
   const rankA=ti[teamA]?.world_ranking,rankB=ti[teamB]?.world_ranking;
   let group='',date='',stage='',matchTime='';
   const mc=DATA.match_context||'';
-  const mm=DATA.match_meta||{};
+  const mm=DATA.match_meta||{};  // New field from backend
   const gm=mc.match(/[-–]\s*小组[：:]\s*(.+)/);if(gm)group=gm[1].trim();
   const dm=mc.match(/[-–]\s*日期[：:]\s*(.+)/);if(dm)date=dm[1].trim();
+  // Extract match_time: first from match_meta, then match_time, then match_context
   matchTime=mm.match_time||DATA.match_time||'';
   if(!matchTime){const tm=mc.match(/[-–]\s*(?:时间|开赛)[：:]\s*(.+)/);if(tm)matchTime=tm[1].trim()}
+  // Build stage string: first from match_meta, then from match_context
   stage=mm.stage||DATA.stage||'';
   if(!stage){
     const roundMatch=mc.match(/[-–]\s*(?:轮次|轮|阶段)[：:]\s*(.+)/);
@@ -383,6 +410,7 @@ function renderHeader(){
     else if(group)stage=group;
     else if(round)stage=round;
   }
+  // Date from match_meta if available
   if(mm.date)date=mm.date;
 
   const metaParts=[];
@@ -414,17 +442,16 @@ function renderPredictionHero(){
   const agents=DATA.agents||[],{teamA,teamB}=parseTopic(DATA.topic);
   if(!agents.length)return;
   let cA=0,cB=0,cX=0;
-  for(const a of agents){const s=sideOf(a,DATA.topic);if(s==='a')cA++;else if(s==='b')cB++;else cX++}
+  for(const a of agents){
+    const s=sideOf(a,DATA.topic);
+    if(s==='a')cA++;else if(s==='b')cB++;else cX++;
+  }
   const total=agents.length;
   const pctA=Math.round(cA/total*100),pctB=Math.round(cB/total*100),pctX=100-pctA-pctB;
   const fp=DATA.final_prediction,confPct=fp?Math.round((fp.confidence||0)/10*100):0;
   const confClass=fp?.confidence>=7?'high':fp?.confidence>=4?'mid':'low';
 
-  // Label on its own line, centered
-  let html=`<div class="pred-hero-label">最终预测</div>`;
-
-  // Content row
-  html+=`<div class="pred-hero-content">`;
+  let html=`<div class="pred-hero-top"><div class="pred-hero-label">最终预测</div>`;
   if(fp)html+=`<div class="pred-hero-result">${esc(fp.winner)}</div><div class="pred-hero-score">${esc(fp.score)}</div>
     <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
   html+=`</div>`;
@@ -455,8 +482,8 @@ function jumpToAnalyst(name){
   for(const card of cards){
     if(card.dataset.name===name){
       card.scrollIntoView({behavior:'smooth',block:'center'});
-      card.classList.add('highlighted');
-      setTimeout(()=>card.classList.remove('highlighted'),2000);
+      card.style.boxShadow='0 0 0 3px var(--orange),0 4px 12px rgba(0,0,0,0.1)';
+      setTimeout(()=>card.style.boxShadow='',2000);
       break;
     }
   }
@@ -473,8 +500,8 @@ function renderContext(){
     html+='</div>';
   }
   for(const rec of ctx.records){
-    let teamTag='';
-    if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
+    let teamTag='',teamCls='';
+    if(rec.title.includes(teamA)){teamTag=teamA;teamCls='a'}else if(rec.title.includes(teamB)){teamTag=teamB;teamCls='b'}
     html+='<div class="context-card">';
     html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title)}</div>`;
     if(rec.summary)html+=`<div class="record-summary">${esc(rec.summary)}</div>`;
@@ -511,10 +538,12 @@ function renderAnalysts(){
     const stanceText=a.assigned_side?`支持${a.assigned_side}`:a.stance||'';
     const summary=profile.initial||firstSummaries[a.name]||'';
 
+    // Current opinion (final prediction) displayed prominently
     const curWinner=final.winner||'',curScore=final.score||'',curConf=final.confidence||0;
     const opinionStr=`${curWinner} ${curScore}`;
     const opinionSideCls=s==='a'?'side-a':s==='b'?'side-b':'side-x';
 
+    // Prediction chain
     let chainHtml='';
     const history=a.prediction_history||[];
     if(history.length>1){
@@ -528,6 +557,8 @@ function renderAnalysts(){
     }else if(history.length===1){
       chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(history[0].winner||'')}${esc(history[0].score||'')}准${history[0].confidence||''}</span></div>`;
     }
+
+    const confPct=curConf*10,confCls=curConf>=7?'high':curConf>=4?'mid':'low';
 
     html+=`<div class="analyst-card ${sideCls}" data-name="${esc(a.name)}" onclick="showAnalystModal('${esc(a.name)}')">
       <div class="analyst-header">
@@ -555,11 +586,13 @@ function showAnalystModal(name){
         const sum=msg.arena_summary||'';
         const vm=sum.match(/\*\*观点\*\*[：:]\s*(.+)/);
         const am=sum.match(/\*\*论述\*\*[：:]\s*(.+)/s);
+        // Get current prediction at this point
         const predAtMsg=msg.speaker_prediction||'';
         speeches.push({
           round:ri+1,action:msg.action||'',target:msg.target||'',counter:msg.counter_challenge,
           view:vm?vm[1].trim():'',args:am?am[1].trim().substring(0,200):sum.substring(0,100),
-          bubble:msg.arena_bubble||'',prediction:predAtMsg,
+          bubble:msg.arena_bubble||'',
+          prediction:predAtMsg,
         });
       }
     }
@@ -578,7 +611,7 @@ function showAnalystModal(name){
       </div>
     </div>`;
 
-  // Chain with grey background
+  // Prediction chain with clickable nodes
   html+='<div class="modal-pred-chain" id="modal-pred-chain">';
   let first=true;
   for(let hi=0;hi<history.length;hi++){
@@ -594,6 +627,7 @@ function showAnalystModal(name){
   for(let si=0;si<speeches.length;si++){
     const sp=speeches[si];
     const actionLabel=sp.action+(sp.target?` → ${esc(sp.target)}`:'')+(sp.counter?' ↩️反质疑':'');
+    // Find the prediction at this speech index
     const predLabel=sp.prediction||history[si]?.winner+history[si]?.score+'准'+history[si]?.confidence||'';
     html+=`<div class="modal-speech" id="modal-speech-${si}">
       ${predLabel?`<div class="speech-opinion">${escAndBold(predLabel)}</div>`:''}
@@ -607,9 +641,9 @@ function showAnalystModal(name){
 
   document.getElementById('modal-content').innerHTML=html;
   document.getElementById('analyst-modal').classList.add('active');
-  // Fix scrollbar shift: measure and compensate
+  // Measure scrollbar width before locking scroll to prevent layout shift
   const sbw=window.innerWidth-document.documentElement.clientWidth;
-  document.body.style.setProperty('--scrollbar-w',sbw+'px');
+  document.documentElement.style.setProperty('--scrollbar-width',sbw+'px');
   document.body.classList.add('modal-open');
 }
 
@@ -625,7 +659,6 @@ function jumpToSpeech(idx){
 function closeModal(){
   document.getElementById('analyst-modal').classList.remove('active');
   document.body.classList.remove('modal-open');
-  document.body.style.removeProperty('--scrollbar-w');
 }
 document.getElementById('analyst-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
 
@@ -657,41 +690,45 @@ function renderVerdict(){
     const rm=c.match(/【理由】(.+?)(?=\n---|\n【预测】|$)/s);
     const pm=c.match(/【预测】(.+?)(?=\n【论点】|\n【引用】|$)/s);
 
-    // Extract verdict details from prediction section
-    let winner='',score='',conf='',confNum=0;
+    // Extract final verdict details
+    let winner='',score='',conf='';
     if(pm){
       const predText=pm[1].trim();
       const wm=predText.match(/胜方[：:]\s*(.+)/);
       const sm=predText.match(/比分[：:]\s*(.+)/);
-      const cm=predText.match(/准确度[：:]\s*(\d+)\s*\/\s*(\d+)/);
+      const cm=predText.match(/准确度[：:]\s*(.+)/);
       if(wm)winner=wm[1].trim();
       if(sm)score=sm[1].trim();
-      if(cm){conf=cm[0].trim();confNum=parseInt(cm[1])}
+      if(cm)conf=cm[1].trim();
     }
-    // Fallback: try to parse from final_prediction
-    if(!winner&&DATA.final_prediction){
-      winner=DATA.final_prediction.winner||'';
-      score=DATA.final_prediction.score||'';
-      confNum=DATA.final_prediction.confidence||0;
-      if(confNum)conf=`准确度 ${confNum}/10`;
-    }
-    const confPct=Math.round(confNum/10*100);
-    const confClass=confNum>=7?'high':confNum>=4?'mid':'low';
-
-    const{teamA,teamB}=parseTopic(DATA.topic);
-    // Determine winner side for flag
-    const winnerSide=winner.includes(teamA)?'a':winner.includes(teamB)?'b':'x';
 
     html+=`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--divider)">
       <div style="font-size:15px;font-weight:700;margin-bottom:8px">⚖️ 仲裁者裁定</div>`;
 
-    html+=`<div class="verdict-final-box">
-      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}</div>
-      ${score?`<div class="vf-score">${esc(score)}</div>`:''}
-      ${confNum?`<div class="vf-conf-row"><div class="vf-conf-bar"><div class="vf-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="vf-conf-text">准确度 ${confNum}/10</span></div>`:''}
-    </div>`;
+    // Determine winner's team side for flag color
+    const{teamA,teamB}=parseTopic(DATA.topic);
+    let winnerSide='x';
+    if(winner){if(winner.includes(teamA))winnerSide='a';else if(winner.includes(teamB))winnerSide='b'}
+    const winnerColor=winnerSide==='a'?'var(--side-a)':winnerSide==='b'?'var(--side-b)':'var(--text)';
+
+    if(winner||score||conf){
+      // Parse confidence to number for bar
+      let confNum=0,confDenom=10;
+      const confNumMatch=conf.match(/(\d+)\s*\/\s*(\d+)/);
+      if(confNumMatch){confNum=parseInt(confNumMatch[1]);confDenom=parseInt(confNumMatch[2])}
+      else{const cm2=conf.match(/(\d+)/);if(cm2)confNum=parseInt(cm2[1])}
+      const confPct=confDenom>0?Math.round(confNum/confDenom*100):0;
+
+      html+=`<div class="verdict-final-box">
+        <div class="vf-label">最终裁定</div>
+        ${winner?`<div class="vf-winner" style="color:${winnerColor}">${smallFlagHtml(winner)} ${esc(winner)} 胜</div>`:''}
+        ${score?`<div class="vf-score">${esc(score)}</div>`:''}
+        ${conf?`<div style="margin:8px auto;max-width:200px"><div style="height:8px;background:var(--divider);border-radius:4px;overflow:hidden"><div style="height:100%;width:${confPct}%;background:${winnerColor};border-radius:4px"></div></div><div class="vf-conf">准确度 ${esc(conf)}</div></div>`:''}
+      </div>`;
+    }
 
     if(rm)html+=`<div class="verdict-text" style="margin-top:8px">${escAndBold(rm[1].trim().substring(0,200))}</div>`;
+    if(pm&&!winner)html+=`<div style="font-weight:600;color:var(--primary);margin-top:4px">${escAndBold(pm[1].trim())}</div>`;
     html+='</div>';
   }
 
@@ -714,7 +751,7 @@ function renderEvidence(){
   const pool=DATA.evidence_pool||[];if(!pool.length)return;
   const shared=pool.filter(e=>e.shared).sort((a,b)=>b.confidence-a.confidence);
   const priv=pool.filter(e=>!e.shared).sort((a,b)=>b.confidence-a.confidence);
-  const display=[...shared,...priv];
+  const display=[...shared,...priv]; // Show ALL, no slice
 
   let html=`<div class="evidence-pool-bar collapsible collapsed" onclick="toggleEvidencePool(this)">
     <span>证据池</span>
@@ -725,13 +762,12 @@ function renderEvidence(){
   for(const ev of display){
     const cc=ev.confidence>=0.7?'high':ev.confidence>=0.4?'mid':'low';
     const cp=typeof ev.confidence==='number'?`${Math.round(ev.confidence*100)}%`:ev.confidence;
-    const sourceTag=ev.discovered_by||ev.source||'';
     html+=`<div class="evidence-item" onclick="this.classList.toggle('expanded')">
       <div class="evidence-header">
         <span class="evidence-id">${esc(ev.id)}</span>
-        <span class="evidence-confidence ${cc}">置信度 ${cp}</span>
-        ${sourceTag?`<span class="evidence-source">${esc(sourceTag)}</span>`:''}
+        <span class="evidence-source">${esc(ev.discovered_by||ev.source||'')}</span>
         ${ev.shared?'':'<span style="font-size:11px;color:var(--text3)">🔒</span>'}
+        <span class="evidence-confidence ${cc}"><span class="evidence-conf-label">置信度</span> ${cp}</span>
       </div>
       ${ev.title?`<div class="evidence-title">${esc(ev.title)}</div>`:''}
       <div class="evidence-content">
@@ -748,6 +784,8 @@ function toggleEvidencePool(el){
   el.classList.toggle('collapsed');
   el.nextElementSibling?.classList.toggle('collapsed');
 }
+// Keep toggleSection for other collapsible sections
+function toggleSection(el){el.classList.toggle('collapsed');el.nextElementSibling?.classList.toggle('collapsed')}
 
 function renderFooter(){
   let html=`<div class="viewer-title">辩论动画回放</div>
@@ -759,6 +797,7 @@ function renderFooter(){
     <div id="link-mode" style="display:none"><button class="viewer-open-btn" onclick="openViewer()">▶ 观看动画回放</button></div>
     <div class="hint">辩论数据由多智能体辩论系统生成</div>`;
   document.getElementById('footer-section').innerHTML=html;
+  // Default to embed mode
   setMode('embed');
 }
 

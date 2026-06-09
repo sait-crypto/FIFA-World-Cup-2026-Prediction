@@ -54,7 +54,7 @@ body{
 }
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--scanline) 2px,var(--scanline) 4px)}
 
-#game{width:1200px;height:820px;position:relative;overflow:hidden;background:var(--bg2);border:3px solid var(--border2)}
+#game{max-width:1200px;width:100%;height:820px;position:relative;overflow:hidden;background:var(--bg2);border:3px solid var(--border2)}
 
 /* Loading */
 #load-screen{position:absolute;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:var(--bg)}
@@ -83,7 +83,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 /* Content */
 #content{flex:1;display:flex;overflow:hidden}
-#arena-col{width:640px;display:flex;flex-direction:column;border-right:2px solid var(--border)}
+#arena-col{flex:0 1 640px;min-width:320px;display:flex;flex-direction:column;border-right:2px solid var(--border)}
 #battle{flex:1;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,var(--battle-inner) 0%,var(--bg) 100%);min-height:0}
 
 /* Round table — shifted down for vertical centering of all content */
@@ -260,6 +260,33 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 #victory-screen .vclose{font-size:8px;color:var(--fg2);margin-top:12px;cursor:pointer;border:1px solid var(--border);padding:4px 12px;background:var(--bg3)}
 #victory-screen .vclose:hover{background:var(--border)}
 
+/* ── Prediction Change Center Popup ── */
+.pred-center-popup{
+  position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);
+  z-index:70;pointer-events:none;text-align:center;
+  animation:pred-popup-in .4s steps(4) forwards,pred-popup-out .5s steps(4) 2.5s forwards;
+}
+.pred-center-popup .popup-inner{
+  padding:16px 28px;border-radius:8px;font-size:16px;font-weight:bold;
+  text-shadow:2px 2px 0 #000;line-height:1.6;
+  border:3px solid;max-width:400px;
+  font-family:'Microsoft YaHei',sans-serif;
+}
+.pred-center-popup.type-conf-down .popup-inner{background:rgba(239,83,80,0.2);border-color:#ef5350;color:#ef5350}
+.pred-center-popup.type-conf-up .popup-inner{background:rgba(46,213,115,0.2);border-color:#2ed573;color:#2ed573}
+.pred-center-popup.type-score .popup-inner{background:rgba(255,165,2,0.2);border-color:#ffa502;color:#ffa502}
+.pred-center-popup.type-stance .popup-inner{background:rgba(229,69,96,0.25);border-color:#e94560;color:#e94560}
+@keyframes pred-popup-in{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}60%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes pred-popup-out{0%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(0.9)}}
+
+/* ── Pre-attack Quote Display ── */
+.duel-quote-bubble{
+  width:70%;padding:6px 10px;margin:6px 0;font-size:10px;line-height:1.6;
+  background:var(--bg2);border:2px solid #ffa502;word-break:break-all;white-space:pre-wrap;
+  flex-shrink:0;font-family:'Microsoft YaHei',sans-serif;
+}
+.duel-quote-bubble .qb-label{font-size:9px;font-weight:bold;color:#ffa502;margin-bottom:2px}
+
 /* Controls */
 #ctrl{height:24px;background:var(--bar-bg);border-top:2px solid var(--border);display:flex;align-items:center;padding:0 8px;gap:6px;flex-shrink:0;font-size:6px}
 #ctrl button{background:var(--bg3);color:var(--fg);border:1px solid var(--border);font-family:inherit;font-size:8px;padding:1px 6px;cursor:pointer;min-width:24px}
@@ -369,7 +396,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
             <div class="vtitle">胜 方</div>
             <div class="vpred" id="v-pred"></div>
             <div class="vsides" id="v-sides"></div>
-            <div class="vclose" id="v-close">✕ 关闭</div>
           </div>
         </div>
         <div id="ctrl">
@@ -381,7 +407,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
             <option value="2600" selected>1x</option>
             <option value="1500">2x</option>
             <option value="800">4x</option>
-            <option value="350">8x</option>
           </select>
           <div id="progress"><div class="fill"></div></div>
           <span class="plabel" id="plabel">0/0</span>
@@ -408,23 +433,26 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 // 留空 → 文件上传模式；填写相对路径 → 自动加载同目录下的 JSON 文件
 // 例如：'debate_data.json' 或 'data/match.json'
 // 也支持 ?json=xxx.json 查询参数覆盖
+// 也支持从 index.html 通过 localStorage 传递数据
 const JSON_FILE = '';  // 留空 → 文件上传模式；从 index.html 打开时通过 ?json= 参数获取
 
 // ── 圆桌布局 ──
 const PENT_CX = 320;          // 五边形中心X
-const PENT_CY = 260;          // 五边形中心Y
+const PENT_CY = 275;          // 五边形中心Y
 const PENT_RX = 195;          // 五边形X半径
 const PENT_RY = 145;          // 五边形Y半径
 const AVATAR_W = 96;          // avatar容器宽度
 const AVATAR_SPRITE = 48;     // avatar sprite尺寸
-const AVATAR_NAME_TOP = 5;    // 名字距sprite的间距
+const AVATAR_NAME_TOP = 12;   // 名字距sprite的间距（可调）
 const AVATAR_HP_BAR_W = 74;   // HP条宽度
+const TABLE_Y = 275;           // 大方桌Y轴位置（可调，即PENT_CY）
 
 // ── 功能Agent布局 ──
 const SP_GAP = 30;            // 三个功能agent间距
 const SP_OFFSET_Y = 90;      // 功能agent距五边形底部的偏移
 const SP_SPRITE_MARGIN = 8;  // 功能agent sprite距桌子的下移量
-const SP_NAME_FONT = 9;      // 功能agent名字字号
+const SP_NAME_FONT = 10;      // 功能agent名字字号
+const SP_NAME_TOP = 10;       // 功能agent名字距sprite的间距（可调）
 
 // ── 对抗界面布局 ──
 const DUEL_TOP_H = 210;       // 对抗顶部区域高度
@@ -482,6 +510,35 @@ function playSound(name){
   try{const a=new Audio(src);a.volume=0.5;a.play().catch(()=>{})}catch(e){}
 }
 
+// ── 预测变化弹窗消息 ──
+// 每种情况一组消息，随机选取；可自行增减
+const PRED_CHANGE_MESSAGES = {
+  // 只有准确度减少
+  conf_down: [
+    '{name}开始怀疑自己的观点，准确度下降',
+    '{name}的论证出现了裂痕，信心动摇',
+    '{name}面对质疑，信心有所降低',
+  ],
+  // 只有准确度增加
+  conf_up: [
+    '{name}更加确信自己的观点，准确度上升',
+    '{name}找到了更强的论据，信心增强',
+    '{name}的论证更加坚实，信心提升',
+  ],
+  // 比分预测变化，立场未变
+  score_changed: [
+    '{name}认为自己的预测有误，调整了比分',
+    '{name}修正了比分预测',
+    '{name}对比分判断做出调整',
+  ],
+  // 立场改变
+  stance_changed: [
+    '{name}被彻底说服了，改变了立场！',
+    '{name}无法坚持原有立场，倒向另一方！',
+    '{name}的观点发生根本转变！',
+  ],
+};
+
 // ═══════════════════════════════════════════════════════════
 // GLOBAL STATE
 // ═══════════════════════════════════════════════════════════
@@ -502,9 +559,28 @@ let themeIdx=0;
 // Pentagon layout (from config)
 const CX=PENT_CX,CY=PENT_CY,RX=PENT_RX,RY=PENT_RY;
 
-// Computed duel avatar centers (relative to overlay)
-const DUEL_LEFT_CX = DUEL_PAD_LR + DUEL_AV_W/2;   // left avatar center X
-const DUEL_RIGHT_CX = 640 - DUEL_PAD_LR - DUEL_AV_W/2; // right avatar center X
+// Computed duel avatar centers (dynamic — recalculated from actual element positions)
+function getDuelCenterX(side){
+  const av=document.getElementById(side==='left'?'duel-left':'duel-right');
+  if(!av)return side==='left'?(DUEL_PAD_LR+DUEL_AV_W/2):(640-DUEL_PAD_LR-DUEL_AV_W/2);
+  const overlay=document.getElementById('duel-overlay');
+  const avRect=av.getBoundingClientRect();
+  const olRect=overlay.getBoundingClientRect();
+  return avRect.left+avRect.width/2-olRect.left;
+}
+function getDuelSpriteY(side){
+  const av=document.getElementById(side==='left'?'duel-left':'duel-right');
+  if(!av)return DUEL_ARROW_Y;
+  const sprite=av.querySelector('.sprite');
+  if(!sprite)return DUEL_ARROW_Y;
+  const overlay=document.getElementById('duel-overlay');
+  const spRect=sprite.getBoundingClientRect();
+  const olRect=overlay.getBoundingClientRect();
+  return spRect.top+spRect.height/2-olRect.top;
+}
+// Legacy constants for fallback
+const DUEL_LEFT_CX = DUEL_PAD_LR + DUEL_AV_W/2;
+const DUEL_RIGHT_CX = 640 - DUEL_PAD_LR - DUEL_AV_W/2;
 function pentPos(i,n){const a=-Math.PI/2+(2*Math.PI*i/n);return{x:CX+RX*Math.cos(a),y:CY+RY*Math.sin(a)}}
 
 // Side colors
@@ -555,9 +631,18 @@ document.getElementById('btn-load').onclick=()=>{fi.value='';fi.click()};
 function load(f){const r=new FileReader();r.onload=e=>{try{DATA=JSON.parse(e.target.result);init()}catch(err){alert('JSON error: '+err.message)}};r.readAsText(f,'utf-8')}
 
 // ── JSON 文件自动加载 ──
-// 优先级：查询参数 ?json=xxx.json > 配置变量 JSON_FILE
-// 使用相对路径，与图片引用方式一致；部署到网站后 fetch 可正常工作
+// 优先级：localStorage（从index.html传入）> 查询参数 ?json=xxx.json > 配置变量 JSON_FILE
 (function tryAutoLoad(){
+  // Check if index.html passed config via localStorage
+  try{
+    const cfg=JSON.parse(localStorage.getItem('debate_arena_config')||'{}');
+    if(cfg.avatar_images) Object.assign(AVATAR_IMAGES,cfg.avatar_images);
+  }catch(e){}
+  // Check localStorage for data passed from index.html
+  try{
+    const lsData=localStorage.getItem('debate_arena_data');
+    if(lsData){DATA=JSON.parse(lsData);localStorage.removeItem('debate_arena_data');init();return}
+  }catch(e){}
   const params=new URLSearchParams(window.location.search);
   const file=params.get('json')||JSON_FILE;
   if(!file)return;
@@ -595,7 +680,7 @@ function init(){
   document.getElementById('dialog-area').innerHTML='';
   document.getElementById('victory-screen').classList.remove('active');
   hideDuelOverlay();clearBattle();updateProgress();
-  document.getElementById('table').style.top=CY+'px';
+  document.getElementById('table').style.top=TABLE_Y+'px';
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -813,10 +898,10 @@ function showProjectile(speaker,target,type){
   const overlay=document.getElementById('duel-overlay');if(!overlay.classList.contains('active'))return;
   playSound('challenge');
   const isL=(speaker===duelSpeaker);
-  // Bind start/end to avatar centers
-  const sX=isL?DUEL_LEFT_CX:DUEL_RIGHT_CX;
-  const eX=isL?DUEL_RIGHT_CX:DUEL_LEFT_CX;
-  const y=DUEL_ARROW_Y;
+  // Dynamic: bind to actual avatar element positions
+  const sX=getDuelCenterX(isL?'left':'right');
+  const eX=getDuelCenterX(isL?'right':'left');
+  const y=getDuelSpriteY(isL?'left':'right');
   const el=document.createElement('div');el.className='projectile';
   const img=FX_IMAGES[type];
   if(img){el.innerHTML=`<img src="${img}" style="width:24px;height:24px">`}
@@ -841,13 +926,14 @@ function showFxIcon(name,emoji){
   if(isShield)playSound('defend');
   if(overlay.classList.contains('active')){
     const isL=(name===duelSpeaker);
-    const cx=isL?DUEL_LEFT_CX:DUEL_RIGHT_CX;
+    const cx=getDuelCenterX(isL?'left':'right');
+    const sy=getDuelSpriteY(isL?'left':'right');
     if(isShield){
       // Shield: inward toward screen center (toward center from avatar)
-      el.style.left=(cx+(isL?15:-15))+'px';el.style.top='95px';
+      el.style.left=(cx+(isL?15:-15))+'px';el.style.top=sy+'px';
     }else{
       // Explosion/skull/heart: slightly outward from avatar center + up
-      el.style.left=(cx+(isL?-15:15))+'px';el.style.top='45px';
+      el.style.left=(cx+(isL?-15:15))+'px';el.style.top=(sy-50)+'px';
     }
     overlay.appendChild(el);
   }else{
@@ -937,8 +1023,9 @@ function showFloatTextAt(name,text,cssClass){
   const overlay=document.getElementById('duel-overlay');const el=document.createElement('div');el.className='float-text '+cssClass;el.textContent=text;
   if(overlay.classList.contains('active')){
     const isL=(name===duelSpeaker);
-    const avatarCenterX=isL?DUEL_LEFT_CX:DUEL_RIGHT_CX;
-    el.style.left=avatarCenterX+'px';el.style.top='40px';el.style.transform='translateX(-50%)';
+    const avatarCenterX=getDuelCenterX(isL?'left':'right');
+    const spriteY=getDuelSpriteY(isL?'left':'right');
+    el.style.left=avatarCenterX+'px';el.style.top=(spriteY-60)+'px';el.style.transform='translateX(-50%)';
     overlay.appendChild(el);
   }else{
     const av=avatars[name];if(!av){el.remove();return}
@@ -952,6 +1039,41 @@ function showPredChange(name,oldP,newP){
   showFloatTextAt(name,`预测变化：${newP.winner} ${newP.score}`,'pred-changed');
   const battle=document.getElementById('battle');
   battle.classList.add('pred-flash');setTimeout(()=>battle.classList.remove('pred-flash'),550);
+}
+
+function pickRandom(arr){return arr[Math.floor(Math.random()*arr.length)]}
+
+function showPredCenterPopup(text,type){
+  const container=document.getElementById('duel-overlay').classList.contains('active')
+    ?document.getElementById('duel-overlay'):document.getElementById('battle');
+  const el=document.createElement('div');
+  el.className='pred-center-popup '+type;
+  el.innerHTML=`<div class="popup-inner">${escapeHtml(text)}</div>`;
+  container.appendChild(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+function showPreAttackQuoteInChat(targetName,content){
+  // Only add at the START of a new duel (first message in chat)
+  const chat=document.getElementById('duel-chat');
+  if(!chat||chat.children.length>0)return; // Only if chat is empty (duel just started)
+  if(!content)return;
+  const box=document.createElement('div');
+  box.className='duel-quote-bubble';
+  const short=content.substring(0,150)+(content.length>150?'...':'');
+  box.innerHTML=`<div class="qb-label">📎 ${escapeHtml(targetName)} 此前发言</div><div>${escapeHtml(short)}</div>`;
+  chat.appendChild(box);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function findLastSpeechContent(name){
+  for(let i=idx;i>=0;i--){
+    const item=flat[i];
+    if(item.msg&&item.msg.speaker===name&&item.msg.role==='assistant'){
+      return item.msg.arena_summary||item.msg.content||'';
+    }
+  }
+  return '';
 }
 function doShake(){document.getElementById('battle').classList.add('shake');setTimeout(()=>document.getElementById('battle').classList.remove('shake'),280)}
 function _clearAllEmphasis(){
@@ -1124,6 +1246,12 @@ function stepForward(){
   if(duelAnimLock){return true}
   // If there's a pending duel (arrow shown, waiting for click), process it
   if(duelPending){processPendingDuel();return true}
+  // If trophy is scheduled (arbitrator bubble shown), dismiss bubble and show trophy
+  if(trophyScheduled){
+    trophyScheduled=false;
+    dismissArbBubbleAndShowTrophy();
+    return true;
+  }
   if(idx>=flat.length-1){stopPlay();if(!victoryShown){showVictoryScreen();victoryShown=true}return false}
   completeTypewriters();idx++;showItem(idx);updateProgress();return true;
 }
@@ -1293,6 +1421,9 @@ function processPendingDuel(){
 }
 
 function runChallengeAnimations(speaker,target,arrowType,targetPeek,msg){
+  // Pre-attack: show target's last speech as a quote bubble in duel chat (only at duel start)
+  const targetContent=findLastSpeechContent(target);
+  showPreAttackQuoteInChat(target,targetContent);
   showCasting(speaker,'attack');
   showDuelSpeechBubble(speaker,msg?.arena_bubble,arrowType);
   setTimeout(()=>showProjectile(speaker,target,arrowType),350);
@@ -1300,23 +1431,29 @@ function runChallengeAnimations(speaker,target,arrowType,targetPeek,msg){
   setTimeout(()=>{
     if(targetPeek){
       if(targetPeek.changed){
-        // Prediction changed — heavy damage + flash screen
+        // Prediction changed — heavy damage + flash screen + center popup
         applyTargetPeek(target,targetPeek);
         showHitHeavy(target);
         showFloatTextAt(target,`预测变化：${targetPeek.newPred.winner} ${targetPeek.newPred.score}`,'pred-changed');
+        // Center popup: determine change type
+        const stanceChanged=targetPeek.oldPred.winner!==targetPeek.newPred.winner;
+        if(stanceChanged){
+          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.stance_changed).replace('{name}',target),'type-stance');
+        }else{
+          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.score_changed).replace('{name}',target),'type-score');
+        }
       }else if(targetPeek.confDelta!==0){
         applyTargetPeek(target,targetPeek);
         if(targetPeek.confDelta>0){
-          // Accuracy up — green heart
           showAccUp(target);
           showFloatTextAt(target,`准+${targetPeek.confDelta}`,'acc-up');
+          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.conf_up).replace('{name}',target),'type-conf-up');
         }else{
-          // Accuracy down — explosion
           showHitCritical(target);
           showFloatTextAt(target,`准${targetPeek.confDelta}`,'acc-down');
+          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.conf_down).replace('{name}',target),'type-conf-down');
         }
       }else{
-        // No change — shield
         showDefend(target);
         showFloatTextAt(target,'准-0','acc-same');
       }
@@ -1369,6 +1506,14 @@ function showItem(i){
     addEndCard(item);clearBattle();
     if(inChain&&chainChanges.length){hideDuelOverlay();removeRoundTableArrow();showChainReport();inChain=false;chainChanges=[]}
     if(item.msg?.speaker==='仲裁者')showArbitratorBubble(item.msg.content,DATA.consensus);
+    // Auto-show trophy after arbitrator verdict bubble exits
+    if(item.endTitle==='仲裁者裁定'||item.endTitle==='最终裁定'){
+      if(!victoryShown){
+        // In auto-play: wait for bubble display time then exit then show trophy
+        // In manual: next click dismisses bubble, then trophy shows
+        scheduleTrophyAfterArbitrator();
+      }
+    }
     return;
   }
   const msg=item.msg;const predInfo=advancePred(msg.speaker);
@@ -1425,7 +1570,7 @@ function showVictoryScreen(){
   sDiv.appendChild(aDiv);vSides.appendChild(sDiv)});
   document.getElementById('victory-screen').classList.add('active');
 }
-document.getElementById('v-close').onclick=()=>{document.getElementById('victory-screen').classList.remove('active')};
+// Removed close button — trophy auto-plays and persists
 
 // ═══════════════════════════════════════════════════════════
 // EVIDENCE
@@ -1446,9 +1591,63 @@ document.addEventListener('keydown',e=>{if(!DATA)return;if(e.key===' '||e.code==
 // ═══════════════════════════════════════════════════════════
 // UTILS
 // ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// TROPHY AFTER ARBITRATOR
+// ═══════════════════════════════════════════════════════════
+let trophyScheduled=false;
+function scheduleTrophyAfterArbitrator(){
+  trophyScheduled=true;
+  if(playing){
+    // Auto-play: wait enough for bubble to display and exit
+    setTimeout(()=>{
+      if(!trophyScheduled)return;
+      trophyScheduled=false;
+      dismissArbBubbleAndShowTrophy();
+    },4000);
+  }
+  // Manual mode: trophy shows on next stepForward after bubble is dismissed
+}
+function dismissArbBubbleAndShowTrophy(){
+  if(arbBubbleEl&&arbBubbleEl.parentNode){arbBubbleEl.remove();arbBubbleEl=null}
+  hideDuelOverlay();
+  if(!victoryShown){showVictoryScreen();victoryShown=true}
+}
+
 function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
 function attrEscape(t){return t.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function truncateHtml(html,max){const text=html.replace(/<[^>]+>/g,'');if(text.length<=max)return html;let r='',l=0,inTag=false;for(let i=0;i<html.length&&l<max;i++){const c=html[i];if(c==='<')inTag=true;r+=c;if(!inTag)l++;if(c==='>')inTag=false}return r+'...'}
+
+// ═══════════════════════════════════════════════════════════
+// RESPONSIVE LAYOUT — reposition pentagon avatars on resize
+// ═══════════════════════════════════════════════════════════
+function updatePentagonPositions(){
+  if(!DATA||!DATA.agents)return;
+  const battle=document.getElementById('battle');
+  if(!battle)return;
+  const bw=battle.offsetWidth;
+  const bh=battle.offsetHeight;
+  // Scale pentagon to actual container size (base = 640x580)
+  const scaleX=bw/640;
+  const scaleY=bh/580;
+  const cx=CX*scaleX, cy=CY*scaleY, rx=RX*scaleX, ry=RY*scaleY;
+  const n=DATA.agents.length||5;
+  for(let i=0;i<n;i++){
+    const a=-Math.PI/2+(2*Math.PI*i/n);
+    const px=cx+rx*Math.cos(a), py=cy+ry*Math.sin(a);
+    const av=avatars[DATA.agents[i]?.name];
+    if(av){
+      av.el.style.left=(px-48)+'px';
+      av.el.style.top=(py-24)+'px';
+      av.el.dataset.cx=px;av.el.dataset.cy=py;
+    }
+  }
+  // Update special agents position
+  const sa=document.getElementById('special-agents');
+  if(sa)sa.style.top=(cy+ry+SP_OFFSET_Y)+'px';
+  // Update table position
+  document.getElementById('table').style.top=cy+'px';
+}
+window.addEventListener('resize',updatePentagonPositions);
 </script>
 </body>
 </html>
