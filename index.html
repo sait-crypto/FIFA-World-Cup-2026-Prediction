@@ -3,1431 +3,595 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚔️ 辩论竞技场</title>
+<title>⚽ AI 辩论预测</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-
-/* ═══ Theme Variables ═══ */
 :root{
-  --bg:#0d0d1a;--bg2:#1a1a2e;--bg3:#252540;
-  --fg:#e8e8e8;--fg2:#888899;
-  --accent:#e94560;
-  --side-a:#4fc3f7;--side-b:#ef5350;--side-x:#a55eea;
-  --a1:#ff4757;--a2:#2ed573;--a3:#1e90ff;--a4:#ffa502;--a5:#a55eea;
-  --border:#444466;--border2:#666688;
-  --bubble-bg:rgba(13,13,26,0.92);
-  --table-bg:#2a1a0a;--table-border:#5a3a1a;
-  --battle-inner:#1e1e3a;
-  --bar-bg:#111;--scanline:rgba(0,0,0,0.12);
+  --primary:#1678F2;--primary-dark:#125ccc;--primary-light:#e8f0fe;
+  --bg:#f5f5f5;--card:#fff;--border:#e8e8e8;--divider:#f1f1f1;
+  --text:#222;--text2:#666;--text3:#999;
+  --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--blue:#2980b9;
+  --side-a:#e74c3c;--side-b:#2980b9;--side-x:#8e44ad;
+  --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.08);
+  --max-w:1200px;
 }
-[data-theme="light"]{
-  --bg:#e8e8d8;--bg2:#f5f5ea;--bg3:#d8d8c8;
-  --fg:#1a1a2e;--fg2:#666677;
-  --accent:#c0392b;
-  --side-a:#1565c0;--side-b:#c62828;--side-x:#6a1b9a;
-  --a1:#c62828;--a2:#2e7d32;--a3:#1565c0;--a4:#e65100;--a5:#6a1b9a;
-  --border:#aaaacc;--border2:#8888aa;
-  --bubble-bg:rgba(245,245,234,0.95);
-  --table-bg:#c4a882;--table-border:#8b6914;
-  --battle-inner:#ddd8c8;
-  --bar-bg:#ccc;--scanline:rgba(0,0,0,0.06);
-}
-[data-theme="cyber"]{
-  --bg:#0a0a14;--bg2:#12122a;--bg3:#1a1a3a;
-  --fg:#00ffcc;--fg2:#009977;
-  --accent:#ff00ff;
-  --side-a:#00ccff;--side-b:#ff3366;--side-x:#cc00ff;
-  --a1:#ff3366;--a2:#33ff99;--a3:#00ccff;--a4:#ffcc00;--a5:#cc00ff;
-  --border:#330066;--border2:#6600cc;
-  --bubble-bg:rgba(10,10,20,0.95);
-  --table-bg:#1a0a2a;--table-border:#6600cc;
-  --battle-inner:#12122a;
-  --bar-bg:#0a0a1a;--scanline:rgba(0,255,204,0.04);
-}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
 
-body{
-  font-family:'Press Start 2P','Microsoft YaHei',monospace;
-  background:var(--bg);color:var(--fg);
-  display:flex;justify-content:center;align-items:flex-start;
-  min-height:100vh;padding:8px;image-rendering:pixelated;
-}
-body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--scanline) 2px,var(--scanline) 4px)}
-
-#game{width:1200px;height:820px;position:relative;overflow:hidden;background:var(--bg2);border:3px solid var(--border2)}
-
-/* Loading */
-#load-screen{position:absolute;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:var(--bg)}
-#load-screen.hidden{display:none}
-#load-screen h1{font-size:16px;color:var(--accent);text-shadow:2px 2px 0 #000}
-#load-screen .sub{font-size:8px;color:var(--fg2)}
-#drop-zone{width:400px;height:130px;border:3px dashed var(--border);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:9px;color:var(--fg2);transition:border-color .2s}
-#drop-zone:hover,#drop-zone.dragover{border-color:var(--accent);background:rgba(233,69,96,.1)}
-#drop-zone .icon{font-size:32px}
+/* ═══ Load Screen ═══ */
+#load-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}
+#load-screen .inner{max-width:400px;padding:40px 20px}
+#load-screen h2{font-size:20px;margin-bottom:16px;color:var(--primary)}
+#load-screen p{color:var(--text2);margin-bottom:24px;font-size:14px}
+#load-screen .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;cursor:pointer;transition:border-color .2s;color:var(--text2);font-size:14px}
+#load-screen .drop-zone:hover{border-color:var(--primary);color:var(--primary)}
+#load-screen .drop-zone.drag-over{border-color:var(--primary);background:var(--primary-light)}
 #file-input{display:none}
 
-/* Main */
-#main{display:none;flex-direction:column;height:100%}
-#main.active{display:flex}
+/* ═══ Main ═══ */
+#main{display:none}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 20px}
 
-/* Top Bar */
-#topbar{height:32px;background:var(--bar-bg);display:flex;align-items:center;padding:0 10px;gap:10px;border-bottom:2px solid var(--border);font-size:8px;flex-shrink:0}
-#topbar .title{color:var(--accent);font-size:10px}
-#topbar .tag{padding:1px 6px;border:1px solid var(--border);font-size:7px}
-#topbar .tag.yes{border-color:#2ed573;color:#2ed573}
-#topbar .tag.no{border-color:#ef5350;color:#ef5350}
-#topbar .spacer{flex:1}
-#topbar button{background:var(--bg3);color:var(--fg2);border:1px solid var(--border);font-family:inherit;font-size:8px;padding:2px 8px;cursor:pointer}
-#topbar button:hover{background:var(--border)}
-#topbar .theme-btn{min-width:60px;color:var(--accent);border-color:var(--accent)}
-
-/* Content */
-#content{flex:1;display:flex;overflow:hidden}
-#arena-col{width:640px;display:flex;flex-direction:column;border-right:2px solid var(--border)}
-#battle{flex:1;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,var(--battle-inner) 0%,var(--bg) 100%);min-height:0}
-
-/* Round table — shifted down for vertical centering of all content */
-#table{position:absolute;width:210px;height:115px;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--table-bg);border:3px solid var(--table-border);transition:opacity .3s steps(4),filter .3s steps(4)}
-#table::after{content:'';position:absolute;inset:6px;border:1px solid var(--table-border);opacity:.5}
-#table.dimmed{opacity:.15;filter:blur(2px)}
-
-/* ── Round Table Avatars ── */
-.avatar{position:absolute;width:96px;text-align:center;transition:opacity .3s steps(4);z-index:10}
-.avatar .sprite{
-  width:48px;height:48px;margin:0 auto;
-  border:2px solid var(--border);background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;font-weight:bold;color:#fff;text-shadow:1px 1px 0 #000;
-  transition:border-color .2s steps(3),box-shadow .2s steps(3),transform .3s steps(4);
-  background-size:cover;background-position:center;
+/* ── Header ── */
+.match-header{
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  color:#fff;padding:16px 20px 20px;position:relative;overflow:hidden;
 }
-.avatar.speaking .sprite{border-color:#fff;transform:scale(1.4);z-index:15;box-shadow:0 0 6px 2px rgba(255,255,255,0.5)}
-.avatar.dimmed{opacity:.15}
-/* dimmed: just opacity, no shrinking or hiding */
-.avatar .aname{font-size:10px;white-space:nowrap;margin-top:5px;text-shadow:1px 1px 0 #000}
-.avatar .apersp{font-size:10px;opacity:.7}
-.avatar .hp-label{font-size:8px;margin-top:1px;font-weight:bold;text-shadow:1px 1px 0 #000;transition:color .4s steps(4),opacity .5s steps(4)}
-.avatar .hp{margin:2px auto 0;height:7px;background:#222;border:1px solid #444;width:74px;overflow:hidden;transition:opacity .5s steps(4)}
-.avatar.no-stance .hp-label,.avatar.no-stance .hp{opacity:0}
-.avatar .hp-fill{height:100%;transition:width .6s steps(6),background .4s steps(4)}
+.match-header::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none}
+.match-brand{text-align:center;font-size:12px;opacity:.5;margin-bottom:8px;letter-spacing:3px;text-transform:uppercase}
+.match-meta{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px;font-size:12px;opacity:.8}
+.match-meta .group-tag{background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px;font-weight:600}
+.match-vs-area{display:flex;align-items:center;justify-content:center;gap:20px}
+.team-block{text-align:center;flex:1;max-width:260px}
+.team-flag{width:56px;height:56px;border-radius:50%;margin:0 auto;object-fit:cover;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)}
+.team-flag-placeholder{width:56px;height:56px;border-radius:50%;margin:0 auto;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid rgba(255,255,255,0.3)}
+.team-name{font-size:24px;font-weight:700;margin-top:6px}
+.team-rank{font-size:12px;opacity:.7;margin-top:2px}
+.vs-divider{text-align:center;flex-shrink:0}
+.vs-text{font-size:32px;font-weight:800;opacity:.5}
+.vs-score{font-size:16px;font-weight:700;margin-top:4px}
 
-@keyframes px-glow{0%,100%{box-shadow:0 0 0 #fff}50%{box-shadow:0 0 8px 2px #fff}}
-
-/* Casting & Hit — round table */
-.avatar.cast-attack .sprite{animation:cast-attack .8s steps(4)}
-.avatar.cast-buff .sprite{animation:cast-buff .8s steps(4)}
-.avatar.hit-critical .sprite{animation:hit-critical .8s steps(4)}
-.avatar.hit-heavy .sprite{animation:hit-heavy 1s steps(5)}
-.avatar.defend .sprite{animation:defend-shield .8s steps(4)}
-.avatar.acc-up-anim .sprite{animation:acc-up-glow .8s steps(4)}
-
-@keyframes cast-attack{0%{transform:scale(1)}25%{transform:scale(1.2) rotate(-8deg)}50%{transform:scale(1.15) rotate(5deg)}75%{transform:scale(1.05) rotate(-2deg)}100%{transform:scale(1)}}
-@keyframes cast-buff{0%{transform:scale(1);filter:brightness(1)}40%{transform:scale(1.08) translateY(-4px);filter:brightness(1.6)}70%{transform:scale(1.03);filter:brightness(1.2)}100%{transform:scale(1);filter:brightness(1)}}
-@keyframes hit-critical{0%,100%{transform:translateX(0);filter:brightness(1)}15%{transform:translateX(-7px);filter:brightness(2.5) hue-rotate(-30deg)}30%{transform:translateX(7px);filter:brightness(0.5)}45%{transform:translateX(-5px);filter:brightness(1.8)}60%{transform:translateX(5px);filter:brightness(1)}75%{transform:translateX(-3px)}}
-@keyframes hit-heavy{0%,100%{transform:translateX(0);filter:brightness(1)}8%{transform:translateX(-10px) scale(1.1);filter:brightness(3) hue-rotate(-60deg)}18%{transform:translateX(10px) scale(0.95);filter:brightness(0.3)}28%{transform:translateX(-8px);filter:brightness(2.5) hue-rotate(30deg)}38%{transform:translateX(8px);filter:brightness(0.5)}48%{transform:translateX(-6px) scale(1.05);filter:brightness(2)}58%{transform:translateX(6px);filter:brightness(0.8)}68%{transform:translateX(-4px);filter:brightness(1.5)}78%{transform:translateX(4px)}}
-@keyframes defend-shield{0%{box-shadow:0 0 0 0 rgba(79,195,247,0);border-color:var(--border)}30%{box-shadow:0 0 22px 8px rgba(79,195,247,0.5);border-color:#4fc3f7}60%{box-shadow:0 0 14px 5px rgba(79,195,247,0.3);border-color:#4fc3f7}100%{box-shadow:0 0 0 0 rgba(79,195,247,0);border-color:var(--border)}}
-@keyframes acc-up-glow{0%{box-shadow:0 0 0 0 rgba(46,213,115,0);filter:brightness(1)}30%{box-shadow:0 0 25px 10px rgba(46,213,115,0.6);filter:brightness(1.8)}60%{box-shadow:0 0 15px 6px rgba(46,213,115,0.3);filter:brightness(1.3)}100%{box-shadow:0 0 0 0 rgba(46,213,115,0);filter:brightness(1)}}
-
-.magic-circle{position:absolute;width:70px;height:20px;left:50%;bottom:-12px;transform:translateX(-50%);border:2px solid var(--side-a);border-radius:50%;pointer-events:none;animation:magic-pulse 1s steps(4) forwards}
-@keyframes magic-pulse{0%{transform:translateX(-50%) scale(0.3);opacity:0}30%{transform:translateX(-50%) scale(1.2);opacity:0.9}60%{transform:translateX(-50%) scale(1);opacity:0.6}100%{transform:translateX(-50%) scale(1.1);opacity:0}}
-
-/* ── Speech Bubbles (unified, no tails) ── */
-.speech-bubble{
-  position:absolute;padding:6px 10px;border:2px solid;
-  background:var(--bubble-bg);border-radius:4px;font-size:11px;
-  max-width:260px;z-index:25;pointer-events:none;
-  font-family:'Microsoft YaHei',sans-serif;line-height:1.5;
-  word-break:break-all;
+/* ── Prediction Hero ── */
+.prediction-hero{
+  background:var(--card);border-radius:var(--radius);
+  box-shadow:0 2px 12px rgba(0,0,0,0.1);padding:20px 24px;margin:-16px auto 0;position:relative;z-index:5;
+  max-width:var(--max-w);
 }
-@keyframes bubble-pop{0%{opacity:0;transform:scale(0.8)}30%{opacity:1;transform:scale(1.05)}60%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0.95)}}
-.speech-bubble.persistent{animation:bubble-pop-in .4s steps(4) forwards;pointer-events:auto}
-.speech-bubble.persistent .evidence-link{pointer-events:auto;cursor:pointer}
-@keyframes bubble-pop-in{0%{opacity:0;transform:scale(0.8)}40%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
+.pred-hero-top{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.pred-hero-label{font-size:13px;color:var(--text3);font-weight:600}
+.pred-hero-result{font-size:28px;font-weight:800;color:var(--primary)}
+.pred-hero-score{font-size:22px;color:var(--text);font-weight:600}
+.pred-hero-conf{display:flex;align-items:center;gap:8px}
+.pred-hero-conf-bar{width:120px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden}
+.pred-hero-conf-fill{height:100%;border-radius:4px;background:var(--primary)}
+.pred-hero-conf-label{font-size:12px;color:var(--text3)}
+.pred-hero-bar{margin-top:16px}
+.pred-hero-bar-title{font-size:12px;color:var(--text3);margin-bottom:6px}
+.pred-hero-bar-track{display:flex;height:24px;border-radius:12px;overflow:hidden;background:var(--divider)}
+.pred-hero-bar-track .seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;min-width:32px;transition:width .6s}
+.pred-hero-bar-track .seg-a{background:var(--side-a)}
+.pred-hero-bar-track .seg-b{background:var(--side-b)}
+.pred-hero-legend{display:flex;gap:20px;margin-top:6px;font-size:12px;color:var(--text2)}
+.pred-hero-legend .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
+.pred-hero-stance{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.stance-chip{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
+.stance-chip.side-a{background:#fde8e8;color:var(--side-a)}
+.stance-chip.side-b{background:#e8f0fe;color:var(--side-b)}
 
-/* ── Special Agents (curator, arbitrator, scribe) ── */
-#special-agents{
-  position:absolute;left:50%;transform:translateX(-50%);
-  display:flex;gap:30px;z-index:10;
+/* ── Section ═══ */
+.section{padding:16px 0}
+.section-title{font-size:15px;font-weight:700;padding:10px 0 6px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--divider);cursor:default}
+.section-title .icon{font-size:16px}
+.section-title .more{margin-left:auto;font-size:11px;color:var(--text3);font-weight:400}
+.section-title.collapsible{cursor:pointer;user-select:none}
+.section-title.collapsible::after{content:'▾';margin-left:6px;font-size:12px;color:var(--text3);transition:transform .2s}
+.section-title.collapsible.collapsed::after{transform:rotate(-90deg)}
+.section-body.collapsed{display:none}
+
+/* ── Context ── */
+.context-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin:10px 0}
+.context-card h3{font-size:13px;color:var(--text2);margin-bottom:6px}
+.record-header{font-size:13px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.record-header .team-icon{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:700}
+.record-header .team-icon.a{background:#fde8e8;color:var(--side-a)}
+.record-header .team-icon.b{background:#e8f0fe;color:var(--side-b)}
+.record-summary{font-size:12px;color:var(--primary);margin-bottom:4px;font-weight:600}
+.record-table{width:100%;border-collapse:collapse;font-size:12px}
+.record-table th{text-align:left;padding:5px 6px;background:var(--divider);font-weight:600;color:var(--text2);font-size:11px;border-bottom:1px solid var(--border)}
+.record-table td{padding:5px 6px;border-bottom:1px solid var(--divider);color:var(--text2)}
+.record-table .date-col{color:var(--text3);white-space:nowrap;width:80px}
+.record-table .score-col{font-weight:600;white-space:nowrap}
+.record-table .score-col.win{color:var(--green)}
+.record-table .score-col.lose{color:var(--red)}
+.record-table .comp-col{color:var(--text3);text-align:right}
+
+/* ── Analyst Cards ── */
+.analyst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;padding:8px 0}
+.analyst-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;position:relative;border-left:4px solid var(--text3);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.analyst-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.analyst-card.side-a{border-left-color:var(--side-a)}
+.analyst-card.side-b{border-left-color:var(--side-b)}
+.analyst-card.changed{border-left-color:var(--orange)}
+.analyst-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.analyst-avatar{width:32px;height:32px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.analyst-name{font-size:14px;font-weight:600}
+.analyst-perspective{font-size:11px;color:var(--text3)}
+.analyst-stance{font-size:10px;padding:1px 6px;border-radius:3px;margin-left:auto;flex-shrink:0}
+.analyst-stance.pro-a{background:#fde8e8;color:var(--side-a)}
+.analyst-stance.pro-b{background:#e8f0fe;color:var(--side-b)}
+.analyst-pred-row{display:flex;align-items:center;gap:6px;padding:6px 0;border-top:1px solid var(--divider);font-size:12px}
+.pred-val{font-weight:600}
+.pred-arrow{color:var(--orange);font-size:13px}
+.pred-changed .pred-val{color:var(--orange)}
+.confidence-bar{flex:1;height:3px;background:var(--divider);border-radius:2px;overflow:hidden}
+.confidence-fill{height:100%;border-radius:2px}
+.confidence-fill.high{background:var(--green)}.confidence-fill.mid{background:var(--orange)}.confidence-fill.low{background:var(--red)}
+.confidence-label{font-size:10px;color:var(--text3);white-space:nowrap}
+.analyst-summary{font-size:12px;color:var(--text2);line-height:1.4;margin-top:4px}
+.analyst-evolution{font-size:11px;color:var(--orange);margin-top:4px;padding:3px 6px;background:#fff8f0;border-radius:3px}
+
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,0.2);max-width:560px;width:100%;max-height:80vh;overflow-y:auto;padding:24px;position:relative}
+.modal-close{position:absolute;top:12px;right:16px;font-size:20px;cursor:pointer;color:var(--text3);line-height:1}
+.modal-close:hover{color:var(--text)}
+.modal h3{font-size:16px;margin-bottom:4px}
+.modal .modal-perspective{font-size:12px;color:var(--text3);margin-bottom:12px}
+.modal-pred-chain{font-size:13px;padding:8px 12px;background:var(--primary-light);border-radius:var(--radius);margin-bottom:12px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.chain-node{display:inline-flex;align-items:center;padding:2px 6px;border-radius:4px;font-size:12px;font-weight:500;background:var(--divider);color:var(--text2)}
+.chain-node.initial{background:var(--primary-light);color:var(--primary)}
+.chain-node.changed{background:#fff3e0;color:var(--orange);font-weight:600;border:1px solid #ffe0b2}
+.chain-arrow{color:var(--text3);font-size:11px}
+.modal-speeches{margin-top:12px}
+.modal-speech{padding:8px 10px;margin-bottom:6px;background:#fafafa;border-radius:4px;border-left:3px solid var(--border);font-size:12px;color:var(--text2);line-height:1.5}
+.modal-speech .speech-action{font-weight:600;color:var(--text);font-size:11px;margin-bottom:2px}
+
+/* ── Verdict ── */
+.verdict-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin:10px 0}
+.phase-timeline{margin:12px 0}
+.phase-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--divider)}
+.phase-item:last-child{border-bottom:none}
+.phase-badge{flex-shrink:0;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.phase-badge.yes{background:var(--green)}.phase-badge.no{background:var(--orange)}
+.phase-content{flex:1}
+.phase-title{font-size:12px;font-weight:600;margin-bottom:2px}
+.phase-desc{font-size:12px;color:var(--text2);line-height:1.4}
+.consensus-yes{color:var(--green);font-weight:600}.consensus-no{color:var(--red);font-weight:600}
+.verdict-text{font-size:13px;color:var(--text2);line-height:1.6}
+.summary-text{font-size:13px;color:var(--text2);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--divider)}
+.summary-text h4{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+
+/* ── Evidence ── */
+.evidence-list{padding:4px 0}
+.evidence-item{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:background .15s}
+.evidence-item:hover{background:#fafafa}
+.evidence-header{display:flex;align-items:center;gap:6px}
+.evidence-id{font-size:11px;font-weight:600;color:var(--primary);background:var(--primary-light);padding:2px 5px;border-radius:3px}
+.evidence-source{font-size:10px;color:var(--text3)}
+.evidence-confidence{margin-left:auto;font-size:10px;padding:2px 5px;border-radius:3px}
+.evidence-confidence.high{background:#e8f5e9;color:var(--green)}
+.evidence-confidence.mid{background:#fff8e1;color:var(--orange)}
+.evidence-confidence.low{background:#fce4ec;color:var(--red)}
+.evidence-title{font-size:12px;color:var(--text);margin-top:3px;font-weight:500}
+.evidence-content{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.4;display:none}
+.evidence-item.expanded .evidence-content{display:block}
+.evidence-url{display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--primary);margin-top:3px}
+
+/* ── Footer ── */
+.footer-section{padding:16px 0 32px;text-align:center;border-top:1px solid var(--divider);margin-top:16px}
+.footer-section .hint{font-size:11px;color:var(--text3);margin-top:10px}
+.viewer-toggle{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px}
+.toggle-btn{padding:5px 14px;border-radius:18px;font-size:12px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;transition:all .2s}
+.toggle-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.viewer-open-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 28px;border-radius:var(--radius);background:var(--primary);color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:background .2s;box-shadow:0 2px 8px rgba(22,120,242,0.3)}
+.viewer-open-btn:hover{background:var(--primary-dark)}
+.embed-container{display:none;margin-top:16px;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.12)}
+.embed-container.visible{display:block}
+.embed-header{background:var(--primary);color:#fff;padding:8px 14px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.embed-close{margin-left:auto;cursor:pointer;opacity:.7;font-size:16px}
+.embed-close:hover{opacity:1}
+.embed-iframe{width:100%;height:840px;border:none;display:block}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .container{padding:0 12px}
+  .match-vs-area{gap:12px}
+  .team-name{font-size:18px}
+  .team-flag,.team-flag-placeholder{width:44px;height:44px}
+  .analyst-grid{grid-template-columns:1fr 1fr}
+  .pred-hero-top{flex-direction:column;align-items:flex-start;gap:8px}
+  .pred-hero-result{font-size:22px}
+  .record-table{font-size:11px}
+  .record-table .date-col{width:60px}
 }
-.sp-agent{text-align:center;width:90px;position:relative}
-.sp-table{width:80px;height:36px;margin:0 auto 2px;background:var(--table-bg);border:2px solid var(--table-border)}
-.sp-sprite{
-  width:48px;height:48px;margin:8px auto 0;
-  border:2px solid var(--border);background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:bold;color:#fff;text-shadow:1px 1px 0 #000;
-  background-size:cover;background-position:center;
-  transition:border-color .2s steps(3),box-shadow .2s steps(3),transform .3s steps(4);
+@media(max-width:480px){
+  .analyst-grid{grid-template-columns:1fr}
+  .match-vs-area{flex-direction:column;gap:8px}
+  .vs-divider{display:flex;gap:8px;align-items:center}
+  .vs-text{font-size:20px}
+  .team-block{max-width:100%}
 }
-.sp-agent.speaking .sp-sprite{border-color:#fff;transform:scale(1.4);z-index:15;box-shadow:0 0 6px 2px rgba(255,255,255,0.5)}
-.sp-agent.dimmed{opacity:.15}
-.sp-name{font-size:9px;margin-top:2px;text-shadow:1px 1px 0 #000;color:var(--fg2)}
-
-/* ── Duel Overlay ── */
-#duel-overlay{position:absolute;inset:0;z-index:50;background:rgba(5,5,15,0.92);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .8s steps(8)}
-#duel-overlay.active{opacity:1;pointer-events:auto}
-[data-theme="light"] #duel-overlay{background:rgba(220,218,200,0.92)}
-[data-theme="cyber"] #duel-overlay{background:rgba(5,5,15,0.92)}
-
-#duel-top{height:210px;display:flex;align-items:flex-start;justify-content:space-between;padding:55px 40px 0;flex-shrink:0;position:relative}
-.duel-av{text-align:center;width:140px;position:relative}
-.duel-av .sprite{
-  width:72px;height:72px;margin:0 auto;border:3px solid var(--border);background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:bold;color:#fff;text-shadow:2px 2px 0 #000;
-  background-size:cover;background-position:center;
-}
-.duel-av .dname{font-size:10px;margin-top:5px;text-shadow:1px 1px 0 #000}
-.duel-av .dpersp{font-size:9px;opacity:.7}
-.duel-av .dpred{font-size:9px;margin-top:2px;font-weight:bold;text-shadow:1px 1px 0 #000;transition:color .4s steps(4)}
-.duel-av .dhp{margin:3px auto 0;height:9px;background:#222;border:1px solid #444;width:110px;overflow:hidden}
-.duel-av .dhp-fill{height:100%;transition:width .6s steps(6),background .4s steps(4)}
-
-/* Duel speech bubble (no tails) — allow longer text */
-.duel-speech{
-  position:absolute;white-space:normal;max-width:180px;font-size:13px;font-weight:bold;
-  padding:8px 16px;border:2px solid;border-radius:4px;
-  background:var(--bubble-bg);z-index:58;pointer-events:none;
-  font-family:'Microsoft YaHei',sans-serif;
-}
-
-.duel-av.cast-attack .sprite{animation:cast-attack-d .8s steps(4)}
-.duel-av.cast-buff .sprite{animation:cast-buff-d .8s steps(4)}
-.duel-av.hit-critical .sprite{animation:hit-critical-d .8s steps(4)}
-.duel-av.hit-heavy .sprite{animation:hit-heavy-d 1s steps(5)}
-.duel-av.defend .sprite{animation:defend-shield-d .8s steps(4)}
-.duel-av.acc-up-anim .sprite{animation:acc-up-glow-d .8s steps(4)}
-@keyframes cast-attack-d{0%{transform:scale(1)}25%{transform:scale(1.25) rotate(-8deg)}50%{transform:scale(1.2) rotate(5deg)}75%{transform:scale(1.05) rotate(-2deg)}100%{transform:scale(1)}}
-@keyframes cast-buff-d{0%{transform:scale(1);filter:brightness(1)}40%{transform:scale(1.1) translateY(-6px);filter:brightness(1.8)}70%{transform:scale(1.04);filter:brightness(1.3)}100%{transform:scale(1);filter:brightness(1)}}
-@keyframes hit-critical-d{0%,100%{transform:translateX(0);filter:brightness(1)}15%{transform:translateX(-8px);filter:brightness(3) hue-rotate(-30deg)}30%{transform:translateX(8px);filter:brightness(0.4)}45%{transform:translateX(-6px);filter:brightness(2)}60%{transform:translateX(6px);filter:brightness(1)}75%{transform:translateX(-4px)}}
-@keyframes hit-heavy-d{0%,100%{transform:translateX(0);filter:brightness(1)}8%{transform:translateX(-12px) scale(1.15);filter:brightness(3.5) hue-rotate(-60deg)}18%{transform:translateX(12px) scale(0.9);filter:brightness(0.2)}28%{transform:translateX(-10px);filter:brightness(2.5) hue-rotate(30deg)}38%{transform:translateX(10px);filter:brightness(0.4)}48%{transform:translateX(-7px) scale(1.05);filter:brightness(2)}58%{transform:translateX(7px);filter:brightness(0.7)}68%{transform:translateX(-5px);filter:brightness(1.5)}78%{transform:translateX(5px)}}
-@keyframes defend-shield-d{0%{box-shadow:0 0 0 0 rgba(79,195,247,0);border-color:var(--border)}30%{box-shadow:0 0 25px 10px rgba(79,195,247,0.5);border-color:#4fc3f7}60%{box-shadow:0 0 16px 6px rgba(79,195,247,0.3);border-color:#4fc3f7}100%{box-shadow:0 0 0 0 rgba(79,195,247,0);border-color:var(--border)}}
-@keyframes acc-up-glow-d{0%{box-shadow:0 0 0 0 rgba(46,213,115,0);filter:brightness(1)}30%{box-shadow:0 0 28px 12px rgba(46,213,115,0.6);filter:brightness(1.8)}60%{box-shadow:0 0 16px 7px rgba(46,213,115,0.3);filter:brightness(1.3)}100%{box-shadow:0 0 0 0 rgba(46,213,115,0);filter:brightness(1)}}
-
-#duel-arrow-svg{position:absolute;top:95px;left:50%;transform:translateX(-50%);width:220px;height:24px;z-index:55;pointer-events:none}
-.projectile{position:absolute;z-index:56;pointer-events:none;font-size:22px;transition:left .9s steps(10),top .9s steps(10)}
-
-#duel-chat{flex:1;overflow-y:auto;padding:4px 16px;min-height:0}
-#duel-chat::-webkit-scrollbar{width:3px}
-#duel-chat::-webkit-scrollbar-thumb{background:var(--border)}
-.duel-bubble{width:70%;padding:6px 10px;margin:6px 0;font-size:10px;line-height:1.6;background:var(--bg2);border:2px solid var(--border);word-break:break-all;white-space:pre-wrap;flex-shrink:0}
-.duel-bubble.left{margin-right:auto;margin-left:4%;border-color:#4fc3f7}
-.duel-bubble.right{margin-left:auto;margin-right:4%;border-color:#ef5350}
-.duel-bubble.counter{border-color:#ffa502 !important}
-.duel-bubble .bhead{font-size:9px;margin-bottom:2px;display:flex;align-items:center;gap:4px}
-.duel-bubble .bhead .bname{font-weight:bold}
-.duel-bubble .bhead .btag{padding:1px 4px;font-size:7px;border:1px solid}
-.duel-bubble strong{color:#ffd54f}
-
-/* Floating text */
-.float-text{position:absolute;z-index:60;pointer-events:none;font-size:13px;font-weight:bold;text-shadow:1px 1px 0 #000,2px 2px 0 rgba(0,0,0,.5);animation:float-up 2s steps(6) forwards}
-.float-text.pred-changed{font-size:14px;color:#ffd54f}
-.float-text.acc-up{color:#2ed573}
-.float-text.acc-down{color:#ef5350}
-.float-text.acc-same{color:#888899}
-.float-text.response-text{color:#4fc3f7}
-@keyframes float-up{0%{transform:translateY(0);opacity:1}60%{opacity:1}100%{transform:translateY(-45px);opacity:0}}
-
-#battle.shake{animation:shake .25s steps(3)}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(5px)}75%{transform:translateX(-5px)}}
-.fx-icon{position:absolute;z-index:55;pointer-events:none;font-size:24px;animation:fx-pop .9s steps(4) forwards}
-@keyframes fx-pop{0%{transform:scale(0);opacity:1}40%{transform:scale(1.5);opacity:1}100%{transform:scale(1);opacity:0}}
-
-/* Arrow on round table (pre-duel) */
-.rt-arrow{position:absolute;z-index:20;pointer-events:none}
-.rt-arrow line{stroke-dasharray:8 5;animation:dash-flow .6s linear infinite}
-@keyframes dash-flow{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-13}}
-
-/* Prediction change flash */
-.pred-flash{animation:pred-flash .5s steps(4)}
-@keyframes pred-flash{0%{filter:brightness(1)}25%{filter:brightness(2.5)}50%{filter:brightness(0.5)}75%{filter:brightness(1.3)}100%{filter:brightness(1)}}
-
-/* ── Victory Screen ── */
-#victory-screen{position:absolute;inset:0;z-index:200;background:rgba(5,5,15,0.96);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:victory-in .8s steps(6)}
-#victory-screen.active{display:flex}
-@keyframes victory-in{0%{opacity:0;transform:scale(0.8)}100%{opacity:1;transform:scale(1)}}
-#victory-screen .vcrown{font-size:48px}
-#victory-screen .vtitle{font-size:18px;color:#ffd54f;text-shadow:2px 2px 0 #000,0 0 12px rgba(255,213,79,.4)}
-#victory-screen .vpred{font-size:14px;text-shadow:1px 1px 0 #000}
-#victory-screen .vsides{display:flex;gap:40px;margin-top:8px}
-#victory-screen .vside{text-align:center}
-#victory-screen .vside-label{font-size:10px;margin-bottom:8px;padding:2px 8px;border:1px solid}
-#victory-screen .vagents{display:flex;gap:12px;justify-content:center}
-#victory-screen .vagent{text-align:center;width:80px}
-#victory-screen .vagent .sprite{width:44px;height:44px;margin:0 auto;border:2px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;color:#fff;text-shadow:1px 1px 0 #000;background-size:cover;background-position:center}
-#victory-screen .vagent .vaname{font-size:8px;margin-top:2px}
-#victory-screen .vagent .vavpred{font-size:7px;font-weight:bold}
-#victory-screen .vclose{font-size:8px;color:var(--fg2);margin-top:12px;cursor:pointer;border:1px solid var(--border);padding:4px 12px;background:var(--bg3)}
-#victory-screen .vclose:hover{background:var(--border)}
-
-/* Controls */
-#ctrl{height:24px;background:var(--bar-bg);border-top:2px solid var(--border);display:flex;align-items:center;padding:0 8px;gap:6px;flex-shrink:0;font-size:6px}
-#ctrl button{background:var(--bg3);color:var(--fg);border:1px solid var(--border);font-family:inherit;font-size:8px;padding:1px 6px;cursor:pointer;min-width:24px}
-#ctrl button:hover{background:var(--border)}
-#ctrl select{background:var(--bg3);color:var(--fg);border:1px solid var(--border);font-family:inherit;font-size:6px;padding:1px 2px}
-#progress{flex:1;height:5px;background:#222;border:1px solid #444;cursor:pointer;position:relative}
-#progress .fill{height:100%;background:var(--accent);transition:width .2s steps(4)}
-#ctrl .plabel{font-size:6px;color:var(--fg2);min-width:50px;text-align:right}
-
-/* Right: Log */
-#log-col{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-#log-header{height:26px;background:var(--bar-bg);display:flex;align-items:center;padding:0 10px;border-bottom:2px solid var(--border);font-size:10px;color:var(--accent);flex-shrink:0}
-#dialog-area{flex:1;overflow-y:auto;padding:6px 8px;min-height:0;font-family:'Microsoft YaHei',sans-serif;font-size:12px;line-height:1.6}
-#dialog-area::-webkit-scrollbar{width:4px}
-#dialog-area::-webkit-scrollbar-thumb{background:var(--border)}
-
-.chain-group{margin-bottom:8px;padding-left:16px;border-left:4px solid var(--border);background:rgba(68,68,102,0.15)}
-.chain-group .chain-root{margin-left:-16px;padding-left:0}
-.chain-group .chain-title{font-size:10px;padding:2px 8px;color:var(--accent);background:rgba(233,69,96,0.1);border-bottom:1px solid var(--border)}
-.chain-group .msg-row{margin-bottom:4px}
-
-.msg-row{margin-bottom:5px;padding:4px 8px;border:2px solid var(--border2);background:var(--bg2);border-radius:3px;box-shadow:0 0 0 1px var(--border)}
-.msg-row.challenge{border-color:#ef5350;background:rgba(239,83,80,0.08)}
-.msg-row.response{border-color:#4fc3f7;background:rgba(79,195,247,0.08)}
-.msg-row.counter{border-color:#ffa502;background:rgba(255,165,2,0.08)}
-.msg-row.stance{border-color:#2ed573;background:rgba(46,213,115,0.08)}
-.msg-row.pred-changed{background:rgba(239,83,80,0.15);border-width:3px}
-.msg-row .mr-head{font-size:11px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:2px}
-.msg-row .mr-head .mr-name{font-weight:bold}
-.msg-row .mr-head .mr-tag{display:inline-block;padding:2px 8px;font-size:14px;border:2px solid;border-radius:2px;font-weight:bold}
-.msg-row .mr-body{white-space:pre-wrap;word-break:break-all;max-height:60px;overflow:hidden;cursor:pointer;transition:max-height .2s}
-.msg-row .mr-body.expanded{max-height:none}
-.msg-row .mr-body .expand-hint{color:var(--fg2);font-size:10px}
-.msg-row strong{color:#ffd54f}
-
-.round-sep{text-align:center;font-size:11px;color:var(--accent);padding:3px 0;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:5px 0}
-.end-card{margin:4px 2px;padding:6px;background:var(--bg3);border:2px solid var(--accent);font-size:12px;line-height:1.6;white-space:pre-wrap}
-.end-card h3{font-size:13px;margin-bottom:4px;color:var(--accent)}
-.evidence-link{color:#ffa502;cursor:pointer;text-decoration:underline}
-.evidence-link:hover{color:#fff}
-
-#ev-popup{display:none;position:fixed;z-index:500;background:var(--bg2);border:2px solid #ffa502;padding:8px 12px;max-width:360px;max-height:220px;overflow-y:auto;font-size:12px;line-height:1.6;font-family:'Microsoft YaHei',sans-serif}
-#ev-popup .close{position:absolute;top:2px;right:6px;cursor:pointer;color:var(--fg2);font-size:14px}
-#ev-popup .eid{color:#ffa502;font-size:13px}
-#ev-popup .einfo{color:var(--fg2);font-size:10px;margin-top:3px}
-@keyframes blink-cursor{0%,100%{opacity:1}50%{opacity:0}}
 </style>
 </head>
 <body>
-<div id="game">
-  <div id="load-screen">
-    <h1>⚔️ 辩论竞技场</h1>
-    <div class="sub">16-BIT DEBATE ARENA</div>
-    <div id="drop-zone"><div class="icon">📂</div><div>拖拽 JSON 到此处</div><div style="font-size:6px">或点击选择文件</div></div>
-    <input type="file" id="file-input" accept=".json">
-  </div>
-  <div id="main">
-    <div id="topbar">
-      <span class="title" id="topic">---</span>
-      <span class="tag" id="mode-tag">圆桌</span>
-      <span class="tag" id="cons-tag">---</span>
-      <span class="spacer"></span>
-      <button class="theme-btn" id="btn-theme">🎨主题</button>
-      <button id="btn-load">📂</button>
-    </div>
-    <div id="content">
-      <div id="arena-col">
-        <div id="battle">
-          <div id="table"></div>
-          <!-- Special agents below round table -->
-          <div id="special-agents">
-            <div class="sp-agent" id="sp-curator"><div class="sp-table"></div><div class="sp-sprite" id="sp-cur-sprite">📋</div><div class="sp-name">审核员</div></div>
-            <div class="sp-agent" id="sp-arbitrator"><div class="sp-table"></div><div class="sp-sprite" id="sp-arb-sprite">⚖️</div><div class="sp-name">仲裁者</div></div>
-            <div class="sp-agent" id="sp-scribe"><div class="sp-table"></div><div class="sp-sprite" id="sp-scr-sprite">📜</div><div class="sp-name">场记</div></div>
-          </div>
-          <!-- Duel Overlay -->
-          <div id="duel-overlay">
-            <div id="duel-top">
-              <div class="duel-av" id="duel-left">
-                <div class="sprite" id="dl-sprite"></div>
-                <div class="dname" id="dl-name"></div>
-                <div class="dpersp" id="dl-persp"></div>
-                <div class="dpred" id="dl-pred"></div>
-                <div class="dhp"><div class="dhp-fill" id="dl-hp"></div></div>
-              </div>
-              <svg id="duel-arrow-svg" viewBox="0 0 220 24">
-                <defs>
-                  <marker id="ah-r" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#ef5350"/></marker>
-                  <marker id="ah-b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4fc3f7"/></marker>
-                  <marker id="ah-y" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#ffa502"/></marker>
-                </defs>
-                <line id="arrow-line" x1="10" y1="12" x2="210" y2="12" stroke="#ef5350" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ah-r)"/>
-              </svg>
-              <div class="duel-av" id="duel-right">
-                <div class="sprite" id="dr-sprite"></div>
-                <div class="dname" id="dr-name"></div>
-                <div class="dpersp" id="dr-persp"></div>
-                <div class="dpred" id="dr-pred"></div>
-                <div class="dhp"><div class="dhp-fill" id="dr-hp"></div></div>
-              </div>
-            </div>
-            <div id="duel-chat"></div>
-          </div>
-          <!-- Victory Screen -->
-          <div id="victory-screen">
-            <div class="vcrown">🏆</div>
-            <div class="vtitle">胜 方</div>
-            <div class="vpred" id="v-pred"></div>
-            <div class="vsides" id="v-sides"></div>
-            <div class="vclose" id="v-close">✕ 关闭</div>
-          </div>
-        </div>
-        <div id="ctrl">
-          <button id="btn-prev">◀</button>
-          <button id="btn-play">▶</button>
-          <button id="btn-next">▶|</button>
-          <select id="speed">
-            <option value="4000">0.5x</option>
-            <option value="2600" selected>1x</option>
-            <option value="1500">2x</option>
-            <option value="800">4x</option>
-            <option value="350">8x</option>
-          </select>
-          <div id="progress"><div class="fill"></div></div>
-          <span class="plabel" id="plabel">0/0</span>
-        </div>
-      </div>
-      <div id="log-col">
-        <div id="log-header">📜 辩论记录</div>
-        <div id="dialog-area"></div>
-      </div>
-    </div>
+
+<div id="load-screen">
+  <div class="inner">
+    <h2>⚽ AI 辩论预测</h2>
+    <p>加载辩论数据以查看赛果分析</p>
+    <div class="drop-zone" id="drop-zone">拖放 JSON 文件到此处<br>或点击选择文件<input type="file" id="file-input" accept=".json"></div>
   </div>
 </div>
-<div id="ev-popup">
-  <span class="close" onclick="this.parentElement.style.display='none'">✕</span>
-  <div id="ev-content"></div>
+
+<div id="main">
+  <div class="match-header" id="match-header"></div>
+  <div class="container">
+    <div class="prediction-hero" id="prediction-hero"></div>
+    <div class="section" id="context-section"></div>
+    <div class="section" id="analysts-section"></div>
+    <div class="section" id="verdict-section"></div>
+    <div class="section" id="evidence-section"></div>
+    <div class="footer-section" id="footer-section"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="analyst-modal">
+  <div class="modal" id="modal-content"></div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// ⚙️ 配置参数 — 所有可调参数集中在此
-// ═══════════════════════════════════════════════════════════
-
-// ── JSON 数据源 ──
-// 留空 → 文件上传模式；填写相对路径 → 自动加载同目录下的 JSON 文件
-// 例如：'debate_data.json' 或 'data/match.json'
-// 也支持 ?json=xxx.json 查询参数覆盖
 const JSON_FILE = '123.json';
+const VIEWER_FILE = 'debate_viewer.html';
+const IMAGES_DIR = 'images/';
 
-// ── 圆桌布局 ──
-const PENT_CX = 320;          // 五边形中心X
-const PENT_CY = 260;          // 五边形中心Y
-const PENT_RX = 195;          // 五边形X半径
-const PENT_RY = 145;          // 五边形Y半径
-const AVATAR_W = 96;          // avatar容器宽度
-const AVATAR_SPRITE = 48;     // avatar sprite尺寸
-const AVATAR_NAME_TOP = 5;    // 名字距sprite的间距
-const AVATAR_HP_BAR_W = 74;   // HP条宽度
+let DATA = null, currentJsonFile = '';
 
-// ── 功能Agent布局 ──
-const SP_GAP = 30;            // 三个功能agent间距
-const SP_OFFSET_Y = 90;      // 功能agent距五边形底部的偏移
-const SP_SPRITE_MARGIN = 8;  // 功能agent sprite距桌子的下移量
-const SP_NAME_FONT = 9;      // 功能agent名字字号
+function loadJson(text){try{DATA=JSON.parse(text);render()}catch(e){alert('JSON error: '+e.message)}}
 
-// ── 对抗界面布局 ──
-const DUEL_TOP_H = 210;       // 对抗顶部区域高度
-const DUEL_PAD_TOP = 55;      // 对抗顶部padding-top
-const DUEL_PAD_LR = 40;       // 对抗左右padding
-const DUEL_AV_W = 140;        // 对抗avatar容器宽度
-const DUEL_SPRITE = 72;       // 对抗sprite尺寸
-const DUEL_NAME_TOP = 5;      // 对打名字距sprite的间距
-const DUEL_ARROW_Y = 95;      // 对抗箭头Y位置
-const DUEL_ARROW_W = 220;     // 对抗箭头SVG宽度
+const dropZone=document.getElementById('drop-zone'),fileInput=document.getElementById('file-input');
+dropZone.addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change',e=>{const f=e.target.files[0];if(f){const r=new FileReader();r.onload=ev=>loadJson(ev.target.result);r.readAsText(f)}});
+dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('drag-over')});
+dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f){const r=new FileReader();r.onload=ev=>loadJson(ev.target.result);r.readAsText(f)}});
 
-// ── 对抗动画参数 ──
-const DUEL_OVERLAY_FADE = 800;     // overlay渐显时间ms
-const DUEL_ANIM_DELAY = 900;       // overlay显示后动画延迟ms
-const ARROW_AUTO_MS = 1500;        // 自动播放时箭头停留时间ms
-const CHALLENGE_ANIM_MS = 2500;    // 质疑动画总时长ms（用于auto-play节拍）
-const RESPONSE_ANIM_MS = 1000;     // 回应动画总时长ms
-const PROJECTILE_MS = 900;         // 投掷物飞行时间ms
-const BATTLE_CRY_MS = 3000;        // 战吼气泡停留时间ms
-const FLOAT_TEXT_MS = 2200;        // 跳字停留时间ms
-const FX_ICON_MS = 1000;           // FX图标停留时间ms
+(function(){const p=new URLSearchParams(location.search);const f=p.get('json')||JSON_FILE;if(!f)return;currentJsonFile=f;fetch(f).then(r=>r.text()).then(loadJson).catch(()=>console.warn('JSON auto-load failed:',f))})();
 
-// ── 打字机参数 ──
-const TW_SPEED = 12;          // 打字速度ms/字符
-const TW_BATCH = 3;           // 每帧字符数
+function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}
+function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t,teamB:p[1]?.split('（')[0]?.trim()||''}}
+function initialPred(a){return a.prediction_history?.[0]||{}}
+function finalPred(a){return a.prediction_history?.[a.prediction_history.length-1]||{}}
+function hasChanged(a){return(a.prediction_history||[]).some((p,i)=>i>0&&p.changed)}
+function sideOf(a,t){const{teamA,teamB}=parseTopic(t);const f=finalPred(a);if(!f.winner)return'x';if(f.winner.includes(teamA))return'a';if(f.winner.includes(teamB))return'b';return'x'}
 
-// ── 图片资源 ──
-const AVATAR_IMAGES = {
-  '分析师1': 'demographics.png',
-  // '分析师2': 'img/analyst2.png',
-  // '审核员':   'img/curator.png',
-  // '仲裁者':   'img/arbitrator.png',
-  // '场记':     'img/scribe.png',
-};
-const FX_IMAGES = {
-  // 'challenge': 'img/fire.png',
-  // 'counter':   'img/lightning.png',
-  // 'response':  'img/heal.png',
-  // 'defend':    'img/shield.png',
-};
-
-// ═══════════════════════════════════════════════════════════
-// GLOBAL STATE
-// ═══════════════════════════════════════════════════════════
-let DATA=null,flat=[],idx=-1,playing=false,timer=null;
-let avatars={},predMap={},predPtr={};
-let currentChainRoot=null,duelSpeaker='',duelTarget='',currentDuelPair='';
-let victoryShown=false;
-let chainChanges=[]; // {speaker, target, changed, oldPred, newPred, arrowType}
-let inChain=false;
-let duelPending=null; // {speaker, target, arrowType, targetPeek, msg, predInfo, isResponse}
-let stanceBubbleTimeout=null,stanceBubbleEl=null,arbBubbleEl=null;
-let duelAnimLock=false; // 动画锁，防止auto-play时消息重叠
-
-const COLORS_HEX=['#ff4757','#2ed573','#1e90ff','#ffa502','#a55eea'];
-const THEMES=['','light','cyber'];
-let themeIdx=0;
-
-// Pentagon layout (from config)
-const CX=PENT_CX,CY=PENT_CY,RX=PENT_RX,RY=PENT_RY;
-
-// Computed duel avatar centers (relative to overlay)
-const DUEL_LEFT_CX = DUEL_PAD_LR + DUEL_AV_W/2;   // left avatar center X
-const DUEL_RIGHT_CX = 640 - DUEL_PAD_LR - DUEL_AV_W/2; // right avatar center X
-function pentPos(i,n){const a=-Math.PI/2+(2*Math.PI*i/n);return{x:CX+RX*Math.cos(a),y:CY+RY*Math.sin(a)}}
-
-// Side colors
-function resolveSideColor(w){
-  if(!w||w==='-')return'#888';
-  const t=DATA?.topic||'',p=t.split(/\s+vs\s+/);
-  if(p.length===2){if(w.includes(p[0].trim()))return'var(--side-a)';if(w.includes(p[1].split('（')[0].trim()))return'var(--side-b)'}
-  return'var(--side-x)';
+function flagImgHtml(name,cls=''){
+  const url=IMAGES_DIR+encodeURIComponent(name)+'.webp';
+  return `<img class="team-flag ${cls}" src="${url}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="${esc(name)}"><div class="team-flag-placeholder ${cls}" style="display:none">${name.charAt(0)}</div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// MARKDOWN PARSER
-// ═══════════════════════════════════════════════════════════
-function renderMd(text){return text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')}
-function renderMdHtml(html){return html.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')}
-
-function renderStanceSummary(text){
-  const vpMatch=text.match(/\*\*观点\*\*[：:]\s*([\s\S]*?)(?=\*\*论述\*\*|$)/);
-  const argMatch=text.match(/\*\*论述\*\*[：:]\s*([\s\S]*?)$/);
-  let html='';
-  if(vpMatch)html+=`<div style="margin-bottom:4px"><span style="color:#ffd54f;font-weight:bold">观点</span> ${renderMdHtml(escapeHtml(vpMatch[1].trim()))}</div>`;
-  if(argMatch)html+=`<div><span style="color:#4fc3f7;font-weight:bold">论述</span> ${renderMdHtml(escapeHtml(argMatch[1].trim()))}</div>`;
-  if(!html)html=renderMd(escapeHtml(text));
-  return html.replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
-}
-
-// ═══════════════════════════════════════════════════════════
-// THEME SWITCHER
-// ═══════════════════════════════════════════════════════════
-document.getElementById('btn-theme').onclick=()=>{
-  themeIdx=(themeIdx+1)%THEMES.length;
-  const t=THEMES[themeIdx];
-  document.documentElement.setAttribute('data-theme',t||'');
-  const labels=['🎨dark','🎨light','🎨cyber'];
-  document.getElementById('btn-theme').textContent=labels[themeIdx];
-};
-
-// ═══════════════════════════════════════════════════════════
-// FILE I/O
-// ═══════════════════════════════════════════════════════════
-const dz=document.getElementById('drop-zone'),fi=document.getElementById('file-input');
-dz.onclick=()=>fi.click();
-dz.ondragover=e=>{e.preventDefault();dz.classList.add('dragover')};
-dz.ondragleave=()=>dz.classList.remove('dragover');
-dz.ondrop=e=>{e.preventDefault();dz.classList.remove('dragover');if(e.dataTransfer.files[0])load(e.dataTransfer.files[0])};
-fi.onchange=e=>{if(e.target.files[0])load(e.target.files[0])};
-document.getElementById('btn-load').onclick=()=>{fi.value='';fi.click()};
-function load(f){const r=new FileReader();r.onload=e=>{try{DATA=JSON.parse(e.target.result);init()}catch(err){alert('JSON error: '+err.message)}};r.readAsText(f,'utf-8')}
-
-// ── JSON 文件自动加载 ──
-// 优先级：查询参数 ?json=xxx.json > 配置变量 JSON_FILE
-// 使用相对路径，与图片引用方式一致；部署到网站后 fetch 可正常工作
-(function tryAutoLoad(){
-  const params=new URLSearchParams(window.location.search);
-  const file=params.get('json')||JSON_FILE;
-  if(!file)return;
-  fetch(file).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{DATA=d;init()}).catch(err=>{console.warn('自动加载JSON失败：',err)});
-})();
-
-// ═══════════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════════
-function init(){
-  document.getElementById('load-screen').classList.add('hidden');
-  document.getElementById('main').classList.add('active');
-  document.getElementById('topic').textContent=DATA.topic||'辩论';
-  document.getElementById('mode-tag').textContent=DATA.mode==='pro_con'?'正反方':'圆桌';
-  const ct=document.getElementById('cons-tag');
-  ct.textContent=DATA.consensus?'✅共识':'⚖️未共识';ct.className='tag '+(DATA.consensus?'yes':'no');
-  flat=[];const labels=['陈述','自由质疑','分配质疑','阶段3','阶段4'];
-  const phaseVerdicts=DATA.phase_verdicts||[];
-  let phaseVerdictIdx=0;
-  DATA.rounds.forEach((r,i)=>{
-    flat.push({sep:true,label:`── ${labels[i]||'阶段'+(i+1)} ──`});
-    r.forEach((m,mi)=>flat.push({msg:m,ri:i,mi}));
-    while(phaseVerdictIdx<phaseVerdicts.length&&phaseVerdicts[phaseVerdictIdx].phase===(i+1)){
-      const pv=phaseVerdicts[phaseVerdictIdx];
-      flat.push({phaseVerdict:true,content:pv.content,consensus:pv.consensus,speaker:pv.speaker,arena_summary:pv.arena_summary||'',arena_bubble:pv.arena_bubble||''});
-      phaseVerdictIdx++;
-    }
-  });
-  if(DATA.arbitrator_verdict){flat.push({sep:true,label:'── ⚖️ 仲裁结论 ──'});flat.push({msg:DATA.arbitrator_verdict,end:true,endTitle:'仲裁者裁定'})}
-  if(DATA.verdict&&!DATA.consensus&&DATA.verdict!==DATA.arbitrator_verdict)flat.push({msg:DATA.verdict,end:true,endTitle:'最终裁定'});
-  if(DATA.summary)flat.push({msg:DATA.summary,end:true,endTitle:'总结'});
-  idx=-1;playing=false;currentChainRoot=null;currentDuelPair='';victoryShown=false;inChain=false;chainChanges=[];
-  duelPending=null;
-  predMap={};predPtr={};buildAvatars();buildSpecialAgents();
-  document.getElementById('dialog-area').innerHTML='';
-  document.getElementById('victory-screen').classList.remove('active');
-  hideDuelOverlay();clearBattle();updateProgress();
-  document.getElementById('table').style.top=CY+'px';
-}
-
-// ═══════════════════════════════════════════════════════════
-// AVATAR BUILDING
-// ═══════════════════════════════════════════════════════════
-function buildAvatars(){
-  const battle=document.getElementById('battle');
-  battle.querySelectorAll('.avatar').forEach(a=>a.remove());avatars={};
-  const n=DATA.agents?.length||5;
-  (DATA.agents||[]).forEach((agent,i)=>{
-    const pos=pentPos(i,n),color=COLORS_HEX[i%COLORS_HEX.length];
-    const el=document.createElement('div');el.className='avatar no-stance';
-    el.style.left=(pos.x-48)+'px';el.style.top=(pos.y-24)+'px';
-    el.dataset.idx=i;el.dataset.color=color;el.dataset.cx=pos.x;el.dataset.cy=pos.y;
-    const pred=agent.prediction_history?.[0];
-    const w=pred?pred.winner:'-',s=pred?pred.score:'',c=pred?pred.confidence:0;
-    const hpC=resolveSideColor(w),pC=resolveSideColor(w);
-    const img=AVATAR_IMAGES[agent.name];
-    const spriteStyle=img?`border-color:${color};background-image:url('${img}')`:`border-color:${color};background:${color}22`;
-    const spriteInner=img?'':`<span style="color:${color}">${i+1}</span>`;
-    el.innerHTML=`
-      <div class="sprite" style="${spriteStyle}">${spriteInner}</div>
-      <div class="aname" style="color:${color}">${agent.name}</div>
-      <div class="apersp">${agent.perspective_short||''}</div>
-      <div class="hp-label" style="color:${pC}"></div>
-      <div class="hp"><div class="hp-fill" style="width:0%;background:${hpC}"></div></div>
-    `;
-    battle.appendChild(el);
-    avatars[agent.name]={el,color,idx:i};
-    predMap[agent.name]={winner:w,score:s,confidence:c};
-    predPtr[agent.name]=0;
-  });
-}
-
-function buildSpecialAgents(){
-  const specials=[
-    {id:'sp-cur-sprite',name:'审核员',emoji:'📋'},
-    {id:'sp-arb-sprite',name:'仲裁者',emoji:'⚖️'},
-    {id:'sp-scr-sprite',name:'场记',emoji:'📜'},
-  ];
-  specials.forEach(sp=>{
-    const el=document.getElementById(sp.id);
-    const img=AVATAR_IMAGES[sp.name];
-    if(img){el.style.backgroundImage=`url('${img}')`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.textContent=''}
-    else{el.textContent=sp.emoji}
-  });
-  const sa=document.getElementById('special-agents');
-  sa.style.top=(CY+RY+90)+'px';
-}
-
-function updateAvatarHP(name){
-  const pred=predMap[name];if(!pred)return;const av=avatars[name];if(!av)return;
-  const hpC=resolveSideColor(pred.winner),pC=resolveSideColor(pred.winner);
-  const fill=av.el.querySelector('.hp-fill');
-  fill.style.width=(pred.confidence*10)+'%';fill.style.background='#fff';
-  setTimeout(()=>{fill.style.background=hpC},300);
-  const label=av.el.querySelector('.hp-label');
-  label.textContent=`${pred.winner} ${pred.score}`;label.style.color=pC;
-}
-
-function updateDuelAvatarHP(name){
-  const pred=predMap[name];if(!pred)return;
-  const hpC=resolveSideColor(pred.winner),pC=resolveSideColor(pred.winner);
-  const isL=(name===duelSpeaker);
-  const hf=document.getElementById(isL?'dl-hp':'dr-hp');
-  const pl=document.getElementById(isL?'dl-pred':'dr-pred');
-  if(hf){hf.style.width=(pred.confidence*10)+'%';hf.style.background='#fff';setTimeout(()=>{hf.style.background=hpC},300)}
-  if(pl){pl.textContent=`${pred.winner} ${pred.score} 准${pred.confidence}/10`;pl.style.color=pC}
-}
-
-// ═══════════════════════════════════════════════════════════
-// SPEECH BUBBLES (no tails, smart positioning)
-// ═══════════════════════════════════════════════════════════
-function showSpeechBubble(parentEl,text,borderColor,cssClass,duration){
-  if(!text)return;
-  const bub=document.createElement('div');
-  bub.className='speech-bubble'+(cssClass?' '+cssClass:'');
-  bub.style.borderColor=borderColor;bub.style.color=borderColor;
-  bub.innerHTML=renderMd(text);
-  parentEl.appendChild(bub);
-  const d=duration||1500;
-  setTimeout(()=>bub.remove(),d);
-  return bub;
-}
-
-// Round table speech bubble — positioned in #battle, no tails
-function showRoundTableBubble(name,text,borderColor,persistent){
-  const av=avatars[name];if(!av)return;
-  const bub=document.createElement('div');
-  bub.className='speech-bubble'+(persistent?' persistent':'');
-  bub.style.borderColor=borderColor;bub.style.color=borderColor;
-  // Split text at evidence section marker, render summary separately
-  const evSplit=text.split('🔍 新证据：');
-  let html=renderStanceSummary(evSplit[0]);
-  if(evSplit.length>1){
-    // Evidence section: evSplit[1] contains HTML evidence links already
-    html+=`<div style="margin-top:4px;font-size:10px;color:#ffa502">🔍 新证据：${evSplit[1]}</div>`;
+function parseMatchContext(md){
+  if(!md)return{info:[],records:[]};
+  const lines=md.split('\n'),info=[],records=[];
+  let cur=null,inR=false;
+  function push(){if(cur&&(cur.summary||cur.matches.length))records.push(cur);cur=null}
+  for(const line of lines){
+    const t=line.trim();if(!t)continue;
+    if(t.startsWith('## ')||t.startsWith('### ')){push();const title=t.replace(/^#+\s*/,'');if(title.includes('战绩')||title.includes('记录')){cur={title,summary:'',matches:[]};inR=true}else inR=false;continue}
+    if(t.startsWith('- ')){if(inR&&cur)cur.matches.push(t.slice(2));else info.push(t.slice(2));continue}
+    if(inR&&cur&&t.startsWith('总计')){cur.summary=t;continue}
+    if(!inR&&!t.startsWith('#'))info.push(t);
   }
-  bub.innerHTML=html;
-  const battle=document.getElementById('battle');
-  battle.appendChild(bub);
-  // Position above avatar, centered, clamped to visible area
-  const cx=parseFloat(av.el.dataset.cx);
-  const cy=parseFloat(av.el.dataset.cy);
-  const bw=bub.offsetWidth,bh=bub.offsetHeight;
-  let left=cx-bw/2;
-  let top=cy-24-bh-10; // above avatar sprite
-  left=Math.max(4,Math.min(left,636-bw));
-  if(top<4)top=cy+30; // if too high, place below
-  bub.style.left=left+'px';bub.style.top=top+'px';
-  bindEvLinks(bub);
-  return bub;
+  push();return{info,records};
 }
 
-// ═══════════════════════════════════════════════════════════
-// DUEL OVERLAY
-// ═══════════════════════════════════════════════════════════
-function fillDuelAvatar(side,name){
-  const av=avatars[name];const pred=predMap[name];
-  const color=av?av.color:'#fff';const idx=av?av.idx:0;
-  const hpC=resolveSideColor(pred?.winner),pC=resolveSideColor(pred?.winner);
-  const img=AVATAR_IMAGES[name];
-  const spriteStyle=img?`border-color:${color};background-image:url('${img}')`:`border-color:${color};background:${color}22`;
-  const spriteInner=img?'':`<span style="color:${color}">${idx+1}</span>`;
-  document.getElementById(side+'-sprite').style.cssText=spriteStyle;
-  document.getElementById(side+'-sprite').innerHTML=spriteInner;
-  document.getElementById(side+'-name').style.color=color;
-  document.getElementById(side+'-name').textContent=name;
-  document.getElementById(side+'-persp').textContent=av?(DATA.agents[idx]?.perspective_short||''):'';
-  const pl=document.getElementById(side+'-pred');pl.textContent=pred?`${pred.winner} ${pred.score} 准${pred.confidence}/10`:'';pl.style.color=pC;
-  const hf=document.getElementById(side+'-hp');hf.style.width=pred?(pred.confidence*10)+'%':'0%';hf.style.background=hpC;
+function render(){
+  document.getElementById('load-screen').style.display='none';
+  document.getElementById('main').style.display='block';
+  document.title=`⚽ ${DATA.topic} · AI预测`;
+  renderHeader();renderPredictionHero();renderContext();renderAnalysts();renderVerdict();renderEvidence();renderFooter();
 }
 
-function showDuelOverlay(speaker,target,arrowType){
-  duelSpeaker=speaker;duelTarget=target;currentDuelPair=speaker+'|'+target;
-  fillDuelAvatar('dl',speaker);fillDuelAvatar('dr',target);
-  updateArrowColor(arrowType);
-  // Clear any existing stance/arbitrator bubbles when entering duel
-  if(stanceBubbleEl&&stanceBubbleEl.parentNode)stanceBubbleEl.remove();stanceBubbleEl=null;
-  if(arbBubbleEl&&arbBubbleEl.parentNode)arbBubbleEl.remove();arbBubbleEl=null;
-  Object.entries(avatars).forEach(([n,a])=>{a.el.classList.remove('cast-attack','cast-buff','hit-critical','defend','hit-heavy','acc-up-anim');a.el.classList.add(n===speaker||n===target?'speaking':'dimmed')});
-  document.querySelectorAll('.sp-agent').forEach(el=>el.classList.add('dimmed'));
-  document.getElementById('duel-chat').innerHTML='';
-  const dl=document.getElementById('duel-left'),dr=document.getElementById('duel-right');
-  dl.classList.remove('cast-attack','cast-buff','hit-critical','defend','hit-heavy','acc-up-anim');
-  dr.classList.remove('cast-attack','cast-buff','hit-critical','defend','hit-heavy','acc-up-anim');
-  document.getElementById('duel-overlay').classList.add('active');
-}
+function renderHeader(){
+  const{teamA,teamB}=parseTopic(DATA.topic);
+  const ti=DATA.team_info||{};
+  const rankA=ti[teamA]?.world_ranking,rankB=ti[teamB]?.world_ranking;
+  let group='',date='';
+  const mc=DATA.match_context||'';
+  const gm=mc.match(/[-–]\s*小组[：:]\s*(.+)/);if(gm)group=gm[1].trim();
+  const dm=mc.match(/[-–]\s*日期[：:]\s*(.+)/);if(dm)date=dm[1].trim();
 
-function updateArrowColor(at){
-  const line=document.getElementById('arrow-line');
-  const c={challenge:'#ef5350',response:'#4fc3f7',counter:'#ffa502'};
-  const m={challenge:'ah-r',response:'ah-b',counter:'ah-y'};
-  line.setAttribute('stroke',c[at]||'#ef5350');line.setAttribute('marker-end',`url(#${m[at]||'ah-r'})`);
-}
-
-function addDuelBubble(msg){
-  const chat=document.getElementById('duel-chat');const box=document.createElement('div');
-  const isL=(msg.speaker===duelSpeaker);let cls='duel-bubble '+(isL?'left':'right');
-  if(msg.counter_challenge&&msg.action==='回应')cls+=' counter';box.className=cls;
-  const av=avatars[msg.speaker];const nc=av?av.color:'#fff';
-  let tag=msg.action||'立场';
-  if(msg.counter_challenge&&msg.action==='回应')tag='↩️反质疑';else if(msg.action==='质疑')tag='⚔️质疑';else if(msg.action==='回应')tag='🛡️回应';else tag='📝'+tag;
-  const newEvIds=msg.new_evidence||[];
-  let newEvTag='';
-  if(newEvIds.length>0){
-    const evLinks=newEvIds.map(eid=>`<a class="evidence-link" data-eid="${eid}" style="margin-right:4px">${eid}</a>`).join('');
-    newEvTag=`<div style="margin-top:3px;font-size:9px;color:#ffa502">🔍 新证据：${evLinks}</div>`;
-  }
-  box.innerHTML=`<div class="bhead"><span class="bname" style="color:${nc}">${msg.speaker}</span><span class="btag" style="border-color:${nc};color:${nc}">${tag}</span></div><div class="bbody"></div>${newEvTag}`;
-  chat.appendChild(box);chat.scrollTop=chat.scrollHeight;
-  typewriter(box.querySelector('.bbody'),msg.arena_summary||msg.content,TW_SPEED);
-  bindEvLinks(box);
-}
-
-function hideDuelOverlay(){
-  document.getElementById('duel-overlay').classList.remove('active');currentDuelPair='';
-  Object.values(avatars).forEach(a=>a.el.classList.remove('speaking','targeted','dimmed','cast-attack','cast-buff','hit-critical','defend','hit-heavy','acc-up-anim'));
-  document.querySelectorAll('.sp-agent').forEach(el=>el.classList.remove('speaking','dimmed'));
-  document.getElementById('table').classList.remove('dimmed');
-  const dl=document.getElementById('duel-left'),dr=document.getElementById('duel-right');
-  dl.classList.remove('cast-attack','cast-buff','hit-critical','defend','hit-heavy','acc-up-anim');
-  dr.classList.remove('cast-attack','cast-buff','hit-critical','defend','hit-heavy','acc-up-anim');
-}
-
-// ═══════════════════════════════════════════════════════════
-// ROUND TABLE ARROW (pre-duel)
-// ═══════════════════════════════════════════════════════════
-let rtArrowSvg=null;
-function showRoundTableArrow(fromName,toName,arrowType){
-  removeRoundTableArrow();
-  const fromAv=avatars[fromName],toAv=avatars[toName];
-  if(!fromAv||!toAv)return;
-  const fx=parseFloat(fromAv.el.dataset.cx),fy=parseFloat(fromAv.el.dataset.cy);
-  const tx=parseFloat(toAv.el.dataset.cx),ty=parseFloat(toAv.el.dataset.cy);
-  const c={challenge:'#ef5350',response:'#4fc3f7',counter:'#ffa502'};
-  const color=c[arrowType]||'#ef5350';
-  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svg.setAttribute('class','rt-arrow');
-  svg.style.cssText=`position:absolute;left:0;top:0;width:640px;height:100%;z-index:20;pointer-events:none`;
-  svg.innerHTML=`<defs><marker id="rt-ah" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto"><polygon points="0 0,10 4,0 8" fill="${color}"/></marker></defs><line x1="${fx}" y1="${fy}" x2="${tx}" y2="${ty}" stroke="${color}" stroke-width="3" stroke-dasharray="10 6" marker-end="url(#rt-ah)"/>`;
-  document.getElementById('battle').appendChild(svg);
-  rtArrowSvg=svg;
-}
-function removeRoundTableArrow(){if(rtArrowSvg){rtArrowSvg.remove();rtArrowSvg=null}}
-
-// ═══════════════════════════════════════════════════════════
-// ANIMATIONS
-// ═══════════════════════════════════════════════════════════
-const ANIM_CLASSES='cast-attack cast-buff hit-critical hit-heavy defend acc-up-anim'.split(' ');
-
-function clearAnimClasses(el){ANIM_CLASSES.forEach(c=>el.classList.remove(c))}
-
-function showProjectile(speaker,target,type){
-  const overlay=document.getElementById('duel-overlay');if(!overlay.classList.contains('active'))return;
-  const isL=(speaker===duelSpeaker);
-  // Bind start/end to avatar centers
-  const sX=isL?DUEL_LEFT_CX:DUEL_RIGHT_CX;
-  const eX=isL?DUEL_RIGHT_CX:DUEL_LEFT_CX;
-  const y=DUEL_ARROW_Y;
-  const el=document.createElement('div');el.className='projectile';
-  const img=FX_IMAGES[type];
-  if(img){el.innerHTML=`<img src="${img}" style="width:24px;height:24px">`}
-  else if(type==='challenge'){el.textContent='🔥';el.style.fontSize='22px'}
-  else if(type==='counter'){el.textContent='⚡';el.style.fontSize='24px'}
-  else{el.textContent='✨';el.style.fontSize='20px'}
-  el.style.left=sX+'px';el.style.top=y+'px';overlay.appendChild(el);el.offsetHeight;
-  el.style.left=eX+'px';el.style.top=y+'px';
-  // Impact FX at target avatar center (same position as projectile end)
-  setTimeout(()=>{const fx=document.createElement('div');fx.className='fx-icon';
-    if(type==='challenge'){fx.textContent='💥'}
-    else if(type==='counter'){fx.textContent='💫'}
-    else{fx.textContent='💚'}
-    fx.style.left=(eX-12)+'px';fx.style.top='80px';overlay.appendChild(fx);setTimeout(()=>fx.remove(),FX_ICON_MS)},PROJECTILE_MS);
-  setTimeout(()=>el.remove(),PROJECTILE_MS+200);
-}
-
-function showFxIcon(name,emoji){
-  const overlay=document.getElementById('duel-overlay');
-  const el=document.createElement('div');el.className='fx-icon';el.textContent=emoji;
-  const isShield=emoji==='🛡️';
-  if(overlay.classList.contains('active')){
-    const isL=(name===duelSpeaker);
-    const cx=isL?DUEL_LEFT_CX:DUEL_RIGHT_CX;
-    if(isShield){
-      // Shield: inward toward screen center (toward center from avatar)
-      el.style.left=(cx+(isL?15:-15))+'px';el.style.top='95px';
-    }else{
-      // Explosion/skull/heart: slightly outward from avatar center + up
-      el.style.left=(cx+(isL?-15:15))+'px';el.style.top='45px';
-    }
-    overlay.appendChild(el);
-  }else{
-    const av=avatars[name];if(!av)return;
-    el.style.left=(parseFloat(av.el.dataset.cx)-12)+'px';
-    el.style.top=(parseFloat(av.el.dataset.cy)-30)+'px';
-    document.getElementById('battle').appendChild(el);
-  }
-  setTimeout(()=>el.remove(),FX_ICON_MS);
-}
-
-function showCasting(name,type){
-  const overlay=document.getElementById('duel-overlay');const cls=type==='buff'?'cast-buff':'cast-attack';
-  if(overlay.classList.contains('active')){
-    const isL=(name===duelSpeaker);const dAv=document.getElementById(isL?'duel-left':'duel-right');
-    if(dAv){clearAnimClasses(dAv);dAv.classList.add(cls);setTimeout(()=>dAv.classList.remove(cls),900)}
-  }else{
-    const av=avatars[name];if(!av)return;
-    clearAnimClasses(av.el);av.el.classList.add(cls);setTimeout(()=>av.el.classList.remove(cls),900);
-  }
-}
-
-function showHitCritical(name){
-  const overlay=document.getElementById('duel-overlay');
-  if(overlay.classList.contains('active')){
-    const isL=(name===duelSpeaker);const dAv=document.getElementById(isL?'duel-left':'duel-right');
-    if(dAv){clearAnimClasses(dAv);dAv.classList.add('hit-critical');setTimeout(()=>dAv.classList.remove('hit-critical'),900)}
-  }else{
-    const av=avatars[name];if(!av)return;
-    clearAnimClasses(av.el);av.el.classList.add('hit-critical');setTimeout(()=>av.el.classList.remove('hit-critical'),900);
-  }
-  showFxIcon(name,'💥');
-}
-
-function showHitHeavy(name){
-  const overlay=document.getElementById('duel-overlay');
-  if(overlay.classList.contains('active')){
-    const isL=(name===duelSpeaker);const dAv=document.getElementById(isL?'duel-left':'duel-right');
-    if(dAv){clearAnimClasses(dAv);dAv.classList.add('hit-heavy');setTimeout(()=>dAv.classList.remove('hit-heavy'),1100)}
-  }else{
-    const av=avatars[name];if(!av)return;
-    clearAnimClasses(av.el);av.el.classList.add('hit-heavy');setTimeout(()=>av.el.classList.remove('hit-heavy'),1100);
-  }
-  showFxIcon(name,'💀');
-  doShake();
-  const battle=document.getElementById('battle');
-  battle.classList.add('pred-flash');setTimeout(()=>battle.classList.remove('pred-flash'),550);
-}
-
-function showAccUp(name){
-  const overlay=document.getElementById('duel-overlay');
-  if(overlay.classList.contains('active')){
-    const isL=(name===duelSpeaker);const dAv=document.getElementById(isL?'duel-left':'duel-right');
-    if(dAv){clearAnimClasses(dAv);dAv.classList.add('acc-up-anim');setTimeout(()=>dAv.classList.remove('acc-up-anim'),900)}
-  }else{
-    const av=avatars[name];if(!av)return;
-    clearAnimClasses(av.el);av.el.classList.add('acc-up-anim');setTimeout(()=>av.el.classList.remove('acc-up-anim'),900);
-  }
-  showFxIcon(name,'💚');
-}
-
-function showDefend(name){
-  const overlay=document.getElementById('duel-overlay');
-  if(overlay.classList.contains('active')){
-    const isL=(name===duelSpeaker);const dAv=document.getElementById(isL?'duel-left':'duel-right');
-    if(dAv){clearAnimClasses(dAv);dAv.classList.add('defend');setTimeout(()=>dAv.classList.remove('defend'),900)}
-  }else{
-    const av=avatars[name];if(!av)return;
-    clearAnimClasses(av.el);av.el.classList.add('defend');setTimeout(()=>av.el.classList.remove('defend'),900);
-  }
-  showFxIcon(name,'🛡️');
-}
-
-function showMagicCircle(name){
-  const overlay=document.getElementById('duel-overlay');
-  if(overlay.classList.contains('active')){
-    const isL=(name===duelSpeaker);const dAv=document.getElementById(isL?'duel-left':'duel-right');
-    if(dAv){const c=document.createElement('div');c.className='magic-circle';dAv.appendChild(c);setTimeout(()=>c.remove(),1100)}
-  }else{
-    const av=avatars[name];if(!av)return;
-    const c=document.createElement('div');c.className='magic-circle';av.el.appendChild(c);setTimeout(()=>c.remove(),1100);
-  }
-}
-
-function showFloatTextAt(name,text,cssClass){
-  const overlay=document.getElementById('duel-overlay');const el=document.createElement('div');el.className='float-text '+cssClass;el.textContent=text;
-  if(overlay.classList.contains('active')){
-    const isL=(name===duelSpeaker);
-    const avatarCenterX=isL?DUEL_LEFT_CX:DUEL_RIGHT_CX;
-    el.style.left=avatarCenterX+'px';el.style.top='40px';el.style.transform='translateX(-50%)';
-    overlay.appendChild(el);
-  }else{
-    const av=avatars[name];if(!av){el.remove();return}
-    el.style.left=(parseFloat(av.el.dataset.cx))+'px';el.style.top=(parseFloat(av.el.dataset.cy)-40)+'px';el.style.transform='translateX(-50%)';
-    document.getElementById('battle').appendChild(el);
-  }
-  setTimeout(()=>el.remove(),FLOAT_TEXT_MS);
-}
-
-function showPredChange(name,oldP,newP){
-  showFloatTextAt(name,`预测变化：${newP.winner} ${newP.score}`,'pred-changed');
-  const battle=document.getElementById('battle');
-  battle.classList.add('pred-flash');setTimeout(()=>battle.classList.remove('pred-flash'),550);
-}
-function doShake(){document.getElementById('battle').classList.add('shake');setTimeout(()=>document.getElementById('battle').classList.remove('shake'),280)}
-function _clearAllEmphasis(){
-  Object.values(avatars).forEach(a=>{a.el.classList.remove('speaking','dimmed')});
-  document.querySelectorAll('.sp-agent').forEach(el=>el.classList.remove('speaking','dimmed'));
-  document.getElementById('table').classList.remove('dimmed');
-}
-function clearBattle(){
-  if(stanceBubbleTimeout){clearTimeout(stanceBubbleTimeout);stanceBubbleTimeout=null}
-  stanceBubbleEl=null;arbBubbleEl=null;
-  _clearAllEmphasis();
-  Object.values(avatars).forEach(a=>{clearAnimClasses(a.el);a.el.classList.remove('targeted')});
-  document.getElementById('battle').querySelectorAll('.fx-icon,.pred-change,.float-text,.projectile,.magic-circle,.speech-bubble,.rt-arrow').forEach(e=>e.remove());
-  removeRoundTableArrow();
-}
-
-// ═══════════════════════════════════════════════════════════
-// CHAIN END BATTLE REPORT
-// ═══════════════════════════════════════════════════════════
-function showChainReport(){
-  const changed=chainChanges.filter(ch=>ch.changed);
-  if(!changed.length)return;
-  changed.forEach((ch,i)=>{
-    setTimeout(()=>{
-      showHitHeavy(ch.target);
-      showFloatTextAt(ch.target,`预测变化：${ch.newPred.winner} ${ch.newPred.score}`,'pred-changed');
-    },i*600);
-  });
-}
-
-// ═══════════════════════════════════════════════════════════
-// DIALOG LOG
-// ═══════════════════════════════════════════════════════════
-function addLogRow(msg,predChanged){
-  const area=document.getElementById('dialog-area');
-  const isChain=(msg.action==='质疑'||msg.action==='回应')&&!!msg.target;
-  if(msg.action==='质疑'&&!msg.counter_challenge){
-    currentChainRoot=document.createElement('div');currentChainRoot.className='chain-group';
-    const title=document.createElement('div');title.className='chain-title';
-    const av=avatars[msg.speaker];const nc=av?av.color:'#fff';
-    title.innerHTML=`<span style="color:${nc}">${msg.speaker}</span> ⚔️ 质疑 → <span style="color:${avatars[msg.target]?avatars[msg.target].color:'#fff'}">${msg.target}</span>`;
-    currentChainRoot.appendChild(title);
-    area.appendChild(currentChainRoot);
-  }
-  if(!isChain)currentChainRoot=null;
-  const container=(isChain&&currentChainRoot)||area;
-  const row=document.createElement('div');let cls='msg-row';
-  if(msg.action==='质疑')cls+=' challenge';else if(msg.action==='回应'&&msg.counter_challenge)cls+=' counter';else if(msg.action==='回应')cls+=' response';else cls+=' stance';
-  if(predChanged)cls+=' pred-changed';
-  const isFirstInChain=isChain&&currentChainRoot&&currentChainRoot.querySelectorAll('.msg-row').length===0;
-  if(isFirstInChain)row.classList.add('chain-root');
-  const av=avatars[msg.speaker];const nc=av?av.color:'#fff';
-  let tag=msg.action||'立场';
-  if(msg.counter_challenge&&msg.action==='回应')tag='↩️反质疑';else if(msg.action==='质疑')tag='⚔️质疑';else if(msg.action==='回应')tag='🛡️回应';else tag='📝'+tag;
-  const sp=predMap[msg.speaker],tp=predMap[msg.target||''];
-  const spStr=sp?`${sp.winner}${sp.score}准${sp.confidence}`:'';
-  const tpStr=tp?`${tp.winner}${tp.score}准${tp.confidence}`:'';
-  const targetInfo=msg.target?`→${msg.target}${tpStr?'('+tpStr+')':''}`:'';
-  const speakerPred=spStr?`(${spStr})`:'';
-  const changedMark=predChanged?'⚡':'';
-  const bodyHtml=renderMdHtml(escapeHtml(msg.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
-  // Build new evidence section if present
-  const newEvIds=msg.new_evidence||[];
-  let newEvHtml='';
-  if(newEvIds.length>0){
-    const evLinks=newEvIds.map(eid=>`<a class="evidence-link" data-eid="${eid}" style="margin-right:4px">${eid}</a>`).join('');
-    newEvHtml=`<div style="margin-top:3px;font-size:10px;color:#ffa502">🔍 新证据：${evLinks}</div>`;
-  }
-  const truncated=truncateHtml(bodyHtml,200);const needsExpand=truncated.length<bodyHtml.length;
-  const fullContent=bodyHtml+newEvHtml;
-  const truncatedContent=truncated+newEvHtml+(needsExpand?'<span class="expand-hint"> ▼展开</span>':'');
-  row.innerHTML=`
-    <div class="mr-head">
-      <span class="mr-name" style="color:${nc}">${msg.speaker}${speakerPred}${changedMark}</span>
-      <span class="mr-tag" style="border-color:${nc};color:${nc}">${tag}</span>
-      <span style="color:var(--fg2)">${targetInfo}</span>
+  document.getElementById('match-header').innerHTML=`
+    <div class="match-brand">AI DEBATE PREDICTION</div>
+    <div class="match-meta">
+      ${group?`<span class="group-tag">${esc(group)}</span>`:''}
+      ${date?`<span>${esc(date)}</span>`:''}
     </div>
-    <div class="mr-body" data-full="${attrEscape(fullContent)}" data-short="${attrEscape(truncatedContent)}">${truncatedContent}</div>
-  `;
-  const bodyEl=row.querySelector('.mr-body');
-  bodyEl.addEventListener('click',()=>{
-    if(bodyEl.classList.contains('expanded')){bodyEl.classList.remove('expanded');bodyEl.innerHTML=truncated+(needsExpand?'<span class="expand-hint"> ▼展开</span>':'')}
-    else{bodyEl.classList.add('expanded');bodyEl.innerHTML=bodyHtml+'<span class="expand-hint"> ▲收起</span>'}
-    bindEvLinks(bodyEl);
-  });
-  container.appendChild(row);bindEvLinks(row);area.scrollTop=area.scrollHeight;
+    <div class="match-vs-area">
+      <div class="team-block">
+        ${flagImgHtml(teamA)}
+        <div class="team-name">${esc(teamA)}</div>
+        ${rankA?`<div class="team-rank">世界排名${rankA}</div>`:''}
+      </div>
+      <div class="vs-divider">
+        <div class="vs-text">VS</div>
+        ${DATA.final_prediction?`<div class="vs-score">${esc(DATA.final_prediction.score)}</div>`:''}
+      </div>
+      <div class="team-block">
+        ${flagImgHtml(teamB)}
+        <div class="team-name">${esc(teamB)}</div>
+        ${rankB?`<div class="team-rank">世界排名${rankB}</div>`:''}
+      </div>
+    </div>`;
 }
 
-function addSep(label){
-  const area=document.getElementById('dialog-area');const sep=document.createElement('div');sep.className='round-sep';sep.textContent=label;
-  area.appendChild(sep);currentChainRoot=null;
-  if(inChain&&chainChanges.length){
-    hideDuelOverlay();removeRoundTableArrow();
-    showChainReport();inChain=false;chainChanges=[];
+function renderPredictionHero(){
+  const agents=DATA.agents||[],{teamA,teamB}=parseTopic(DATA.topic);
+  if(!agents.length)return;
+  let cA=0,cB=0;
+  for(const a of agents){const f=finalPred(a);if(f.winner?.includes(teamA))cA++;else if(f.winner?.includes(teamB))cB++}
+  const total=agents.length,pctA=Math.round(cA/total*100),pctB=Math.round(cB/total*100),pctD=100-pctA-pctB;
+  const fp=DATA.final_prediction,confPct=fp?Math.round((fp.confidence||0)/10*100):0;
+  const confClass=fp?.confidence>=7?'high':fp?.confidence>=4?'mid':'low';
+
+  let html=`<div class="pred-hero-top"><div class="pred-hero-label">最终预测</div>`;
+  if(fp)html+=`<div class="pred-hero-result">${esc(fp.winner)}</div><div class="pred-hero-score">${esc(fp.score)}</div>
+    <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
+  html+=`</div>`;
+
+  html+=`<div class="pred-hero-bar"><div class="pred-hero-bar-title">辩手预测分布</div>
+    <div class="pred-hero-bar-track">
+      ${cA?`<div class="seg seg-a" style="width:${pctA}%">${teamA} ${pctA}%</div>`:''}
+      ${pctD>0?`<div class="seg" style="width:${pctD}%;background:#95a5a6">平${pctD}%</div>`:''}
+      ${cB?`<div class="seg seg-b" style="width:${pctB}%">${teamB} ${pctB}%</div>`:''}
+    </div>
+    <div class="pred-hero-legend">
+      <span><span class="dot" style="background:var(--side-a)"></span>${esc(teamA)} ${cA}人</span>
+      ${cB?`<span><span class="dot" style="background:var(--side-b)"></span>${esc(teamB)} ${cB}人</span>`:''}
+    </div></div>`;
+
+  html+=`<div class="pred-hero-stance">`;
+  for(const a of agents){
+    const s=sideOf(a,DATA.topic),f=finalPred(a);
+    html+=`<span class="stance-chip side-${s}">${esc(a.name)} ${esc(f.winner||'')}${esc(f.score||'')}</span>`;
   }
+  html+='</div>';
+  document.getElementById('prediction-hero').innerHTML=html;
 }
 
-function addEndCard(item){
-  const area=document.getElementById('dialog-area');const card=document.createElement('div');card.className='end-card';
-  card.innerHTML=`<h3>${item.endTitle}</h3><div>${escapeHtml(item.msg.content)}</div>`;
-  area.appendChild(card);area.scrollTop=area.scrollHeight;currentChainRoot=null;
-  if(inChain&&chainChanges.length){
-    hideDuelOverlay();removeRoundTableArrow();
-    showChainReport();inChain=false;chainChanges=[];
+function renderContext(){
+  const ctx=parseMatchContext(DATA.match_context);
+  if(!ctx.info.length&&!ctx.records.length)return;
+  const{teamA,teamB}=parseTopic(DATA.topic);
+  let html=`<div class="section-title"><span class="icon">⚽</span> 比赛信息与战绩</div>`;
+  if(ctx.info.length){
+    html+='<div class="context-card"><h3>赛事信息</h3>';
+    for(const item of ctx.info)html+=`<div style="font-size:12px;color:var(--text2);padding:1px 0">${esc(item)}</div>`;
+    html+='</div>';
   }
-}
-
-// ═══════════════════════════════════════════════════════════
-// TYPEWRITER
-// ═══════════════════════════════════════════════════════════
-let twTimers=[];
-function typewriter(el,text,speed){
-  twTimers.forEach(t=>clearInterval(t));twTimers=[];
-  const html=renderMdHtml(escapeHtml(text)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
-  el.dataset.twFull=html;let pos=0;const batch=TW_BATCH;
-  const chatEl=document.getElementById('duel-chat');
-  const t=setInterval(()=>{
-    pos+=batch;
-    if(pos>=html.length){el.innerHTML=html;bindEvLinks(el);clearInterval(t);twTimers=twTimers.filter(x=>x!==t);chatEl.scrollTop=chatEl.scrollHeight;return}
-    let safe=pos,inTag=false;
-    for(let i=0;i<pos&&i<html.length;i++){if(html[i]==='<')inTag=true;if(html[i]==='>'&&inTag)inTag=false}
-    if(inTag)safe=html.indexOf('>',pos)+1||pos;
-    el.innerHTML=html.substring(0,safe)+'<span style="animation:blink-cursor .4s steps(1) infinite;background:var(--fg)">▌</span>';
-    chatEl.scrollTop=chatEl.scrollHeight;
-  },speed);twTimers.push(t);
-}
-
-function completeTypewriters(){twTimers.forEach(t=>clearInterval(t));twTimers=[];document.querySelectorAll('[data-tw-full]').forEach(el=>{el.innerHTML=el.dataset.twFull;bindEvLinks(el)})}
-
-// ═══════════════════════════════════════════════════════════
-// PREDICTION
-// ═══════════════════════════════════════════════════════════
-function advancePred(name){
-  const agent=(DATA.agents||[]).find(a=>a.name===name);
-  if(!agent||!agent.prediction_history)return{changed:false,confDelta:0,oldPred:null,newPred:null};
-  const ptr=predPtr[name]||0;
-  if(ptr<agent.prediction_history.length){
-    const p=agent.prediction_history[ptr];const prev=predMap[name];
-    const changed=prev&&(prev.winner!==p.winner||prev.score!==p.score);
-    const confDelta=p.confidence-(prev?prev.confidence:0);
-    const oldP={winner:prev?.winner||'-',score:prev?.score||'',confidence:prev?.confidence||0};
-    predMap[name]={winner:p.winner,score:p.score,confidence:p.confidence};
-    predPtr[name]=ptr+1;
-    if(ptr===0){const av=avatars[name];if(av)av.el.classList.remove('no-stance')}
-    updateAvatarHP(name);updateDuelAvatarHP(name);
-    if(changed)showPredChange(name,oldP,predMap[name]);
-    return{changed,confDelta,oldPred:oldP,newPred:{...predMap[name]}};
-  }
-  return{changed:false,confDelta:0,oldPred:null,newPred:null};
-}
-
-function peekTargetPred(targetName){
-  const agent=(DATA.agents||[]).find(a=>a.name===targetName);
-  if(!agent||!agent.prediction_history)return null;
-  const ptr=predPtr[targetName]||0;if(ptr>=agent.prediction_history.length)return null;
-  const p=agent.prediction_history[ptr];const prev=predMap[targetName];
-  const changed=prev&&(prev.winner!==p.winner||prev.score!==p.score);
-  const confDelta=p.confidence-(prev?prev.confidence:0);
-  const oldP={winner:prev?.winner||'-',score:prev?.score||'',confidence:prev?.confidence||0};
-  return{changed,confDelta,oldPred:oldP,newPred:{winner:p.winner,score:p.score,confidence:p.confidence}};
-}
-
-function applyTargetPeek(targetName,peek){if(!peek)return;predMap[targetName]={...peek.newPred};updateAvatarHP(targetName);updateDuelAvatarHP(targetName)}
-
-// ═══════════════════════════════════════════════════════════
-// PLAYBACK
-// ═══════════════════════════════════════════════════════════
-function stepForward(){
-  // If animations are locked (duel playing), skip this step
-  if(duelAnimLock){return true}
-  // If there's a pending duel (arrow shown, waiting for click), process it
-  if(duelPending){processPendingDuel();return true}
-  if(idx>=flat.length-1){stopPlay();if(!victoryShown){showVictoryScreen();victoryShown=true}return false}
-  completeTypewriters();idx++;showItem(idx);updateProgress();return true;
-}
-
-function stepBack(){
-  if(idx<=0)return;completeTypewriters();const target=idx-1;
-  duelPending=null;stanceBubbleEl=null;arbBubbleEl=null;
-  document.getElementById('dialog-area').innerHTML='';currentChainRoot=null;currentDuelPair='';inChain=false;chainChanges=[];
-  document.getElementById('victory-screen').classList.remove('active');victoryShown=false;
-  document.getElementById('battle').querySelectorAll('.speech-bubble,.fx-icon,.float-text,.projectile,.magic-circle,.rt-arrow').forEach(e=>e.remove());
-  removeRoundTableArrow();
-  Object.keys(predPtr).forEach(k=>predPtr[k]=0);
-  (DATA.agents||[]).forEach(a=>{const ph=a.prediction_history;if(ph&&ph[0])predMap[a.name]={winner:ph[0].winner,score:ph[0].score,confidence:ph[0].confidence};else predMap[a.name]={winner:'-',score:'',confidence:0}});
-  buildAvatars();hideDuelOverlay();idx=-1;
-  for(let i=0;i<=target;i++){idx=i;const item=flat[i];if(item.sep)addSep(item.label);else if(item.end)addEndCard(item);else if(item.phaseVerdict){/* skip phase verdict visuals during replay */}else{const info=advancePred(item.msg.speaker);addLogRow(item.msg,info.changed);if(item.msg.target)showDuelForItem(item.msg,info,true);else if(item.msg.action==='立场')showStanceBubble(item.msg,info);else{hideDuelOverlay();removeRoundTableArrow();clearBattle();if(avatars[item.msg.speaker])avatars[item.msg.speaker].el.classList.add('speaking')}}}
-  updateProgress();
-}
-
-function showStanceBubble(msg,predInfo){
-  // Clear any existing stance bubble and arbitrator bubble
-  if(stanceBubbleTimeout){clearTimeout(stanceBubbleTimeout);stanceBubbleTimeout=null}
-  if(stanceBubbleEl&&stanceBubbleEl.parentNode)stanceBubbleEl.remove();
-  if(arbBubbleEl&&arbBubbleEl.parentNode)arbBubbleEl.remove();arbBubbleEl=null;
-  const av=avatars[msg.speaker];if(!av)return;
-  const color=av.color;
-  // Hide duel overlay FIRST (it clears speaking/dimmed, so do it before setting emphasis)
-  hideDuelOverlay();removeRoundTableArrow();
-  // Clear ALL previous speaking/dimmed first, then set new state
-  _clearAllEmphasis();
-  // Enlarge speaker, dim others and table
-  Object.entries(avatars).forEach(([n,a])=>{
-    clearAnimClasses(a.el);
-    if(n===msg.speaker){a.el.classList.add('speaking')}
-    else{a.el.classList.add('dimmed')}
-  });
-  // Dim special agents too
-  document.querySelectorAll('.sp-agent').forEach(el=>el.classList.add('dimmed'));
-  document.getElementById('table').classList.add('dimmed');
-  // Show speech bubble above avatar (positioned in #battle)
-  let summary=msg.arena_summary||msg.content;
-  // Append new evidence links if present
-  const newEvIds=msg.new_evidence||[];
-  if(newEvIds.length>0){
-    const evLinks=newEvIds.map(eid=>`<a class="evidence-link" data-eid="${eid}" style="margin-right:4px">${eid}</a>`).join('');
-    summary+='\n\n🔍 新证据：'+evLinks;
-  }
-  stanceBubbleEl=showRoundTableBubble(msg.speaker,summary,color,true);
-  // Bubble persists until next action — no auto-dismiss
-}
-
-function showArbitratorBubble(content,consensus){
-  const arbEl=document.getElementById('sp-arbitrator');
-  const battle=document.getElementById('battle');
-  // Clear previous bubbles
-  if(stanceBubbleEl&&stanceBubbleEl.parentNode)stanceBubbleEl.remove();stanceBubbleEl=null;
-  if(arbBubbleEl&&arbBubbleEl.parentNode)arbBubbleEl.remove();
-  // Clear ALL previous emphasis first
-  _clearAllEmphasis();
-  // Highlight arbitrator, dim ALL other avatars and table — same pattern as stance bubble
-  Object.entries(avatars).forEach(([n,a])=>{
-    a.el.classList.add('dimmed');
-  });
-  // Dim curator and scribe, highlight arbitrator
-  document.querySelectorAll('.sp-agent').forEach(el=>el.classList.add('dimmed'));
-  arbEl.classList.remove('dimmed');
-  arbEl.classList.add('speaking');
-  document.getElementById('table').classList.add('dimmed');
-  const battleRect=battle.getBoundingClientRect();
-  const arbRect=arbEl.getBoundingClientRect();
-  const bub=document.createElement('div');
-  bub.className='speech-bubble persistent';
-  bub.style.borderColor='var(--accent)';bub.style.color='var(--fg)';
-  // Format: consensus status header + content
-  const statusIcon=consensus?'✅ 共识达成':'⚖️ 共识未达成';
-  const statusColor=consensus?'#2ed573':'#ffa502';
-  const bodyHtml=renderMd(escapeHtml(content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
-  bub.innerHTML=`<div style="font-weight:bold;color:${statusColor};margin-bottom:4px;font-size:11px">${statusIcon}</div><div>${bodyHtml}</div>`;
-  bub.style.maxWidth='280px';bub.style.whiteSpace='normal';
-  battle.appendChild(bub);
-  // Position above arbitrator, centered
-  const cx=arbRect.left+arbRect.width/2-battleRect.left;
-  const cy=arbRect.top-battleRect.top;
-  const bw=bub.offsetWidth,bh=bub.offsetHeight;
-  let left=cx-bw/2;
-  left=Math.max(4,Math.min(left,636-bw));
-  let top=cy-bh-10;
-  // Always place above — if too high, still place above (battle has overflow:hidden)
-  if(top<4)top=4;
-  bub.style.left=left+'px';bub.style.top=top+'px';
-  bindEvLinks(bub);
-  arbBubbleEl=bub;
-  // Bubble persists until next action — no auto-dismiss
-}
-
-// ═══════════════════════════════════════════════════════════
-// DUEL FLOW: arrow → click → overlay → animations
-// ═══════════════════════════════════════════════════════════
-function showDuelForItem(msg,predInfo,autoProceed){
-  const arrowType=msg.action==='质疑'?'challenge':msg.counter_challenge?'counter':'response';
-  const isResponse=arrowType==='response';
-  const newPair=msg.speaker+'|'+msg.target,newPairReverse=msg.target+'|'+msg.speaker;
-  const overlay=document.getElementById('duel-overlay');
-  let targetPeek=null;if(!isResponse&&msg.target)targetPeek=peekTargetPred(msg.target);
-
-  // Track chain
-  inChain=true;
-  if(targetPeek){
-    chainChanges.push({speaker:msg.speaker,target:msg.target,changed:targetPeek.changed,oldPred:targetPeek.oldPred,newPred:targetPeek.newPred,arrowType});
-  }
-
-  if(!autoProceed&&currentDuelPair!==newPair&&currentDuelPair!==newPairReverse){
-    // Interactive mode: show arrow on round table, wait for click (or auto-proceed if playing)
-    removeRoundTableArrow();
-    showRoundTableArrow(msg.speaker,msg.target,arrowType);
-    // Dim other avatars and table to highlight participants
-    Object.entries(avatars).forEach(([n,a])=>{
-      clearAnimClasses(a.el);
-      if(n===msg.speaker||n===msg.target){a.el.classList.add('speaking');a.el.classList.remove('dimmed')}
-      else{a.el.classList.add('dimmed')}
-    });
-    document.getElementById('table').classList.add('dimmed');
-    // Store pending duel info
-    duelPending={speaker:msg.speaker,target:msg.target,arrowType,targetPeek,msg,predInfo,isResponse};
-    // Auto-proceed if currently playing; otherwise stop and wait for user click
-    if(playing){
-      setTimeout(()=>{if(duelPending)processPendingDuel()},1500);
-    }
-    // Fade out existing overlay if active
-    if(overlay.classList.contains('active'))overlay.classList.remove('active');
-  }else{
-    // Auto-proceed mode (stepBack/progress rebuild) or same pair
-    if(currentDuelPair!==newPair&&currentDuelPair!==newPairReverse){
-      // New pair, auto-proceed
-      removeRoundTableArrow();
-      showDuelOverlay(msg.speaker,msg.target,arrowType);
-      removeRoundTableArrow();
-    }else{
-      updateArrowColor(arrowType);
-    }
-    if(isResponse)runResponseAnimations(msg.speaker,predInfo,msg);
-    else runChallengeAnimations(msg.speaker,msg.target,arrowType,targetPeek,msg);
-    addDuelBubble(msg);
-  }
-}
-
-function processPendingDuel(){
-  if(!duelPending)return;
-  const p=duelPending;duelPending=null;
-  removeRoundTableArrow();
-  // Clear stance/arbitrator bubbles
-  if(stanceBubbleEl&&stanceBubbleEl.parentNode)stanceBubbleEl.remove();stanceBubbleEl=null;
-  if(arbBubbleEl&&arbBubbleEl.parentNode)arbBubbleEl.remove();arbBubbleEl=null;
-  // Un-dim round table avatars
-  _clearAllEmphasis();
-  // Show duel overlay (fade in)
-  showDuelOverlay(p.speaker,p.target,p.arrowType);
-  // Lock animations to prevent auto-play from advancing too fast
-  duelAnimLock=true;
-  const animDuration=p.isResponse?RESPONSE_ANIM_MS:CHALLENGE_ANIM_MS;
-  setTimeout(()=>{
-    if(p.isResponse)runResponseAnimations(p.speaker,p.predInfo,p.msg);
-    else runChallengeAnimations(p.speaker,p.target,p.arrowType,p.targetPeek,p.msg);
-    addDuelBubble(p.msg);
-  },DUEL_ANIM_DELAY);
-  // Unlock after animation completes
-  setTimeout(()=>{duelAnimLock=false},DUEL_ANIM_DELAY+animDuration);
-}
-
-function runChallengeAnimations(speaker,target,arrowType,targetPeek,msg){
-  showCasting(speaker,'attack');
-  showDuelSpeechBubble(speaker,msg?.arena_bubble,arrowType);
-  setTimeout(()=>showProjectile(speaker,target,arrowType),350);
-  setTimeout(doShake,300);
-  setTimeout(()=>{
-    if(targetPeek){
-      if(targetPeek.changed){
-        // Prediction changed — heavy damage + flash screen
-        applyTargetPeek(target,targetPeek);
-        showHitHeavy(target);
-        showFloatTextAt(target,`预测变化：${targetPeek.newPred.winner} ${targetPeek.newPred.score}`,'pred-changed');
-      }else if(targetPeek.confDelta!==0){
-        applyTargetPeek(target,targetPeek);
-        if(targetPeek.confDelta>0){
-          // Accuracy up — green heart
-          showAccUp(target);
-          showFloatTextAt(target,`准+${targetPeek.confDelta}`,'acc-up');
-        }else{
-          // Accuracy down — explosion
-          showHitCritical(target);
-          showFloatTextAt(target,`准${targetPeek.confDelta}`,'acc-down');
-        }
-      }else{
-        // No change — shield
-        showDefend(target);
-        showFloatTextAt(target,'准-0','acc-same');
+  for(const rec of ctx.records){
+    let teamTag='',teamCls='';
+    if(rec.title.includes(teamA)){teamTag=teamA;teamCls='a'}else if(rec.title.includes(teamB)){teamTag=teamB;teamCls='b'}
+    html+='<div class="context-card">';
+    html+=`<div class="record-header">${teamTag?`<span class="team-icon ${teamCls}">${teamTag.charAt(0)}</span>`:''}${esc(rec.title)}</div>`;
+    if(rec.summary)html+=`<div class="record-summary">${esc(rec.summary)}</div>`;
+    if(rec.matches.length){
+      html+=`<table class="record-table"><thead><tr><th class="date-col">日期</th><th>对阵</th><th class="comp-col">赛事</th></tr></thead><tbody>`;
+      for(const m of rec.matches){
+        const pm=m.match(/^(\d{4}-\d{2}-\d{2})\s+(.+?)\s+(\d+-\d+)\s+(.+?)(?:\s+\((.+)\))?$/);
+        if(pm){
+          const[,date,teams,score,opp,comp]=pm;
+          const sp=score.split('-'),isW=parseInt(sp[0])>parseInt(sp[1]),isL=parseInt(sp[0])<parseInt(sp[1]);
+          html+=`<tr><td class="date-col">${date.slice(5)}</td><td>${esc(teams)} <span class="score-col ${isW?'win':isL?'lose':''}">${score}</span> ${esc(opp)}</td><td class="comp-col">${comp?esc(comp):''}</td></tr>`;
+        }else html+=`<tr><td colspan="3">${esc(m)}</td></tr>`;
       }
-    }else{
-      showDefend(target);
-      showFloatTextAt(target,'准-0','acc-same');
+      html+='</tbody></table>';
     }
-  },1250);
+    html+='</div>';
+  }
+  document.getElementById('context-section').innerHTML=html;
 }
 
-function runResponseAnimations(speaker,predInfo,msg){
-  showCasting(speaker,'buff');
-  showDuelSpeechBubble(speaker,msg?.arena_bubble,'response');
-  setTimeout(()=>showMagicCircle(speaker),200);
-  setTimeout(()=>{
-    showFloatTextAt(speaker,'回应','response-text');
-  },500);
+function renderAnalysts(){
+  const agents=DATA.agents||[];if(!agents.length)return;
+  const profiles=DATA.agent_profiles||{};
+  const firstSummaries={};
+  for(const msg of(DATA.rounds?.[0]||[]))if(msg.arena_summary&&msg.speaker)firstSummaries[msg.speaker]=msg.arena_summary;
+
+  let html=`<div class="section-title"><span class="icon">⚔️</span> 辩手观点</div><div class="analyst-grid">`;
+  for(const a of agents){
+    const s=sideOf(a,DATA.topic),initial=initialPred(a),final=finalPred(a),changed=hasChanged(a);
+    const profile=profiles[a.name]||{};
+    const sideCls=changed?'changed':s==='a'?'side-a':s==='b'?'side-b':'';
+    const stanceCls=s==='a'?'pro-a':s==='b'?'pro-b':'';
+    const stanceText=a.assigned_side?`支持${a.assigned_side}`:a.stance||'';
+    const initStr=`${initial.winner||''}${initial.score||''}准${initial.confidence||''}`;
+    const finalStr=`${final.winner||''}${final.score||''}准${final.confidence||''}`;
+    const conf=final.confidence||0,confPct=conf*10,confCls=conf>=7?'high':conf>=4?'mid':'low';
+    const summary=profile.initial||firstSummaries[a.name]||'';
+
+    html+=`<div class="analyst-card ${sideCls}" onclick="showAnalystModal('${esc(a.name)}')">
+      <div class="analyst-header">
+        <div class="analyst-avatar">${a.name.replace(/[^\d]/g,'')||'?'}</div>
+        <div><div class="analyst-name">${esc(a.name)}</div><div class="analyst-perspective">${esc(a.perspective_short||'')}</div></div>
+        <span class="analyst-stance ${stanceCls}">${esc(stanceText)}</span>
+      </div>
+      <div class="analyst-pred-row ${changed?'pred-changed':''}">
+        <span class="pred-val">${esc(initStr)}</span>
+        ${changed?'<span class="pred-arrow">→</span><span class="pred-val">'+esc(finalStr)+'</span>':''}
+        <div class="confidence-bar"><div class="confidence-fill ${confCls}" style="width:${confPct}%"></div></div>
+        <span class="confidence-label">${conf}/10</span>
+      </div>
+      ${summary?`<div class="analyst-summary">${esc(summary.replace(/\*\*[^*]+\*\*[：:]/g,'').substring(0,100))}</div>`:''}
+      ${profile.evolution&&profile.evolution!=='立场坚定'?`<div class="analyst-evolution">⚡ ${esc(profile.evolution)}</div>`:''}
+    </div>`;
+  }
+  html+='</div>';
+  document.getElementById('analysts-section').innerHTML=html;
 }
 
-function showDuelSpeechBubble(name,bubble,arrowType){
-  if(!bubble)return;
-  const overlay=document.getElementById('duel-overlay');if(!overlay.classList.contains('active'))return;
-  const isL=(name===duelSpeaker);const duelAv=document.getElementById(isL?'duel-left':'duel-right');if(!duelAv)return;
-  const el=document.createElement('div');el.className='duel-speech';
-  const c=arrowType==='challenge'?'#ef5350':arrowType==='counter'?'#ffa502':'#4fc3f7';
-  el.style.borderColor=c;el.style.color=c;
-  // Left avatar: bubble toward center (right side); Right avatar: mirror (left side)
-  if(isL){el.style.right='-70px';el.style.top='-40px'}
-  else{el.style.left='-70px';el.style.top='-40px'}
-  el.textContent=bubble;
-  duelAv.appendChild(el);setTimeout(()=>el.remove(),BATTLE_CRY_MS);
-}
-
-function showItem(i){
-  const item=flat[i];
-  if(item.sep){addSep(item.label);clearBattle();
-    if(inChain&&chainChanges.length){hideDuelOverlay();removeRoundTableArrow();showChainReport();inChain=false;chainChanges=[]}
-    return;
-  }
-  if(item.phaseVerdict){
-    const summary=item.arena_summary||item.content;
-    showArbitratorBubble(summary,item.consensus);
-    const area=document.getElementById('dialog-area');
-    const row=document.createElement('div');row.className='msg-row stance';
-    row.innerHTML=`<div class="mr-head"><span class="mr-name" style="color:var(--accent)">⚖️ 仲裁者</span><span class="mr-tag" style="border-color:var(--accent);color:var(--accent)">${item.consensus?'✅共识':'⚖️未共识'}</span></div><div class="mr-body">${renderMdHtml(escapeHtml(item.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>')}</div>`;
-    area.appendChild(row);area.scrollTop=area.scrollHeight;bindEvLinks(row);
-    return;
-  }
-  if(item.end){
-    addEndCard(item);clearBattle();
-    if(inChain&&chainChanges.length){hideDuelOverlay();removeRoundTableArrow();showChainReport();inChain=false;chainChanges=[]}
-    if(item.msg?.speaker==='仲裁者')showArbitratorBubble(item.msg.content,DATA.consensus);
-    return;
-  }
-  const msg=item.msg;const predInfo=advancePred(msg.speaker);
-
-  if(msg.target){showDuelForItem(msg,predInfo)}
-  else if(msg.action==='立场'){showStanceBubble(msg,predInfo)}
-  else{
-    if(!document.getElementById('duel-overlay').classList.contains('active')){
-      clearBattle();if(avatars[msg.speaker])avatars[msg.speaker].el.classList.add('speaking');
+function showAnalystModal(name){
+  const a=(DATA.agents||[]).find(x=>x.name===name);if(!a)return;
+  const history=a.prediction_history||[];
+  const speeches=[];
+  for(let ri=0;ri<(DATA.rounds||[]).length;ri++){
+    for(const msg of DATA.rounds[ri]){
+      if(msg.speaker===name&&msg.role==='assistant'){
+        const sum=msg.arena_summary||'';
+        const vm=sum.match(/\*\*观点\*\*[：:]\s*(.+)/);
+        const am=sum.match(/\*\*论述\*\*[：:]\s*(.+)/s);
+        speeches.push({
+          round:ri+1,action:msg.action||'',target:msg.target||'',counter:msg.counter_challenge,
+          view:vm?vm[1].trim():'',args:am?am[1].trim().substring(0,150):sum.substring(0,80),
+          bubble:msg.arena_bubble||''
+        });
+      }
     }
   }
-  addLogRow(msg,predInfo.changed);
+  const s=sideOf(a,DATA.topic);
+  const stanceCls=s==='a'?'pro-a':s==='b'?'pro-b':'';
+  const stanceText=a.assigned_side?`支持${a.assigned_side}`:a.stance||'';
+
+  let html=`<span class="modal-close" onclick="closeModal()">&times;</span>
+    <h3>${esc(name)}</h3>
+    <div class="modal-perspective">${esc(a.perspective_short||'')} · <span class="analyst-stance ${stanceCls}" style="margin:0">${esc(stanceText)}</span></div>`;
+
+  html+='<div class="modal-pred-chain">';
+  let first=true;
+  for(const entry of history){
+    if(!first)html+='<span class="chain-arrow">→</span>';
+    const cls=first?'initial':(entry.changed?'changed':'');
+    html+=`<span class="chain-node ${cls}">${esc(entry.winner||'')}${esc(entry.score||'')}准${entry.confidence||''}</span>`;
+    first=false;
+  }
+  html+='</div>';
+
+  html+='<div class="modal-speeches">';
+  for(const sp of speeches){
+    const actionLabel=sp.action+(sp.target?` → ${esc(sp.target)}`:'')+(sp.counter?' ↩️反质疑':'');
+    html+=`<div class="modal-speech">
+      <div class="speech-action">第${sp.round}轮 · ${esc(actionLabel)}</div>
+      ${sp.bubble?`<div style="font-weight:600;color:var(--primary);margin:2px 0">${esc(sp.bubble)}</div>`:''}
+      ${sp.view?`<div><strong>观点：</strong>${esc(sp.view)}</div>`:''}
+      ${sp.args?`<div style="color:var(--text3)">${esc(sp.args)}</div>`:''}
+    </div>`;
+  }
+  html+='</div>';
+
+  document.getElementById('modal-content').innerHTML=html;
+  document.getElementById('analyst-modal').classList.add('active');
+}
+function closeModal(){document.getElementById('analyst-modal').classList.remove('active')}
+document.getElementById('analyst-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
+
+function renderVerdict(){
+  let html=`<div class="section-title"><span class="icon">⚖️</span> 仲裁裁决</div><div class="verdict-card">`;
+  html+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <span style="font-size:20px">${DATA.consensus?'✅':'❌'}</span>
+    <span style="font-size:15px;font-weight:700;color:${DATA.consensus?'var(--green)':'var(--orange)'}">${DATA.consensus?'共识达成':'未达共识'}</span>
+  </div>`;
+
+  if(DATA.phase_verdicts?.length){
+    html+='<div class="phase-timeline">';
+    const pn={1:'陈述',2:'自由质疑',3:'分配质疑'};
+    for(const pv of DATA.phase_verdicts){
+      const rm=pv.content.match(/【理由】(.+)/s);
+      const reason=rm?rm[1].trim():'';
+      html+=`<div class="phase-item">
+        <div class="phase-badge ${pv.consensus?'yes':'no'}">${pv.phase}</div>
+        <div class="phase-content">
+          <div class="phase-title">${pn[pv.phase]||'第'+pv.phase+'阶段'} ${pv.consensus?'<span class="consensus-yes">✅ 共识达成</span>':'<span class="consensus-no">❌ 未达共识</span>'}</div>
+          <div class="phase-desc">${esc(reason.substring(0,120))}${reason.length>120?'...':''}</div>
+        </div></div>`;
+    }
+    html+='</div>';
+  }
+
+  if(DATA.arbitrator_verdict?.content){
+    const c=DATA.arbitrator_verdict.content;
+    const rm=c.match(/【理由】(.+?)(?=\n---|\n【预测】|$)/s);
+    const pm=c.match(/【预测】(.+?)(?=\n【论点】|\n【引用】|$)/s);
+    html+=`<div class="verdict-text" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--divider)">
+      <strong>⚖️ 仲裁者裁定</strong><br>`;
+    if(rm)html+=`理由：${esc(rm[1].trim().substring(0,150))}<br>`;
+    if(pm)html+=`<span style="font-weight:600;color:var(--primary)">${esc(pm[1].trim())}</span>`;
+    html+='</div>';
+  }
+
+  if(DATA.summary?.content){
+    const secs=DATA.summary.content.split(/\n(?=##\s)/);
+    html+='<div class="summary-text"><strong>📝 总结</strong>';
+    for(const sec of secs){
+      const lines=sec.trim().split('\n'),title=lines[0].replace(/^#+\s*/,''),body=lines.slice(1).join('\n').trim();
+      if(!body)continue;
+      if(title)html+=`<h4>${esc(title)}</h4>`;
+      html+=`<div style="font-size:12px;color:var(--text2);line-height:1.5;padding-left:10px">${esc(body.substring(0,300))}${body.length>300?'...':''}</div>`;
+    }
+    html+='</div>';
+  }
+  html+='</div>';
+  document.getElementById('verdict-section').innerHTML=html;
 }
 
-function startPlay(){if(idx>=flat.length-1)return;playing=true;document.getElementById('btn-play').textContent='⏸';scheduleNext(parseInt(document.getElementById('speed').value))}
-function stopPlay(){playing=false;document.getElementById('btn-play').textContent='▶';clearTimeout(timer)}
-function scheduleNext(spd){if(!playing)return;const delay=duelAnimLock?500:spd;timer=setTimeout(()=>{if(!stepForward())return;scheduleNext(spd)},delay)}
+function renderEvidence(){
+  const pool=DATA.evidence_pool||[];if(!pool.length)return;
+  const shared=pool.filter(e=>e.shared).sort((a,b)=>b.confidence-a.confidence);
+  const priv=pool.filter(e=>!e.shared).sort((a,b)=>b.confidence-a.confidence);
+  const display=[...shared,...priv].slice(0,20);
 
-document.getElementById('btn-play').onclick=()=>playing?stopPlay():startPlay();
-document.getElementById('btn-next').onclick=()=>{stopPlay();stepForward()};
-document.getElementById('btn-prev').onclick=()=>{stopPlay();stepBack()};
-document.getElementById('speed').onchange=()=>{if(playing){stopPlay();startPlay()}};
+  let html=`<div class="section-title collapsible collapsed" onclick="toggleSection(this)">
+    <span class="icon">📝</span> 证据池 <span class="more">共 ${pool.length} 条</span>
+  </div><div class="section-body collapsed"><div class="evidence-list">`;
 
-document.getElementById('progress').onclick=e=>{
-  stopPlay();const rect=e.currentTarget.getBoundingClientRect();const pct=(e.clientX-rect.left)/rect.width;const target=Math.round(pct*(flat.length-1));
-  duelPending=null;stanceBubbleEl=null;arbBubbleEl=null;
-  document.getElementById('dialog-area').innerHTML='';currentChainRoot=null;currentDuelPair='';inChain=false;chainChanges=[];
-  document.getElementById('victory-screen').classList.remove('active');victoryShown=false;
-  document.getElementById('battle').querySelectorAll('.speech-bubble,.fx-icon,.float-text,.projectile,.magic-circle,.rt-arrow').forEach(e=>e.remove());
-  removeRoundTableArrow();
-  Object.keys(predPtr).forEach(k=>predPtr[k]=0);
-  (DATA.agents||[]).forEach(a=>{const ph=a.prediction_history;if(ph&&ph[0])predMap[a.name]={winner:ph[0].winner,score:ph[0].score,confidence:ph[0].confidence};else predMap[a.name]={winner:'-',score:'',confidence:0}});
-  buildAvatars();hideDuelOverlay();idx=-1;
-  for(let i=0;i<=target;i++){idx=i;const item=flat[i];if(item.sep)addSep(item.label);else if(item.end)addEndCard(item);else if(item.phaseVerdict){/* skip phase verdict visuals during replay */}else{const info=advancePred(item.msg.speaker);addLogRow(item.msg,info.changed);if(item.msg.target)showDuelForItem(item.msg,info,true);else if(item.msg.action==='立场')showStanceBubble(item.msg,info);else{hideDuelOverlay();removeRoundTableArrow();clearBattle();if(avatars[item.msg.speaker])avatars[item.msg.speaker].el.classList.add('speaking')}}}
-  updateProgress();
-};
-
-function updateProgress(){const total=flat.length;const pct=total>1?(idx/(total-1))*100:0;document.querySelector('#progress .fill').style.width=pct+'%';document.getElementById('plabel').textContent=`${Math.max(0,idx+1)}/${total}`}
-
-// ═══════════════════════════════════════════════════════════
-// VICTORY SCREEN
-// ═══════════════════════════════════════════════════════════
-function showVictoryScreen(){
-  const sides={};DATA.agents.forEach(agent=>{const hist=agent.prediction_history;const last=hist&&hist.length>0?hist[hist.length-1]:null;if(last){const key=last.winner;if(!sides[key])sides[key]={winner:last.winner,score:last.score,color:resolveSideColor(last.winner),agents:[]};sides[key].agents.push(agent)}});
-  const sideList=Object.values(sides).sort((a,b)=>b.agents.length-a.agents.length);const winner=sideList[0];if(!winner)return;
-  const vPred=document.getElementById('v-pred');vPred.textContent=`${winner.winner} ${winner.score}`;vPred.style.color=winner.color;
-  const vSides=document.getElementById('v-sides');vSides.innerHTML='';
-  sideList.forEach(s=>{const sDiv=document.createElement('div');sDiv.className='vside';const sLabel=document.createElement('div');sLabel.className='vside-label';sLabel.style.color=s.color;sLabel.style.borderColor=s.color;sLabel.textContent=`${s.winner} ${s.score}（${s.agents.length}人）`;sDiv.appendChild(sLabel);
-  const aDiv=document.createElement('div');aDiv.className='vagents';
-  s.agents.forEach(agent=>{const idx=DATA.agents.indexOf(agent);const color=COLORS_HEX[idx%COLORS_HEX.length];const last=agent.prediction_history?.[agent.prediction_history.length-1];
-    const img=AVATAR_IMAGES[agent.name];const spriteStyle=img?`border-color:${color};background-image:url('${img}')`:`border-color:${color};background:${color}22`;const spriteInner=img?'':`<span style="color:${color}">${idx+1}</span>`;
-    const d=document.createElement('div');d.className='vagent';d.innerHTML=`<div class="sprite" style="${spriteStyle}">${spriteInner}</div><div class="vaname" style="color:${color}">${agent.name}</div><div class="vavpred" style="color:${s.color}">${last?last.winner+' '+last.score:''}</div>`;aDiv.appendChild(d)});
-  sDiv.appendChild(aDiv);vSides.appendChild(sDiv)});
-  document.getElementById('victory-screen').classList.add('active');
+  for(const ev of display){
+    const cc=ev.confidence>=0.7?'high':ev.confidence>=0.4?'mid':'low';
+    const cp=typeof ev.confidence==='number'?`${Math.round(ev.confidence*100)}%`:ev.confidence;
+    html+=`<div class="evidence-item" onclick="this.classList.toggle('expanded')">
+      <div class="evidence-header">
+        <span class="evidence-id">${esc(ev.id)}</span>
+        <span class="evidence-confidence ${cc}">${cp}</span>
+        <span class="evidence-source">${esc(ev.discovered_by||ev.source||'')}</span>
+        ${ev.shared?'':'<span style="font-size:10px;color:var(--text3)">🔒</span>'}
+      </div>
+      ${ev.title?`<div class="evidence-title">${esc(ev.title)}</div>`:''}
+      <div class="evidence-content">
+        ${esc(ev.content).substring(0,250)}${ev.content.length>250?'...':''}
+        ${ev.url?`<div class="evidence-url">🔗 <a href="${esc(ev.url)}" target="_blank" onclick="event.stopPropagation()">${esc(ev.url.substring(0,50))}${ev.url.length>50?'...':''}</a></div>`:''}
+      </div>
+    </div>`;
+  }
+  html+='</div></div>';
+  document.getElementById('evidence-section').innerHTML=html;
 }
-document.getElementById('v-close').onclick=()=>{document.getElementById('victory-screen').classList.remove('active')};
+function toggleSection(el){el.classList.toggle('collapsed');el.nextElementSibling?.classList.toggle('collapsed')}
 
-// ═══════════════════════════════════════════════════════════
-// EVIDENCE
-// ═══════════════════════════════════════════════════════════
-function bindEvLinks(el){if(!el)return;el.querySelectorAll('.evidence-link').forEach(a=>{a.onclick=e=>{e.stopPropagation();showEv(a.dataset.eid,e)}})}
-function showEv(eid,event){const ev=(DATA.evidence_pool||[]).find(e=>e.id===eid);const popup=document.getElementById('ev-popup');const content=document.getElementById('ev-content');
-  if(ev){
-    let urlLine='';
-    if(ev.url)urlLine=`<div style="margin:4px 0"><a href="${ev.url}" target="_blank" rel="noopener" style="color:#4fc3f7;font-size:11px;word-break:break-all;text-decoration:underline">🔗 ${ev.url}</a></div>`;
-    content.innerHTML=`<span class="eid">${ev.id}</span>${urlLine}<div style="margin-top:4px">${escapeHtml(ev.content)}</div><div class="einfo">来源：${ev.source||''} | 置信度：${ev.confidence}${ev.title?' | '+ev.title:''}</div>`;
-  }else{content.innerHTML=`<span class="eid">${eid}</span> — 未找到`}
-  popup.style.display='block';popup.style.left=Math.min(event.clientX+10,window.innerWidth-380)+'px';popup.style.top=Math.min(event.clientY+10,window.innerHeight-230)+'px'}
-document.addEventListener('click',e=>{const p=document.getElementById('ev-popup');if(!p.contains(e.target)&&!e.target.classList.contains('evidence-link'))p.style.display='none'});
+function renderFooter(){
+  let html=`<div class="viewer-toggle">
+    <button class="toggle-btn active" id="toggle-link" onclick="setMode('link')">🔗 链接模式</button>
+    <button class="toggle-btn" id="toggle-embed" onclick="setMode('embed')">📦 嵌入模式</button>
+  </div>
+  <div id="link-mode"><button class="viewer-open-btn" onclick="openViewer()">▶ 观看动画回放</button></div>
+  <div class="embed-container" id="embed-mode"></div>
+  <div class="hint">辩论数据由多智能体辩论系统生成</div>`;
+  document.getElementById('footer-section').innerHTML=html;
+}
 
-// Keyboard
-document.addEventListener('keydown',e=>{if(!DATA)return;if(e.key===' '||e.code==='Space'){e.preventDefault();playing?stopPlay():startPlay()}else if(e.key==='ArrowRight'){e.preventDefault();stopPlay();stepForward()}else if(e.key==='ArrowLeft'){e.preventDefault();stopPlay();stepBack()}});
-
-// ═══════════════════════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════════════════════
-function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
-function attrEscape(t){return t.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function truncateHtml(html,max){const text=html.replace(/<[^>]+>/g,'');if(text.length<=max)return html;let r='',l=0,inTag=false;for(let i=0;i<html.length&&l<max;i++){const c=html[i];if(c==='<')inTag=true;r+=c;if(!inTag)l++;if(c==='>')inTag=false}return r+'...'}
+let currentMode='link';
+function setMode(mode){
+  currentMode=mode;
+  document.getElementById('toggle-link').classList.toggle('active',mode==='link');
+  document.getElementById('toggle-embed').classList.toggle('active',mode==='embed');
+  document.getElementById('link-mode').style.display=mode==='link'?'':'none';
+  const el=document.getElementById('embed-mode');
+  if(mode==='embed'){
+    const jp=currentJsonFile?`?json=${encodeURIComponent(currentJsonFile)}`:'';
+    el.innerHTML=`<div class="embed-header">🎬 辩论动画回放<span class="embed-close" onclick="setMode('link')">✕</span></div><iframe class="embed-iframe" src="${VIEWER_FILE}${jp}"></iframe>`;
+    el.classList.add('visible');
+  }else{el.classList.remove('visible');el.innerHTML=''}
+}
+function openViewer(){const jp=currentJsonFile?`?json=${encodeURIComponent(currentJsonFile)}`:'';window.open(VIEWER_FILE+jp,'_blank')}
 </script>
 </body>
 </html>
