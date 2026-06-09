@@ -404,8 +404,10 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 // ═══════════════════════════════════════════════════════════
 
 // ── JSON 数据源 ──
-// 留空 → 文件上传模式；填写 URL → 自动加载（支持 ?json=URL 查询参数覆盖）
-const JSON_URL = '';
+// 留空 → 文件上传模式；填写相对路径 → 自动加载同目录下的 JSON 文件
+// 例如：'debate_data.json' 或 'data/match.json'
+// 也支持 ?json=xxx.json 查询参数覆盖
+const JSON_FILE = '123.json';
 
 // ── 圆桌布局 ──
 const PENT_CX = 320;          // 五边形中心X
@@ -450,7 +452,7 @@ const TW_BATCH = 3;           // 每帧字符数
 
 // ── 图片资源 ──
 const AVATAR_IMAGES = {
-  // '分析师1': 'img/analyst1.png',
+  '分析师1': 'demographics.png',
   // '分析师2': 'img/analyst2.png',
   // '审核员':   'img/curator.png',
   // '仲裁者':   'img/arbitrator.png',
@@ -535,13 +537,14 @@ fi.onchange=e=>{if(e.target.files[0])load(e.target.files[0])};
 document.getElementById('btn-load').onclick=()=>{fi.value='';fi.click()};
 function load(f){const r=new FileReader();r.onload=e=>{try{DATA=JSON.parse(e.target.result);init()}catch(err){alert('JSON error: '+err.message)}};r.readAsText(f,'utf-8')}
 
-// ── JSON URL 自动加载 ──
-// 优先级：查询参数 ?json=URL > 配置变量 JSON_URL
+// ── JSON 文件自动加载 ──
+// 优先级：查询参数 ?json=xxx.json > 配置变量 JSON_FILE
+// 使用相对路径，与图片引用方式一致；部署到网站后 fetch 可正常工作
 (function tryAutoLoad(){
   const params=new URLSearchParams(window.location.search);
-  const url=params.get('json')||JSON_URL;
-  if(!url)return;
-  fetch(url).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{DATA=d;init()}).catch(err=>{console.warn('自动加载JSON失败：',err)});
+  const file=params.get('json')||JSON_FILE;
+  if(!file)return;
+  fetch(file).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{DATA=d;init()}).catch(err=>{console.warn('自动加载JSON失败：',err)});
 })();
 
 // ═══════════════════════════════════════════════════════════
