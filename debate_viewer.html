@@ -1761,11 +1761,11 @@ function updatePentagonPositions(){
   if(!battle)return;
   const bw=battle.offsetWidth;
   const bh=battle.offsetHeight;
-  if(bw===0||bh===0)return; // Not yet laid out
-  // Scale pentagon to actual container size (base = 640x580)
+  if(bw===0||bh===0)return;
+  // Scale only the RADIUS to fit container, keep center at user-configured CX/CY
   const scaleX=bw/640;
   const scaleY=bh/580;
-  const cx=CX*scaleX, cy=CY*scaleY, rx=RX*scaleX, ry=RY*scaleY;
+  const cx=CX*scaleX, cy=CY, rx=RX*scaleX, ry=RY*scaleY;
   const n=DATA.agents.length||5;
   for(let i=0;i<n;i++){
     const a=-Math.PI/2+(2*Math.PI*i/n);
@@ -1780,10 +1780,9 @@ function updatePentagonPositions(){
   // Special agents: keep relative to pentagon center
   const sa=document.getElementById('special-agents');
   if(sa)sa.style.top=(cy+ry+SP_OFFSET_Y)+'px';
-  // Table position: scaled proportionally with container
-  // Remove inline top so CSS top:50% + transform can center it, then offset by CY
+  // Table position: always at user-configured CY + offset
   const tbl=document.getElementById('table');
-  tbl.style.top=(bh*CY/580+TABLE_OFFSET_Y)+'px';
+  tbl.style.top=(CY+TABLE_OFFSET_Y)+'px';
 }
 </script>
 </body>
