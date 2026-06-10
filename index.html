@@ -117,7 +117,8 @@ a:hover{text-decoration:underline}
 .record-summary-bar .win-seg{background:var(--green)}
 .record-summary-bar .draw-seg{background:var(--yellow)}
 .record-summary-bar .lose-seg{background:var(--red)}
-.record-summary-text{white-space:nowrap}
+.record-summary-text{white-space:nowrap;font-weight:700;font-size:13px}
+.record-summary-text .w{color:var(--green)}.record-summary-text .d{color:var(--yellow)}.record-summary-text .l{color:var(--red)}
 .record-table{width:100%;border-collapse:collapse;font-size:13px}
 .record-table th{text-align:left;padding:5px 6px;background:var(--divider);font-weight:600;color:var(--text2);font-size:12px;border-bottom:1px solid var(--border)}
 .record-table td{padding:5px 6px;border-bottom:1px solid var(--divider);color:var(--text2)}
@@ -197,10 +198,13 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
   background:var(--card);border:2px solid var(--border);border-radius:var(--radius);
 }
 .verdict-final-box .vf-winner{font-size:22px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px}
-.verdict-final-box .vf-score{font-size:18px;font-weight:700;color:var(--text);margin:4px 0}
-.verdict-final-box .vf-conf-row{display:flex;align-items:center;gap:8px;margin-top:6px}
-.verdict-final-box .vf-conf-bar{width:100px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden}
-.verdict-final-box .vf-conf-fill{height:100%;border-radius:4px}
+.verdict-final-box .vf-score{font-size:18px;font-weight:700;color:var(--text)}
+.verdict-final-box .vf-conf-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.verdict-final-box .vf-conf-bar{width:140px;height:10px;background:var(--divider);border-radius:5px;overflow:hidden}
+.verdict-final-box .vf-conf-fill{height:100%;border-radius:5px}
+.verdict-final-box .vf-conf-fill.high{background:var(--green)}
+.verdict-final-box .vf-conf-fill.mid{background:var(--orange)}
+.verdict-final-box .vf-conf-fill.low{background:var(--red)}
 .verdict-final-box .vf-conf-text{font-size:14px;color:var(--text2);font-weight:600}
 .summary-text{font-size:14px;color:var(--text2);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--divider)}
 .summary-text h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
@@ -494,7 +498,7 @@ function renderContext(){
         const wp=Math.round(w/t*100),dp=Math.round(d/t*100),lp=100-wp-dp;
         summaryHtml=`<span class="record-summary">
           <span class="record-summary-bar"><span class="win-seg" style="width:${wp}%"></span><span class="draw-seg" style="width:${dp}%"></span><span class="lose-seg" style="width:${lp}%"></span></span>
-          <span class="record-summary-text"><span style="color:var(--green)">${w}胜</span><span style="color:var(--yellow)">${d}平</span><span style="color:var(--red)">${l}负</span></span>
+          <span class="record-summary-text"><span class="w">${w}胜</span><span class="d">${d}平</span><span class="l">${l}负</span></span>
         </span>`;
       }else{
         summaryHtml=`<span class="record-summary">${esc(rec.summary)}</span>`;
@@ -708,8 +712,7 @@ function renderVerdict(){
       <div style="font-size:15px;font-weight:700;margin-bottom:8px">⚖️ 仲裁者裁定</div>`;
 
     html+=`<div class="verdict-final-box">
-      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}</div>
-      ${score?`<div class="vf-score">${esc(score)}</div>`:''}
+      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}${score?` <span style="color:var(--text3);font-weight:400">|</span> 比分：${esc(score)}`:''}</div>
       ${confNum?`<div class="vf-conf-row"><div class="vf-conf-bar"><div class="vf-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="vf-conf-text">准确度 ${confNum}/10</span></div>`:''}
     </div>`;
 

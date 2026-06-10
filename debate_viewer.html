@@ -432,7 +432,7 @@ const JSON_FILE = '';  // 留空 → 文件上传模式；从 index.html 打开�
 
 // ── 圆桌布局 ──
 const PENT_CX = 320;          // 五边形中心X
-const PENT_CY = 275;          // 五边形中心Y
+const PENT_CY = 250;          // 五边形中心Y
 const PENT_RX = 195;          // 五边形X半径
 const PENT_RY = 110;          // 五边形Y半径
 const AVATAR_W = 96;          // avatar容器宽度
@@ -681,24 +681,34 @@ function init(){
   hideDuelOverlay();clearBattle();updateProgress();
   // Initial position: set table to configured CY
   document.getElementById('table').style.top=CY+'px';
-  // Recalculate positions once layout is stable
-  // Use ResizeObserver on #battle for robust detection (works in iframes too)
-  const battle=document.getElementById('battle');
-  if(window.ResizeObserver&&battle){
-    const ro=new ResizeObserver(()=>{
-      updatePentagonPositions();
-    });
-    ro.observe(battle);
-    // Also fire once after a short delay as backup
-    setTimeout(()=>updatePentagonPositions(),100);
-    setTimeout(()=>updatePentagonPositions(),500);
-  }else{
-    // Fallback: multiple retries
-    setTimeout(()=>updatePentagonPositions(),50);
-    setTimeout(()=>updatePentagonPositions(),200);
-    setTimeout(()=>updatePentagonPositions(),500);
-  }
 }
+
+// ── Robust layout initialization ──
+// Ensure pentagon positions are correct regardless of load order
+// Handles: direct open, iframe embed, window.open from index.html
+(function setupLayoutObserver(){
+  let lastW=0,lastH=0,settled=0;
+  function check(){
+    if(!DATA||!DATA.agents)return;
+    const b=document.getElementById('battle');
+    if(!b)return;
+    const w=b.offsetWidth,h=b.offsetHeight;
+    if(w>0&&h>0&&(w!==lastW||h!==lastH)){
+      lastW=w;lastH=h;
+      updatePentagonPositions();
+      settled=0;
+    }else if(w>0&&h>0){
+      settled++;
+    }
+    // Stop checking after 5 consecutive stable readings
+    if(settled<5)setTimeout(check,100);
+  }
+  // Run on DOMContentLoaded, load, and periodically
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(check,50));
+  else setTimeout(check,50);
+  window.addEventListener('load',()=>setTimeout(check,50));
+  window.addEventListener('resize',()=>{settled=0;check()});
+})();
 
 // ═══════════════════════════════════════════════════════════
 // AVATAR BUILDING
@@ -1746,7 +1756,6 @@ function updatePentagonPositions(){
   const tbl=document.getElementById('table');
   tbl.style.top=(bh*CY/580)+'px';
 }
-window.addEventListener('resize',updatePentagonPositions);
 </script>
 </body>
 </html>
