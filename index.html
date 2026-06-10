@@ -295,7 +295,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 // ⚙️ 配置参数
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
-  JSON_FILE: '123.json',
+  JSON_FILE: '2026-06-10_090211_韩国_vs_捷克（group_第一轮）.json',
   VIEWER_FILE: 'debate_viewer.html',
   IMAGES_DIR: 'images/',
   AVATAR_IMAGES: {
@@ -688,8 +688,8 @@ function renderVerdict(){
     let winner='',score='',conf='',confNum=0;
     if(pm){
       const predText=pm[1].trim();
-      const wm=predText.match(/胜方[：:]\s*(.+)/);
-      const sm=predText.match(/比分[：:]\s*(.+)/);
+      const wm=predText.match(/胜方[：:]\s*([^|\n]+)/);
+      const sm=predText.match(/比分[：:]\s*([^|\n]+)/);
       const cm=predText.match(/准确度[：:]\s*(\d+)\s*\/\s*(\d+)/);
       if(wm)winner=wm[1].trim();
       if(sm)score=sm[1].trim();

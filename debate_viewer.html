@@ -498,10 +498,21 @@ const FX_IMAGES = {
 // 音效文件放在 sounds/ 目录下，填写文件名即可
 // 留空或不填则不播放音效
 const SOUNDS = {
-  // challenge: 'sounds/challenge.mp3',
-  // hit:       'sounds/hit.mp3',
-  // defend:    'sounds/defend.mp3',
-  // victory:   'sounds/victory.mp3',
+  challenge:  'sounds/shoot2.wav',   // 质疑攻击
+  hit:        'sounds/hit.wav',         // 命中/预测变化
+  defend:     'sounds/shield.wav',      // 防御/无变化
+  victory:    'sounds/victory.wav',     // 胜利结算
+  duel_start: 'sounds/heal.wav',  // 对抗开始
+  stance:     'sounds/buff-short.wav',      // 立场发表
+  stance_chg: 'sounds/change-stance.wav',  // 立场改变
+  score_chg:  'sounds/change-stance.wav',   // 比分变化（立场未变）
+  conf_up:    'sounds/buff-short.wav',     // 准确度上升
+  conf_down:  'sounds/gethit.wav',   // 准确度下降
+  response:   'sounds/response.wav',    // 回应/反质疑
+  // arrow:      'sounds/shoot2.wav',       // 方桌箭头动画
+  // phase:      'sounds/phase.mp3',       // 阶段分隔
+  arb_verdict:'sounds/buff-short.wav', // 仲裁者裁定
+  // step:       'sounds/step.mp3',        // 手动步进
 };
 
 function playSound(name){
@@ -850,6 +861,7 @@ function fillDuelAvatar(side,name){
 
 function showDuelOverlay(speaker,target,arrowType){
   duelSpeaker=speaker;duelTarget=target;currentDuelPair=speaker+'|'+target;
+  playSound('duel_start');
   fillDuelAvatar('dl',speaker);fillDuelAvatar('dr',target);
   updateArrowColor(arrowType);
   // Clear any existing stance/arbitrator bubbles when entering duel
@@ -905,6 +917,7 @@ function hideDuelOverlay(){
 // ═══════════════════════════════════════════════════════════
 let rtArrowSvg=null;
 function showRoundTableArrow(fromName,toName,arrowType){
+  playSound('arrow');
   removeRoundTableArrow();
   const fromAv=avatars[fromName],toAv=avatars[toName];
   if(!fromAv||!toAv)return;
@@ -1078,6 +1091,10 @@ function showPredChange(name,oldP,newP){
 function pickRandom(arr){return arr[Math.floor(Math.random()*arr.length)]}
 
 function showPredCenterPopup(text,type,name){
+  if(type==='type-stance')playSound('stance_chg');
+  else if(type==='type-score')playSound('score_chg');
+  else if(type==='type-conf-up')playSound('conf_up');
+  else if(type==='type-conf-down')playSound('conf_down');
   const container=document.getElementById('duel-overlay').classList.contains('active')
     ?document.getElementById('duel-overlay'):document.getElementById('battle');
   const el=document.createElement('div');
@@ -1217,6 +1234,7 @@ function addLogRow(msg,predChanged){
 }
 
 function addSep(label){
+  playSound('phase');
   const area=document.getElementById('dialog-area');const sep=document.createElement('div');sep.className='round-sep';sep.textContent=label;
   area.appendChild(sep);currentChainRoot=null;
   if(inChain&&chainChanges.length){
@@ -1318,7 +1336,7 @@ function stepForward(){
     return true;
   }
   if(idx>=flat.length-1){stopPlay();if(!victoryShown){showVictoryScreen();victoryShown=true}return false}
-  completeTypewriters();idx++;showItem(idx);updateProgress();return true;
+  completeTypewriters();playSound('step');idx++;showItem(idx);updateProgress();return true;
 }
 
 function stepBack(){
@@ -1336,6 +1354,7 @@ function stepBack(){
 }
 
 function showStanceBubble(msg,predInfo){
+  playSound('stance');
   // Clear any existing stance bubble and arbitrator bubble
   if(stanceBubbleTimeout){clearTimeout(stanceBubbleTimeout);stanceBubbleTimeout=null}
   if(stanceBubbleEl&&stanceBubbleEl.parentNode)stanceBubbleEl.remove();
@@ -1368,6 +1387,7 @@ function showStanceBubble(msg,predInfo){
 }
 
 function showArbitratorBubble(content,consensus){
+  playSound('arb_verdict');
   const arbEl=document.getElementById('sp-arbitrator');
   const battle=document.getElementById('battle');
   // Clear previous bubbles
@@ -1564,6 +1584,7 @@ function startAttackAnimations(speaker,target,arrowType,targetPeek,msg){
 }
 
 function runResponseAnimations(speaker,predInfo,msg){
+  playSound('response');
   showCasting(speaker,'buff');
   showDuelSpeechBubble(speaker,msg?.arena_bubble,'response');
   setTimeout(()=>showMagicCircle(speaker),200);
