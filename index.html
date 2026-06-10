@@ -112,6 +112,8 @@ a:hover{text-decoration:underline}
 .record-header{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
 .team-flag-sm{width:22px;height:15px;border-radius:2px;object-fit:cover;border:1px solid var(--border);vertical-align:middle}
 .team-flag-sm-placeholder{display:inline-flex;width:22px;height:15px;border-radius:2px;background:var(--divider);align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
+.team-flag-md{width:30px;height:20px;border-radius:3px;object-fit:cover;border:1px solid var(--border);vertical-align:middle}
+.team-flag-md-placeholder{display:inline-flex;width:30px;height:20px;border-radius:3px;background:var(--divider);align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
 .record-summary{display:flex;align-items:center;gap:8px;margin-left:6px;font-size:12px;color:var(--text2);font-weight:500}
 .record-summary-bar{width:80px;height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--divider);flex-shrink:0}
 .record-summary-bar .win-seg{background:var(--green)}
@@ -338,6 +340,11 @@ function smallFlagHtml(name){
   const fb=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.png';
   return `<img class="team-flag-sm" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='inline-flex'}" alt="${esc(name)}"><span class="team-flag-sm-placeholder" style="display:none">${esc(name.charAt(0))}</span>`;
 }
+function mediumFlagHtml(name){
+  const url=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.webp';
+  const fb=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.png';
+  return `<img class="team-flag-md" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='inline-flex'}" alt="${esc(name)}"><span class="team-flag-md-placeholder" style="display:none">${esc(name.charAt(0))}</span>`;
+}
 function avatarHtml(name,idx,cls='analyst-avatar'){
   const img=CONFIG.AVATAR_IMAGES[name];
   if(img) return `<div class="${cls}" style="background-image:url('${img}')"></div>`;
@@ -436,7 +443,7 @@ function renderPredictionHero(){
   // Main result centered
   html+=`<div class="pred-hero-main">`;
   if(fp){
-    const winnerFlag=smallFlagHtml(fp.winner);
+    const winnerFlag=mediumFlagHtml(fp.winner);
     html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)}</span></div>
     <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
   }
@@ -562,7 +569,7 @@ function renderAnalysts(){
         <div><div class="analyst-name">${esc(a.name)}</div><div class="analyst-perspective">${esc(a.perspective_short||'')}</div></div>
         <span class="analyst-stance ${stanceCls}">${esc(stanceText)}</span>
       </div>
-      <div class="analyst-current-opinion ${opinionSideCls}">${esc(opinionStr.trim())} <span style="font-size:13px;font-weight:500">准${curConf}/10</span></div>
+      <div class="analyst-current-opinion ${opinionSideCls}">${smallFlagHtml(curWinner)} ${esc(opinionStr.trim())} <span style="font-size:13px;font-weight:500">准确度 ${curConf}/10</span></div>
       ${chainHtml}
       ${summary?`<div class="analyst-summary">${escAndBold(summary.replace(/\*\*[^*]+\*\*[：:]/g,'').substring(0,120))}</div>`:''}
       ${profile.evolution&&profile.evolution!=='立场坚定'?`<div class="analyst-evolution">${esc(profile.evolution)}</div>`:''}

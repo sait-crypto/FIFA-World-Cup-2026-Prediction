@@ -274,10 +274,10 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 }
 .pred-center-popup .popup-name{color:inherit;font-weight:900}
 .pred-center-popup .popup-rest{color:inherit;opacity:1}
-.pred-center-popup.type-conf-down .popup-inner{background:rgba(239,83,80,0.1);border-color:#ef5350;color:#ef5350}
-.pred-center-popup.type-conf-up .popup-inner{background:rgba(46,213,115,0.1);border-color:#2ed573;color:#2ed573}
-.pred-center-popup.type-score .popup-inner{background:rgba(239,83,80,0.1);border-color:#ef5350;color:#ef5350}
-.pred-center-popup.type-stance .popup-inner{background:rgba(229,57,70,0.12);border-color:#e53946;color:#e53946}
+.pred-center-popup.type-conf-down .popup-inner{background:rgba(239,83,80,var(--popup-bg-opacity,0.1));border-color:#ef5350;color:#ef5350}
+.pred-center-popup.type-conf-up .popup-inner{background:rgba(46,213,115,var(--popup-bg-opacity,0.1));border-color:#2ed573;color:#2ed573}
+.pred-center-popup.type-score .popup-inner{background:rgba(239,83,80,var(--popup-bg-opacity,0.1));border-color:#ef5350;color:#ef5350}
+.pred-center-popup.type-stance .popup-inner{background:rgba(229,57,70,var(--popup-bg-opacity,0.12));border-color:#e53946;color:#e53946}
 @keyframes pred-popup-in{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}60%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 @keyframes pred-popup-out{0%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(0.9)}}
 
@@ -442,6 +442,7 @@ const AVATAR_NAME_TOP = 12;   // 名字距sprite的间距（可调）
 const AVATAR_HP_BAR_W = 74;   // HP条宽度
 const PRED_POPUP_DURATION = 2200; // 中心跳字持续时间(ms)（可调）
 const PRED_POPUP_Y = 42;      // 中心跳字Y轴位置(%)（可调）
+const PRED_POPUP_BG_OPACITY = 0.6; // 中心跳字背景框透明度（可调，0=全透明，1=不透明）
 
 // ── 功能Agent布局 ──
 const SP_GAP = 30;            // 三个功能agent间距
@@ -458,6 +459,7 @@ const DUEL_AV_W = 140;        // 对抗avatar容器宽度
 const DUEL_SPRITE = 72;       // 对抗sprite尺寸
 const DUEL_NAME_TOP = 5;      // 对打名字距sprite的间距
 const DUEL_ARROW_Y = 95;      // 对抗箭头Y位置
+const DUEL_ARROW_SHORTEN = 40; // 对抗箭头向中心缩短的像素（可调）
 const DUEL_ARROW_W = 220;     // 对抗箭头SVG宽度
 
 // ── 对抗动画参数 ──
@@ -945,9 +947,12 @@ function showProjectile(speaker,target,type){
   const overlay=document.getElementById('duel-overlay');if(!overlay.classList.contains('active'))return;
   playSound('challenge');
   const isL=(speaker===duelSpeaker);
-  // Dynamic: bind to actual avatar element positions
-  const sX=getDuelCenterX(isL?'left':'right');
-  const eX=getDuelCenterX(isL?'right':'left');
+  // Dynamic: bind to actual avatar element positions, shortened toward center
+  const rawSX=getDuelCenterX(isL?'left':'right');
+  const rawEX=getDuelCenterX(isL?'right':'left');
+  // Shorten: move start toward end, move end toward start
+  const sX=isL?rawSX+DUEL_ARROW_SHORTEN:rawSX-DUEL_ARROW_SHORTEN;
+  const eX=isL?rawEX-DUEL_ARROW_SHORTEN:rawEX+DUEL_ARROW_SHORTEN;
   const y=getDuelSpriteY(isL?'left':'right');
   const el=document.createElement('div');el.className='projectile';
   const img=FX_IMAGES[type];
@@ -1100,6 +1105,7 @@ function showPredCenterPopup(text,type,name){
   const el=document.createElement('div');
   el.className='pred-center-popup '+type;
   el.style.top=PRED_POPUP_Y+'%';
+  el.style.setProperty('--popup-bg-opacity',PRED_POPUP_BG_OPACITY);
   // Determine animation duration from param
   const inMs=300,outMs=400,stayMs=PRED_POPUP_DURATION-inMs-outMs;
   el.style.animationDelay=`0s, ${stayMs}ms`;
