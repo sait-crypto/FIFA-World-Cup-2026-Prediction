@@ -701,6 +701,8 @@ function init(){
 let _layoutLastW=0,_layoutLastH=0;
 (function setupLayoutObserver(){
   function tick(){
+    // Always schedule next tick FIRST, so the loop never dies
+    setTimeout(tick,200);
     if(!DATA||!DATA.agents)return;
     const b=document.getElementById('battle');
     if(!b)return;
@@ -709,8 +711,6 @@ let _layoutLastW=0,_layoutLastH=0;
       _layoutLastW=w;_layoutLastH=h;
       updatePentagonPositions();
     }
-    // Always keep polling (low cost: just two getBoundingClientRect reads)
-    setTimeout(tick,200);
   }
   // Start checking on various events
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(tick,30));
