@@ -62,12 +62,12 @@ a:hover{text-decoration:underline}
 .pred-hero-label{font-size:22px;color:var(--text);font-weight:800;text-align:center;margin-bottom:12px}
 .pred-hero-main{text-align:center;margin-bottom:14px}
 .pred-hero-result-line{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.pred-hero-result{font-size:26px;font-weight:800;color:var(--primary)}
+.pred-hero-result{font-size:26px;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:8px}
 .pred-hero-score{font-size:20px;color:var(--text);font-weight:700}
-.pred-hero-conf{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px}
-.pred-hero-conf-bar{width:100px;height:7px;background:var(--divider);border-radius:4px;overflow:hidden}
-.pred-hero-conf-fill{height:100%;border-radius:4px;background:var(--primary)}
-.pred-hero-conf-label{font-size:13px;color:var(--text2);font-weight:600}
+.pred-hero-conf{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}
+.pred-hero-conf-bar{width:160px;height:10px;background:var(--divider);border-radius:5px;overflow:hidden}
+.pred-hero-conf-fill{height:100%;border-radius:5px;background:var(--primary)}
+.pred-hero-conf-label{font-size:15px;color:var(--text2);font-weight:600}
 .pred-hero-bar{margin-top:16px}
 .pred-hero-bar-title{font-size:14px;color:var(--text2);margin-bottom:6px;font-weight:600}
 .pred-hero-bar-track{display:flex;height:24px;border-radius:12px;overflow:hidden;background:var(--divider)}
@@ -112,7 +112,12 @@ a:hover{text-decoration:underline}
 .record-header{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
 .team-flag-sm{width:22px;height:15px;border-radius:2px;object-fit:cover;border:1px solid var(--border);vertical-align:middle}
 .team-flag-sm-placeholder{display:inline-flex;width:22px;height:15px;border-radius:2px;background:var(--divider);align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
-.record-summary{font-size:13px;color:var(--primary);margin-bottom:4px;font-weight:600}
+.record-summary{display:flex;align-items:center;gap:8px;margin-left:6px;font-size:12px;color:var(--text2);font-weight:500}
+.record-summary-bar{width:80px;height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--divider);flex-shrink:0}
+.record-summary-bar .win-seg{background:var(--green)}
+.record-summary-bar .draw-seg{background:var(--yellow)}
+.record-summary-bar .lose-seg{background:var(--red)}
+.record-summary-text{white-space:nowrap}
 .record-table{width:100%;border-collapse:collapse;font-size:13px}
 .record-table th{text-align:left;padding:5px 6px;background:var(--divider);font-weight:600;color:var(--text2);font-size:12px;border-bottom:1px solid var(--border)}
 .record-table td{padding:5px 6px;border-bottom:1px solid var(--divider);color:var(--text2)}
@@ -130,7 +135,7 @@ a:hover{text-decoration:underline}
 .analyst-card.side-b{border-left-color:var(--side-b)}
 .analyst-card.side-x{border-left-color:var(--side-x)}
 .analyst-card.changed{border-left-color:var(--orange)}
-.analyst-card.highlighted{box-shadow:0 0 0 3px var(--highlight),0 4px 12px rgba(0,0,0,0.1)}
+.analyst-card.highlighted{box-shadow:0 0 0 4px var(--highlight),0 4px 16px rgba(0,0,0,0.12)}
 .analyst-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .analyst-avatar{width:36px;height:36px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center}
 .analyst-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
@@ -171,7 +176,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 .modal-pred-chain .chain-node:hover{filter:brightness(0.95)}
 .modal-speeches{margin-top:12px}
 .modal-speech{padding:10px 12px;margin-bottom:8px;background:#fafafa;border-radius:6px;border-left:3px solid var(--border);font-size:13px;color:var(--text2);line-height:1.5;transition:background .3s,border-color .3s}
-.modal-speech.highlight{background:#f0f0f0;border-left-color:var(--highlight)}
+.modal-speech.highlight{background:#fff8e0;border-left-color:#f5a623}
 .modal-speech .speech-opinion{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
 .modal-speech .speech-action{font-weight:600;color:var(--text);font-size:12px;margin-bottom:2px}
 
@@ -426,8 +431,11 @@ function renderPredictionHero(){
 
   // Main result centered
   html+=`<div class="pred-hero-main">`;
-  if(fp)html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)}</span></div>
+  if(fp){
+    const winnerFlag=smallFlagHtml(fp.winner);
+    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)}</span></div>
     <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
+  }
   html+=`</div>`;
 
   html+=`<div class="pred-hero-bar"><div class="pred-hero-bar-title">辩手预测分布</div>
@@ -477,8 +485,22 @@ function renderContext(){
     let teamTag='';
     if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
     html+='<div class="context-card">';
-    html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title)}</div>`;
-    if(rec.summary)html+=`<div class="record-summary">${esc(rec.summary)}</div>`;
+    // Parse summary for W/D/L bar
+    let summaryHtml='';
+    if(rec.summary){
+      const m=rec.summary.match(/(\d+)胜(\d+)平(\d+)负/);
+      if(m){
+        const w=parseInt(m[1]),d=parseInt(m[2]),l=parseInt(m[3]),t=w+d+l;
+        const wp=Math.round(w/t*100),dp=Math.round(d/t*100),lp=100-wp-dp;
+        summaryHtml=`<span class="record-summary">
+          <span class="record-summary-bar"><span class="win-seg" style="width:${wp}%"></span><span class="draw-seg" style="width:${dp}%"></span><span class="lose-seg" style="width:${lp}%"></span></span>
+          <span class="record-summary-text">${w}胜${d}平${l}负</span>
+        </span>`;
+      }else{
+        summaryHtml=`<span class="record-summary">${esc(rec.summary)}</span>`;
+      }
+    }
+    html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title)}${summaryHtml}</div>`;
     if(rec.matches.length){
       html+=`<table class="record-table"><thead><tr><th class="date-col">日期</th><th>对阵</th><th class="comp-col">赛事</th></tr></thead><tbody>`;
       for(const m of rec.matches){
@@ -656,49 +678,17 @@ function renderVerdict(){
   if(DATA.arbitrator_verdict?.content){
     const c=DATA.arbitrator_verdict.content;
     const rm=c.match(/【理由】(.+?)(?=\n---|\n【预测】|$)/s);
-    const pm=c.match(/【预测】(.+?)(?=\n【论点】|\n【引用】|$)/s);
-
-    // Extract verdict details from prediction section
-    let winner='',score='',conf='',confNum=0;
-    if(pm){
-      const predText=pm[1].trim();
-      const wm=predText.match(/胜方[：:]\s*(.+)/);
-      const sm=predText.match(/比分[：:]\s*(.+)/);
-      const cm=predText.match(/准确度[：:]\s*(\d+)\s*\/\s*(\d+)/);
-      if(wm)winner=wm[1].trim();
-      if(sm)score=sm[1].trim();
-      if(cm){conf=cm[0].trim();confNum=parseInt(cm[1])}
-    }
-    // Fallback: try to parse from final_prediction
-    if(!winner&&DATA.final_prediction){
-      winner=DATA.final_prediction.winner||'';
-      score=DATA.final_prediction.score||'';
-      confNum=DATA.final_prediction.confidence||0;
-      if(confNum)conf=`准确度 ${confNum}/10`;
-    }
-    const confPct=Math.round(confNum/10*100);
-    const confClass=confNum>=7?'high':confNum>=4?'mid':'low';
-
-    const{teamA,teamB}=parseTopic(DATA.topic);
-    // Determine winner side for flag
-    const winnerSide=winner.includes(teamA)?'a':winner.includes(teamB)?'b':'x';
 
     html+=`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--divider)">
       <div style="font-size:15px;font-weight:700;margin-bottom:8px">⚖️ 仲裁者裁定</div>`;
 
-    html+=`<div class="verdict-final-box">
-      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}</div>
-      ${score?`<div class="vf-score">${esc(score)}</div>`:''}
-      ${confNum?`<div class="vf-conf-row"><div class="vf-conf-bar"><div class="vf-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="vf-conf-text">准确度 ${confNum}/10</span></div>`:''}
-    </div>`;
-
-    if(rm)html+=`<div class="verdict-text" style="margin-top:8px">${escAndBold(rm[1].trim().substring(0,200))}</div>`;
+    if(rm)html+=`<div class="verdict-text" style="margin-top:8px">${escAndBold(rm[1].trim().substring(0,400))}</div>`;
     html+='</div>';
   }
 
   if(DATA.summary?.content){
     const secs=DATA.summary.content.split(/\n(?=##\s)/);
-    html+='<div class="summary-text"><strong>总结</strong>';
+    html+='<div class="summary-text">';
     for(const sec of secs){
       const lines=sec.trim().split('\n'),title=lines[0].replace(/^#+\s*/,''),body=lines.slice(1).join('\n').trim();
       if(!body)continue;

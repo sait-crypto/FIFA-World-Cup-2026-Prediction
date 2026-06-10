@@ -274,10 +274,10 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 }
 .pred-center-popup .popup-name{color:inherit;font-weight:900}
 .pred-center-popup .popup-rest{color:inherit;opacity:1}
-.pred-center-popup.type-conf-down .popup-inner{background:rgba(255,165,2,0.1);border-color:#ffa502;color:#ffa502}
+.pred-center-popup.type-conf-down .popup-inner{background:rgba(239,83,80,0.1);border-color:#ef5350;color:#ef5350}
 .pred-center-popup.type-conf-up .popup-inner{background:rgba(46,213,115,0.1);border-color:#2ed573;color:#2ed573}
-.pred-center-popup.type-score .popup-inner{background:rgba(255,193,7,0.1);border-color:#ffc107;color:#ffc107}
-.pred-center-popup.type-stance .popup-inner{background:rgba(255,152,0,0.12);border-color:#ff9800;color:#ff9800}
+.pred-center-popup.type-score .popup-inner{background:rgba(239,83,80,0.1);border-color:#ef5350;color:#ef5350}
+.pred-center-popup.type-stance .popup-inner{background:rgba(229,57,70,0.12);border-color:#e53946;color:#e53946}
 @keyframes pred-popup-in{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}60%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 @keyframes pred-popup-out{0%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(0.9)}}
 
@@ -477,8 +477,11 @@ const TW_BATCH = 3;           // 每帧字符数
 // ── 图片资源 ──
 // 图片统一放在 images/ 目录下，填写文件名即可
 const AVATAR_IMAGES = {
-  // '分析师1': 'images/analyst1.png',
-  // '分析师2': 'images/analyst2.png',
+  '分析师1': 'images/1.png',
+  '分析师2': 'images/2.png',
+  '分析师3': 'images/3.png',
+  '分析师4': 'images/4.png',
+  '分析师5': 'images/5.png',
   // '审核员':   'images/curator.png',
   // '仲裁者':   'images/arbitrator.png',
   // '场记':     'images/scribe.png',
@@ -676,7 +679,20 @@ function init(){
   document.getElementById('dialog-area').innerHTML='';
   document.getElementById('victory-screen').classList.remove('active');
   hideDuelOverlay();clearBattle();updateProgress();
+  // Initial position: set table to configured CY
   document.getElementById('table').style.top=CY+'px';
+  // After layout settles, recalculate positions based on actual container size
+  // Use multiple rAF rounds and a small timeout to ensure container has final dimensions
+  const initLayout=()=>{
+    const battle=document.getElementById('battle');
+    if(battle&&battle.offsetWidth>0&&battle.offsetHeight>0){
+      updatePentagonPositions();
+    }else{
+      // Container not ready yet, retry
+      setTimeout(initLayout,50);
+    }
+  };
+  requestAnimationFrame(()=>requestAnimationFrame(initLayout));
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1262,11 +1278,8 @@ function stepForward(){
   if(duelAnimLock){return true}
   // If quote is pending (pre-attack quote shown, waiting for click to start attack)
   if(quotePending){
-    // First: complete any running typewriters (same as normal bubble behavior)
-    const hadTyping=twTimers.length>0;
-    completeTypewriters();
-    if(hadTyping){return true} // Just completed typewriter, wait for next click to start attack
     quotePending=false;
+    completeTypewriters(); // Finish quote bubble text immediately
     // Start attack animations using saved duel info
     duelAnimLock=true;
     startAttackAnimations(duelSpeaker,duelTarget,duelArrowType||'challenge',currentDuelTargetPeek,currentDuelMsg);
@@ -1704,8 +1717,8 @@ function updatePentagonPositions(){
   if(!battle)return;
   const bw=battle.offsetWidth;
   const bh=battle.offsetHeight;
-  // Scale pentagon radius to actual container size (base = 640x580)
-  // Center position stays at user-configured CX/CY (not scaled)
+  if(bw===0||bh===0)return; // Not yet laid out
+  // Scale pentagon to actual container size (base = 640x580)
   const scaleX=bw/640;
   const scaleY=bh/580;
   const cx=CX*scaleX, cy=CY*scaleY, rx=RX*scaleX, ry=RY*scaleY;
@@ -1723,9 +1736,10 @@ function updatePentagonPositions(){
   // Special agents: keep relative to pentagon center
   const sa=document.getElementById('special-agents');
   if(sa)sa.style.top=(cy+ry+SP_OFFSET_Y)+'px';
-  // Table position: always at user-configured CY (not scaled)
-  // left stays at CSS default (50% with transform for centering)
-  document.getElementById('table').style.top=CY+'px';
+  // Table position: scaled proportionally with container
+  // Remove inline top so CSS top:50% + transform can center it, then offset by CY
+  const tbl=document.getElementById('table');
+  tbl.style.top=(bh*CY/580)+'px';
 }
 window.addEventListener('resize',updatePentagonPositions);
 </script>
