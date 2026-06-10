@@ -262,30 +262,24 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 /* ── Prediction Change Center Popup ── */
 .pred-center-popup{
-  position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);
+  position:absolute;left:50%;transform:translate(-50%,-50%);
   z-index:70;pointer-events:none;text-align:center;
-  animation:pred-popup-in .4s steps(4) forwards,pred-popup-out .5s steps(4) 2.5s forwards;
+  animation:pred-popup-in .3s steps(4) forwards,pred-popup-out .4s steps(4) forwards;
 }
 .pred-center-popup .popup-inner{
-  padding:16px 28px;border-radius:8px;font-size:16px;font-weight:bold;
+  padding:14px 24px;border-radius:8px;font-size:16px;font-weight:bold;
   text-shadow:2px 2px 0 #000;line-height:1.6;
   border:3px solid;max-width:400px;
   font-family:'Microsoft YaHei',sans-serif;
 }
-.pred-center-popup.type-conf-down .popup-inner{background:rgba(239,83,80,0.2);border-color:#ef5350;color:#ef5350}
-.pred-center-popup.type-conf-up .popup-inner{background:rgba(46,213,115,0.2);border-color:#2ed573;color:#2ed573}
-.pred-center-popup.type-score .popup-inner{background:rgba(255,165,2,0.2);border-color:#ffa502;color:#ffa502}
-.pred-center-popup.type-stance .popup-inner{background:rgba(229,69,96,0.25);border-color:#e94560;color:#e94560}
+.pred-center-popup .popup-name{color:inherit;font-weight:900}
+.pred-center-popup .popup-rest{color:inherit;opacity:1}
+.pred-center-popup.type-conf-down .popup-inner{background:rgba(255,165,2,0.1);border-color:#ffa502;color:#ffa502}
+.pred-center-popup.type-conf-up .popup-inner{background:rgba(46,213,115,0.1);border-color:#2ed573;color:#2ed573}
+.pred-center-popup.type-score .popup-inner{background:rgba(255,193,7,0.1);border-color:#ffc107;color:#ffc107}
+.pred-center-popup.type-stance .popup-inner{background:rgba(255,152,0,0.12);border-color:#ff9800;color:#ff9800}
 @keyframes pred-popup-in{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}60%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 @keyframes pred-popup-out{0%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(0.9)}}
-
-/* ── Pre-attack Quote Display ── */
-.duel-quote-bubble{
-  width:70%;padding:6px 10px;margin:6px 0;font-size:10px;line-height:1.6;
-  background:var(--bg2);border:2px solid #ffa502;word-break:break-all;white-space:pre-wrap;
-  flex-shrink:0;font-family:'Microsoft YaHei',sans-serif;
-}
-.duel-quote-bubble .qb-label{font-size:9px;font-weight:bold;color:#ffa502;margin-bottom:2px}
 
 /* Controls */
 #ctrl{height:24px;background:var(--bar-bg);border-top:2px solid var(--border);display:flex;align-items:center;padding:0 8px;gap:6px;flex-shrink:0;font-size:6px}
@@ -445,7 +439,8 @@ const AVATAR_W = 96;          // avatar容器宽度
 const AVATAR_SPRITE = 48;     // avatar sprite尺寸
 const AVATAR_NAME_TOP = 12;   // 名字距sprite的间距（可调）
 const AVATAR_HP_BAR_W = 74;   // HP条宽度
-const TABLE_Y = 275;           // 大方桌Y轴位置（可调，即PENT_CY）
+const PRED_POPUP_DURATION = 2200; // 中心跳字持续时间(ms)（可调）
+const PRED_POPUP_Y = 42;      // 中心跳字Y轴位置(%)（可调）
 
 // ── 功能Agent布局 ──
 const SP_GAP = 30;            // 三个功能agent间距
@@ -545,6 +540,7 @@ const PRED_CHANGE_MESSAGES = {
 let DATA=null,flat=[],idx=-1,playing=false,timer=null;
 let avatars={},predMap={},predPtr={};
 let currentChainRoot=null,duelSpeaker='',duelTarget='',currentDuelPair='';
+let currentDuelTargetPeek=null,currentDuelMsg=null,duelArrowType='';
 let victoryShown=false;
 let chainChanges=[]; // {speaker, target, changed, oldPred, newPred, arrowType}
 let inChain=false;
@@ -680,7 +676,7 @@ function init(){
   document.getElementById('dialog-area').innerHTML='';
   document.getElementById('victory-screen').classList.remove('active');
   hideDuelOverlay();clearBattle();updateProgress();
-  document.getElementById('table').style.top=TABLE_Y+'px';
+  document.getElementById('table').style.top=CY+'px';
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1043,28 +1039,48 @@ function showPredChange(name,oldP,newP){
 
 function pickRandom(arr){return arr[Math.floor(Math.random()*arr.length)]}
 
-function showPredCenterPopup(text,type){
+function showPredCenterPopup(text,type,name){
   const container=document.getElementById('duel-overlay').classList.contains('active')
     ?document.getElementById('duel-overlay'):document.getElementById('battle');
   const el=document.createElement('div');
   el.className='pred-center-popup '+type;
-  el.innerHTML=`<div class="popup-inner">${escapeHtml(text)}</div>`;
+  el.style.top=PRED_POPUP_Y+'%';
+  // Determine animation duration from param
+  const inMs=300,outMs=400,stayMs=PRED_POPUP_DURATION-inMs-outMs;
+  el.style.animationDelay=`0s, ${stayMs}ms`;
+  // Use avatar color for the analyst name portion
+  const av=avatars[name];const nameColor=av?av.color:'';
+  let innerHtml=escapeHtml(text);
+  if(name&&nameColor){
+    // Replace the name in text with colored version
+    const nameEsc=escapeHtml(name);
+    innerHtml=innerHtml.replace(nameEsc,`<span class="popup-name" style="color:${nameColor}">${nameEsc}</span>`);
+  }
+  el.innerHTML=`<div class="popup-inner">${innerHtml}</div>`;
   container.appendChild(el);
-  setTimeout(()=>el.remove(),3500);
+  setTimeout(()=>el.remove(),PRED_POPUP_DURATION);
 }
 
 function showPreAttackQuoteInChat(targetName,content){
-  // Only add at the START of a new duel (first message in chat)
+  // Show target's last speech as a normal duel chat bubble, same format as other messages
+  // This only happens at the START of a new duel (when chat is empty)
   const chat=document.getElementById('duel-chat');
-  if(!chat||chat.children.length>0)return; // Only if chat is empty (duel just started)
+  if(!chat||chat.children.length>0)return;
   if(!content)return;
+  const av=avatars[targetName];const nc=av?av.color:'#fff';
+  // Determine which side the target is on (right if not the speaker)
+  const isL=false; // target is always on the right (opposite of speaker)
+  let cls='duel-bubble right'; // target side
   const box=document.createElement('div');
-  box.className='duel-quote-bubble';
-  const short=content.substring(0,150)+(content.length>150?'...':'');
-  box.innerHTML=`<div class="qb-label">📎 ${escapeHtml(targetName)} 此前发言</div><div>${escapeHtml(short)}</div>`;
+  box.className=cls;
+  box.innerHTML=`<div class="bhead"><span class="bname" style="color:${nc}">${escapeHtml(targetName)}</span><span class="btag" style="border-color:${nc};color:${nc}">此前发言</span></div><div class="bbody"></div>`;
   chat.appendChild(box);
+  const short=content.substring(0,150)+(content.length>150?'...':'');
+  typewriter(box.querySelector('.bbody'),short,TW_SPEED);
   chat.scrollTop=chat.scrollHeight;
 }
+
+let quotePending=false; // true when quote bubble is shown and waiting for click to start attack
 
 function findLastSpeechContent(name){
   for(let i=idx;i>=0;i--){
@@ -1244,6 +1260,20 @@ function applyTargetPeek(targetName,peek){if(!peek)return;predMap[targetName]={.
 function stepForward(){
   // If animations are locked (duel playing), skip this step
   if(duelAnimLock){return true}
+  // If quote is pending (pre-attack quote shown, waiting for click to start attack)
+  if(quotePending){
+    // First: complete any running typewriters (same as normal bubble behavior)
+    const hadTyping=twTimers.length>0;
+    completeTypewriters();
+    if(hadTyping){return true} // Just completed typewriter, wait for next click to start attack
+    quotePending=false;
+    // Start attack animations using saved duel info
+    duelAnimLock=true;
+    startAttackAnimations(duelSpeaker,duelTarget,duelArrowType||'challenge',currentDuelTargetPeek,currentDuelMsg);
+    addDuelBubble(currentDuelMsg);
+    setTimeout(()=>{duelAnimLock=false},CHALLENGE_ANIM_MS);
+    return true;
+  }
   // If there's a pending duel (arrow shown, waiting for click), process it
   if(duelPending){processPendingDuel();return true}
   // If trophy is scheduled (arbitrator bubble shown), dismiss bubble and show trophy
@@ -1258,7 +1288,7 @@ function stepForward(){
 
 function stepBack(){
   if(idx<=0)return;completeTypewriters();const target=idx-1;
-  duelPending=null;stanceBubbleEl=null;arbBubbleEl=null;
+  duelPending=null;quotePending=false;stanceBubbleEl=null;arbBubbleEl=null;
   document.getElementById('dialog-area').innerHTML='';currentChainRoot=null;currentDuelPair='';inChain=false;chainChanges=[];
   document.getElementById('victory-screen').classList.remove('active');victoryShown=false;
   document.getElementById('battle').querySelectorAll('.speech-bubble,.fx-icon,.float-text,.projectile,.magic-circle,.rt-arrow').forEach(e=>e.remove());
@@ -1391,9 +1421,8 @@ function showDuelForItem(msg,predInfo,autoProceed){
     }else{
       updateArrowColor(arrowType);
     }
-    if(isResponse)runResponseAnimations(msg.speaker,predInfo,msg);
-    else runChallengeAnimations(msg.speaker,msg.target,arrowType,targetPeek,msg);
-    addDuelBubble(msg);
+    if(isResponse){runResponseAnimations(msg.speaker,predInfo,msg);addDuelBubble(msg)}
+    else runChallengeAnimations(msg.speaker,msg.target,arrowType,targetPeek,msg,true);
   }
 }
 
@@ -1410,20 +1439,55 @@ function processPendingDuel(){
   showDuelOverlay(p.speaker,p.target,p.arrowType);
   // Lock animations to prevent auto-play from advancing too fast
   duelAnimLock=true;
-  const animDuration=p.isResponse?RESPONSE_ANIM_MS:CHALLENGE_ANIM_MS;
   setTimeout(()=>{
-    if(p.isResponse)runResponseAnimations(p.speaker,p.predInfo,p.msg);
-    else runChallengeAnimations(p.speaker,p.target,p.arrowType,p.targetPeek,p.msg);
-    addDuelBubble(p.msg);
+    if(p.isResponse){
+      runResponseAnimations(p.speaker,p.predInfo,p.msg);
+      addDuelBubble(p.msg);
+      // Unlock after response animation completes
+      setTimeout(()=>{duelAnimLock=false},RESPONSE_ANIM_MS);
+    }else{
+      // runChallengeAnimations handles its own lock management (may set quotePending)
+      runChallengeAnimations(p.speaker,p.target,p.arrowType,p.targetPeek,p.msg);
+      // Only unlock if quote is NOT pending (otherwise stepForward will manage the lock)
+      if(!quotePending){
+        setTimeout(()=>{duelAnimLock=false},CHALLENGE_ANIM_MS);
+      }else{
+        // Quote is shown, unlock so user can click to proceed
+        duelAnimLock=false;
+      }
+    }
   },DUEL_ANIM_DELAY);
-  // Unlock after animation completes
-  setTimeout(()=>{duelAnimLock=false},DUEL_ANIM_DELAY+animDuration);
 }
 
-function runChallengeAnimations(speaker,target,arrowType,targetPeek,msg){
+function runChallengeAnimations(speaker,target,arrowType,targetPeek,msg,skipQuote){
   // Pre-attack: show target's last speech as a quote bubble in duel chat (only at duel start)
+  // skipQuote=true means we're in replay/rebuild mode — skip the quote pause entirely
+  const chat=document.getElementById('duel-chat');
   const targetContent=findLastSpeechContent(target);
-  showPreAttackQuoteInChat(target,targetContent);
+  // Save for stepForward quotePending resolution
+  currentDuelTargetPeek=targetPeek;currentDuelMsg=msg;duelArrowType=arrowType;
+  if(!skipQuote&&chat&&chat.children.length===0&&targetContent){
+    showPreAttackQuoteInChat(target,targetContent);
+    if(!playing){
+      // Manual mode: pause here, next click starts the actual attack
+      quotePending=true;
+      return;
+    }
+    // Auto-play: small delay then start attack (with proper lock)
+    duelAnimLock=true;
+    setTimeout(()=>{
+      startAttackAnimations(speaker,target,arrowType,targetPeek,msg);
+      addDuelBubble(msg);
+      setTimeout(()=>{duelAnimLock=false},CHALLENGE_ANIM_MS);
+    },1200);
+    return;
+  }
+  // No quote to show, proceed directly
+  startAttackAnimations(speaker,target,arrowType,targetPeek,msg);
+  addDuelBubble(msg);
+}
+
+function startAttackAnimations(speaker,target,arrowType,targetPeek,msg){
   showCasting(speaker,'attack');
   showDuelSpeechBubble(speaker,msg?.arena_bubble,arrowType);
   setTimeout(()=>showProjectile(speaker,target,arrowType),350);
@@ -1438,20 +1502,20 @@ function runChallengeAnimations(speaker,target,arrowType,targetPeek,msg){
         // Center popup: determine change type
         const stanceChanged=targetPeek.oldPred.winner!==targetPeek.newPred.winner;
         if(stanceChanged){
-          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.stance_changed).replace('{name}',target),'type-stance');
+          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.stance_changed).replace('{name}',target),'type-stance',target);
         }else{
-          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.score_changed).replace('{name}',target),'type-score');
+          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.score_changed).replace('{name}',target),'type-score',target);
         }
       }else if(targetPeek.confDelta!==0){
         applyTargetPeek(target,targetPeek);
         if(targetPeek.confDelta>0){
           showAccUp(target);
           showFloatTextAt(target,`准+${targetPeek.confDelta}`,'acc-up');
-          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.conf_up).replace('{name}',target),'type-conf-up');
+          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.conf_up).replace('{name}',target),'type-conf-up',target);
         }else{
           showHitCritical(target);
           showFloatTextAt(target,`准${targetPeek.confDelta}`,'acc-down');
-          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.conf_down).replace('{name}',target),'type-conf-down');
+          showPredCenterPopup(pickRandom(PRED_CHANGE_MESSAGES.conf_down).replace('{name}',target),'type-conf-down',target);
         }
       }else{
         showDefend(target);
@@ -1539,7 +1603,7 @@ document.getElementById('speed').onchange=()=>{if(playing){stopPlay();startPlay(
 
 document.getElementById('progress').onclick=e=>{
   stopPlay();const rect=e.currentTarget.getBoundingClientRect();const pct=(e.clientX-rect.left)/rect.width;const target=Math.round(pct*(flat.length-1));
-  duelPending=null;stanceBubbleEl=null;arbBubbleEl=null;
+  duelPending=null;quotePending=false;stanceBubbleEl=null;arbBubbleEl=null;
   document.getElementById('dialog-area').innerHTML='';currentChainRoot=null;currentDuelPair='';inChain=false;chainChanges=[];
   document.getElementById('victory-screen').classList.remove('active');victoryShown=false;
   document.getElementById('battle').querySelectorAll('.speech-bubble,.fx-icon,.float-text,.projectile,.magic-circle,.rt-arrow').forEach(e=>e.remove());
@@ -1588,6 +1652,20 @@ document.addEventListener('click',e=>{const p=document.getElementById('ev-popup'
 // Keyboard
 document.addEventListener('keydown',e=>{if(!DATA)return;if(e.key===' '||e.code==='Space'){e.preventDefault();playing?stopPlay():startPlay()}else if(e.key==='ArrowRight'){e.preventDefault();stopPlay();stepForward()}else if(e.key==='ArrowLeft'){e.preventDefault();stopPlay();stepBack()}});
 
+// Mouse click on game area: left = forward, right = backward
+document.getElementById('game').addEventListener('click',e=>{
+  if(!DATA)return;
+  // Don't intercept clicks on controls, evidence links, etc.
+  if(e.target.closest('#ctrl')||e.target.closest('#ev-popup')||e.target.closest('.evidence-link')||e.target.closest('button')||e.target.closest('select'))return;
+  stopPlay();stepForward();
+});
+document.getElementById('game').addEventListener('contextmenu',e=>{
+  if(!DATA)return;
+  e.preventDefault();
+  if(e.target.closest('#ctrl')||e.target.closest('#ev-popup'))return;
+  stopPlay();stepBack();
+});
+
 // ═══════════════════════════════════════════════════════════
 // UTILS
 // ═══════════════════════════════════════════════════════════
@@ -1626,7 +1704,8 @@ function updatePentagonPositions(){
   if(!battle)return;
   const bw=battle.offsetWidth;
   const bh=battle.offsetHeight;
-  // Scale pentagon to actual container size (base = 640x580)
+  // Scale pentagon radius to actual container size (base = 640x580)
+  // Center position stays at user-configured CX/CY (not scaled)
   const scaleX=bw/640;
   const scaleY=bh/580;
   const cx=CX*scaleX, cy=CY*scaleY, rx=RX*scaleX, ry=RY*scaleY;
@@ -1641,11 +1720,12 @@ function updatePentagonPositions(){
       av.el.dataset.cx=px;av.el.dataset.cy=py;
     }
   }
-  // Update special agents position
+  // Special agents: keep relative to pentagon center
   const sa=document.getElementById('special-agents');
   if(sa)sa.style.top=(cy+ry+SP_OFFSET_Y)+'px';
-  // Update table position
-  document.getElementById('table').style.top=cy+'px';
+  // Table position: always at user-configured CY (not scaled)
+  // left stays at CSS default (50% with transform for centering)
+  document.getElementById('table').style.top=CY+'px';
 }
 window.addEventListener('resize',updatePentagonPositions);
 </script>
