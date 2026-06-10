@@ -571,7 +571,7 @@ function renderAnalysts(){
       </div>
       <div class="analyst-current-opinion ${opinionSideCls}">${smallFlagHtml(curWinner)} ${esc(opinionStr.trim())} <span style="font-size:13px;font-weight:500">准确度 ${curConf}/10</span></div>
       ${chainHtml}
-      ${summary?`<div class="analyst-summary">${escAndBold(summary.replace(/\*\*[^*]+\*\*[：:]/g,'').substring(0,120))}</div>`:''}
+      ${summary?`<div class="analyst-summary">${escAndBold(summary.replace(/\*\*[^*]+\*\*[：:]/g,'').substring(0,180))}</div>`:''}
       ${profile.evolution&&profile.evolution!=='立场坚定'?`<div class="analyst-evolution">${esc(profile.evolution)}</div>`:''}
     </div>`;
   }
@@ -680,7 +680,7 @@ function renderVerdict(){
         <div class="phase-badge ${pv.consensus?'yes':'no'}">${pv.phase}</div>
         <div class="phase-content">
           <div class="phase-title">${pn[pv.phase]||'第'+pv.phase+'阶段'} ${pv.consensus?'<span class="consensus-yes">✅ 共识达成</span>':'<span class="consensus-no">❌ 未达共识</span>'}</div>
-          <div class="phase-desc">${esc(reason.substring(0,120))}${reason.length>120?'...':''}</div>
+          <div class="phase-desc">${esc(reason.substring(0,240))}${reason.length>240?'...':''}</div>
         </div></div>`;
     }
     html+='</div>';
@@ -723,7 +723,7 @@ function renderVerdict(){
       ${confNum?`<div class="vf-conf-row"><div class="vf-conf-bar"><div class="vf-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="vf-conf-text">准确度 ${confNum}/10</span></div>`:''}
     </div>`;
 
-    if(rm)html+=`<div class="verdict-text" style="margin-top:8px">${escAndBold(rm[1].trim().substring(0,400))}</div>`;
+    if(rm)html+=`<div class="verdict-text" style="margin-top:8px">${escAndBold(rm[1].trim().substring(0,600))}</div>`;
     html+='</div>';
   }
 
@@ -738,7 +738,7 @@ function renderVerdict(){
       // Skip sections whose body is just a prediction summary line
       if(body.match(/^胜方[：:]/)||body.match(/^.*比分[：:].*准确度/))continue;
       if(title)html+=`<h4>${esc(title)}</h4>`;
-      html+=`<div style="font-size:13px;color:var(--text2);line-height:1.5;padding-left:10px">${escAndBold(body.substring(0,400))}${body.length>400?'...':''}</div>`;
+      html+=`<div style="font-size:13px;color:var(--text2);line-height:1.5;padding-left:10px">${escAndBold(body.substring(0,600))}${body.length>600?'...':''}</div>`;
     }
     html+='</div>';
   }
