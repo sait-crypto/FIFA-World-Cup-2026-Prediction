@@ -685,36 +685,27 @@ function init(){
 }
 
 // ── Robust layout initialization ──
-// Ensure pentagon positions are correct regardless of load order
-// Handles: direct open, iframe embed, window.open from index.html
+// Polls #battle dimensions and calls updatePentagonPositions when they change
 let _layoutLastW=0,_layoutLastH=0;
-function ensureLayoutPositions(){
-  if(!DATA||!DATA.agents)return;
-  const b=document.getElementById('battle');
-  if(!b)return;
-  const w=b.offsetWidth,h=b.offsetHeight;
-  if(w>0&&h>0&&(w!==_layoutLastW||h!==_layoutLastH)){
-    _layoutLastW=w;_layoutLastH=h;
-    updatePentagonPositions();
-  }
-}
-// Polling loop that keeps checking for dimension changes (stops after 3s of stability)
 (function setupLayoutObserver(){
-  let stableCount=0;
   function tick(){
-    const prevW=_layoutLastW,prevH=_layoutLastH;
-    ensureLayoutPositions();
-    if(_layoutLastW===prevW&&_layoutLastH===prevH&&_layoutLastW>0)stableCount++;
-    else stableCount=0;
-    if(stableCount<30)setTimeout(tick,100); // 30 × 100ms = 3s stable → stop
+    if(!DATA||!DATA.agents)return;
+    const b=document.getElementById('battle');
+    if(!b)return;
+    const w=b.offsetWidth,h=b.offsetHeight;
+    if(w>0&&h>0&&(w!==_layoutLastW||h!==_layoutLastH)){
+      _layoutLastW=w;_layoutLastH=h;
+      updatePentagonPositions();
+    }
+    // Always keep polling (low cost: just two getBoundingClientRect reads)
+    setTimeout(tick,200);
   }
-  // Start checking
+  // Start checking on various events
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(tick,30));
   else setTimeout(tick,30);
-  window.addEventListener('load',()=>{stableCount=0;setTimeout(tick,30)});
-  window.addEventListener('resize',()=>{stableCount=0;_layoutLastW=0;_layoutLastH=0;setTimeout(tick,30)});
-  // Also re-check when page becomes visible (e.g. tab switch on mobile)
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden){stableCount=0;setTimeout(tick,30)}});
+  window.addEventListener('load',()=>setTimeout(tick,30));
+  window.addEventListener('resize',()=>{_layoutLastW=0;_layoutLastH=0;setTimeout(tick,30)});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){_layoutLastW=0;_layoutLastH=0;setTimeout(tick,30)}});
 })();
 
 // ═══════════════════════════════════════════════════════════
@@ -747,8 +738,15 @@ function buildAvatars(){
     predMap[agent.name]={winner:w,score:s,confidence:c};
     predPtr[agent.name]=0;
   });
-  // Recalculate positions based on actual container size after building
-  ensureLayoutPositions();
+  // Always recalculate positions based on actual container size after building
+  const b=document.getElementById('battle');
+  if(b&&b.offsetWidth>0&&b.offsetHeight>0){
+    updatePentagonPositions();
+  }else{
+    // Container not ready yet, schedule retry
+    setTimeout(()=>updatePentagonPositions(),100);
+    setTimeout(()=>updatePentagonPositions(),500);
+  }
 }
 
 function buildSpecialAgents(){
