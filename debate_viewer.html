@@ -773,8 +773,7 @@ function buildSpecialAgents(){
     if(img){el.style.backgroundImage=`url('${img}')`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.textContent=''}
     else{el.textContent=sp.emoji}
   });
-  const sa=document.getElementById('special-agents');
-  sa.style.top=(CY+RY+90)+'px';
+  // Don't set top here — updatePentagonPositions() handles it
 }
 
 function updateAvatarHP(name){
