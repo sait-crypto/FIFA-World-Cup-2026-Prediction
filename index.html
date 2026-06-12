@@ -63,6 +63,10 @@ a{color:var(--primary);text-decoration:none}
 /* ── Container ── */
 .container{max-width:var(--max-w);margin:0 auto;padding:0 16px}
 
+/* ── Today Button ── */
+.today-btn{display:block;width:100%;max-width:var(--max-w);margin:0 auto;padding:12px 20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-size:14px;font-weight:600;color:var(--primary);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.today-btn:hover{background:var(--primary-light);border-color:var(--primary)}
+
 /* ── Stage Section ── */
 .stage-section[id]{scroll-margin-top:54px}
 .stage-title{font-size:20px;font-weight:800;color:var(--text);margin:28px 0 6px;padding:6px 0 6px 14px;border-left:5px solid var(--primary);background:linear-gradient(90deg,var(--primary-light),transparent);border-radius:0 var(--radius) var(--radius) 0;transition:color .3s,border-color .3s,background .3s}
@@ -89,7 +93,6 @@ a{color:var(--primary);text-decoration:none}
 .team-flag{width:72px;height:48px;border-radius:4px;object-fit:contain;margin:0 auto 4px;border:none;background:none}
 .team-flag-ph{width:72px;height:48px;border-radius:4px;margin:0 auto 4px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--primary);border:none}
 .team-name{font-size:16px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
-.team-rank{font-size:11px;color:var(--text3)}
 .vs-text{font-size:20px;font-weight:800;color:var(--text3);flex-shrink:0}
 
 /* Stance Bar */
@@ -112,7 +115,10 @@ a{color:var(--primary);text-decoration:none}
 .pred-score{font-size:13px;color:var(--text2);font-weight:700;white-space:nowrap}
 .pred-conf-bar{flex:1;min-width:50px;max-width:80px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden;transition:background .3s}
 .pred-conf-label{font-size:11px;color:var(--text3);white-space:nowrap}
-.pred-conf-fill{height:100%;border-radius:4px;width:0%;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94)}
+.pred-conf-fill{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94)}
+.topk-row{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px}
+.topk-label{color:var(--text3);white-space:nowrap}
+.topk-score{color:var(--text2);font-weight:600;padding:1px 5px;background:var(--primary-light);border-radius:3px}
 .pred-conf-fill.high{background:var(--green)}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
@@ -168,6 +174,7 @@ a{color:var(--primary);text-decoration:none}
 <div class="container" id="main-content">
   <div class="loading">正在加载赛程数据...</div>
 </div>
+<a class="today-btn" id="today-btn" style="display:none" onclick="jumpToToday()">📅 跳转至今日赛程</a>
 
 <div class="page-footer">辩论数据由多智能体辩论系统生成 · 仅供参考</div>
 
@@ -235,19 +242,17 @@ function restoreScrollPos(){
 // ═══ 数据提取 ═══
 function extractCardData(data,filename){
   const{teamA,teamB}=parseTopic(data.topic||'');
-  const meta=data.match_meta||{},fp=data.final_prediction,agents=data.agents||[];
+  const meta=data.match_meta||{},fp=data.final_prediction,agents=data.agents||[],ti=data.team_info||{};
   let cA=0,cB=0,cX=0;
   for(const a of agents){const s=sideOf(a,data.topic);if(s==='a')cA++;else if(s==='b')cB++;else cX++}
   const total=agents.length||1;
-  // Top-N 预测（排除最高预测本身）
-  const topPreds=(data.top_predictions||[]).filter(p=>p&&p.winner).slice(0,3);
-  const altPreds=topPreds.filter(p=>p.winner!==fp?.winner||p.score!==fp?.score);
+  const topPreds=(data.top_predictions||[]).slice(1,4);
   return{file:filename,teamA,teamB,stage:meta.stage||'',matchId:meta.match_id||'',
     date:meta.date||'',city:meta.city||'',venue:meta.venue_zh||meta.venue||'',
     winner:fp?.winner||'',score:fp?.score||'',confidence:fp?.confidence||0,
     pctA:Math.round(cA/total*100),pctB:Math.round(cB/total*100),
     pctX:Math.max(0,100-Math.round(cA/total*100)-Math.round(cB/total*100)),
-    consensus:data.consensus,altPreds:altPreds.slice(0,2)};
+    consensus:data.consensus,topPreds};
 }
 
 // ═══ 渲染 ═══
@@ -263,6 +268,10 @@ async function loadSchedule(){
   const sk=buildSkeleton();
   container.innerHTML=sk.html;
   restoreScrollPos();
+  // Show today button if there are matches today
+  const today=new Date().toISOString().slice(0,10);
+  const todayBtn=document.getElementById('today-btn');
+  if(todayBtn && sk.byDate[today])todayBtn.style.display='block';
   setupNavLinks();
   setupScrollHighlight();
 
@@ -278,13 +287,6 @@ async function loadSchedule(){
     if(!el.parentElement.querySelector('.sched-card'))el.textContent='等待最新数据，还未开始预测';
     else el.remove();
   });
-
-  // 触发准确度进度条动画
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    document.querySelectorAll('.pred-conf-fill[data-target-width]').forEach(el=>{
-      el.style.width=el.dataset.targetWidth;
-    });
-  }));
 }
 
 function buildSkeleton(){
@@ -333,17 +335,21 @@ async function handleDropped(fileList){
   for(const f of fileList){if(!f.name.endsWith('.json'))continue;try{matches.push(extractCardData(JSON.parse(await f.text()),f.name))}catch(e){}}
   if(matches.length){const byDate={};for(const m of matches){const d=m.date||'';if(d){if(!byDate[d])byDate[d]=[];byDate[d].push(m)}}
     let html='';for(const stage of TOURNAMENT){html+=`<div class="stage-section" id="stage-${stage.key}"><div class="stage-title">${stage.label}</div>`;for(const sub of stage.subs){html+=`<div class="sub-stage-title">${sub.label}</div>`;for(const d of sub.dates){const ms=byDate[d]||[];html+=`<div class="date-head">${formatDate(d)}</div>`;if(ms.length){html+='<div class="cards">';for(const m of ms)html+=renderCard(m);html+='</div>'}else html+=`<div class="empty-slot">等待最新数据，还未开始预测</div>`}}html+='</div>'}
-    document.getElementById('main-content').innerHTML=html;setupNavLinks();setupScrollHighlight();
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      document.querySelectorAll('.pred-conf-fill[data-target-width]').forEach(el=>{el.style.width=el.dataset.targetWidth});
-    }));}
+    document.getElementById('main-content').innerHTML=html;setupNavLinks();setupScrollHighlight();}
 }
 
 function formatDate(d){
   if(!d)return'';const p=d.split('-');if(p.length!==3)return d;
   const w=['日','一','二','三','四','五','六'];
   const dt=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
-  return `${parseInt(p[1])}月${parseInt(p[2])}日 周${w[dt.getDay()]}`;
+  const isToday=d===new Date().toISOString().slice(0,10);
+  return `🗓 ${parseInt(p[1])}月${parseInt(p[2])}日 周${w[dt.getDay()]}${isToday?' · 今天':''}`;
+}
+
+function jumpToToday(){
+  const today=new Date().toISOString().slice(0,10);
+  const el=document.getElementById('cards-'+today.replace(/-/g,''))||document.querySelector('.date-head');
+  if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
 function renderCard(m){
@@ -361,13 +367,19 @@ function renderCard(m){
   let predHtml='';
   if(m.winner){
     const winLabel=ws!=='x'?esc(m.winner)+' 胜':esc(m.winner);
+    // Top-k alternative predictions
+    let topkHtml='';
+    if(m.topPreds&&m.topPreds.length){
+      const altScores=m.topPreds.map(p=>esc(p.score||'')).filter(s=>s&&s!==m.score).slice(0,2);
+      if(altScores.length) topkHtml=`<div class="topk-row"><span class="topk-label">其它可能比分</span>${altScores.map(s=>`<span class="topk-score">${s}</span>`).join('')}</div>`;
+    }
     predHtml=`<div class="pred-row">
       <span class="pred-winner ${sc}">${winLabel}</span>
       <span class="pred-score">${esc(m.score)}</span>
       <span class="pred-conf-label">准确度</span>
-      <span class="pred-conf-bar"><span class="pred-conf-fill ${cc}" data-target-width="${confPct}%"></span></span>
+      <span class="pred-conf-bar"><span class="pred-conf-fill ${cc}" style="width:${confPct}%"></span></span>
       <span class="pred-conf-text">${m.confidence}/10</span>
-    </div>`;
+    </div>${topkHtml}`;
   }else{
     predHtml='<div class="pred-row" style="color:var(--text3);font-size:13px">暂无预测</div>';
   }
@@ -384,9 +396,9 @@ function renderCard(m){
       </span>
     </div>
     <div class="teams-row">
-      <div class="team-col">${flagImgHtml(teamA)}<div class="team-name">${esc(teamA)}</div>${m.rankingA?`<div class="team-rank">世界排名 ${m.rankingA}</div>`:''}</div>
+      <div class="team-col">${flagImgHtml(teamA)}<div class="team-name">${esc(teamA)}</div></div>
       <div class="vs-text">VS</div>
-      <div class="team-col">${flagImgHtml(teamB)}<div class="team-name">${esc(teamB)}</div>${m.rankingB?`<div class="team-rank">世界排名 ${m.rankingB}</div>`:''}</div>
+      <div class="team-col">${flagImgHtml(teamB)}<div class="team-name">${esc(teamB)}</div></div>
     </div>
     ${barHtml?`<div class="stance-bar">${barHtml}</div><div class="stance-legend"><span><span class="dot" style="background:var(--side-a)"></span>${esc(teamA)}</span><span><span class="dot" style="background:var(--side-x)"></span>平局</span><span><span class="dot" style="background:var(--side-b)"></span>${esc(teamB)}</span></div>`:''}
     ${predHtml}
