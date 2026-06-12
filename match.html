@@ -514,22 +514,11 @@ function renderHeader(){
 
 function renderPredictionHero(){
   const agents=DATA.agents||[],{teamA,teamB}=parseTopic(DATA.topic);
-  const preds=DATA.predictions||{};
-  // 兼容 agents 为空的批量模式：从 predictions 字典推算立场
+  if(!agents.length)return;
   let cA=0,cB=0,cX=0;
-  if(agents.length){
-    for(const a of agents){const s=sideOf(a,DATA.topic);if(s==='a')cA++;else if(s==='b')cB++;else cX++}
-  }else{
-    // 从 predictions 字典推算
-    for(const[name,plist]of Object.entries(preds)){
-      if(!plist||!plist.length)continue;
-      const last=plist[plist.length-1];
-      const w=last.winner||'';
-      if(w.includes(teamA))cA++;else if(w.includes(teamB))cB++;else cX++;
-    }
-  }
-  const total=agents.length||Object.keys(preds).length||1;
-  const pctA=Math.round(cA/total*100),pctB=Math.round(cB/total*100),pctX=Math.max(0,100-pctA-pctB);
+  for(const a of agents){const s=sideOf(a,DATA.topic);if(s==='a')cA++;else if(s==='b')cB++;else cX++}
+  const total=agents.length;
+  const pctA=Math.round(cA/total*100),pctB=Math.round(cB/total*100),pctX=100-pctA-pctB;
   const fp=DATA.final_prediction,confPct=fp?Math.round((fp.confidence||0)/10*100):0;
   const confClass=fp?.confidence>=7?'high':fp?.confidence>=4?'mid':'low';
 
@@ -558,19 +547,9 @@ function renderPredictionHero(){
     </div></div>`;
 
   html+=`<div class="pred-hero-stance">`;
-  if(agents.length){
-    for(const a of agents){
-      const s=sideOf(a,DATA.topic),f=finalPred(a);
-      html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')}${esc(f.score||'')}</span>`;
-    }
-  }else{
-    for(const[name,plist]of Object.entries(preds)){
-      if(!plist||!plist.length)continue;
-      const last=plist[plist.length-1];
-      const w=last.winner||'';
-      const s=w.includes(teamA)?'a':w.includes(teamB)?'b':'x';
-      html+=`<span class="stance-chip side-${s}">${esc(name)} ${esc(w)}${esc(last.score||'')}</span>`;
-    }
+  for(const a of agents){
+    const s=sideOf(a,DATA.topic),f=finalPred(a);
+    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')}${esc(f.score||'')}</span>`;
   }
   html+='</div>';
 
@@ -706,28 +685,14 @@ function renderContext(){
 }
 
 function renderAnalysts(){
-  const agents=DATA.agents||[];
-  const preds=DATA.predictions||{};
+  const agents=DATA.agents||[];if(!agents.length)return;
   const profiles=DATA.agent_profiles||{};
-
-  // agents 为空时从 predictions 构建虚拟 agent 列表
-  let agentList=agents;
-  if(!agents.length&&Object.keys(preds).length){
-    agentList=Object.entries(preds).map(([name,plist])=>({
-      name,
-      stance:'',
-      perspective_short:'',
-      prediction_history:plist.map(p=>({winner:p.winner,score:p.score,confidence:p.confidence,changed:false})),
-    }));
-  }
-  if(!agentList.length)return;
-
   const firstSummaries={};
   for(const msg of(DATA.rounds?.[0]||[]))if(msg.arena_summary&&msg.speaker)firstSummaries[msg.speaker]=msg.arena_summary;
 
   let html=`<div class="section-title">辩手观点</div><div class="analyst-grid">`;
-  for(let ai=0;ai<agentList.length;ai++){
-    const a=agentList[ai];
+  for(let ai=0;ai<agents.length;ai++){
+    const a=agents[ai];
     const s=sideOf(a,DATA.topic),initial=initialPred(a),final=finalPred(a),changed=hasChanged(a);
     const profile=profiles[a.name]||{};
     const sideCls=changed?'changed':s==='a'?'side-a':s==='b'?'side-b':'side-x';
@@ -753,7 +718,7 @@ function renderAnalysts(){
       chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(history[0].winner||'')}${esc(history[0].score||'')}准${history[0].confidence||''}</span></div>`;
     }
 
-    html+=`<div class="analyst-card ${sideCls}" data-name="${esc(a.name)}"${agents.length?` onclick="showAnalystModal('${esc(a.name)}')"`:''}>
+    html+=`<div class="analyst-card ${sideCls}" data-name="${esc(a.name)}" onclick="showAnalystModal('${esc(a.name)}')">
       <div class="analyst-header">
         ${avatarHtml(a.name,ai)}
         <div><div class="analyst-name">${esc(a.name)}</div><div class="analyst-perspective">${esc(a.perspective_short||'')}</div></div>

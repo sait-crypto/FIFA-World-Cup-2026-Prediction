@@ -8,8 +8,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --primary:#1678F2;--primary-dark:#125ccc;--primary-light:#e8f0fe;
-  --bg:#f5f5f5;--card:#fff;--border:#e8e8e8;--divider:#eee;
-  --text:#222;--text2:#555;--text3:#999;
+  --bg:#f5f5f5;--card:#fff;--border:#e8e8e8;--divider:#f1f1f1;
+  --text:#222;--text2:#555;--text3:#888;
   --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--blue:#2980b9;--yellow:#f0ad4e;
   --side-a:#e74c3c;--side-b:#2980b9;--side-x:#f0ad4e;
   --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.08);
@@ -20,11 +20,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","
 a{color:var(--primary);text-decoration:none}
 
 /* ── Sticky Nav ── */
-.sticky-nav{position:sticky;top:0;z-index:100;background:rgba(22,120,242,0.96);backdrop-filter:blur(8px);padding:8px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.sticky-nav{position:sticky;top:0;z-index:100;background:rgba(22,120,242,0.95);backdrop-filter:blur(8px);padding:8px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 .nav-brand{color:#fff;font-size:14px;font-weight:700;letter-spacing:1px;white-space:nowrap}
 .nav-spacer{flex:1}
 .nav-links{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-.nav-link{color:rgba(255,255,255,0.6);font-size:12px;padding:4px 12px;border-radius:16px;transition:all .2s;text-decoration:none;white-space:nowrap;cursor:pointer}
+.nav-link{color:rgba(255,255,255,0.65);font-size:12px;padding:4px 12px;border-radius:16px;transition:all .2s;text-decoration:none;white-space:nowrap}
 .nav-link:hover,.nav-link.active{background:rgba(255,255,255,0.2);color:#fff}
 
 /* ── Hero ── */
@@ -46,40 +46,41 @@ a{color:var(--primary);text-decoration:none}
 .date-head{font-size:13px;font-weight:600;color:var(--text3);margin:14px 0 6px;padding-left:4px}
 
 /* ── Cards Grid ── */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;align-items:start}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;align-items:start}
 
 /* ── Schedule Card ── */
 .sched-card{
   background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
   padding:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;
-  text-decoration:none;color:var(--text);display:flex;flex-direction:column;
+  text-decoration:none;color:var(--text);display:block;
   border-left:4px solid var(--text3);
 }
 .sched-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
 .sched-card.side-a{border-left-color:var(--side-a)}
 .sched-card.side-b{border-left-color:var(--side-b)}
 .sched-card.side-x{border-left-color:var(--side-x)}
-.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;gap:4px}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;gap:6px}
 .stage-tag{background:var(--primary-light);color:var(--primary);padding:2px 8px;border-radius:4px;font-weight:600;white-space:nowrap;flex-shrink:0}
-.city-tag{color:var(--text3);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+.city-tag{color:var(--text3);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;text-align:right}
 
 /* Teams Row */
-.teams-row{display:flex;align-items:flex-start;justify-content:center;gap:10px;margin-bottom:10px}
+.teams-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
 .team-col{text-align:center;flex:1;min-width:0}
 .team-flag{width:72px;height:48px;border-radius:4px;object-fit:cover;margin:0 auto 4px;border:1px solid var(--border);background:var(--divider)}
 .team-flag-ph{width:72px;height:48px;border-radius:4px;margin:0 auto 4px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--primary)}
-.team-name{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.team-name{font-size:16px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 .team-rank{font-size:11px;color:var(--text3)}
-.vs-text{font-size:20px;font-weight:800;color:var(--text3);flex-shrink:0;line-height:48px}
+.vs-text{font-size:20px;font-weight:800;color:var(--text3);flex-shrink:0}
 
 /* Stance Bar: 红(主) → 黄(平) → 蓝(客) */
-.stance-bar{display:flex;height:20px;border-radius:10px;overflow:hidden;margin:8px 0 2px;background:var(--divider)}
-.stance-bar .seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;min-width:0;overflow:hidden;transition:width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
+.stance-bar{display:flex;height:20px;border-radius:10px;overflow:hidden;margin:8px 0;background:var(--divider)}
+.stance-bar .seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;min-width:22px}
 .stance-bar .seg.seg-a{background:var(--side-a)}
 .stance-bar .seg.seg-x{background:var(--side-x)}
 .stance-bar .seg.seg-b{background:var(--side-b)}
 .stance-legend{display:flex;gap:14px;font-size:11px;color:var(--text3);margin-top:3px}
 .stance-legend .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:3px}
+.stance-legend span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* Prediction Row */
 .pred-row{display:flex;align-items:center;gap:8px;margin-top:8px}
@@ -88,15 +89,15 @@ a{color:var(--primary);text-decoration:none}
 .pred-winner.side-b{color:var(--side-b)}
 .pred-winner.side-x{color:var(--side-x)}
 .pred-score{font-size:13px;color:var(--text2);font-weight:700;white-space:nowrap}
-.pred-conf-bar{width:60px;height:6px;background:var(--divider);border-radius:3px;overflow:hidden;flex-shrink:0}
-.pred-conf-fill{height:100%;border-radius:3px;transition:width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
+.pred-conf-bar{flex:1;min-width:50px;max-width:80px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden}
+.pred-conf-fill{height:100%;border-radius:4px;width:0;transition:width 0.8s cubic-bezier(0.25,0.46,0.45,0.94)}
 .pred-conf-fill.high{background:var(--green)}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
 .pred-conf-text{font-size:11px;color:var(--text3);white-space:nowrap}
 
 /* Consensus Badge */
-.consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;white-space:nowrap;flex-shrink:0}
+.consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;flex-shrink:0}
 .consensus-badge.yes{background:#e8f5e9;color:var(--green)}
 .consensus-badge.no{background:#fff3e0;color:var(--orange)}
 
@@ -147,7 +148,8 @@ const MANIFEST=DATA_DIR+'manifest.json';
 const DETAIL_PAGE='match.html';
 const IMAGES_DIR='images/';
 
-// ═══ 赛程结构 — 三大顶级阶段 ═══
+// ═══ 赛程结构定义 ═══
+// 决赛和淘汰赛同级，各为独立顶层阶段
 const TOURNAMENT=[
   {key:'group',label:'小组赛',subs:[
     {key:'g-r1',label:'小组赛第1轮',dates:['2026-06-12','2026-06-13','2026-06-14']},
@@ -160,7 +162,7 @@ const TOURNAMENT=[
     {key:'sf',label:'半决赛',dates:['2026-07-09','2026-07-10']},
   ]},
   {key:'final',label:'决赛',subs:[
-    {key:'final-match',label:'决赛',dates:['2026-07-13']},
+    {key:'f1',label:'决赛',dates:['2026-07-13']},
   ]},
 ];
 
@@ -170,7 +172,7 @@ function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t
 function flagImgHtml(name){
   const url=IMAGES_DIR+encodeURIComponent(name)+'.webp';
   const fb=IMAGES_DIR+encodeURIComponent(name)+'.png';
-  return `<img class="team-flag" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}" alt="${esc(name)}" loading="lazy"><div class="team-flag-ph" style="display:none">${esc(name.charAt(0))}</div>`;
+  return `<img class="team-flag" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}" alt="${esc(name)}"><div class="team-flag-ph" style="display:none">${esc(name.charAt(0))}</div>`;
 }
 
 function sideOf(agent,topic){
@@ -249,28 +251,17 @@ function extractCardData(data,filename){
   const meta=data.match_meta||{};
   const fp=data.final_prediction;
   const agents=data.agents||[];
-  const preds=data.predictions||{};
   const ti=data.team_info||{};
 
   let cA=0,cB=0,cX=0;
-  if(agents.length){
-    for(const a of agents){
-      const s=sideOf(a,data.topic);
-      if(s==='a')cA++;else if(s==='b')cB++;else cX++;
-    }
-  }else if(Object.keys(preds).length){
-    // agents 为空时从 predictions 推算
-    for(const[name,plist]of Object.entries(preds)){
-      if(!plist||!plist.length)continue;
-      const last=plist[plist.length-1];
-      const w=last.winner||'';
-      if(w.includes(teamA))cA++;else if(w.includes(teamB))cB++;else cX++;
-    }
+  for(const a of agents){
+    const s=sideOf(a,data.topic);
+    if(s==='a')cA++;else if(s==='b')cB++;else cX++;
   }
-  const total=agents.length||Object.keys(preds).length||1;
+  const total=agents.length||1;
   const pctA=Math.round(cA/total*100);
   const pctB=Math.round(cB/total*100);
-  const pctX=Math.max(0,100-pctA-pctB);
+  const pctX=100-pctA-pctB;
 
   return{
     file:filename,teamA,teamB,
@@ -280,7 +271,7 @@ function extractCardData(data,filename){
     rankingA:ti[teamA]?.world_ranking,rankingB:ti[teamB]?.world_ranking,
     winner:fp?.winner||'',score:fp?.score||'',
     confidence:fp?.confidence||0,
-    pctA,pctB,pctX,
+    pctA,pctB,pctX:Math.max(0,pctX),
     consensus:data.consensus,
   };
 }
@@ -297,7 +288,7 @@ function renderSchedule(matches){
     if(d){if(!byDate[d])byDate[d]=[];byDate[d].push(m)}
   }
 
-  // 导航链接：三大阶段
+  // 导航链接：小组赛 / 淘汰赛 / 决赛（同级）
   const navLinks=document.getElementById('nav-links');
   let navHtml='';
   for(const stage of TOURNAMENT){
@@ -336,16 +327,12 @@ function renderSchedule(matches){
 
   container.innerHTML=html;
 
-  // 动画
+  // 延迟触发进度条动画（确保浏览器已渲染 width:0 状态）
   requestAnimationFrame(()=>requestAnimationFrame(()=>animateProgressBars()));
 
   // 导航点击
   navLinks.querySelectorAll('.nav-link').forEach(link=>{
-    link.addEventListener('click',e=>{
-      e.preventDefault();
-      const href=link.getAttribute('href');
-      const target=document.querySelector(href);
-      if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+    link.addEventListener('click',()=>{
       navLinks.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
       link.classList.add('active');
     });
@@ -373,31 +360,31 @@ function renderCard(m){
 
   // 立场条：主场(红) → 平局(黄) → 客场(蓝)
   let barSegs='';
-  if(m.pctA)barSegs+=`<div class="seg seg-a" data-tw="${m.pctA}%">${m.pctA}%</div>`;
-  if(m.pctX)barSegs+=`<div class="seg seg-x" data-tw="${m.pctX}%">${m.pctX}%</div>`;
-  if(m.pctB)barSegs+=`<div class="seg seg-b" data-tw="${m.pctB}%">${m.pctB}%</div>`;
+  if(m.pctA)barSegs+=`<div class="seg seg-a" style="width:${m.pctA}%">${m.pctA}%</div>`;
+  if(m.pctX)barSegs+=`<div class="seg seg-x" style="width:${m.pctX}%">${m.pctX}%</div>`;
+  if(m.pctB)barSegs+=`<div class="seg seg-b" style="width:${m.pctB}%">${m.pctB}%</div>`;
 
-  // 城市场地：拼接后截断
-  const cityVenue=[m.city,m.venue].filter(Boolean).join(' · ');
-
-  // 预测结果（含准确度进度条）
+  // 预测结果行
   let predHtml='';
   if(m.winner){
     predHtml=`<div class="pred-row">
       <span class="pred-winner ${sideCls}">${esc(m.winner)}</span>
       <span class="pred-score">${esc(m.score)}</span>
-      <span class="pred-conf-bar"><span class="pred-conf-fill ${confClass}" data-tw="${confPct}%"></span></span>
+      <span class="pred-conf-bar"><span class="pred-conf-fill ${confClass}" data-target="${confPct}"></span></span>
       <span class="pred-conf-text">${m.confidence}/10</span>
     </div>`;
   }else{
     predHtml='<div class="pred-row" style="color:var(--text3);font-size:13px">暂无预测</div>';
   }
 
+  // 城市+场馆（过长截断）
+  const cityVenue=trimCityVenue(m.city,m.venue);
+
   return`
   <a class="sched-card ${sideCls}" href="${DETAIL_PAGE}?json=${encodeURIComponent(DATA_DIR+m.file)}">
     <div class="card-top">
       <span class="stage-tag">${esc(m.stage||m.matchId)}</span>
-      <span style="display:flex;align-items:center;gap:6px;min-width:0;flex:1;justify-content:flex-end">
+      <span style="display:flex;align-items:center;gap:6px;min-width:0">
         <span class="city-tag">${esc(cityVenue)}</span>
         ${m.consensus!==undefined?`<span class="consensus-badge ${m.consensus?'yes':'no'}">${m.consensus?'共识':'分歧'}</span>`:''}
       </span>
@@ -415,34 +402,40 @@ function renderCard(m){
         ${m.rankingB?`<div class="team-rank">FIFA #${m.rankingB}</div>`:''}
       </div>
     </div>
-    <div class="stance-bar">${barSegs}</div>
+    ${barSegs?`<div class="stance-bar">${barSegs}</div>
     <div class="stance-legend">
       <span><span class="dot" style="background:var(--side-a)"></span>${esc(teamA)}</span>
       <span><span class="dot" style="background:var(--side-x)"></span>平局</span>
       <span><span class="dot" style="background:var(--side-b)"></span>${esc(teamB)}</span>
-    </div>
+    </div>`:''}
     ${predHtml}
   </a>`;
 }
 
-function animateProgressBars(){
-  // 立场条段：从 0 动画到目标宽度
-  document.querySelectorAll('.stance-bar .seg[data-tw]').forEach(el=>{
-    const tw=el.dataset.tw;
-    el.style.width='0';
-    // 双 RAF 确保浏览器已渲染 width:0
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      el.style.width=tw;
-    }));
-  });
+function trimCityVenue(city,venue){
+  if(!city&&!venue)return'';
+  let text=city||'';
+  if(venue&&venue!==city)text+=(text?' · ':'')+venue;
+  if(text.length>18)return text.slice(0,17)+'…';
+  return text;
+}
 
-  // 准确度进度条：从 0 动画到目标宽度
-  document.querySelectorAll('.pred-conf-fill[data-tw]').forEach(el=>{
-    const tw=el.dataset.tw;
+function animateProgressBars(){
+  // 准确度进度条动画
+  document.querySelectorAll('.pred-conf-fill[data-target]').forEach(el=>{
+    const target=el.dataset.target;
+    if(!target||target==='0')return;
+    // 先确保 width:0 已被渲染，再设置目标宽度触发 CSS transition
+    el.offsetHeight; // 强制 reflow
+    el.style.width=target+'%';
+  });
+  // 立场条段动画
+  document.querySelectorAll('.stance-bar .seg').forEach(el=>{
+    const w=el.style.width;
+    if(!w||w==='0%')return;
     el.style.width='0';
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      el.style.width=tw;
-    }));
+    el.style.transition='width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.width=w}));
   });
 }
 
