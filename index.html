@@ -64,8 +64,10 @@ a{color:var(--primary);text-decoration:none}
 .container{max-width:var(--max-w);margin:0 auto;padding:0 16px}
 
 /* ── Today Button ── */
-.today-btn{display:inline-block;padding:10px 32px;background:var(--card);border:1.5px solid var(--primary);border-radius:28px;font-size:15px;font-weight:700;color:var(--primary);cursor:pointer;transition:all .2s;box-shadow:var(--shadow);text-decoration:none;letter-spacing:.5px}
+.today-btn{display:inline-block;padding:10px 120px;background:var(--card);border:1.5px solid var(--primary);border-radius:28px;font-size:15px;font-weight:700;color:var(--primary);cursor:pointer;transition:all .2s;box-shadow:var(--shadow);text-decoration:none;letter-spacing:.5px}
 .today-btn:hover{background:var(--primary);color:#fff;transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
+[data-theme="default"] .today-btn{background:var(--bg);border-color:var(--text3);box-shadow:none}
+[data-theme="default"] .today-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
 
 /* ── Stage Section ── */
 .stage-section[id]{scroll-margin-top:54px}
@@ -115,7 +117,7 @@ a{color:var(--primary);text-decoration:none}
 .pred-score{font-size:13px;color:var(--text2);font-weight:700;white-space:nowrap}
 .pred-conf-bar{flex:1;min-width:50px;max-width:80px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden;transition:background .3s}
 .pred-conf-label{font-size:11px;color:var(--text3);white-space:nowrap}
-.pred-conf-fill{height:100%;border-radius:4px}
+.pred-conf-fill{height:100%;border-radius:4px;display:block;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .pred-conf-fill.high{background:var(--green)}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
@@ -268,7 +270,7 @@ async function loadSchedule(){
   // Show today button if there are matches today
   const today=new Date().toISOString().slice(0,10);
   const todayBtn=document.getElementById('today-btn');
-  if(todayBtn && sk.byDate[today])todayBtn.style.display='block';
+  if(todayBtn && sk.byDate[today])todayBtn.style.display='inline-block';
   setupNavLinks();
   setupScrollHighlight();
 
