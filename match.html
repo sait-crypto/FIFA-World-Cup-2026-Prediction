@@ -1,24 +1,48 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="default">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 辩论预测</title>
 <style>
+/* ═══ Theme: Default ═══ */
+[data-theme="default"]{
+  --primary:#4a7bbf;--primary-dark:#3a65a0;--primary-light:#edf1f8;
+  --bg:#f4f4f6;--card:#fff;--border:#ddd;--divider:#ebebec;
+  --text:#2a2a2a;--text2:#5a5a5a;--text3:#8a8a8a;
+  --red:#b03d3d;--green:#27ae60;--orange:#ec852b;--blue:#3a65a0;--yellow:#a4a380;
+  --side-a:#b03d3d;--side-b:#3a65a0;--side-x:#a4a380;
+  --nav-bg:rgba(58,72,96,0.96);--nav-text:#d0d8e4;--nav-muted:rgba(255,255,255,0.55);
+  --badge-yes-bg:#e2efe6;--badge-no-bg:#f5eadb;
+}
+/* ═══ Theme: Light ═══ */
+[data-theme="light"]{
+  --primary:#1678F2;--primary-dark:#125ccc;--primary-light:#e8f0fe;
+  --bg:#f5f5f5;--card:#fff;--border:#e8e8e8;--divider:#f1f1f1;
+  --text:#222;--text2:#555;--text3:#888;
+  --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--blue:#2980b9;--yellow:#f0ad4e;
+  --side-a:#e74c3c;--side-b:#2980b9;--side-x:#f0ad4e;
+  --nav-bg:rgba(22,120,242,0.95);--nav-text:#fff;--nav-muted:rgba(255,255,255,0.65);
+  --badge-yes-bg:#e8f5e9;--badge-no-bg:#fff3e0;
+}
+/* ═══ Theme: Dark ═══ */
+[data-theme="dark"]{
+  --primary:#5a7aaa;--primary-dark:#4a6a98;--primary-light:#252538;
+  --bg:#1a1a24;--card:#242432;--border:#363648;--divider:#2a2a38;
+  --text:#c8c8d4;--text2:#8a8aa4;--text3:#5a5a72;
+  --red:#dd6550;--green:#27ae60;--orange:#e9842c;--blue:#5790d6;--yellow:#bdccab;
+  --side-a:#dd6550;--side-b:#5790d6;--side-x:#bdccab;
+  --nav-bg:rgba(18,18,28,0.97);--nav-text:#a8a8bc;--nav-muted:rgba(255,255,255,0.4);
+  --badge-yes-bg:#1e2e28;--badge-no-bg:#2e2818;
+}
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --primary:#4a7bbf;--primary-dark:#3a65a0;--primary-light:#edf1f8;
-  --bg:#f4f4f6;--card:#fff;--border:#ddd;--divider:#ededee;
-  --text:#2a2a2a;--text2:#5a5a5a;--text3:#8a8a8a;
-  --red:#c0392b;--green:#1e8449;--orange:#d4850a;--blue:#2471a3;--yellow:#b8920a;
-  --side-a:#c0392b;--side-b:#2471a3;--side-x:#9a8a1e;
   --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.07);
   --max-w:1200px;
   --highlight:#aaa;
-  --nav-bg:rgba(58,72,96,0.96);
 }
 html{font-size:17px;scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
 a{color:var(--primary);text-decoration:none}
 a:hover{text-decoration:underline}
 
@@ -35,10 +59,15 @@ a:hover{text-decoration:underline}
 /* ═══ Main ═══ */
 #main{display:none}
 .container{max-width:var(--max-w);margin:0 auto;padding:0 20px}
-.sticky-nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);padding:8px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.12)}
-.nav-back{color:rgba(255,255,255,0.85);font-size:13px;font-weight:600;text-decoration:none;transition:opacity .2s;white-space:nowrap}
+.sticky-nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);padding:9px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.12);transition:background .3s}
+.nav-back{color:var(--nav-text);font-size:14px;font-weight:600;text-decoration:none;transition:opacity .2s;white-space:nowrap}
 .nav-back:hover{opacity:.7}
-.nav-title{color:rgba(255,255,255,0.5);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-title{color:var(--nav-muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-spacer{flex:1}
+.theme-btns{display:flex;gap:2px;margin-left:8px;border-left:1px solid rgba(255,255,255,0.15);padding-left:10px}
+.theme-btn{color:var(--nav-muted);font-size:12px;padding:3px 8px;border-radius:12px;cursor:pointer;border:none;background:none;transition:all .2s;line-height:1.2}
+.theme-btn:hover{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85)}
+.theme-btn.active{background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.95)}
 
 /* ── Header ── */
 .match-header{
@@ -51,8 +80,8 @@ a:hover{text-decoration:underline}
 .match-meta .meta-tag{background:rgba(255,255,255,0.18);padding:3px 10px;border-radius:4px;font-weight:600}
 .match-vs-area{display:flex;align-items:center;justify-content:center;gap:24px}
 .team-block{text-align:center;flex:1;max-width:280px}
-.team-flag{width:72px;height:48px;border-radius:4px;margin:0 auto;object-fit:cover;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)}
-.team-flag-placeholder{width:72px;height:48px;border-radius:4px;margin:0 auto;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;border:2px solid rgba(255,255,255,0.3)}
+.team-flag{width:72px;height:48px;border-radius:4px;margin:0 auto;object-fit:contain;border:none;background:none}
+.team-flag-placeholder{width:72px;height:48px;border-radius:4px;margin:0 auto;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;border:none}
 .team-name{font-size:26px;font-weight:700;margin-top:4px}
 .team-rank{font-size:13px;opacity:.8;margin-top:1px}
 .vs-divider{text-align:center;flex-shrink:0}
@@ -71,12 +100,13 @@ a:hover{text-decoration:underline}
 .pred-hero-score{font-size:24px;color:var(--text);font-weight:700}
 .pred-hero-conf{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}
 .pred-hero-conf-bar{width:160px;height:10px;background:var(--divider);border-radius:5px;overflow:hidden}
-.pred-hero-conf-fill{height:100%;border-radius:5px;background:var(--primary)}
+.pred-hero-conf-fill{height:100%;border-radius:5px;background:var(--primary);clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .pred-hero-conf-label{font-size:15px;color:var(--text2);font-weight:600}
 .pred-hero-bar{margin-top:16px}
 .pred-hero-bar-title{font-size:14px;color:var(--text2);margin-bottom:6px;font-weight:600}
 .pred-hero-bar-track{display:flex;height:24px;border-radius:12px;overflow:hidden;background:var(--divider)}
-.pred-hero-bar-track .seg{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;min-width:32px;transition:width .6s}
+.pred-hero-bar-track .seg{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;min-width:32px;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
+@keyframes bar-enter{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 .pred-hero-bar-track .seg-a{background:var(--side-a)}
 .pred-hero-bar-track .seg-x{background:var(--side-x)}
 .pred-hero-bar-track .seg-b{background:var(--side-b)}
@@ -93,7 +123,7 @@ a:hover{text-decoration:underline}
 .top-pred-rank{font-size:11px;color:var(--text2);min-width:22px}
 .top-pred-score{font-size:13px;min-width:100px}
 .top-pred-conf-bar{flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
-.top-pred-conf-fill{height:100%;border-radius:3px;transition:width .3s}
+.top-pred-conf-fill{height:100%;border-radius:3px;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .top-pred-conf-fill.high{background:linear-gradient(90deg,#22c55e,#16a34a)}
 .top-pred-conf-fill.mid{background:linear-gradient(90deg,#f59e0b,#d97706)}
 .top-pred-conf-fill.low{background:linear-gradient(90deg,#ef4444,#dc2626)}
@@ -138,6 +168,7 @@ a:hover{text-decoration:underline}
 .team-flag-md-placeholder{display:inline-flex;width:30px;height:20px;border-radius:3px;background:var(--divider);align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
 .record-summary{display:flex;align-items:center;gap:8px;margin-left:6px;font-size:12px;color:var(--text2);font-weight:500}
 .record-summary-bar{width:80px;height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--divider);flex-shrink:0}
+.record-summary-bar .win-seg,.record-summary-bar .draw-seg,.record-summary-bar .lose-seg{clip-path:inset(0 100% 0 0);animation:bar-enter 1s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .record-summary-bar .win-seg{background:var(--green)}
 .record-summary-bar .draw-seg{background:var(--yellow)}
 .record-summary-bar .lose-seg{background:var(--red)}
@@ -180,7 +211,7 @@ a:hover{text-decoration:underline}
 .chain-node.changed{background:#fff3e0;color:var(--orange);font-weight:700;border:1px solid #ffe0b2}
 .chain-arrow{color:var(--text3);font-size:11px}
 .confidence-bar{flex:1;height:4px;background:var(--divider);border-radius:2px;overflow:hidden}
-.confidence-fill{height:100%;border-radius:2px}
+.confidence-fill{height:100%;border-radius:2px;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .confidence-fill.high{background:var(--green)}.confidence-fill.mid{background:var(--orange)}.confidence-fill.low{background:var(--red)}
 .confidence-label{font-size:11px;color:var(--text3);white-space:nowrap}
 .analyst-conf-bar{margin-top:4px}.analyst-conf-bar .confidence-bar{width:100%;height:6px;background:var(--divider);border-radius:3px;overflow:hidden}
@@ -226,7 +257,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 .verdict-final-box .vf-score{font-size:18px;font-weight:700;color:var(--text)}
 .verdict-final-box .vf-conf-row{display:flex;align-items:center;gap:10px;margin-top:8px}
 .verdict-final-box .vf-conf-bar{width:140px;height:10px;background:var(--divider);border-radius:5px;overflow:hidden}
-.verdict-final-box .vf-conf-fill{height:100%;border-radius:5px}
+.verdict-final-box .vf-conf-fill{height:100%;border-radius:5px;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .verdict-final-box .vf-conf-fill.high{background:var(--green)}
 .verdict-final-box .vf-conf-fill.mid{background:var(--orange)}
 .verdict-final-box .vf-conf-fill.low{background:var(--red)}
@@ -307,6 +338,12 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
   <nav class="sticky-nav" id="sticky-nav">
     <a href="index.html" class="nav-back" onclick="sessionStorage.setItem('index_scroll_y',String(window.scrollY))">← 返回赛程</a>
     <span class="nav-title" id="nav-title"></span>
+    <span class="nav-spacer"></span>
+    <div class="theme-btns" id="theme-btns">
+      <button class="theme-btn active" data-theme="default" title="默认灰调">◈</button>
+      <button class="theme-btn" data-theme="light" title="明亮原色">☀</button>
+      <button class="theme-btn" data-theme="dark" title="暗夜模式">◐</button>
+    </div>
   </nav>
   <div class="match-header" id="match-header"></div>
   <div class="container">
@@ -324,6 +361,28 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 </div>
 
 <script>
+// ═══ 主题切换 ═══
+(function(){
+  const KEY='arena_theme';
+  const saved=localStorage.getItem(KEY);
+  if(saved)document.documentElement.setAttribute('data-theme',saved);
+  function updateBtns(){
+    const cur=document.documentElement.getAttribute('data-theme')||'default';
+    document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.theme===cur));
+  }
+  document.addEventListener('DOMContentLoaded',()=>{
+    updateBtns();
+    document.querySelectorAll('.theme-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.dataset.theme;
+        document.documentElement.setAttribute('data-theme',t);
+        localStorage.setItem(KEY,t);
+        updateBtns();
+      });
+    });
+  });
+})();
+
 // ═══════════════════════════════════════════════════════════
 // ⚙️ 配置参数
 // ═══════════════════════════════════════════════════════════
@@ -453,8 +512,14 @@ function render(){
   document.getElementById('main').style.display='block';
   document.title=`${DATA.topic} · AI预测`;
   document.getElementById('nav-title').textContent=DATA.topic||'';
-  renderHeader();renderPredictionHero();renderContext();renderAnalysts();renderVerdict();renderEvidence();renderFooter();
-  animateProgressBars();
+  // 逐步渲染各区块，边读边显示
+  const steps=[renderHeader,renderPredictionHero,renderContext,renderAnalysts,renderVerdict,renderEvidence,renderFooter];
+  let i=0;
+  function nextStep(){
+    if(i<steps.length){steps[i]();i++;requestAnimationFrame(nextStep)}
+    else animateProgressBars();
+  }
+  requestAnimationFrame(nextStep);
 }
 
 function passDataToViewer(){
@@ -726,7 +791,7 @@ function renderAnalysts(){
         <span class="analyst-stance ${stanceCls}">${esc(stanceText)}</span>
       </div>
       <div class="analyst-current-opinion ${opinionSideCls}">${smallFlagHtml(curWinner)} ${esc(opinionStr.trim())} <span style="font-size:13px;font-weight:500">准确度 ${curConf}/10</span></div>
-      <div class="analyst-conf-bar"><div class="confidence-bar"><div class="confidence-fill ${curConf>=7?'high':curConf>=4?'mid':'low'}" data-target-width="${Math.round(curConf/10*100)}%" style="width:0"></div></div></div>
+      <div class="analyst-conf-bar"><div class="confidence-bar"><div class="confidence-fill ${curConf>=7?'high':curConf>=4?'mid':'low'}" style="width:${Math.round(curConf/10*100)}%"></div></div></div>
       ${chainHtml}
       ${summary?`<div class="analyst-summary">${escAndBold(summary.replace(/\*\*[^*]+\*\*[：:]/g,'').substring(0,180))}</div>`:''}
       ${profile.evolution&&profile.evolution!=='立场坚定'?`<div class="analyst-evolution">${esc(profile.evolution)}</div>`:''}
@@ -976,24 +1041,8 @@ function animateProgressBars(){
       el.style.transition='width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
       el.style.width=tw;
     });
-    // Also animate prediction hero bar segments
-    document.querySelectorAll('.pred-hero-bar-track .seg').forEach(el=>{
-      const tw=el.style.width;
-      el.style.width='0';
-      requestAnimationFrame(()=>{
-        el.style.transition='width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
-        el.style.width=tw;
-      });
-    });
-    // Animate record summary bar segments
-    document.querySelectorAll('.record-summary-bar span[class$="-seg"]').forEach(el=>{
-      const tw=el.style.width;
-      el.style.width='0';
-      requestAnimationFrame(()=>{
-        el.style.transition='width 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
-        el.style.width=tw;
-      });
-    });
+    // Hero bar segments use CSS clip-path animation now (no JS needed)
+    // Record summary bars also use CSS clip-path animation (no JS needed)
     // Animate confidence fill bars
     document.querySelectorAll('.confidence-fill:not([data-target-width])').forEach(el=>{
       const tw=el.style.width;

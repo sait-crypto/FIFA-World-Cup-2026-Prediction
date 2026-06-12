@@ -1,84 +1,104 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="default">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>AI 辩论预测 · 赛程</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
+/* ═══ Theme: Default（高级灰） ═══ */
+[data-theme="default"]{
   --primary:#4a7bbf;--primary-dark:#3a65a0;--primary-light:#edf1f8;
-  --bg:#f4f4f6;--card:#fff;--border:#ddd;--divider:#ededee;
+  --bg:#f4f4f6;--card:#fff;--border:#ddd;--divider:#ebebec;
   --text:#2a2a2a;--text2:#5a5a5a;--text3:#8a8a8a;
-  --red:#c0392b;--green:#1e8449;--orange:#d4850a;--blue:#2471a3;--yellow:#b8920a;
-  --side-a:#c0392b;--side-b:#2471a3;--side-x:#9a8a1e;
-  --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.07);
-  --max-w:1080px;
-  --nav-bg:rgba(58,72,96,0.96);
+  --red:#b03d3d;--green:#27ae60;--orange:#ec852b;--blue:#3a65a0;--yellow:#a4a380;
+  --side-a:#b03d3d;--side-b:#3a65a0;--side-x:#a4a380;
+  --nav-bg:rgba(58,72,96,0.96);--nav-text:#d0d8e4;--nav-muted:rgba(255,255,255,0.55);
+  --badge-yes-bg:#e2efe6;--badge-no-bg:#f5eadb;
 }
+/* ═══ Theme: Light（原色） ═══ */
+[data-theme="light"]{
+  --primary:#1678F2;--primary-dark:#125ccc;--primary-light:#e8f0fe;
+  --bg:#f5f5f5;--card:#fff;--border:#e8e8e8;--divider:#f1f1f1;
+  --text:#222;--text2:#555;--text3:#888;
+  --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--blue:#2980b9;--yellow:#f0ad4e;
+  --side-a:#e74c3c;--side-b:#2980b9;--side-x:#f0ad4e;
+  --nav-bg:rgba(22,120,242,0.95);--nav-text:#fff;--nav-muted:rgba(255,255,255,0.65);
+  --badge-yes-bg:#e8f5e9;--badge-no-bg:#fff3e0;
+}
+/* ═══ Theme: Dark ═══ */
+[data-theme="dark"]{
+  --primary:#5a7aaa;--primary-dark:#4a6a98;--primary-light:#252538;
+  --bg:#1a1a24;--card:#242432;--border:#363648;--divider:#2a2a38;
+  --text:#c8c8d4;--text2:#8a8aa4;--text3:#5a5a72;
+  --red:#dd6550;--green:#27ae60;--orange:#e9842c;--blue:#5790d6;--yellow:#bdccab;
+  --side-a:#dd6550;--side-b:#5790d6;--side-x:#bdccab;
+  --nav-bg:rgba(18,18,28,0.97);--nav-text:#a8a8bc;--nav-muted:rgba(255,255,255,0.4);
+  --badge-yes-bg:#1e2e28;--badge-no-bg:#2e2818;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.07);--max-w:1080px}
 html{font-size:17px;scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
 a{color:var(--primary);text-decoration:none}
 
 /* ── Sticky Nav ── */
-.sticky-nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);padding:8px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.12)}
-.nav-brand{color:#d0d8e4;font-size:13px;font-weight:700;letter-spacing:1px;white-space:nowrap}
+.sticky-nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);padding:9px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.12);transition:background .3s}
+.nav-brand{color:var(--nav-text);font-size:14px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
 .nav-spacer{flex:1}
 .nav-links{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-.nav-link{color:rgba(255,255,255,0.55);font-size:12px;padding:4px 12px;border-radius:16px;transition:all .2s;text-decoration:none;white-space:nowrap}
+.nav-link{color:var(--nav-muted);font-size:13px;padding:4px 12px;border-radius:16px;transition:all .2s;text-decoration:none;white-space:nowrap}
 .nav-link:hover,.nav-link.active{background:rgba(255,255,255,0.14);color:rgba(255,255,255,0.95)}
+.theme-btns{display:flex;gap:2px;margin-left:8px;border-left:1px solid rgba(255,255,255,0.15);padding-left:10px}
+.theme-btn{color:var(--nav-muted);font-size:12px;padding:3px 8px;border-radius:12px;cursor:pointer;border:none;background:none;transition:all .2s;line-height:1.2}
+.theme-btn:hover{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85)}
+.theme-btn.active{background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.95)}
 
 /* ── Hero ── */
-.hero-header{
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  color:#fff;padding:28px 20px 20px;text-align:center;position:relative;overflow:hidden;
-}
+.hero-header{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;padding:28px 20px 20px;text-align:center;position:relative;overflow:hidden;transition:background .3s}
 .hero-header::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;border-radius:50%;background:rgba(255,255,255,0.03);pointer-events:none}
 .hero-title{font-size:22px;font-weight:800;margin-bottom:4px}
-.hero-sub{font-size:13px;opacity:.65}
+.hero-sub{font-size:13px;opacity:.6}
 
 /* ── Container ── */
 .container{max-width:var(--max-w);margin:0 auto;padding:0 16px}
 
 /* ── Stage Section ── */
-.stage-section[id]{scroll-margin-top:52px}
-.stage-title{font-size:20px;font-weight:800;color:var(--text);margin:28px 0 6px;padding:6px 0 6px 14px;border-left:5px solid var(--primary);background:linear-gradient(90deg,var(--primary-light),transparent);border-radius:0 var(--radius) var(--radius) 0}
-.sub-stage-title{font-size:15px;font-weight:700;color:var(--text2);margin:16px 0 6px;padding-left:4px}
+.stage-section[id]{scroll-margin-top:54px}
+.stage-title{font-size:20px;font-weight:800;color:var(--text);margin:28px 0 6px;padding:6px 0 6px 14px;border-left:5px solid var(--primary);background:linear-gradient(90deg,var(--primary-light),transparent);border-radius:0 var(--radius) var(--radius) 0;transition:color .3s,border-color .3s,background .3s}
+.sub-stage-title{font-size:15px;font-weight:700;color:var(--text2);margin:16px 0 6px;padding-left:4px;transition:color .3s}
 .date-head{font-size:13px;font-weight:600;color:var(--text3);margin:14px 0 6px;padding-left:4px}
 
 /* ── Cards Grid ── */
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;align-items:start}
 
 /* ── Schedule Card ── */
-.sched-card{
-  background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-  padding:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;
-  text-decoration:none;color:var(--text);display:block;
-  border-left:4px solid var(--text3);
-}
+.sched-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;cursor:pointer;transition:transform .15s,box-shadow .15s,background .3s;text-decoration:none;color:var(--text);display:block;border-left:4px solid var(--text3);animation:card-in .4s ease both}
 .sched-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
 .sched-card.side-a{border-left-color:var(--side-a)}
 .sched-card.side-b{border-left-color:var(--side-b)}
 .sched-card.side-x{border-left-color:var(--side-x)}
+@keyframes card-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;gap:6px}
-.stage-tag{background:var(--primary-light);color:var(--primary);padding:2px 8px;border-radius:4px;font-weight:600;white-space:nowrap;flex-shrink:0}
-.city-tag{color:var(--text3);font-size:11px;display:block;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+.stage-tag{background:var(--primary-light);color:var(--primary);padding:2px 8px;border-radius:4px;font-weight:600;white-space:nowrap;flex-shrink:0;transition:background .3s,color .3s}
+.city-tag{color:var(--text3);font-size:11px;display:block;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;transition:color .3s}
 
 /* Teams Row */
 .teams-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
 .team-col{text-align:center;flex:1;min-width:0}
-.team-flag{width:72px;height:48px;border-radius:4px;object-fit:cover;margin:0 auto 4px;border:1px solid var(--border);background:var(--divider)}
-.team-flag-ph{width:72px;height:48px;border-radius:4px;margin:0 auto 4px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--primary)}
+.team-flag{width:72px;height:48px;border-radius:4px;object-fit:contain;margin:0 auto 4px;border:none;background:none}
+.team-flag-ph{width:72px;height:48px;border-radius:4px;margin:0 auto 4px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--primary);border:none}
 .team-name{font-size:16px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 .team-rank{font-size:11px;color:var(--text3)}
 .vs-text{font-size:20px;font-weight:800;color:var(--text3);flex-shrink:0}
 
-/* Stance Bar: 红(主) → 黄(平) → 蓝(客) */
-.stance-bar{display:flex;height:20px;border-radius:10px;overflow:hidden;margin:8px 0;background:var(--divider)}
-.stance-bar .seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;min-width:22px;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94)}
+/* Stance Bar */
+.stance-bar{display:flex;height:20px;border-radius:10px;overflow:hidden;margin:8px 0;background:var(--divider);transition:background .3s}
+.stance-bar .seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;min-width:22px;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .stance-bar .seg.seg-a{background:var(--side-a)}
 .stance-bar .seg.seg-x{background:var(--side-x)}
 .stance-bar .seg.seg-b{background:var(--side-b)}
+@keyframes bar-enter{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 .stance-legend{display:flex;gap:14px;font-size:11px;color:var(--text3);margin-top:3px}
 .stance-legend .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:3px}
 .stance-legend span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -90,27 +110,30 @@ a{color:var(--primary);text-decoration:none}
 .pred-winner.side-b{color:var(--side-b)}
 .pred-winner.side-x{color:var(--side-x)}
 .pred-score{font-size:13px;color:var(--text2);font-weight:700;white-space:nowrap}
-.pred-conf-bar{flex:1;min-width:50px;max-width:80px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden}
+.pred-conf-bar{flex:1;min-width:50px;max-width:80px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden;transition:background .3s}
+.pred-conf-label{font-size:11px;color:var(--text3);white-space:nowrap}
 .pred-conf-fill{height:100%;border-radius:4px;width:0%;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94)}
+.pred-conf-fill.high{background:var(--green)}
+.pred-conf-fill.mid{background:var(--orange)}
+.pred-conf-fill.low{background:var(--red)}
 .pred-conf-fill.high{background:var(--green)}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
 .pred-conf-text{font-size:11px;color:var(--text3);white-space:nowrap}
 
 /* Consensus Badge */
-.consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;flex-shrink:0}
-.consensus-badge.yes{background:#e2efe6;color:var(--green)}
-.consensus-badge.no{background:#f5eadb;color:var(--orange)}
+.consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;flex-shrink:0;transition:background .3s}
+.consensus-badge.yes{background:var(--badge-yes-bg);color:var(--green)}
+.consensus-badge.no{background:var(--badge-no-bg);color:var(--orange)}
 
-/* ── Empty placeholder ── */
-.empty-slot{padding:10px 16px;margin:4px 0;background:var(--card);border-radius:var(--radius);border:1px dashed var(--border);font-size:13px;color:var(--text3);text-align:center}
+/* ── Empty / Loading ── */
+.empty-slot{padding:10px 16px;margin:4px 0;background:var(--card);border-radius:var(--radius);border:1px dashed var(--border);font-size:13px;color:var(--text3);text-align:center;transition:background .3s;grid-column:1/-1}
+.date-loading{color:var(--text3);font-size:13px;display:block;text-align:center;padding:10px 16px;margin:4px 0;background:var(--card);border-radius:var(--radius);border:1px dashed var(--border);grid-column:1/-1;transition:background .3s}
+.loading{text-align:center;padding:40px;color:var(--text3);font-size:14px}
 
 /* ── Drop Zone ── */
 .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:30px 20px;text-align:center;cursor:pointer;transition:border-color .2s;color:var(--text3);margin:20px 0;font-size:14px}
 .drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-
-/* ── Loading ── */
-.loading{text-align:center;padding:40px;color:var(--text3);font-size:14px}
 
 /* ── Footer ── */
 .page-footer{text-align:center;padding:20px;font-size:12px;color:var(--text3);margin-top:40px}
@@ -118,18 +141,23 @@ a{color:var(--primary);text-decoration:none}
 /* ── Responsive ── */
 @media(max-width:760px){
   .cards{grid-template-columns:1fr}
-  .sticky-nav{padding:6px 12px;gap:6px}
-  .nav-brand{font-size:12px}
-  .nav-link{font-size:11px;padding:3px 8px}
+  .sticky-nav{padding:7px 12px;gap:6px}
+  .nav-brand{font-size:13px}
+  .nav-link{font-size:12px;padding:3px 8px}
 }
 </style>
 </head>
 <body>
 
 <nav class="sticky-nav" id="sticky-nav">
-  <span class="nav-brand">AI Arena · 多维辩论预测</span>
+  <span class="nav-brand">AI Arena · 多AI辩论预测</span>
   <span class="nav-spacer"></span>
   <div class="nav-links" id="nav-links"></div>
+  <div class="theme-btns" id="theme-btns">
+    <button class="theme-btn active" data-theme="default" title="默认灰调">◈</button>
+    <button class="theme-btn" data-theme="light" title="明亮原色">☀</button>
+    <button class="theme-btn" data-theme="dark" title="暗夜模式">◐</button>
+  </div>
 </nav>
 
 <div class="hero-header" id="hero-header">
@@ -144,13 +172,10 @@ a{color:var(--primary);text-decoration:none}
 <div class="page-footer">辩论数据由多智能体辩论系统生成 · 仅供参考</div>
 
 <script>
-const DATA_DIR='data/';
-const MANIFEST=DATA_DIR+'manifest.json';
-const DETAIL_PAGE='match.html';
-const IMAGES_DIR='images/';
-const SCROLL_KEY='index_scroll_y';
+const DATA_DIR='data/',MANIFEST=DATA_DIR+'manifest.json',DETAIL_PAGE='match.html',IMAGES_DIR='images/';
+const SCROLL_KEY='index_scroll_y',THEME_KEY='arena_theme';
 
-// ═══ 赛程结构定义 ═══
+// ═══ 赛程结构 ═══
 const TOURNAMENT=[
   {key:'group',label:'小组赛',subs:[
     {key:'g-r1',label:'小组赛第1轮',dates:['2026-06-12','2026-06-13','2026-06-14']},
@@ -168,65 +193,123 @@ const TOURNAMENT=[
   ]},
 ];
 
+// ═══ 主题切换 ═══
+function initTheme(){
+  const saved=localStorage.getItem(THEME_KEY);
+  if(saved)document.documentElement.setAttribute('data-theme',saved);
+  updateThemeBtns();
+  document.querySelectorAll('.theme-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const t=btn.dataset.theme;
+      document.documentElement.setAttribute('data-theme',t);
+      localStorage.setItem(THEME_KEY,t);
+      updateThemeBtns();
+    });
+  });
+}
+function updateThemeBtns(){
+  const cur=document.documentElement.getAttribute('data-theme')||'default';
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.theme===cur));
+}
+
+// ═══ 工具函数 ═══
 function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
 function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t,teamB:p[1]?.split('（')[0]?.trim()||''}}
-
 function flagImgHtml(name){
   const url=IMAGES_DIR+encodeURIComponent(name)+'.webp';
   const fb=IMAGES_DIR+encodeURIComponent(name)+'.png';
   return `<img class="team-flag" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}" alt="${esc(name)}"><div class="team-flag-ph" style="display:none">${esc(name.charAt(0))}</div>`;
 }
-
 function sideOf(agent,topic){
   const{teamA,teamB}=parseTopic(topic);
-  const h=agent.prediction_history||[];
-  const last=h[h.length-1];
-  if(!last)return'x';
-  const w=last.winner||'';
-  if(w.includes(teamA))return'a';
-  if(w.includes(teamB))return'b';
-  return'x';
+  const h=agent.prediction_history||[],last=h[h.length-1];
+  if(!last)return'x';const w=last.winner||'';
+  if(w.includes(teamA))return'a';if(w.includes(teamB))return'b';return'x';
 }
-
-// ═══ 滚动位置记忆 ═══
 function saveScrollPos(){sessionStorage.setItem(SCROLL_KEY,String(window.scrollY))}
 function restoreScrollPos(){
   const y=parseInt(sessionStorage.getItem(SCROLL_KEY)||'0');
-  if(y>0){
-    setTimeout(()=>window.scrollTo(0,y),50);
-    sessionStorage.removeItem(SCROLL_KEY);
-  }
+  if(y>0){setTimeout(()=>window.scrollTo(0,y),80);sessionStorage.removeItem(SCROLL_KEY)}
 }
 
-// ═══ 数据加载 ═══
+// ═══ 数据提取 ═══
+function extractCardData(data,filename){
+  const{teamA,teamB}=parseTopic(data.topic||'');
+  const meta=data.match_meta||{},fp=data.final_prediction,agents=data.agents||[];
+  let cA=0,cB=0,cX=0;
+  for(const a of agents){const s=sideOf(a,data.topic);if(s==='a')cA++;else if(s==='b')cB++;else cX++}
+  const total=agents.length||1;
+  // Top-N 预测（排除最高预测本身）
+  const topPreds=(data.top_predictions||[]).filter(p=>p&&p.winner).slice(0,3);
+  const altPreds=topPreds.filter(p=>p.winner!==fp?.winner||p.score!==fp?.score);
+  return{file:filename,teamA,teamB,stage:meta.stage||'',matchId:meta.match_id||'',
+    date:meta.date||'',city:meta.city||'',venue:meta.venue_zh||meta.venue||'',
+    winner:fp?.winner||'',score:fp?.score||'',confidence:fp?.confidence||0,
+    pctA:Math.round(cA/total*100),pctB:Math.round(cB/total*100),
+    pctX:Math.max(0,100-Math.round(cA/total*100)-Math.round(cB/total*100)),
+    consensus:data.consensus,altPreds:altPreds.slice(0,2)};
+}
+
+// ═══ 渲染 ═══
 
 async function loadSchedule(){
   const container=document.getElementById('main-content');
   container.innerHTML='<div class="loading">正在加载赛程数据...</div>';
-
   let files=null;
-  try{
-    const resp=await fetch(MANIFEST+'?t='+Date.now());
-    if(resp.ok) files=await resp.json();
-  }catch(e){}
+  try{const r=await fetch(MANIFEST+'?t='+Date.now());if(r.ok)files=await r.json()}catch(e){}
+  if(!files||!files.length){showDropZone();return}
 
-  if(!files||!files.length){
-    showDropZone();
-    return;
-  }
+  // 先渲染骨架
+  const sk=buildSkeleton();
+  container.innerHTML=sk.html;
+  restoreScrollPos();
+  setupNavLinks();
+  setupScrollHighlight();
 
-  const matches=[];
+  // 逐条加载并插入
   for(const file of files){
     try{
-      const resp=await fetch(DATA_DIR+file);
-      if(resp.ok){
-        const data=await resp.json();
-        matches.push(extractCardData(data,file));
-      }
+      const r=await fetch(DATA_DIR+file);
+      if(r.ok){const d=await r.json();insertCard(extractCardData(d,file),sk.byDate)}
     }catch(e){console.warn('跳过:',file)}
   }
+  // 清除空位 loading
+  document.querySelectorAll('.date-loading').forEach(el=>{
+    if(!el.parentElement.querySelector('.sched-card'))el.textContent='等待最新数据，还未开始预测';
+    else el.remove();
+  });
 
-  renderSchedule(matches);
+  // 触发准确度进度条动画
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    document.querySelectorAll('.pred-conf-fill[data-target-width]').forEach(el=>{
+      el.style.width=el.dataset.targetWidth;
+    });
+  }));
+}
+
+function buildSkeleton(){
+  const byDate={};let html='';
+  for(const stage of TOURNAMENT){
+    html+=`<div class="stage-section" id="stage-${stage.key}"><div class="stage-title">${stage.label}</div>`;
+    for(const sub of stage.subs){
+      html+=`<div class="sub-stage-title">${sub.label}</div>`;
+      for(const d of sub.dates){
+        byDate[d]='cards-'+d.replace(/-/g,'');
+        html+=`<div class="date-head">${formatDate(d)}</div>`;
+        html+=`<div class="cards" id="${byDate[d]}"><span class="date-loading">加载中…</span></div>`;
+
+      }
+    }
+    html+='</div>';
+  }
+  return{html,byDate};
+}
+
+function insertCard(m,byDate){
+  const grid=document.getElementById(byDate[m.date]);
+  if(!grid)return;
+  const ld=grid.querySelector('.date-loading');if(ld)ld.remove();
+  grid.insertAdjacentHTML('beforeend',renderCard(m));
 }
 
 function showDropZone(){
@@ -234,12 +317,8 @@ function showDropZone(){
     <div style="text-align:center;padding:40px;color:var(--text3)">
       <p style="margin-bottom:12px">无法自动加载赛程数据</p>
       <p style="font-size:13px;margin-bottom:8px">请使用本地服务器：<code style="background:var(--primary-light);padding:2px 6px;border-radius:4px">cd FIFA-Prediction && python -m http.server</code></p>
-      <p style="font-size:12px">或将 JSON 文件拖放到下方</p>
     </div>
-    <div class="drop-zone" id="drop-zone">
-      📂 拖放 JSON 文件到此处，或点击选择
-      <input type="file" id="file-input" multiple accept=".json" style="display:none">
-    </div>`;
+    <div class="drop-zone" id="drop-zone">📂 拖放 JSON 文件到此处<input type="file" id="file-input" multiple accept=".json" style="display:none"></div>`;
   const dz=document.getElementById('drop-zone'),fi=document.getElementById('file-input');
   if(!dz||!fi)return;
   dz.addEventListener('click',()=>fi.click());
@@ -251,220 +330,87 @@ function showDropZone(){
 
 async function handleDropped(fileList){
   const matches=[];
-  for(const f of fileList){
-    if(!f.name.endsWith('.json'))continue;
-    try{const data=JSON.parse(await f.text());matches.push(extractCardData(data,f.name))}catch(e){}
-  }
-  if(matches.length) renderSchedule(matches);
-}
-
-function extractCardData(data,filename){
-  const{teamA,teamB}=parseTopic(data.topic||'');
-  const meta=data.match_meta||{};
-  const fp=data.final_prediction;
-  const agents=data.agents||[];
-  const ti=data.team_info||{};
-
-  let cA=0,cB=0,cX=0;
-  for(const a of agents){
-    const s=sideOf(a,data.topic);
-    if(s==='a')cA++;else if(s==='b')cB++;else cX++;
-  }
-  const total=agents.length||1;
-  const pctA=Math.round(cA/total*100);
-  const pctB=Math.round(cB/total*100);
-  const pctX=100-pctA-pctB;
-
-  return{
-    file:filename,teamA,teamB,
-    stage:meta.stage||'',matchId:meta.match_id||'',
-    date:meta.date||'',city:meta.city||'',
-    venue:meta.venue_zh||meta.venue||'',
-    rankingA:ti[teamA]?.world_ranking,rankingB:ti[teamB]?.world_ranking,
-    winner:fp?.winner||'',score:fp?.score||'',
-    confidence:fp?.confidence||0,
-    pctA,pctB,pctX:Math.max(0,pctX),
-    consensus:data.consensus,
-  };
-}
-
-// ═══ 渲染 ═══
-
-function renderSchedule(matches){
-  const container=document.getElementById('main-content');
-
-  const byDate={};
-  for(const m of matches){
-    const d=m.date||'';
-    if(d){if(!byDate[d])byDate[d]=[];byDate[d].push(m)}
-  }
-
-  // 导航：小组赛 / 淘汰赛 / 决赛
-  const navLinks=document.getElementById('nav-links');
-  let navHtml='';
-  for(const stage of TOURNAMENT){
-    navHtml+=`<a href="#stage-${stage.key}" class="nav-link">${stage.label}</a>`;
-  }
-  navLinks.innerHTML=navHtml;
-
-  let html='';
-  for(const stage of TOURNAMENT){
-    html+=`<div class="stage-section" id="stage-${stage.key}">`;
-    html+=`<div class="stage-title">${stage.label}</div>`;
-    for(const sub of stage.subs){
-      html+=`<div class="sub-stage-title">${sub.label}</div>`;
-      for(const d of sub.dates){
-        const ms=byDate[d]||[];
-        html+=`<div class="date-head">${formatDate(d)}</div>`;
-        if(ms.length){
-          html+='<div class="cards">';
-          for(const m of ms)html+=renderCard(m);
-          html+='</div>';
-        }else{
-          html+=`<div class="empty-slot">还未开始预测</div>`;
-        }
-      }
-    }
-    html+='</div>';
-  }
-
-  container.innerHTML=html;
-
-  // 恢复滚动位置
-  restoreScrollPos();
-
-  // 进度条动画：确保浏览器先渲染 width:0% 状态
-  requestAnimationFrame(()=>requestAnimationFrame(()=>animateProgressBars()));
-
-  // 导航点击
-  navLinks.querySelectorAll('.nav-link').forEach(link=>{
-    link.addEventListener('click',()=>{
-      navLinks.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-      link.classList.add('active');
-    });
-  });
-
-  setupScrollHighlight();
+  for(const f of fileList){if(!f.name.endsWith('.json'))continue;try{matches.push(extractCardData(JSON.parse(await f.text()),f.name))}catch(e){}}
+  if(matches.length){const byDate={};for(const m of matches){const d=m.date||'';if(d){if(!byDate[d])byDate[d]=[];byDate[d].push(m)}}
+    let html='';for(const stage of TOURNAMENT){html+=`<div class="stage-section" id="stage-${stage.key}"><div class="stage-title">${stage.label}</div>`;for(const sub of stage.subs){html+=`<div class="sub-stage-title">${sub.label}</div>`;for(const d of sub.dates){const ms=byDate[d]||[];html+=`<div class="date-head">${formatDate(d)}</div>`;if(ms.length){html+='<div class="cards">';for(const m of ms)html+=renderCard(m);html+='</div>'}else html+=`<div class="empty-slot">等待最新数据，还未开始预测</div>`}}html+='</div>'}
+    document.getElementById('main-content').innerHTML=html;setupNavLinks();setupScrollHighlight();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      document.querySelectorAll('.pred-conf-fill[data-target-width]').forEach(el=>{el.style.width=el.dataset.targetWidth});
+    }));}
 }
 
 function formatDate(d){
-  if(!d)return'';
-  const parts=d.split('-');
-  if(parts.length!==3)return d;
-  const weekDay=['日','一','二','三','四','五','六'];
-  const dt=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
-  return `${parseInt(parts[1])}月${parseInt(parts[2])}日 周${weekDay[dt.getDay()]}`;
+  if(!d)return'';const p=d.split('-');if(p.length!==3)return d;
+  const w=['日','一','二','三','四','五','六'];
+  const dt=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
+  return `${parseInt(p[1])}月${parseInt(p[2])}日 周${w[dt.getDay()]}`;
 }
 
 function renderCard(m){
   const{teamA,teamB}=m;
-  const winnerSide=m.winner.includes(teamA)?'a':m.winner.includes(teamB)?'b':'x';
-  const sideCls=winnerSide==='a'?'side-a':winnerSide==='b'?'side-b':'side-x';
+  const ws=m.winner.includes(teamA)?'a':m.winner.includes(teamB)?'b':'x';
+  const sc=ws==='a'?'side-a':ws==='b'?'side-b':'side-x';
   const confPct=Math.round(m.confidence/10*100);
-  const confClass=m.confidence>=7?'high':m.confidence>=4?'mid':'low';
+  const cc=m.confidence>=7?'high':m.confidence>=4?'mid':'low';
 
-  // 立场条：主场(红) → 平局(黄) → 客场(蓝)
   let barHtml='';
-  if(m.pctA)barHtml+=`<div class="seg seg-a" data-tw="${m.pctA}%">${m.pctA}%</div>`;
-  if(m.pctX)barHtml+=`<div class="seg seg-x" data-tw="${m.pctX}%">${m.pctX}%</div>`;
-  if(m.pctB)barHtml+=`<div class="seg seg-b" data-tw="${m.pctB}%">${m.pctB}%</div>`;
+  if(m.pctA)barHtml+=`<div class="seg seg-a" style="width:${m.pctA}%">${m.pctA}%</div>`;
+  if(m.pctX)barHtml+=`<div class="seg seg-x" style="width:${m.pctX}%">${m.pctX}%</div>`;
+  if(m.pctB)barHtml+=`<div class="seg seg-b" style="width:${m.pctB}%">${m.pctB}%</div>`;
 
-  // 预测结果行（准确度进度条用 data-tw 存目标宽度）
   let predHtml='';
   if(m.winner){
+    const winLabel=ws!=='x'?esc(m.winner)+' 胜':esc(m.winner);
     predHtml=`<div class="pred-row">
-      <span class="pred-winner ${sideCls}">${esc(m.winner)}</span>
+      <span class="pred-winner ${sc}">${winLabel}</span>
       <span class="pred-score">${esc(m.score)}</span>
-      <span class="pred-conf-bar"><span class="pred-conf-fill ${confClass}" data-tw="${confPct}%"></span></span>
+      <span class="pred-conf-label">准确度</span>
+      <span class="pred-conf-bar"><span class="pred-conf-fill ${cc}" data-target-width="${confPct}%"></span></span>
       <span class="pred-conf-text">${m.confidence}/10</span>
     </div>`;
   }else{
     predHtml='<div class="pred-row" style="color:var(--text3);font-size:13px">暂无预测</div>';
   }
 
-  // 城市场馆（CSS 按宽度截断）
-  const cityVenue=(m.city?m.city:'')+(m.venue&&m.venue!==m.city?' · '+m.venue:'');
+  const cv=(m.city||'')+(m.venue&&m.venue!==m.city?' · '+m.venue:'');
 
   return`
-  <a class="sched-card ${sideCls}" href="${DETAIL_PAGE}?json=${encodeURIComponent(DATA_DIR+m.file)}" onclick="saveScrollPos()">
+  <a class="sched-card ${sc}" href="${DETAIL_PAGE}?json=${encodeURIComponent(DATA_DIR+m.file)}" onclick="saveScrollPos()">
     <div class="card-top">
       <span class="stage-tag">${esc(m.stage||m.matchId)}</span>
       <span style="display:flex;align-items:center;gap:6px;min-width:0">
-        <span class="city-tag">${esc(cityVenue)}</span>
+        <span class="city-tag">${esc(cv)}</span>
         ${m.consensus!==undefined?`<span class="consensus-badge ${m.consensus?'yes':'no'}">${m.consensus?'共识':'分歧'}</span>`:''}
       </span>
     </div>
     <div class="teams-row">
-      <div class="team-col">
-        ${flagImgHtml(teamA)}
-        <div class="team-name">${esc(teamA)}</div>
-        ${m.rankingA?`<div class="team-rank">FIFA #${m.rankingA}</div>`:''}
-      </div>
+      <div class="team-col">${flagImgHtml(teamA)}<div class="team-name">${esc(teamA)}</div>${m.rankingA?`<div class="team-rank">世界排名 ${m.rankingA}</div>`:''}</div>
       <div class="vs-text">VS</div>
-      <div class="team-col">
-        ${flagImgHtml(teamB)}
-        <div class="team-name">${esc(teamB)}</div>
-        ${m.rankingB?`<div class="team-rank">FIFA #${m.rankingB}</div>`:''}
-      </div>
+      <div class="team-col">${flagImgHtml(teamB)}<div class="team-name">${esc(teamB)}</div>${m.rankingB?`<div class="team-rank">世界排名 ${m.rankingB}</div>`:''}</div>
     </div>
-    ${barHtml?`<div class="stance-bar">${barHtml}</div>
-    <div class="stance-legend">
-      <span><span class="dot" style="background:var(--side-a)"></span>${esc(teamA)}</span>
-      <span><span class="dot" style="background:var(--side-x)"></span>平局</span>
-      <span><span class="dot" style="background:var(--side-b)"></span>${esc(teamB)}</span>
-    </div>`:''}
+    ${barHtml?`<div class="stance-bar">${barHtml}</div><div class="stance-legend"><span><span class="dot" style="background:var(--side-a)"></span>${esc(teamA)}</span><span><span class="dot" style="background:var(--side-x)"></span>平局</span><span><span class="dot" style="background:var(--side-b)"></span>${esc(teamB)}</span></div>`:''}
     ${predHtml}
   </a>`;
 }
 
-function animateProgressBars(){
-  // 准确度进度条：从 0% 动画到 data-tw
-  document.querySelectorAll('.pred-conf-fill[data-tw]').forEach(el=>{
-    const tw=el.dataset.tw;
-    if(!tw||tw==='0%')return;
-    // 强制浏览器先渲染 width:0%（CSS 默认），再设目标触发 transition
-    void el.offsetHeight;
-    el.style.width=tw;
-  });
-  // 立场条段：从 0% 动画到 data-tw
-  document.querySelectorAll('.stance-bar .seg[data-tw]').forEach(el=>{
-    const tw=el.dataset.tw;
-    if(!tw||tw==='0%')return;
-    void el.offsetHeight;
-    el.style.width=tw;
+function setupNavLinks(){
+  const navLinks=document.getElementById('nav-links');
+  if(!navLinks.children.length){let h='';for(const s of TOURNAMENT)h+=`<a href="#stage-${s.key}" class="nav-link">${s.label}</a>`;navLinks.innerHTML=h}
+  navLinks.querySelectorAll('.nav-link').forEach(link=>{
+    link.addEventListener('click',()=>{navLinks.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));link.classList.add('active')});
   });
 }
 
 function setupScrollHighlight(){
-  const navLinks=document.getElementById('nav-links');
-  const links=navLinks.querySelectorAll('.nav-link');
+  const navLinks=document.getElementById('nav-links'),links=navLinks.querySelectorAll('.nav-link');
   if(!links.length)return;
-
   const sections=[];
-  links.forEach(link=>{
-    const href=link.getAttribute('href');
-    if(href&&href.startsWith('#')){
-      const el=document.querySelector(href);
-      if(el)sections.push({el,id:href.slice(1)});
-    }
-  });
-
-  function onScroll(){
-    const scrollY=window.scrollY+80;
-    let current='';
-    for(const s of sections){
-      if(s.el.offsetTop<=scrollY)current=s.id;
-    }
-    links.forEach(l=>{
-      const href=l.getAttribute('href');
-      l.classList.toggle('active',href==='#'+current);
-    });
-  }
-
-  window.addEventListener('scroll',onScroll,{passive:true});
-  onScroll();
+  links.forEach(l=>{const h=l.getAttribute('href');if(h&&h.startsWith('#')){const el=document.querySelector(h);if(el)sections.push({el,id:h.slice(1)})}});
+  function onScroll(){const sy=window.scrollY+80;let cur='';for(const s of sections)if(s.el.offsetTop<=sy)cur=s.id;links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur))}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 }
 
+initTheme();
 loadSchedule();
 </script>
 </body>
