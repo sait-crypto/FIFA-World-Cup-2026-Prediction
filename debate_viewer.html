@@ -670,7 +670,7 @@ function init(){
   document.getElementById('load-screen').classList.add('hidden');
   document.getElementById('main').classList.add('active');
   document.getElementById('topic').textContent=DATA.topic||'辩论';
-  document.getElementById('mode-tag').textContent=DATA.mode==='pro_con'?'正反方':'圆桌';
+  document.getElementById('mode-tag').textContent='圆桌';
   const ct=document.getElementById('cons-tag');
   ct.textContent=DATA.consensus?'✅共识':'⚖️未共识';ct.className='tag '+(DATA.consensus?'yes':'no');
   flat=[];const labels=['陈述','自由质疑','分配质疑','阶段3','阶段4'];
@@ -686,6 +686,7 @@ function init(){
     }
   });
   if(DATA.arbitrator_verdict){flat.push({sep:true,label:'── ⚖️ 仲裁结论 ──'});flat.push({msg:DATA.arbitrator_verdict,end:true,endTitle:'仲裁者裁定'})}
+  // 只有当 verdict 与 arbitrator_verdict 不同时才显示（兼容旧数据）
   if(DATA.verdict&&!DATA.consensus&&DATA.verdict!==DATA.arbitrator_verdict)flat.push({msg:DATA.verdict,end:true,endTitle:'最终裁定'});
   if(DATA.summary)flat.push({msg:DATA.summary,end:true,endTitle:'总结'});
   idx=-1;playing=false;currentChainRoot=null;currentDuelPair='';victoryShown=false;inChain=false;chainChanges=[];
@@ -1621,11 +1622,15 @@ function showItem(i){
   }
   if(item.phaseVerdict){
     const summary=item.arena_summary||item.content;
+    const isFinal=item.is_final||false;
     showArbitratorBubble(summary,item.consensus);
     const area=document.getElementById('dialog-area');
     const row=document.createElement('div');row.className='msg-row stance';
-    row.innerHTML=`<div class="mr-head"><span class="mr-name" style="color:var(--accent)">⚖️ 仲裁者</span><span class="mr-tag" style="border-color:var(--accent);color:var(--accent)">${item.consensus?'✅共识':'⚖️未共识'}</span></div><div class="mr-body">${renderMdHtml(escapeHtml(item.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>')}</div>`;
+    const tagLabel=isFinal?(item.consensus?'✅共识·终裁':'⚖️终裁'):(item.consensus?'✅共识':'⚖️未共识');
+    row.innerHTML=`<div class="mr-head"><span class="mr-name" style="color:var(--accent)">⚖️ 仲裁者</span><span class="mr-tag" style="border-color:var(--accent);color:var(--accent)">${tagLabel}</span></div><div class="mr-body">${renderMdHtml(escapeHtml(item.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>')}</div>`;
     area.appendChild(row);area.scrollTop=area.scrollHeight;bindEvLinks(row);
+    // 最终仲裁：播放奖杯动画
+    if(isFinal&&!victoryShown){scheduleTrophyAfterArbitrator()}
     return;
   }
   if(item.end){

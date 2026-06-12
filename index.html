@@ -109,6 +109,10 @@ a:hover{text-decoration:underline}
 /* ── Context ── */
 .context-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin:10px 0}
 .context-card h3{font-size:14px;color:var(--text2);margin-bottom:6px}
+.wc-results-card{border-left:3px solid var(--accent,#f59e0b);background:color-mix(in srgb,var(--accent,#f59e0b) 5%,var(--card))}
+.wc-results-table td{font-size:12px;padding:2px 6px}
+.travel-card{border-left:3px solid #60a5fa;background:color-mix(in srgb,#60a5fa 5%,var(--card))}
+.home-adv-card{border-left:3px solid #34d399;background:color-mix(in srgb,#34d399 5%,var(--card))}
 .record-header{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
 .team-flag-sm{width:22px;height:15px;border-radius:2px;object-fit:cover;border:1px solid var(--border);vertical-align:middle}
 .team-flag-sm-placeholder{display:inline-flex;width:22px;height:15px;border-radius:2px;background:var(--divider);align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
@@ -297,7 +301,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 // ⚙️ 配置参数
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
-  JSON_FILE: '2026-06-10_090211_韩国_vs_捷克（group_第一轮）.json',
+  JSON_FILE: '2026-06-12_042323_墨西哥_vs_南非（小组赛）.json',
   VIEWER_FILE: 'debate_viewer.html',
   IMAGES_DIR: 'images/',
   AVATAR_IMAGES: {
@@ -353,18 +357,45 @@ function avatarHtml(name,idx,cls='analyst-avatar'){
 }
 
 function parseMatchContext(md){
-  if(!md)return{info:[],records:[]};
-  const lines=md.split('\n'),info=[],records=[];
-  let cur=null,inR=false;
-  function push(){if(cur&&(cur.summary||cur.matches.length))records.push(cur);cur=null}
+  if(!md)return{info:[],records:[],wcResults:[],travel:[],homeAdvantage:[]};
+  const lines=md.split('\n'),info=[],records=[],wcResults=[],travel=[],homeAdvantage=[];
+  let cur=null,inR=false,sectionType='';
+  function push(){if(cur&&(cur.summary||cur.matches.length)){
+    if(sectionType==='wc')wcResults.push(cur);else records.push(cur);
+  }cur=null;sectionType=''}
   for(const line of lines){
     const t=line.trim();if(!t)continue;
-    if(t.startsWith('## ')||t.startsWith('### ')){push();const title=t.replace(/^#+\s*/,'');if(title.includes('战绩')||title.includes('记录')){cur={title,summary:'',matches:[]};inR=true}else inR=false;continue}
-    if(t.startsWith('- ')){if(inR&&cur)cur.matches.push(t.slice(2));else info.push(t.slice(2));continue}
+    if(t.startsWith('## ')||t.startsWith('### ')){
+      push();const title=t.replace(/^#+\s*/,'');
+      if(title.includes('本届世界杯')||title.includes('⚽')){
+        cur={title,summary:'',matches:[]};inR=true;sectionType='wc';
+      }else if(title.includes('战绩')||title.includes('记录')){
+        cur={title,summary:'',matches:[]};inR=true;sectionType='record';
+      }else if(title.includes('舟车劳顿')){
+        sectionType='travel';inR=false;
+      }else if(title.includes('主客场')){
+        sectionType='homeAdvantage';inR=false;
+      }else{
+        inR=false;sectionType='';
+      }
+      continue;
+    }
+    if(t.startsWith('- ')){
+      const content=t.slice(2);
+      if(inR&&cur)cur.matches.push(content);
+      else if(sectionType==='travel')travel.push(content);
+      else if(sectionType==='homeAdvantage')homeAdvantage.push(content);
+      else info.push(content);
+      continue;
+    }
     if(inR&&cur&&t.startsWith('总计')){cur.summary=t;continue}
-    if(!inR&&!t.startsWith('#'))info.push(t);
+    if(!inR&&!t.startsWith('#')){
+      if(sectionType==='travel')travel.push(t);
+      else if(sectionType==='homeAdvantage')homeAdvantage.push(t);
+      else info.push(t);
+    }
   }
-  push();return{info,records};
+  push();return{info,records,wcResults,travel,homeAdvantage};
 }
 
 function render(){
@@ -406,6 +437,9 @@ function renderHeader(){
   if(stage)metaParts.push(`<span class="meta-tag">${esc(stage)}</span>`);
   if(date)metaParts.push(`<span>${esc(date)}</span>`);
   if(matchTime)metaParts.push(`<span>${esc(matchTime)}</span>`);
+  // Venue/city info
+  const venue=mm.venue||'',city=mm.city||'';
+  if(city)metaParts.push(`<span style="opacity:0.7">${esc(city)}${venue?' · '+esc(venue):''}</span>`);
 
   document.getElementById('match-header').innerHTML=`
     <div class="match-brand">AI DEBATE PREDICTION</div>
@@ -484,7 +518,7 @@ function jumpToAnalyst(name){
 
 function renderContext(){
   const ctx=parseMatchContext(DATA.match_context);
-  if(!ctx.info.length&&!ctx.records.length)return;
+  if(!ctx.info.length&&!ctx.records.length&&!ctx.wcResults.length&&!ctx.travel.length)return;
   const{teamA,teamB}=parseTopic(DATA.topic);
   let html=`<div class="section-title">比赛信息与战绩</div>`;
   if(ctx.info.length){
@@ -492,11 +526,49 @@ function renderContext(){
     for(const item of ctx.info)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
     html+='</div>';
   }
+
+  // 本届世界杯战绩 ⚽（视觉区分）
+  if(ctx.wcResults.length){
+    html+=`<div class="context-card wc-results-card"><h3>⚽ 本届世界杯战绩</h3>`;
+    html+=`<div style="font-size:12px;color:var(--accent);margin-bottom:8px">对队伍心态和状态影响极大</div>`;
+    for(const rec of ctx.wcResults){
+      let teamTag='';
+      if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
+      html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title.replace(/⚽/g,''))}</div>`;
+      if(rec.matches.length){
+        html+=`<table class="record-table wc-results-table"><tbody>`;
+        for(const m of rec.matches){
+          const pm=m.match(/^(\d{4}-\d{2}-\d{2})\s+vs\s+(.+?)(?:\s+-\s+(.+))?$/);
+          if(pm){
+            const[,date,opponent,stage]=pm;
+            html+=`<tr><td class="date-col">${date.slice(5)}</td><td>vs ${esc(opponent)}</td><td class="comp-col">${stage?esc(stage):''}</td></tr>`;
+          }else html+=`<tr><td colspan="3">${esc(m)}</td></tr>`;
+        }
+        html+='</tbody></table>';
+      }
+    }
+    html+='</div>';
+  }
+
+  // 舟车劳顿分析
+  if(ctx.travel.length){
+    html+=`<div class="context-card travel-card"><h3>✈️ 舟车劳顿分析</h3>`;
+    for(const item of ctx.travel)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
+    html+='</div>';
+  }
+
+  // 主客场信息
+  if(ctx.homeAdvantage.length){
+    html+=`<div class="context-card home-adv-card"><h3>🏟️ 主客场</h3>`;
+    for(const item of ctx.homeAdvantage)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
+    html+='</div>';
+  }
+
+  // 历史战绩
   for(const rec of ctx.records){
     let teamTag='';
     if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
     html+='<div class="context-card">';
-    // Parse summary for W/D/L bar
     let summaryHtml='';
     if(rec.summary){
       const m=rec.summary.match(/(\d+)胜(\d+)平(\d+)负/);
