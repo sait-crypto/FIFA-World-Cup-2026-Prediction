@@ -80,6 +80,19 @@ a:hover{text-decoration:underline}
 .pred-hero-stance{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .stance-chip{font-size:12px;padding:3px 10px;border-radius:12px;font-weight:600;cursor:pointer;transition:all .15s;border:1px solid transparent}
 .stance-chip:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.top-predictions{margin-top:14px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid var(--border)}
+.top-predictions-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.top-pred-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent)}
+.top-pred-item:last-child{border-bottom:none}
+.top-pred-best{font-weight:700}
+.top-pred-rank{font-size:11px;color:var(--text2);min-width:22px}
+.top-pred-score{font-size:13px;min-width:100px}
+.top-pred-conf-bar{flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
+.top-pred-conf-fill{height:100%;border-radius:3px;transition:width .3s}
+.top-pred-conf-fill.high{background:linear-gradient(90deg,#22c55e,#16a34a)}
+.top-pred-conf-fill.mid{background:linear-gradient(90deg,#f59e0b,#d97706)}
+.top-pred-conf-fill.low{background:linear-gradient(90deg,#ef4444,#dc2626)}
+.top-pred-conf-label{font-size:11px;color:var(--text2);min-width:32px;text-align:right}
 .stance-chip.side-a{background:#fde8e8;color:var(--side-a);border-color:var(--side-a)}
 .stance-chip.side-b{background:#e8f0fe;color:var(--side-b);border-color:var(--side-b)}
 .stance-chip.side-x{background:#fef9e7;color:#b8860b;border-color:var(--side-x)}
@@ -301,7 +314,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 // ⚙️ 配置参数
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
-  JSON_FILE: '2026-06-12_042323_墨西哥_vs_南非（小组赛）.json',
+  JSON_FILE: '2026-06-12_132350_加拿大_vs_波黑（小组赛）.json',
   VIEWER_FILE: 'debate_viewer.html',
   IMAGES_DIR: 'images/',
   AVATAR_IMAGES: {
@@ -501,6 +514,26 @@ function renderPredictionHero(){
     html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')}${esc(f.score||'')}</span>`;
   }
   html+='</div>';
+
+  // Top-N 预测列表（如果有多个）
+  const topPreds=DATA.top_predictions||[];
+  if(topPreds.length>1){
+    html+=`<div class="top-predictions">`;
+    html+=`<div class="top-predictions-title">可能比分</div>`;
+    topPreds.forEach((p,i)=>{
+      const pConf=p.confidence||0;
+      const pClass=pConf>=7?'high':pConf>=4?'mid':'low';
+      const pPct=Math.round(pConf/10*100);
+      html+=`<div class="top-pred-item ${i===0?'top-pred-best':''}">
+        <span class="top-pred-rank">#${i+1}</span>
+        <span class="top-pred-score">${esc(p.winner)} ${esc(p.score)}</span>
+        <div class="top-pred-conf-bar"><div class="top-pred-conf-fill ${pClass}" style="width:${pPct}%"></div></div>
+        <span class="top-pred-conf-label">${pConf}/10</span>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
   document.getElementById('prediction-hero').innerHTML=html;
 }
 
