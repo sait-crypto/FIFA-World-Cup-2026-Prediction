@@ -249,15 +249,15 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 #victory-screen .vcrown{font-size:48px}
 #victory-screen .vtitle{font-size:18px;color:#ffd54f;text-shadow:2px 2px 0 #000,0 0 12px rgba(255,213,79,.4)}
 #victory-screen .vpred{font-size:14px;text-shadow:1px 1px 0 #000}
-#victory-screen .vsides{display:flex;gap:40px;margin-top:8px}
-#victory-screen .vside{text-align:center}
+#victory-screen .vsides{display:flex;gap:20px;margin-top:8px;flex-wrap:wrap;justify-content:center;max-width:580px}
+#victory-screen .vside{text-align:center;min-width:100px}
 #victory-screen .vside-label{font-size:10px;margin-bottom:8px;padding:2px 8px;border:1px solid}
 #victory-screen .vagents{display:flex;gap:12px;justify-content:center}
 #victory-screen .vagent{text-align:center;width:80px}
 #victory-screen .vagent .sprite{width:44px;height:44px;margin:0 auto;border:2px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;color:#fff;text-shadow:1px 1px 0 #000;background-size:cover;background-position:center}
 #victory-screen .vagent .vaname{font-size:8px;margin-top:2px}
 #victory-screen .vagent .vavpred{font-size:7px;font-weight:bold}
-#victory-screen .vtopn{margin-top:16px;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,0.3);border:1px solid var(--border)}
+#victory-screen .vtopn{margin-top:8px;padding:8px 12px;border-radius:8px;background:rgba(0,0,0,0.3);border:1px solid var(--border);max-width:580px;width:100%}
 #victory-screen .vtopn-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
 #victory-screen .vtopn-item{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px}
 #victory-screen .vtopn-best{font-weight:700;color:#ffd700}
@@ -346,6 +346,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   </div>
   <div id="main">
     <div id="topbar">
+      <a href="index.html" id="btn-back" style="color:inherit;text-decoration:none;font-size:10px;padding:2px 8px;border:1px solid var(--border);border-radius:4px;cursor:pointer;white-space:nowrap">← 赛程</a>
       <span class="title" id="topic">---</span>
       <span class="tag" id="mode-tag">圆桌</span>
       <span class="tag" id="cons-tag">---</span>
@@ -492,6 +493,9 @@ const AVATAR_IMAGES = {
   '分析师3': 'images/3.png',
   '分析师4': 'images/4.png',
   '分析师5': 'images/5.png',
+  '分析师6': 'images/6.png',
+  '分析师7': 'images/7.png',
+  '分析师8': 'images/8.png',
   
   // '审核员':   'images/curator.png',
   // '仲裁者':   'images/arbitrator.png',
@@ -1706,7 +1710,7 @@ function showVictoryScreen(){
     const img=AVATAR_IMAGES[agent.name];const spriteStyle=img?`border-color:${color};background-image:url('${img}')`:`border-color:${color};background:${color}22`;const spriteInner=img?'':`<span style="color:${color}">${idx+1}</span>`;
     const d=document.createElement('div');d.className='vagent';d.innerHTML=`<div class="sprite" style="${spriteStyle}">${spriteInner}</div><div class="vaname" style="color:${color}">${agent.name}</div><div class="vavpred" style="color:${s.color}">${last?last.winner+' '+last.score:''}</div>`;aDiv.appendChild(d)});
   sDiv.appendChild(aDiv);vSides.appendChild(sDiv)});
-  // Top-N 预测
+  // Top-N 预测 — 追加到 victory-screen（独立一行，不在 vsides 内）
   const topPreds=DATA.top_predictions||[];
   if(topPreds.length>1){
     const tpDiv=document.createElement('div');tpDiv.className='vtopn';
@@ -1717,7 +1721,7 @@ function showVictoryScreen(){
       item.innerHTML=`<span class="vtopn-rank">#${i+1}</span><span class="vtopn-score">${escapeHtml(p.winner)} ${escapeHtml(p.score)}</span><span class="vtopn-conf">${p.confidence||0}/10</span>`;
       tpDiv.appendChild(item);
     });
-    vSides.appendChild(tpDiv);
+    document.getElementById('victory-screen').appendChild(tpDiv);
   }
   document.getElementById('victory-screen').classList.add('active');
 }

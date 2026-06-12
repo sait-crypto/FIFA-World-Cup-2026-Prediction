@@ -2,926 +2,454 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 辩论预测</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI 辩论预测 · 赛程</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --primary:#1678F2;--primary-dark:#125ccc;--primary-light:#e8f0fe;
   --bg:#f5f5f5;--card:#fff;--border:#e8e8e8;--divider:#f1f1f1;
   --text:#222;--text2:#555;--text3:#888;
-  --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--blue:#2980b9;--yellow:#f0ad4e;
+  --green:#27ae60;--red:#e74c3c;--orange:#f39c12;--yellow:#f0ad4e;
   --side-a:#e74c3c;--side-b:#2980b9;--side-x:#f0ad4e;
+  --bar-home:#1678F2;--bar-draw:#94a3b8;--bar-away:#e74c3c;
   --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.08);
-  --max-w:1200px;
-  --highlight:#aaa;
+  --max-w:1080px;
 }
 html{font-size:17px;scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
 a{color:var(--primary);text-decoration:none}
-a:hover{text-decoration:underline}
 
-/* ═══ Load Screen ═══ */
-#load-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}
-#load-screen .inner{max-width:400px;padding:40px 20px}
-#load-screen h2{font-size:22px;margin-bottom:16px;color:var(--primary)}
-#load-screen p{color:var(--text2);margin-bottom:24px;font-size:15px}
-#load-screen .drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;cursor:pointer;transition:border-color .2s;color:var(--text2);font-size:15px}
-#load-screen .drop-zone:hover{border-color:var(--primary);color:var(--primary)}
-#load-screen .drop-zone.drag-over{border-color:var(--primary);background:var(--primary-light)}
-#file-input{display:none}
+/* ── Sticky Nav ── */
+.sticky-nav{position:sticky;top:0;z-index:100;background:rgba(22,120,242,0.95);backdrop-filter:blur(8px);padding:8px 20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.nav-brand{color:#fff;font-size:14px;font-weight:700;letter-spacing:1px;white-space:nowrap}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-link{color:rgba(255,255,255,0.8);font-size:12px;padding:4px 12px;border-radius:16px;transition:all .2s;text-decoration:none;white-space:nowrap}
+.nav-link:hover,.nav-link.active{background:rgba(255,255,255,0.2);color:#fff}
 
-/* ═══ Main ═══ */
-#main{display:none}
-.container{max-width:var(--max-w);margin:0 auto;padding:0 20px}
-
-/* ── Header ── */
-.match-header{
+/* ── Hero ── */
+.hero-header{
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  color:#fff;padding:14px 20px 28px;position:relative;overflow:hidden;
+  color:#fff;padding:28px 20px 20px;text-align:center;position:relative;overflow:hidden;
 }
-.match-header::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none}
-.match-brand{text-align:center;font-size:11px;opacity:.4;margin-bottom:4px;letter-spacing:4px;text-transform:uppercase}
-.match-meta{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px;font-size:13px;opacity:.85;flex-wrap:wrap}
-.match-meta .meta-tag{background:rgba(255,255,255,0.18);padding:3px 10px;border-radius:4px;font-weight:600}
-.match-vs-area{display:flex;align-items:center;justify-content:center;gap:24px}
-.team-block{text-align:center;flex:1;max-width:280px}
-.team-flag{width:72px;height:48px;border-radius:4px;margin:0 auto;object-fit:cover;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)}
-.team-flag-placeholder{width:72px;height:48px;border-radius:4px;margin:0 auto;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;border:2px solid rgba(255,255,255,0.3)}
-.team-name{font-size:26px;font-weight:700;margin-top:4px}
-.team-rank{font-size:13px;opacity:.8;margin-top:1px}
-.vs-divider{text-align:center;flex-shrink:0}
-.vs-text{font-size:36px;font-weight:800;opacity:.5}
+.hero-header::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none}
+.hero-title{font-size:22px;font-weight:800;margin-bottom:4px}
+.hero-sub{font-size:13px;opacity:.7}
 
-/* ── Prediction Hero ── */
-.prediction-hero{
-  background:var(--card);border-radius:var(--radius);
-  box-shadow:0 2px 12px rgba(0,0,0,0.1);padding:20px 24px;margin:-8px auto 0;position:relative;z-index:5;
-  max-width:var(--max-w);
+/* ── Container ── */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 16px}
+
+/* ── Section ── */
+.section-title{font-size:18px;font-weight:800;color:var(--text);margin:24px 0 12px;padding-left:4px;border-left:4px solid var(--primary);padding:4px 0 4px 12px}
+.date-head{font-size:14px;font-weight:700;color:var(--text2);margin:20px 0 8px;padding-left:4px}
+
+/* ── Cards Grid ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+
+/* ── Schedule Card ── */
+.sched-card{
+  background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;
+  text-decoration:none;color:var(--text);display:block;
 }
-.pred-hero-label{font-size:22px;color:var(--text);font-weight:800;text-align:center;margin-bottom:12px}
-.pred-hero-main{text-align:center;margin-bottom:14px}
-.pred-hero-result-line{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.pred-hero-result{font-size:30px;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:8px}
-.pred-hero-score{font-size:24px;color:var(--text);font-weight:700}
-.pred-hero-conf{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}
-.pred-hero-conf-bar{width:160px;height:10px;background:var(--divider);border-radius:5px;overflow:hidden}
-.pred-hero-conf-fill{height:100%;border-radius:5px;background:var(--primary)}
-.pred-hero-conf-label{font-size:15px;color:var(--text2);font-weight:600}
-.pred-hero-bar{margin-top:16px}
-.pred-hero-bar-title{font-size:14px;color:var(--text2);margin-bottom:6px;font-weight:600}
-.pred-hero-bar-track{display:flex;height:24px;border-radius:12px;overflow:hidden;background:var(--divider)}
-.pred-hero-bar-track .seg{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;min-width:32px;transition:width .6s}
-.pred-hero-bar-track .seg-a{background:var(--side-a)}
-.pred-hero-bar-track .seg-x{background:var(--side-x)}
-.pred-hero-bar-track .seg-b{background:var(--side-b)}
-.pred-hero-legend{display:flex;gap:20px;margin-top:6px;font-size:13px;color:var(--text2)}
-.pred-hero-legend .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px}
-.pred-hero-stance{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.stance-chip{font-size:12px;padding:3px 10px;border-radius:12px;font-weight:600;cursor:pointer;transition:all .15s;border:1px solid transparent}
-.stance-chip:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1)}
-.top-predictions{margin-top:14px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid var(--border)}
-.top-predictions-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-.top-pred-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent)}
-.top-pred-item:last-child{border-bottom:none}
-.top-pred-best{font-weight:700}
-.top-pred-rank{font-size:11px;color:var(--text2);min-width:22px}
-.top-pred-score{font-size:13px;min-width:100px}
-.top-pred-conf-bar{flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
-.top-pred-conf-fill{height:100%;border-radius:3px;transition:width .3s}
-.top-pred-conf-fill.high{background:linear-gradient(90deg,#22c55e,#16a34a)}
-.top-pred-conf-fill.mid{background:linear-gradient(90deg,#f59e0b,#d97706)}
-.top-pred-conf-fill.low{background:linear-gradient(90deg,#ef4444,#dc2626)}
-.top-pred-conf-label{font-size:11px;color:var(--text2);min-width:32px;text-align:right}
-.stance-chip.side-a{background:#fde8e8;color:var(--side-a);border-color:var(--side-a)}
-.stance-chip.side-b{background:#e8f0fe;color:var(--side-b);border-color:var(--side-b)}
-.stance-chip.side-x{background:#fef9e7;color:#b8860b;border-color:var(--side-x)}
+.sched-card:hover{transform:translateY(-3px);box-shadow:0 4px 16px rgba(0,0,0,0.12)}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px}
+.stage-tag{background:var(--primary-light);color:var(--primary);padding:2px 8px;border-radius:4px;font-weight:600}
+.city-tag{color:var(--text3);font-size:11px}
 
-/* ── Section ═══ */
-.section{padding:16px 0}
-.section-title{font-size:18px;font-weight:800;padding:12px 0 8px;border-bottom:2px solid var(--divider);cursor:default}
-.section-title .more{margin-left:auto;font-size:12px;color:var(--text3);font-weight:400}
-.section-title.collapsible{cursor:pointer;user-select:none}
-.section-title.collapsible::after{content:'▾';margin-left:8px;font-size:14px;color:var(--text3);transition:transform .2s}
-.section-title.collapsible.collapsed::after{transform:rotate(-90deg)}
-.section-body.collapsed{display:none}
+/* Teams Row */
+.teams-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+.team-col{text-align:center;flex:1}
+.team-flag{width:56px;height:38px;border-radius:3px;object-fit:cover;margin:0 auto 4px;border:1px solid var(--border);background:var(--divider)}
+.team-flag-ph{width:56px;height:38px;border-radius:3px;margin:0 auto 4px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--primary)}
+.team-name{font-size:15px;font-weight:700}
+.team-rank{font-size:11px;color:var(--text3)}
+.vs-text{font-size:18px;font-weight:800;color:var(--text3);flex-shrink:0}
 
-/* ── Evidence Pool Bar ── */
-.evidence-pool-bar{
-  display:flex;align-items:center;gap:12px;
-  padding:12px 18px;
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  cursor:pointer;font-size:15px;font-weight:700;color:var(--text);
-  transition:all .2s;user-select:none;box-shadow:var(--shadow);
-}
-.evidence-pool-bar:hover{border-color:var(--text3)}
-.evidence-pool-bar .bar-arrow{font-size:14px;transition:transform .2s;margin-left:auto}
-.evidence-pool-bar.collapsed .bar-arrow{transform:rotate(-90deg)}
-.evidence-pool-bar .bar-count{font-size:13px;font-weight:500;color:var(--text2)}
+/* Prob Bar */
+.prob-bar{display:flex;height:18px;border-radius:9px;overflow:hidden;margin:6px 0;background:var(--divider)}
+.prob-bar .seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;min-width:24px;transition:width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
+.prob-bar .seg.home{background:linear-gradient(90deg,#3b82f6,#2563eb)}
+.prob-bar .seg.draw{background:linear-gradient(90deg,#94a3b8,#64748b)}
+.prob-bar .seg.away{background:linear-gradient(90deg,#ef4444,#dc2626)}
+.prob-legend{display:flex;gap:12px;font-size:11px;color:var(--text3);margin-top:2px}
+.prob-legend .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:2px}
 
-/* ── Context ── */
-.context-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin:10px 0}
-.context-card h3{font-size:14px;color:var(--text2);margin-bottom:6px}
-.wc-results-card{border-left:3px solid var(--accent,#f59e0b);background:color-mix(in srgb,var(--accent,#f59e0b) 5%,var(--card))}
-.wc-results-table td{font-size:12px;padding:2px 6px}
-.travel-card{border-left:3px solid #60a5fa;background:color-mix(in srgb,#60a5fa 5%,var(--card))}
-.home-adv-card{border-left:3px solid #34d399;background:color-mix(in srgb,#34d399 5%,var(--card))}
-.record-header{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.team-flag-sm{width:22px;height:15px;border-radius:2px;object-fit:cover;border:1px solid var(--border);vertical-align:middle}
-.team-flag-sm-placeholder{display:inline-flex;width:22px;height:15px;border-radius:2px;background:var(--divider);align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
-.team-flag-md{width:30px;height:20px;border-radius:3px;object-fit:cover;border:1px solid var(--border);vertical-align:middle}
-.team-flag-md-placeholder{display:inline-flex;width:30px;height:20px;border-radius:3px;background:var(--divider);align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
-.record-summary{display:flex;align-items:center;gap:8px;margin-left:6px;font-size:12px;color:var(--text2);font-weight:500}
-.record-summary-bar{width:80px;height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--divider);flex-shrink:0}
-.record-summary-bar .win-seg{background:var(--green)}
-.record-summary-bar .draw-seg{background:var(--yellow)}
-.record-summary-bar .lose-seg{background:var(--red)}
-.record-summary-text{white-space:nowrap;font-weight:700;font-size:13px}
-.record-summary-text .w{color:var(--green)}.record-summary-text .d{color:var(--yellow)}.record-summary-text .l{color:var(--red)}
-.record-table{width:100%;border-collapse:collapse;font-size:13px}
-.record-table th{text-align:left;padding:5px 6px;background:var(--divider);font-weight:600;color:var(--text2);font-size:12px;border-bottom:1px solid var(--border)}
-.record-table td{padding:5px 6px;border-bottom:1px solid var(--divider);color:var(--text2)}
-.record-table .date-col{color:var(--text3);white-space:nowrap;width:80px}
-.record-table .score-col{font-weight:600;white-space:nowrap}
-.record-table .score-col.win{color:var(--green)}
-.record-table .score-col.lose{color:var(--red)}
-.record-table .comp-col{color:var(--text3);text-align:right}
+/* Prediction Row */
+.pred-row{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.pred-result{font-size:14px;font-weight:700;color:var(--primary)}
+.pred-score{font-size:13px;color:var(--text2)}
+.pred-conf{font-size:11px;color:var(--text3)}
+.pred-conf-bar{width:60px;height:5px;background:var(--divider);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle}
+.pred-conf-fill{height:100%;border-radius:3px;transition:width 0.5s cubic-bezier(0.25,0.46,0.45,0.94)}
+.pred-conf-fill.high{background:var(--green)}
+.pred-conf-fill.mid{background:var(--orange)}
+.pred-conf-fill.low{background:var(--red)}
 
-/* ── Analyst Cards ── */
-.analyst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;padding:8px 0}
-.analyst-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;position:relative;border-left:4px solid var(--text3);cursor:pointer;transition:transform .15s,box-shadow .15s}
-.analyst-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-.analyst-card.side-a{border-left-color:var(--side-a)}
-.analyst-card.side-b{border-left-color:var(--side-b)}
-.analyst-card.side-x{border-left-color:var(--side-x)}
-.analyst-card.changed{border-left-color:var(--orange)}
-.analyst-card.highlighted{box-shadow:0 0 0 4px var(--highlight),0 4px 16px rgba(0,0,0,0.12)}
-.analyst-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.analyst-avatar{width:36px;height:36px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center}
-.analyst-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.analyst-name{font-size:15px;font-weight:600}
-.analyst-perspective{font-size:12px;color:var(--text3)}
-.analyst-stance{font-size:11px;padding:2px 8px;border-radius:4px;margin-left:auto;flex-shrink:0;font-weight:600}
-.analyst-stance.pro-a{background:#fde8e8;color:var(--side-a)}
-.analyst-stance.pro-b{background:#e8f0fe;color:var(--side-b)}
-.analyst-stance.pro-x{background:#fef9e7;color:#b8860b}
-.analyst-current-opinion{font-size:18px;font-weight:800;margin:8px 0 6px;padding:6px 10px;background:var(--primary-light);border-radius:var(--radius);color:var(--primary)}
-.analyst-current-opinion.side-a{color:var(--side-a);background:#fde8e8}
-.analyst-current-opinion.side-b{color:var(--side-b);background:#e8f0fe}
-.analyst-current-opinion.side-x{color:#b8860b;background:#fef9e7}
-.analyst-pred-chain{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin:6px 0;padding:4px 8px;background:var(--divider);border-radius:4px}
-.chain-node{padding:2px 6px;border-radius:4px;font-size:12px;font-weight:500;background:var(--card);color:var(--text2)}
-.chain-node.initial{background:var(--primary-light);color:var(--primary)}
-.chain-node.changed{background:#fff3e0;color:var(--orange);font-weight:700;border:1px solid #ffe0b2}
-.chain-arrow{color:var(--text3);font-size:11px}
-.confidence-bar{flex:1;height:4px;background:var(--divider);border-radius:2px;overflow:hidden}
-.confidence-fill{height:100%;border-radius:2px}
-.confidence-fill.high{background:var(--green)}.confidence-fill.mid{background:var(--orange)}.confidence-fill.low{background:var(--red)}
-.confidence-label{font-size:11px;color:var(--text3);white-space:nowrap}
-.analyst-summary{font-size:13px;color:var(--text2);line-height:1.5;margin-top:6px}
-.analyst-evolution{font-size:12px;color:var(--orange);margin-top:6px;padding:4px 8px;background:#fff8f0;border-radius:4px;border:1px solid #ffe0b2;font-weight:600}
+/* Top Scores */
+.top-scores{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.score-chip{font-size:11px;padding:2px 8px;border-radius:10px;background:var(--primary-light);color:var(--primary);font-weight:600}
+.score-chip.best{background:var(--primary);color:#fff}
 
-/* ── Modal ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.active{display:flex}
-body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
-.modal{background:var(--card);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,0.25);max-width:620px;width:100%;max-height:80vh;overflow-y:auto;padding:24px;position:relative;overscroll-behavior:contain}
-.modal-close{position:absolute;top:12px;right:16px;font-size:22px;cursor:pointer;color:var(--text3);line-height:1}
-.modal-close:hover{color:var(--text)}
-.modal h3{font-size:17px;margin-bottom:4px}
-.modal .modal-perspective{font-size:12px;color:var(--text3);margin-bottom:12px}
-.modal-pred-chain{font-size:13px;padding:10px 14px;background:var(--divider);border-radius:var(--radius);margin-bottom:12px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.modal-pred-chain .chain-node{cursor:pointer;transition:background .15s}
-.modal-pred-chain .chain-node.initial{background:var(--primary-light);color:var(--primary)}
-.modal-pred-chain .chain-node:hover{filter:brightness(0.95)}
-.modal-speeches{margin-top:12px}
-.modal-speech{padding:10px 12px;margin-bottom:8px;background:#fafafa;border-radius:6px;border-left:3px solid var(--border);font-size:13px;color:var(--text2);line-height:1.5;transition:background .3s,border-color .3s}
-.modal-speech.highlight{background:#fff8e0;border-left-color:#f5a623}
-.modal-speech .speech-opinion{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
-.modal-speech .speech-action{font-weight:600;color:var(--text);font-size:12px;margin-bottom:2px}
+/* Consensus Badge */
+.consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600}
+.consensus-badge.yes{background:#e8f5e9;color:var(--green)}
+.consensus-badge.no{background:#fff3e0;color:var(--orange)}
 
-/* ── Verdict ── */
-.verdict-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin:10px 0}
-.phase-timeline{margin:12px 0}
-.phase-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--divider)}
-.phase-item:last-child{border-bottom:none}
-.phase-badge{flex-shrink:0;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
-.phase-badge.yes{background:var(--green)}.phase-badge.no{background:var(--orange)}
-.phase-content{flex:1}
-.phase-title{font-size:13px;font-weight:600;margin-bottom:2px}
-.phase-desc{font-size:13px;color:var(--text2);line-height:1.4}
-.consensus-yes{color:var(--green);font-weight:600}.consensus-no{color:var(--red);font-weight:600}
-.verdict-text{font-size:14px;color:var(--text2);line-height:1.6}
-.verdict-final-box{
-  margin:12px 0;padding:16px 20px;
-  background:var(--card);border:2px solid var(--border);border-radius:var(--radius);
-}
-.verdict-final-box .vf-winner{font-size:22px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px}
-.verdict-final-box .vf-score{font-size:18px;font-weight:700;color:var(--text)}
-.verdict-final-box .vf-conf-row{display:flex;align-items:center;gap:10px;margin-top:8px}
-.verdict-final-box .vf-conf-bar{width:140px;height:10px;background:var(--divider);border-radius:5px;overflow:hidden}
-.verdict-final-box .vf-conf-fill{height:100%;border-radius:5px}
-.verdict-final-box .vf-conf-fill.high{background:var(--green)}
-.verdict-final-box .vf-conf-fill.mid{background:var(--orange)}
-.verdict-final-box .vf-conf-fill.low{background:var(--red)}
-.verdict-final-box .vf-conf-text{font-size:14px;color:var(--text2);font-weight:600}
-.summary-text{font-size:14px;color:var(--text2);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--divider)}
-.summary-text h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+/* ── Drop Zone ── */
+.drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;transition:border-color .2s;color:var(--text3);margin:20px 0;font-size:14px}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
 
-/* ── Evidence ── */
-.evidence-list{padding:4px 0}
-.evidence-item{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:background .15s}
-.evidence-item:hover{background:#fafafa}
-.evidence-header{display:flex;align-items:center;gap:6px}
-.evidence-id{font-size:12px;font-weight:600;color:var(--primary);background:var(--primary-light);padding:2px 5px;border-radius:3px}
-.evidence-source{font-size:11px;color:var(--text3);margin-left:auto}
-.evidence-confidence{font-size:11px;padding:2px 5px;border-radius:3px}
-.evidence-confidence.high{background:#e8f5e9;color:var(--green)}
-.evidence-confidence.mid{background:#fff8e1;color:var(--orange)}
-.evidence-confidence.low{background:#fce4ec;color:var(--red)}
-.evidence-title{font-size:13px;color:var(--text);margin-top:3px;font-weight:500}
-.evidence-content{font-size:13px;color:var(--text2);margin-top:4px;line-height:1.5;display:none}
-.evidence-item.expanded .evidence-content{display:block}
-.evidence-url{display:inline-flex;align-items:center;gap:3px;font-size:12px;color:var(--primary);margin-top:3px}
+/* ── Empty State ── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
+.empty-state h3{font-size:18px;margin-bottom:8px;color:var(--text2)}
+
+/* ── Loading ── */
+.loading{text-align:center;padding:40px;color:var(--text3);font-size:14px}
 
 /* ── Footer ── */
-.footer-section{padding:16px 0 32px;text-align:center;border-top:1px solid var(--divider);margin-top:16px}
-.footer-section .hint{font-size:12px;color:var(--text3);margin-top:10px}
-.viewer-title{font-size:17px;font-weight:800;text-align:center;margin-bottom:12px;color:var(--text)}
-.viewer-toggle{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px}
-.toggle-btn{padding:6px 16px;border-radius:20px;font-size:13px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;transition:all .2s;font-weight:600}
-.toggle-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-.viewer-open-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 28px;border-radius:var(--radius);background:var(--primary);color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:background .2s;box-shadow:0 2px 8px rgba(22,120,242,0.3)}
-.viewer-open-btn:hover{background:var(--primary-dark)}
-.embed-container{display:none;margin-top:16px;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.12)}
-.embed-container.visible{display:block}
-.embed-header{background:var(--primary);color:#fff;padding:8px 14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
-.embed-close{margin-left:auto;cursor:pointer;opacity:.7;font-size:16px}
-.embed-close:hover{opacity:1}
-.embed-iframe{width:100%;height:840px;border:none;display:block}
+.page-footer{text-align:center;padding:20px;font-size:12px;color:var(--text3);margin-top:40px}
 
 /* ── Responsive ── */
-@media(max-width:768px){
-  .container{padding:0 12px}
-  .match-vs-area{gap:12px}
-  .team-name{font-size:20px}
-  .team-flag,.team-flag-placeholder{width:56px;height:38px}
-  .analyst-grid{grid-template-columns:1fr 1fr}
-  .pred-hero-content{flex-direction:column;align-items:flex-start;gap:8px}
-  .pred-hero-result{font-size:22px}
-  .record-table{font-size:12px}
-  .record-table .date-col{width:60px}
-  .section-title{font-size:16px}
-}
-@media(max-width:480px){
-  .analyst-grid{grid-template-columns:1fr}
-  .match-vs-area{flex-direction:column;gap:8px}
-  .vs-divider{display:flex;gap:8px;align-items:center}
-  .vs-text{font-size:24px}
-  .team-block{max-width:100%}
-  .team-flag,.team-flag-placeholder{width:48px;height:32px}
+@media(max-width:760px){
+  .cards{grid-template-columns:1fr}
+  .sticky-nav{padding:6px 12px;gap:8px}
+  .nav-brand{font-size:12px}
+  .nav-link{font-size:11px;padding:3px 8px}
 }
 </style>
 </head>
 <body>
 
-<div id="load-screen">
-  <div class="inner">
-    <h2>AI 辩论预测</h2>
-    <p>加载辩论数据以查看赛果分析</p>
-    <div class="drop-zone" id="drop-zone">拖放 JSON 文件到此处<br>或点击选择文件<input type="file" id="file-input" accept=".json"></div>
+<nav class="sticky-nav" id="sticky-nav">
+  <span class="nav-brand">⚽ AI 辩论预测</span>
+  <div class="nav-links" id="nav-links"></div>
+</nav>
+
+<div class="hero-header" id="hero-header">
+  <div class="hero-title">2026 世界杯 · 赛程预测</div>
+  <div class="hero-sub">多智能体辩论系统 · 综合分析</div>
+</div>
+
+<div class="container" id="main-content">
+  <div class="loading" id="loading">正在加载赛程数据...</div>
+  <div class="drop-zone" id="drop-zone" style="display:none">
+    📂 拖放 data 文件夹或 JSON 文件到此处<br>或点击选择文件
+    <input type="file" id="file-input" multiple accept=".json" style="display:none">
   </div>
 </div>
 
-<div id="main">
-  <div class="match-header" id="match-header"></div>
-  <div class="container">
-    <div class="prediction-hero" id="prediction-hero"></div>
-    <div class="section" id="context-section"></div>
-    <div class="section" id="analysts-section"></div>
-    <div class="section" id="verdict-section"></div>
-    <div class="section" id="evidence-section"></div>
-    <div class="footer-section" id="footer-section"></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="analyst-modal">
-  <div class="modal" id="modal-content"></div>
-</div>
+<div class="page-footer">辩论数据由多智能体辩论系统生成 · 仅供参考</div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// ⚙️ 配置参数
-// ═══════════════════════════════════════════════════════════
-const CONFIG = {
-  JSON_FILE: '2026-06-12_132350_加拿大_vs_波黑（小组赛）.json',
-  VIEWER_FILE: 'debate_viewer.html',
-  IMAGES_DIR: 'images/',
-  AVATAR_IMAGES: {
-    // '分析师1': 'images/analyst1.png',
-  },
-};
+const DATA_DIR='data/';
+const MANIFEST=DATA_DIR+'manifest.json';
+const DETAIL_PAGE='match.html';
 
-// ═══════════════════════════════════════════════════════════
+// 内嵌文件列表（当 fetch 不可用时使用，如本地 file:// 协议）
+// 新增比赛后请更新此列表
+const EMBEDDED_FILES=[
+  "2026-06-12墨西哥_vs_南非（小组赛）.json",
+  "2026-06-12韩国_vs_捷克（小组赛）.json",
+  "2026-06-13加拿大_vs_波黑（小组赛）.json",
+  "2026-06-13美国_vs_巴拉圭（小组赛）.json"
+];
 
-let DATA = null, currentJsonFile = '';
+const FLAG_MAP={'韩国':'🇰🇷','捷克':'🇨🇿','墨西哥':'🇲🇽','南非':'🇿🇦','加拿大':'🇨🇦','波黑':'🇧🇦','美国':'🇺🇸','巴拉圭':'🇵🇾','卡塔尔':'🇶🇦','瑞士':'🇨🇭'};
 
-function loadJson(text){try{DATA=JSON.parse(text);render()}catch(e){alert('JSON error: '+e.message)}}
+function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
 
-const dropZone=document.getElementById('drop-zone'),fileInput=document.getElementById('file-input');
-dropZone.addEventListener('click',()=>fileInput.click());
-fileInput.addEventListener('change',e=>{const f=e.target.files[0];if(f){const r=new FileReader();r.onload=ev=>loadJson(ev.target.result);r.readAsText(f)}});
-dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('drag-over')});
-dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('drag-over'));
-dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f){const r=new FileReader();r.onload=ev=>loadJson(ev.target.result);r.readAsText(f)}});
-
-(function(){const p=new URLSearchParams(location.search);const f=p.get('json')||CONFIG.JSON_FILE;if(!f)return;currentJsonFile=f;fetch(f).then(r=>r.text()).then(loadJson).catch(()=>console.warn('JSON auto-load failed:',f))})();
-
-// ── Helpers ──
-function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}
-function renderBold(t){return t?t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>'):''}
-function escAndBold(t){return renderBold(esc(t))}
 function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t,teamB:p[1]?.split('（')[0]?.trim()||''}}
-function initialPred(a){return a.prediction_history?.[0]||{}}
-function finalPred(a){return a.prediction_history?.[a.prediction_history.length-1]||{}}
-function hasChanged(a){return(a.prediction_history||[]).some((p,i)=>i>0&&p.changed)}
-function sideOf(a,t){const{teamA,teamB}=parseTopic(t);const f=finalPred(a);if(!f.winner)return'x';if(f.winner.includes(teamA))return'a';if(f.winner.includes(teamB))return'b';return'x'}
 
-function flagImgHtml(name,cls=''){
-  const url=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.webp';
-  const fb=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.png';
-  return `<img class="team-flag ${cls}" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}" alt="${esc(name)}"><div class="team-flag-placeholder ${cls}" style="display:none">${esc(name.charAt(0))}</div>`;
-}
-function smallFlagHtml(name){
-  const url=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.webp';
-  const fb=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.png';
-  return `<img class="team-flag-sm" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='inline-flex'}" alt="${esc(name)}"><span class="team-flag-sm-placeholder" style="display:none">${esc(name.charAt(0))}</span>`;
-}
-function mediumFlagHtml(name){
-  const url=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.webp';
-  const fb=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.png';
-  return `<img class="team-flag-md" src="${url}" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${fb}'}else{this.style.display='none';this.nextElementSibling.style.display='inline-flex'}" alt="${esc(name)}"><span class="team-flag-md-placeholder" style="display:none">${esc(name.charAt(0))}</span>`;
-}
-function avatarHtml(name,idx,cls='analyst-avatar'){
-  const img=CONFIG.AVATAR_IMAGES[name];
-  if(img) return `<div class="${cls}" style="background-image:url('${img}')"></div>`;
-  const num=name.replace(/[^\d]/g,'')||'?';
-  return `<div class="${cls}"><span>${num}</span></div>`;
+function sideOf(agent,topic){
+  const{teamA,teamB}=parseTopic(topic);
+  const h=agent.prediction_history||[];
+  const last=h[h.length-1];
+  if(!last)return'x';
+  const w=last.winner||'';
+  if(w.includes(teamA))return'a';
+  if(w.includes(teamB))return'b';
+  return'x';
 }
 
-function parseMatchContext(md){
-  if(!md)return{info:[],records:[],wcResults:[],travel:[],homeAdvantage:[]};
-  const lines=md.split('\n'),info=[],records=[],wcResults=[],travel=[],homeAdvantage=[];
-  let cur=null,inR=false,sectionType='';
-  function push(){if(cur&&(cur.summary||cur.matches.length)){
-    if(sectionType==='wc')wcResults.push(cur);else records.push(cur);
-  }cur=null;sectionType=''}
-  for(const line of lines){
-    const t=line.trim();if(!t)continue;
-    if(t.startsWith('## ')||t.startsWith('### ')){
-      push();const title=t.replace(/^#+\s*/,'');
-      if(title.includes('本届世界杯')||title.includes('⚽')){
-        cur={title,summary:'',matches:[]};inR=true;sectionType='wc';
-      }else if(title.includes('战绩')||title.includes('记录')){
-        cur={title,summary:'',matches:[]};inR=true;sectionType='record';
-      }else if(title.includes('舟车劳顿')){
-        sectionType='travel';inR=false;
-      }else if(title.includes('主客场')){
-        sectionType='homeAdvantage';inR=false;
-      }else{
-        inR=false;sectionType='';
-      }
-      continue;
-    }
-    if(t.startsWith('- ')){
-      const content=t.slice(2);
-      if(inR&&cur)cur.matches.push(content);
-      else if(sectionType==='travel')travel.push(content);
-      else if(sectionType==='homeAdvantage')homeAdvantage.push(content);
-      else info.push(content);
-      continue;
-    }
-    if(inR&&cur&&t.startsWith('总计')){cur.summary=t;continue}
-    if(!inR&&!t.startsWith('#')){
-      if(sectionType==='travel')travel.push(t);
-      else if(sectionType==='homeAdvantage')homeAdvantage.push(t);
-      else info.push(t);
-    }
-  }
-  push();return{info,records,wcResults,travel,homeAdvantage};
+function flagHtml(team){
+  const flag=FLAG_MAP[team];
+  if(flag)return`<span style="font-size:28px;line-height:1">${flag}</span>`;
+  return`<div class="team-flag-ph">${esc(team.charAt(0))}</div>`;
 }
 
-function render(){
-  document.getElementById('load-screen').style.display='none';
-  document.getElementById('main').style.display='block';
-  document.title=`${DATA.topic} · AI预测`;
-  renderHeader();renderPredictionHero();renderContext();renderAnalysts();renderVerdict();renderEvidence();renderFooter();
+function smallFlagHtml(team){
+  const flag=FLAG_MAP[team];
+  if(flag)return flag;
+  return'🏳️';
 }
 
-function passDataToViewer(){
+// ── 数据加载 ──
+
+async function loadSchedule(){
+  let files=null;
+
+  // 方式1: 尝试 fetch manifest.json（HTTP 服务器模式）
   try{
-    if(DATA) localStorage.setItem('debate_arena_data',JSON.stringify(DATA));
-    localStorage.setItem('debate_arena_config',JSON.stringify({avatar_images:CONFIG.AVATAR_IMAGES}));
-  }catch(e){}
-}
+    const resp=await fetch(MANIFEST);
+    if(resp.ok) files=await resp.json();
+  }catch(e){/* file:// 协议下 fetch 不可用 */}
 
-function renderHeader(){
-  const{teamA,teamB}=parseTopic(DATA.topic);
-  const ti=DATA.team_info||{};
-  const rankA=ti[teamA]?.world_ranking,rankB=ti[teamB]?.world_ranking;
-  let group='',date='',stage='',matchTime='';
-  const mc=DATA.match_context||'';
-  const mm=DATA.match_meta||{};
-  const gm=mc.match(/[-–]\s*小组[：:]\s*(.+)/);if(gm)group=gm[1].trim();
-  const dm=mc.match(/[-–]\s*日期[：:]\s*(.+)/);if(dm)date=dm[1].trim();
-  matchTime=mm.match_time||DATA.match_time||'';
-  if(!matchTime){const tm=mc.match(/[-–]\s*(?:时间|开赛)[：:]\s*(.+)/);if(tm)matchTime=tm[1].trim()}
-  stage=mm.stage||DATA.stage||'';
-  if(!stage){
-    const roundMatch=mc.match(/[-–]\s*(?:轮次|轮|阶段)[：:]\s*(.+)/);
-    const round=roundMatch?roundMatch[1].trim():(DATA.round||'');
-    if(group&&round)stage=group+' · '+round;
-    else if(group)stage=group;
-    else if(round)stage=round;
+  // 方式2: 回退到内嵌列表
+  if(!files||!files.length){
+    console.log('manifest.json 不可用，使用内嵌文件列表');
+    files=EMBEDDED_FILES;
   }
-  if(mm.date)date=mm.date;
 
-  const metaParts=[];
-  if(stage)metaParts.push(`<span class="meta-tag">${esc(stage)}</span>`);
-  if(date)metaParts.push(`<span>${esc(date)}</span>`);
-  if(matchTime)metaParts.push(`<span>${esc(matchTime)}</span>`);
-  // Venue/city info
-  const venue=mm.venue||'',city=mm.city||'';
-  if(city)metaParts.push(`<span style="opacity:0.7">${esc(city)}${venue?' · '+esc(venue):''}</span>`);
+  if(!files||!files.length){
+    showDropZone();
+    return;
+  }
 
-  document.getElementById('match-header').innerHTML=`
-    <div class="match-brand">AI DEBATE PREDICTION</div>
-    ${metaParts.length?`<div class="match-meta">${metaParts.join('')}</div>`:''}
-    <div class="match-vs-area">
-      <div class="team-block">
-        ${flagImgHtml(teamA)}
-        <div class="team-name">${esc(teamA)}</div>
-        ${rankA?`<div class="team-rank">世界排名 ${rankA}</div>`:''}
-      </div>
-      <div class="vs-divider">
-        <div class="vs-text">VS</div>
-      </div>
-      <div class="team-block">
-        ${flagImgHtml(teamB)}
-        <div class="team-name">${esc(teamB)}</div>
-        ${rankB?`<div class="team-rank">世界排名 ${rankB}</div>`:''}
-      </div>
-    </div>`;
+  await loadFilesAndRender(files);
 }
 
-function renderPredictionHero(){
-  const agents=DATA.agents||[],{teamA,teamB}=parseTopic(DATA.topic);
-  if(!agents.length)return;
+async function loadFilesAndRender(files){
+  const matches=[];
+  for(const file of files){
+    try{
+      // 尝试从 data/ 目录加载
+      const resp=await fetch(DATA_DIR+file);
+      if(resp.ok){
+        const data=await resp.json();
+        matches.push(extractCardData(data,file));
+      }
+    }catch(e){
+      console.warn('跳过文件:',file,e);
+    }
+  }
+
+  if(!matches.length){
+    showDropZone();
+    return;
+  }
+
+  renderSchedule(matches);
+}
+
+function showDropZone(){
+  const container=document.getElementById('main-content');
+  container.innerHTML=`
+    <div class="empty-state">
+      <h3>无法自动加载赛程数据</h3>
+      <p style="margin-bottom:16px">本地打开时（file:// 协议）浏览器禁止读取文件，请：</p>
+      <p>1. 将 JSON 文件拖放到下方区域；或</p>
+      <p>2. 使用本地服务器：<code style="background:var(--primary-light);padding:2px 6px;border-radius:4px">python -m http.server</code></p>
+    </div>
+    <div class="drop-zone" id="drop-zone">
+      📂 拖放 data 文件夹或 JSON 文件到此处<br>或点击选择文件
+      <input type="file" id="file-input" multiple accept=".json" style="display:none">
+    </div>`;
+  setupDropZone();
+}
+
+function setupDropZone(){
+  const dz=document.getElementById('drop-zone');
+  const fi=document.getElementById('file-input');
+  if(!dz||!fi)return;
+
+  dz.addEventListener('click',()=>fi.click());
+  dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag-over')});
+  dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
+  dz.addEventListener('drop',e=>{
+    e.preventDefault();dz.classList.remove('drag-over');
+    handleDroppedFiles(e.dataTransfer.files);
+  });
+  fi.addEventListener('change',e=>handleDroppedFiles(e.target.files));
+}
+
+async function handleDroppedFiles(fileList){
+  const matches=[];
+  for(const f of fileList){
+    if(!f.name.endsWith('.json'))continue;
+    try{
+      const text=await f.text();
+      const data=JSON.parse(text);
+      matches.push(extractCardData(data,f.name));
+    }catch(e){console.warn('无法解析:',f.name)}
+  }
+  if(matches.length) renderSchedule(matches);
+  else alert('未找到有效的辩论 JSON 文件');
+}
+
+function extractCardData(data,filename){
+  const{teamA,teamB}=parseTopic(data.topic||'');
+  const meta=data.match_meta||{};
+  const fp=data.final_prediction;
+  const agents=data.agents||[];
+  const ti=data.team_info||{};
+
   let cA=0,cB=0,cX=0;
-  for(const a of agents){const s=sideOf(a,DATA.topic);if(s==='a')cA++;else if(s==='b')cB++;else cX++}
-  const total=agents.length;
-  const pctA=Math.round(cA/total*100),pctB=Math.round(cB/total*100),pctX=100-pctA-pctB;
-  const fp=DATA.final_prediction,confPct=fp?Math.round((fp.confidence||0)/10*100):0;
-  const confClass=fp?.confidence>=7?'high':fp?.confidence>=4?'mid':'low';
-
-  // Label on its own line, centered
-  let html=`<div class="pred-hero-label">最终预测</div>`;
-
-  // Main result centered
-  html+=`<div class="pred-hero-main">`;
-  if(fp){
-    const winnerFlag=mediumFlagHtml(fp.winner);
-    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)}</span></div>
-    <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
-  }
-  html+=`</div>`;
-
-  html+=`<div class="pred-hero-bar"><div class="pred-hero-bar-title">辩手预测分布</div>
-    <div class="pred-hero-bar-track">
-      ${cA?`<div class="seg seg-a" style="width:${pctA}%">${esc(teamA)} ${pctA}%</div>`:''}
-      ${cX>0?`<div class="seg seg-x" style="width:${pctX}%">平 ${pctX}%</div>`:''}
-      ${cB?`<div class="seg seg-b" style="width:${pctB}%">${esc(teamB)} ${pctB}%</div>`:''}
-    </div>
-    <div class="pred-hero-legend">
-      <span><span class="dot" style="background:var(--side-a)"></span>${esc(teamA)} ${cA}人</span>
-      ${cX?`<span><span class="dot" style="background:var(--side-x)"></span>平局 ${cX}人</span>`:''}
-      ${cB?`<span><span class="dot" style="background:var(--side-b)"></span>${esc(teamB)} ${cB}人</span>`:''}
-    </div></div>`;
-
-  html+=`<div class="pred-hero-stance">`;
   for(const a of agents){
-    const s=sideOf(a,DATA.topic),f=finalPred(a);
-    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')}${esc(f.score||'')}</span>`;
+    const s=sideOf(a,data.topic);
+    if(s==='a')cA++;else if(s==='b')cB++;else cX++;
   }
-  html+='</div>';
+  const total=agents.length||1;
+  const probA=Math.round(cA/total*100);
+  const probB=Math.round(cB/total*100);
+  const probX=100-probA-probB;
 
-  // Top-N 预测列表（如果有多个）
-  const topPreds=DATA.top_predictions||[];
-  if(topPreds.length>1){
-    html+=`<div class="top-predictions">`;
-    html+=`<div class="top-predictions-title">可能比分</div>`;
-    topPreds.forEach((p,i)=>{
-      const pConf=p.confidence||0;
-      const pClass=pConf>=7?'high':pConf>=4?'mid':'low';
-      const pPct=Math.round(pConf/10*100);
-      html+=`<div class="top-pred-item ${i===0?'top-pred-best':''}">
-        <span class="top-pred-rank">#${i+1}</span>
-        <span class="top-pred-score">${esc(p.winner)} ${esc(p.score)}</span>
-        <div class="top-pred-conf-bar"><div class="top-pred-conf-fill ${pClass}" style="width:${pPct}%"></div></div>
-        <span class="top-pred-conf-label">${pConf}/10</span>
-      </div>`;
+  const stageStr=meta.stage||'';
+  const isKnockout=/淘汰|1\/8|1\/4|半|决赛/i.test(stageStr);
+
+  return{
+    file:filename,teamA,teamB,
+    stage:stageStr,matchId:meta.match_id||'',
+    date:meta.date||'',city:meta.city||'',
+    venue:meta.venue_zh||meta.venue||'',
+    rankingA:ti[teamA]?.world_ranking,rankingB:ti[teamB]?.world_ranking,
+    winner:fp?.winner||'',score:fp?.score||'',
+    confidence:fp?.confidence||0,
+    topPredictions:data.top_predictions||[],
+    probA,probB,probX:Math.max(0,probX),
+    consensus:data.consensus,isKnockout,
+  };
+}
+
+// ── 渲染 ──
+
+function renderSchedule(matches){
+  const container=document.getElementById('main-content');
+
+  const navLinks=document.getElementById('nav-links');
+  const hasGroup=matches.some(m=>!m.isKnockout);
+  const hasKnockout=matches.some(m=>m.isKnockout);
+  let navHtml='';
+  if(hasGroup)navHtml+='<a href="#section-group" class="nav-link active" data-section="group">小组赛</a>';
+  if(hasKnockout)navHtml+='<a href="#section-knockout" class="nav-link" data-section="knockout">淘汰赛</a>';
+  navLinks.innerHTML=navHtml;
+
+  const byDate={};
+  for(const m of matches){
+    const d=m.date||'未知日期';
+    if(!byDate[d])byDate[d]=[];
+    byDate[d].push(m);
+  }
+
+  let html='';
+  if(hasGroup){
+    html+='<div id="section-group"><div class="section-title">小组赛</div>';
+    for(const[date,ms]of Object.entries(byDate)){
+      const gm=ms.filter(m=>!m.isKnockout);
+      if(!gm.length)continue;
+      html+=`<div class="date-head">📅 ${esc(date)}</div><div class="cards">`;
+      for(const m of gm)html+=renderCard(m);
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  if(hasKnockout){
+    html+='<div id="section-knockout"><div class="section-title">淘汰赛</div>';
+    for(const[date,ms]of Object.entries(byDate)){
+      const km=ms.filter(m=>m.isKnockout);
+      if(!km.length)continue;
+      html+=`<div class="date-head">📅 ${esc(date)}</div><div class="cards">`;
+      for(const m of km)html+=renderCard(m);
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+
+  container.innerHTML=html;
+  requestAnimationFrame(()=>animateProgressBars());
+
+  navLinks.querySelectorAll('.nav-link').forEach(link=>{
+    link.addEventListener('click',()=>{
+      navLinks.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+      link.classList.add('active');
     });
-    html+=`</div>`;
-  }
-
-  document.getElementById('prediction-hero').innerHTML=html;
+  });
 }
 
-function jumpToAnalyst(name){
-  const cards=document.querySelectorAll('.analyst-card');
-  for(const card of cards){
-    if(card.dataset.name===name){
-      card.scrollIntoView({behavior:'smooth',block:'center'});
-      card.classList.add('highlighted');
-      setTimeout(()=>card.classList.remove('highlighted'),2000);
-      break;
-    }
-  }
-}
+function renderCard(m){
+  const confPct=Math.round(m.confidence/10*100);
+  const confClass=m.confidence>=7?'high':m.confidence>=4?'mid':'low';
 
-function renderContext(){
-  const ctx=parseMatchContext(DATA.match_context);
-  if(!ctx.info.length&&!ctx.records.length&&!ctx.wcResults.length&&!ctx.travel.length)return;
-  const{teamA,teamB}=parseTopic(DATA.topic);
-  let html=`<div class="section-title">比赛信息与战绩</div>`;
-  if(ctx.info.length){
-    html+='<div class="context-card"><h3>赛事信息</h3>';
-    for(const item of ctx.info)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
-    html+='</div>';
+  let topHtml='';
+  if(m.topPredictions.length>1){
+    topHtml='<div class="top-scores">';
+    m.topPredictions.forEach((p,i)=>{
+      topHtml+=`<span class="score-chip${i===0?' best':''}">${smallFlagHtml(p.winner)}${esc(p.score)}</span>`;
+    });
+    topHtml+='</div>';
   }
 
-  // 本届世界杯战绩 ⚽（视觉区分）
-  if(ctx.wcResults.length){
-    html+=`<div class="context-card wc-results-card"><h3>⚽ 本届世界杯战绩</h3>`;
-    html+=`<div style="font-size:12px;color:var(--accent);margin-bottom:8px">对队伍心态和状态影响极大</div>`;
-    for(const rec of ctx.wcResults){
-      let teamTag='';
-      if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
-      html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title.replace(/⚽/g,''))}</div>`;
-      if(rec.matches.length){
-        html+=`<table class="record-table wc-results-table"><tbody>`;
-        for(const m of rec.matches){
-          const pm=m.match(/^(\d{4}-\d{2}-\d{2})\s+vs\s+(.+?)(?:\s+-\s+(.+))?$/);
-          if(pm){
-            const[,date,opponent,stage]=pm;
-            html+=`<tr><td class="date-col">${date.slice(5)}</td><td>vs ${esc(opponent)}</td><td class="comp-col">${stage?esc(stage):''}</td></tr>`;
-          }else html+=`<tr><td colspan="3">${esc(m)}</td></tr>`;
-        }
-        html+='</tbody></table>';
-      }
-    }
-    html+='</div>';
-  }
+  const{teamA,teamB}=m;
+  const winnerSide=m.winner.includes(teamA)?'a':m.winner.includes(teamB)?'b':'x';
+  const winnerFlag=winnerSide==='a'?smallFlagHtml(teamA):winnerSide==='b'?smallFlagHtml(teamB):'🤝';
 
-  // 舟车劳顿分析
-  if(ctx.travel.length){
-    html+=`<div class="context-card travel-card"><h3>✈️ 舟车劳顿分析</h3>`;
-    for(const item of ctx.travel)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
-    html+='</div>';
-  }
+  // 构建详情页链接 — 如果从 data/ fetch 成功则用 data/ 路径
+  const jsonParam=encodeURIComponent(DATA_DIR+m.file);
 
-  // 主客场信息
-  if(ctx.homeAdvantage.length){
-    html+=`<div class="context-card home-adv-card"><h3>🏟️ 主客场</h3>`;
-    for(const item of ctx.homeAdvantage)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
-    html+='</div>';
-  }
-
-  // 历史战绩
-  for(const rec of ctx.records){
-    let teamTag='';
-    if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
-    html+='<div class="context-card">';
-    let summaryHtml='';
-    if(rec.summary){
-      const m=rec.summary.match(/(\d+)胜(\d+)平(\d+)负/);
-      if(m){
-        const w=parseInt(m[1]),d=parseInt(m[2]),l=parseInt(m[3]),t=w+d+l;
-        const wp=Math.round(w/t*100),dp=Math.round(d/t*100),lp=100-wp-dp;
-        summaryHtml=`<span class="record-summary">
-          <span class="record-summary-bar"><span class="win-seg" style="width:${wp}%"></span><span class="draw-seg" style="width:${dp}%"></span><span class="lose-seg" style="width:${lp}%"></span></span>
-          <span class="record-summary-text"><span class="w">${w}胜</span><span class="d">${d}平</span><span class="l">${l}负</span></span>
-        </span>`;
-      }else{
-        summaryHtml=`<span class="record-summary">${esc(rec.summary)}</span>`;
-      }
-    }
-    html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title)}${summaryHtml}</div>`;
-    if(rec.matches.length){
-      html+=`<table class="record-table"><thead><tr><th class="date-col">日期</th><th>对阵</th><th class="comp-col">赛事</th></tr></thead><tbody>`;
-      for(const m of rec.matches){
-        const pm=m.match(/^(\d{4}-\d{2}-\d{2})\s+(.+?)\s+(\d+-\d+)\s+(.+?)(?:\s+\((.+)\))?$/);
-        if(pm){
-          const[,date,teams,score,opp,comp]=pm;
-          const sp=score.split('-'),isW=parseInt(sp[0])>parseInt(sp[1]),isL=parseInt(sp[0])<parseInt(sp[1]);
-          html+=`<tr><td class="date-col">${date.slice(5)}</td><td>${esc(teams)} <span class="score-col ${isW?'win':isL?'lose':''}">${score}</span> ${esc(opp)}</td><td class="comp-col">${comp?esc(comp):''}</td></tr>`;
-        }else html+=`<tr><td colspan="3">${esc(m)}</td></tr>`;
-      }
-      html+='</tbody></table>';
-    }
-    html+='</div>';
-  }
-  document.getElementById('context-section').innerHTML=html;
-}
-
-function renderAnalysts(){
-  const agents=DATA.agents||[];if(!agents.length)return;
-  const profiles=DATA.agent_profiles||{};
-  const firstSummaries={};
-  for(const msg of(DATA.rounds?.[0]||[]))if(msg.arena_summary&&msg.speaker)firstSummaries[msg.speaker]=msg.arena_summary;
-
-  let html=`<div class="section-title">辩手观点</div><div class="analyst-grid">`;
-  for(let ai=0;ai<agents.length;ai++){
-    const a=agents[ai];
-    const s=sideOf(a,DATA.topic),initial=initialPred(a),final=finalPred(a),changed=hasChanged(a);
-    const profile=profiles[a.name]||{};
-    const sideCls=changed?'changed':s==='a'?'side-a':s==='b'?'side-b':'side-x';
-    const stanceCls=s==='a'?'pro-a':s==='b'?'pro-b':'pro-x';
-    const stanceText=a.assigned_side?`支持${a.assigned_side}`:a.stance||'';
-    const summary=profile.initial||firstSummaries[a.name]||'';
-
-    const curWinner=final.winner||'',curScore=final.score||'',curConf=final.confidence||0;
-    const opinionStr=`${curWinner} ${curScore}`;
-    const opinionSideCls=s==='a'?'side-a':s==='b'?'side-b':'side-x';
-
-    let chainHtml='';
-    const history=a.prediction_history||[];
-    if(history.length>1){
-      chainHtml='<div class="analyst-pred-chain">';
-      history.forEach((entry,hi)=>{
-        if(hi>0)chainHtml+='<span class="chain-arrow">→</span>';
-        const cls=hi===0?'initial':(entry.changed?'changed':'');
-        chainHtml+=`<span class="chain-node ${cls}">${esc(entry.winner||'')}${esc(entry.score||'')}准${entry.confidence||''}</span>`;
-      });
-      chainHtml+='</div>';
-    }else if(history.length===1){
-      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(history[0].winner||'')}${esc(history[0].score||'')}准${history[0].confidence||''}</span></div>`;
-    }
-
-    html+=`<div class="analyst-card ${sideCls}" data-name="${esc(a.name)}" onclick="showAnalystModal('${esc(a.name)}')">
-      <div class="analyst-header">
-        ${avatarHtml(a.name,ai)}
-        <div><div class="analyst-name">${esc(a.name)}</div><div class="analyst-perspective">${esc(a.perspective_short||'')}</div></div>
-        <span class="analyst-stance ${stanceCls}">${esc(stanceText)}</span>
-      </div>
-      <div class="analyst-current-opinion ${opinionSideCls}">${smallFlagHtml(curWinner)} ${esc(opinionStr.trim())} <span style="font-size:13px;font-weight:500">准确度 ${curConf}/10</span></div>
-      ${chainHtml}
-      ${summary?`<div class="analyst-summary">${escAndBold(summary.replace(/\*\*[^*]+\*\*[：:]/g,'').substring(0,180))}</div>`:''}
-      ${profile.evolution&&profile.evolution!=='立场坚定'?`<div class="analyst-evolution">${esc(profile.evolution)}</div>`:''}
-    </div>`;
-  }
-  html+='</div>';
-  document.getElementById('analysts-section').innerHTML=html;
-}
-
-function showAnalystModal(name){
-  const a=(DATA.agents||[]).find(x=>x.name===name);if(!a)return;
-  const history=a.prediction_history||[];
-  const speeches=[];
-  for(let ri=0;ri<(DATA.rounds||[]).length;ri++){
-    for(const msg of DATA.rounds[ri]){
-      if(msg.speaker===name&&msg.role==='assistant'){
-        const sum=msg.arena_summary||'';
-        const vm=sum.match(/\*\*观点\*\*[：:]\s*(.+)/);
-        const am=sum.match(/\*\*论述\*\*[：:]\s*(.+)/s);
-        const predAtMsg=msg.speaker_prediction||'';
-        speeches.push({
-          round:ri+1,action:msg.action||'',target:msg.target||'',counter:msg.counter_challenge,
-          view:vm?vm[1].trim():'',args:am?am[1].trim().substring(0,200):sum.substring(0,100),
-          bubble:msg.arena_bubble||'',prediction:predAtMsg,
-        });
-      }
-    }
-  }
-  const s=sideOf(a,DATA.topic);
-  const stanceCls=s==='a'?'pro-a':s==='b'?'pro-b':'pro-x';
-  const stanceText=a.assigned_side?`支持${a.assigned_side}`:a.stance||'';
-  const ai=(DATA.agents||[]).indexOf(a);
-
-  let html=`<span class="modal-close" onclick="closeModal()">&times;</span>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-      ${avatarHtml(name,ai)}
-      <div>
-        <h3 style="margin:0">${esc(name)}</h3>
-        <div class="modal-perspective">${esc(a.perspective_short||'')} · <span class="analyst-stance ${stanceCls}" style="margin:0">${esc(stanceText)}</span></div>
-      </div>
-    </div>`;
-
-  // Chain with grey background
-  html+='<div class="modal-pred-chain" id="modal-pred-chain">';
-  let first=true;
-  for(let hi=0;hi<history.length;hi++){
-    const entry=history[hi];
-    if(!first)html+='<span class="chain-arrow">→</span>';
-    const cls=first?'initial':(entry.changed?'changed':'');
-    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')}${esc(entry.score||'')}准${entry.confidence||''}</span>`;
-    first=false;
-  }
-  html+='</div>';
-
-  html+='<div class="modal-speeches" id="modal-speeches">';
-  for(let si=0;si<speeches.length;si++){
-    const sp=speeches[si];
-    const actionLabel=sp.action+(sp.target?` → ${esc(sp.target)}`:'')+(sp.counter?' ↩️反质疑':'');
-    const predLabel=sp.prediction||history[si]?.winner+history[si]?.score+'准'+history[si]?.confidence||'';
-    html+=`<div class="modal-speech" id="modal-speech-${si}">
-      ${predLabel?`<div class="speech-opinion">${escAndBold(predLabel)}</div>`:''}
-      <div class="speech-action">第${sp.round}轮 · ${esc(actionLabel)}</div>
-      ${sp.bubble?`<div style="font-weight:700;color:var(--primary);margin:2px 0">${esc(sp.bubble)}</div>`:''}
-      ${sp.view?`<div>${escAndBold('观点：'+sp.view)}</div>`:''}
-      ${sp.args?`<div style="color:var(--text3);margin-top:2px">${escAndBold(sp.args)}</div>`:''}
-    </div>`;
-  }
-  html+='</div>';
-
-  document.getElementById('modal-content').innerHTML=html;
-  document.getElementById('analyst-modal').classList.add('active');
-  // Fix scrollbar shift: measure and compensate
-  const sbw=window.innerWidth-document.documentElement.clientWidth;
-  document.body.style.setProperty('--scrollbar-w',sbw+'px');
-  document.body.classList.add('modal-open');
-}
-
-function jumpToSpeech(idx){
-  const el=document.getElementById('modal-speech-'+idx);
-  if(el){
-    el.scrollIntoView({behavior:'smooth',block:'center'});
-    el.classList.add('highlight');
-    setTimeout(()=>el.classList.remove('highlight'),2000);
-  }
-}
-
-function closeModal(){
-  document.getElementById('analyst-modal').classList.remove('active');
-  document.body.classList.remove('modal-open');
-  document.body.style.removeProperty('--scrollbar-w');
-}
-document.getElementById('analyst-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
-
-function renderVerdict(){
-  let html=`<div class="section-title">仲裁裁决</div><div class="verdict-card">`;
-  html+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-    <span style="font-size:20px">${DATA.consensus?'✅':'❌'}</span>
-    <span style="font-size:16px;font-weight:700;color:${DATA.consensus?'var(--green)':'var(--orange)'}">${DATA.consensus?'共识达成':'未达共识'}</span>
-  </div>`;
-
-  if(DATA.phase_verdicts?.length){
-    html+='<div class="phase-timeline">';
-    const pn={1:'陈述',2:'自由质疑',3:'分配质疑'};
-    for(const pv of DATA.phase_verdicts){
-      const rm=pv.content.match(/【理由】(.+)/s);
-      const reason=rm?rm[1].trim():'';
-      html+=`<div class="phase-item">
-        <div class="phase-badge ${pv.consensus?'yes':'no'}">${pv.phase}</div>
-        <div class="phase-content">
-          <div class="phase-title">${pn[pv.phase]||'第'+pv.phase+'阶段'} ${pv.consensus?'<span class="consensus-yes">✅ 共识达成</span>':'<span class="consensus-no">❌ 未达共识</span>'}</div>
-          <div class="phase-desc">${esc(reason.substring(0,240))}${reason.length>240?'...':''}</div>
-        </div></div>`;
-    }
-    html+='</div>';
-  }
-
-  if(DATA.arbitrator_verdict?.content){
-    const c=DATA.arbitrator_verdict.content;
-    const rm=c.match(/【理由】(.+?)(?=\n---|\n【预测】|$)/s);
-    const pm=c.match(/【预测】(.+?)(?=\n【论点】|\n【引用】|$)/s);
-
-    // Extract verdict details from prediction section
-    let winner='',score='',conf='',confNum=0;
-    if(pm){
-      const predText=pm[1].trim();
-      const wm=predText.match(/胜方[：:]\s*([^|\n]+)/);
-      const sm=predText.match(/比分[：:]\s*([^|\n]+)/);
-      const cm=predText.match(/准确度[：:]\s*(\d+)\s*\/\s*(\d+)/);
-      if(wm)winner=wm[1].trim();
-      if(sm)score=sm[1].trim();
-      if(cm){conf=cm[0].trim();confNum=parseInt(cm[1])}
-    }
-    // Fallback: try to parse from final_prediction
-    if(!winner&&DATA.final_prediction){
-      winner=DATA.final_prediction.winner||'';
-      score=DATA.final_prediction.score||'';
-      confNum=DATA.final_prediction.confidence||0;
-      if(confNum)conf=`准确度 ${confNum}/10`;
-    }
-    const confPct=Math.round(confNum/10*100);
-    const confClass=confNum>=7?'high':confNum>=4?'mid':'low';
-
-    const{teamA,teamB}=parseTopic(DATA.topic);
-    const winnerSide=winner.includes(teamA)?'a':winner.includes(teamB)?'b':'x';
-
-    html+=`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--divider)">
-      <div style="font-size:15px;font-weight:700;margin-bottom:8px">⚖️ 仲裁者裁定</div>`;
-
-    html+=`<div class="verdict-final-box">
-      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}${score?` <span style="color:var(--text3);font-weight:400">|</span> 比分：${esc(score)}`:''}</div>
-      ${confNum?`<div class="vf-conf-row"><div class="vf-conf-bar"><div class="vf-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="vf-conf-text">准确度 ${confNum}/10</span></div>`:''}
-    </div>`;
-
-    if(rm)html+=`<div class="verdict-text" style="margin-top:8px">${escAndBold(rm[1].trim().substring(0,600))}</div>`;
-    html+='</div>';
-  }
-
-  if(DATA.summary?.content){
-    const secs=DATA.summary.content.split(/\n(?=##\s)/);
-    html+='<div class="summary-text">';
-    for(const sec of secs){
-      const lines=sec.trim().split('\n'),title=lines[0].replace(/^#+\s*/,''),body=lines.slice(1).join('\n').trim();
-      if(!body)continue;
-      // Skip summary sections that duplicate prediction info already shown above
-      if(title.includes('最终预测')||title.includes('总结'))continue;
-      // Skip sections whose body is just a prediction summary line
-      if(body.match(/^胜方[：:]/)||body.match(/^.*比分[：:].*准确度/))continue;
-      if(title)html+=`<h4>${esc(title)}</h4>`;
-      html+=`<div style="font-size:13px;color:var(--text2);line-height:1.5;padding-left:10px">${escAndBold(body.substring(0,600))}${body.length>600?'...':''}</div>`;
-    }
-    html+='</div>';
-  }
-  html+='</div>';
-  document.getElementById('verdict-section').innerHTML=html;
-}
-
-function renderEvidence(){
-  const pool=DATA.evidence_pool||[];if(!pool.length)return;
-  const shared=pool.filter(e=>e.shared).sort((a,b)=>b.confidence-a.confidence);
-  const priv=pool.filter(e=>!e.shared).sort((a,b)=>b.confidence-a.confidence);
-  const display=[...shared,...priv];
-
-  let html=`<div class="evidence-pool-bar collapsible collapsed" onclick="toggleEvidencePool(this)">
-    <span>证据池</span>
-    <span class="bar-count">共 ${pool.length} 条</span>
-    <span class="bar-arrow">▾</span>
-  </div><div class="section-body collapsed"><div class="evidence-list">`;
-
-  for(const ev of display){
-    const cc=ev.confidence>=0.7?'high':ev.confidence>=0.4?'mid':'low';
-    const cp=typeof ev.confidence==='number'?`${Math.round(ev.confidence*100)}%`:ev.confidence;
-    const sourceTag=ev.discovered_by||ev.source||'';
-    html+=`<div class="evidence-item" onclick="this.classList.toggle('expanded')">
-      <div class="evidence-header">
-        <span class="evidence-id">${esc(ev.id)}</span>
-        <span class="evidence-confidence ${cc}">置信度 ${cp}</span>
-        ${sourceTag?`<span class="evidence-source">${esc(sourceTag)}</span>`:''}
-        ${ev.shared?'':'<span style="font-size:11px;color:var(--text3)">🔒</span>'}
-      </div>
-      ${ev.title?`<div class="evidence-title">${esc(ev.title)}</div>`:''}
-      <div class="evidence-content">
-        ${esc(ev.content).substring(0,300)}${ev.content.length>300?'...':''}
-        ${ev.url?`<div class="evidence-url"><a href="${esc(ev.url)}" target="_blank" onclick="event.stopPropagation()">${esc(ev.url.substring(0,60))}${ev.url.length>60?'...':''}</a></div>`:''}
-      </div>
-    </div>`;
-  }
-  html+='</div></div>';
-  document.getElementById('evidence-section').innerHTML=html;
-}
-
-function toggleEvidencePool(el){
-  el.classList.toggle('collapsed');
-  el.nextElementSibling?.classList.toggle('collapsed');
-}
-
-function renderFooter(){
-  let html=`<div class="viewer-title">辩论动画回放</div>
-    <div class="viewer-toggle">
-      <button class="toggle-btn active" id="toggle-embed" onclick="setMode('embed')">📦 嵌入模式</button>
-      <button class="toggle-btn" id="toggle-link" onclick="setMode('link')">🔗 跳转模式</button>
+  return`
+  <a class="sched-card" href="${DETAIL_PAGE}?json=${jsonParam}">
+    <div class="card-top">
+      <span class="stage-tag">${esc(m.stage||m.matchId)}</span>
+      <span style="display:flex;align-items:center;gap:6px">
+        <span class="city-tag">${esc(m.city)}${m.venue?' · '+esc(m.venue):''}</span>
+        ${m.consensus!==undefined?`<span class="consensus-badge ${m.consensus?'yes':'no'}">${m.consensus?'共识':'分歧'}</span>`:''}
+      </span>
     </div>
-    <div class="embed-container" id="embed-mode"></div>
-    <div id="link-mode" style="display:none"><button class="viewer-open-btn" onclick="openViewer()">▶ 观看动画回放</button></div>
-    <div class="hint">辩论数据由多智能体辩论系统生成</div>`;
-  document.getElementById('footer-section').innerHTML=html;
-  setMode('embed');
+    <div class="teams-row">
+      <div class="team-col">
+        ${flagHtml(teamA)}
+        <div class="team-name">${esc(teamA)}</div>
+        ${m.rankingA?`<div class="team-rank">FIFA #${m.rankingA}</div>`:''}
+      </div>
+      <div class="vs-text">VS</div>
+      <div class="team-col">
+        ${flagHtml(teamB)}
+        <div class="team-name">${esc(teamB)}</div>
+        ${m.rankingB?`<div class="team-rank">FIFA #${m.rankingB}</div>`:''}
+      </div>
+    </div>
+    <div class="prob-bar">
+      <div class="seg home" style="width:${m.probA}%">${m.probA}%</div>
+      <div class="seg draw" style="width:${m.probX}%">${m.probX}%</div>
+      <div class="seg away" style="width:${m.probB}%">${m.probB}%</div>
+    </div>
+    <div class="prob-legend">
+      <span><span class="dot" style="background:var(--bar-home)"></span>${esc(teamA)}</span>
+      <span><span class="dot" style="background:var(--bar-draw)"></span>平局</span>
+      <span><span class="dot" style="background:var(--bar-away)"></span>${esc(teamB)}</span>
+    </div>
+    ${m.winner?`
+    <div class="pred-row">
+      <span class="pred-result">${winnerFlag} ${esc(m.winner)}</span>
+      <span class="pred-score">${esc(m.score)}</span>
+      <span class="pred-conf-bar"><span class="pred-conf-fill ${confClass}" data-target-width="${confPct}%" style="width:0"></span></span>
+      <span class="pred-conf">${m.confidence}/10</span>
+    </div>
+    `:'<div class="pred-row" style="color:var(--text3);font-size:13px">暂无预测结果</div>'}
+    ${topHtml}
+  </a>`;
 }
 
-let currentMode='embed';
-function setMode(mode){
-  currentMode=mode;
-  document.getElementById('toggle-embed').classList.toggle('active',mode==='embed');
-  document.getElementById('toggle-link').classList.toggle('active',mode==='link');
-  document.getElementById('link-mode').style.display=mode==='link'?'':'none';
-  const el=document.getElementById('embed-mode');
-  if(mode==='embed'){
-    passDataToViewer();
-    const jp=currentJsonFile?`?json=${encodeURIComponent(currentJsonFile)}`:'';
-    el.innerHTML=`<div class="embed-header">🎬 辩论动画回放<span class="embed-close" onclick="setMode('link')">✕</span></div><iframe class="embed-iframe" src="${CONFIG.VIEWER_FILE}${jp}"></iframe>`;
-    el.classList.add('visible');
-  }else{el.classList.remove('visible');el.innerHTML=''}
+function animateProgressBars(){
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('[data-target-width]').forEach(el=>{
+      const tw=el.dataset.targetWidth;
+      el.style.transition='width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
+      el.style.width=tw;
+    });
+    document.querySelectorAll('.prob-bar .seg').forEach(el=>{
+      const tw=el.style.width;
+      el.style.width='0';
+      requestAnimationFrame(()=>{
+        el.style.transition='width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
+        el.style.width=tw;
+      });
+    });
+  });
 }
-function openViewer(){
-  passDataToViewer();
-  const jp=currentJsonFile?`?json=${encodeURIComponent(currentJsonFile)}`:'';
-  window.open(CONFIG.VIEWER_FILE+jp,'_blank');
-}
+
+// Load on startup
+loadSchedule();
 </script>
 </body>
 </html>
