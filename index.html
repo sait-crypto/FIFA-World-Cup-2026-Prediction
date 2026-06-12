@@ -37,7 +37,7 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.07);--max-w:1080px}
+:root{--radius:10px;--shadow:0 2px 8px rgba(0,0,0,0.12);--max-w:1080px}
 html{font-size:17px;scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
 a{color:var(--primary);text-decoration:none}
@@ -64,8 +64,8 @@ a{color:var(--primary);text-decoration:none}
 .container{max-width:var(--max-w);margin:0 auto;padding:0 16px}
 
 /* ── Today Button ── */
-.today-btn{display:block;width:100%;max-width:var(--max-w);margin:0 auto;padding:12px 20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-size:14px;font-weight:600;color:var(--primary);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
-.today-btn:hover{background:var(--primary-light);border-color:var(--primary)}
+.today-btn{display:inline-block;padding:10px 32px;background:var(--card);border:1.5px solid var(--primary);border-radius:28px;font-size:15px;font-weight:700;color:var(--primary);cursor:pointer;transition:all .2s;box-shadow:var(--shadow);text-decoration:none;letter-spacing:.5px}
+.today-btn:hover{background:var(--primary);color:#fff;transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
 
 /* ── Stage Section ── */
 .stage-section[id]{scroll-margin-top:54px}
@@ -77,8 +77,8 @@ a{color:var(--primary);text-decoration:none}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;align-items:start}
 
 /* ── Schedule Card ── */
-.sched-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;cursor:pointer;transition:transform .15s,box-shadow .15s,background .3s;text-decoration:none;color:var(--text);display:block;border-left:4px solid var(--text3);animation:card-in .4s ease both}
-.sched-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.sched-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .3s;text-decoration:none;color:var(--text);display:block;border-left:4px solid var(--text3);animation:card-in .5s ease both}
+.sched-card:hover{transform:translateY(-4px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
 .sched-card.side-a{border-left-color:var(--side-a)}
 .sched-card.side-b{border-left-color:var(--side-b)}
 .sched-card.side-x{border-left-color:var(--side-x)}
@@ -115,17 +115,14 @@ a{color:var(--primary);text-decoration:none}
 .pred-score{font-size:13px;color:var(--text2);font-weight:700;white-space:nowrap}
 .pred-conf-bar{flex:1;min-width:50px;max-width:80px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden;transition:background .3s}
 .pred-conf-label{font-size:11px;color:var(--text3);white-space:nowrap}
-.pred-conf-fill{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94)}
-.topk-row{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px}
-.topk-label{color:var(--text3);white-space:nowrap}
-.topk-score{color:var(--text2);font-weight:600;padding:1px 5px;background:var(--primary-light);border-radius:3px}
-.pred-conf-fill.high{background:var(--green)}
-.pred-conf-fill.mid{background:var(--orange)}
-.pred-conf-fill.low{background:var(--red)}
+.pred-conf-fill{height:100%;border-radius:4px}
 .pred-conf-fill.high{background:var(--green)}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
 .pred-conf-text{font-size:11px;color:var(--text3);white-space:nowrap}
+.topk-row{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px}
+.topk-label{color:var(--text3);white-space:nowrap}
+.topk-score{color:var(--text2);font-weight:600;padding:1px 5px;background:var(--primary-light);border-radius:3px}
 
 /* Consensus Badge */
 .consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;flex-shrink:0;transition:background .3s}
@@ -169,12 +166,12 @@ a{color:var(--primary);text-decoration:none}
 <div class="hero-header" id="hero-header">
   <div class="hero-title">2026 世界杯 · 赛程预测</div>
   <div class="hero-sub">多智能体对抗辩论系统 · 综合研判</div>
+  <div style="margin-top:14px"><a class="today-btn" id="today-btn" style="display:none" onclick="jumpToToday()">跳转至今日赛程</a></div>
 </div>
 
 <div class="container" id="main-content">
   <div class="loading">正在加载赛程数据...</div>
 </div>
-<a class="today-btn" id="today-btn" style="display:none" onclick="jumpToToday()">📅 跳转至今日赛程</a>
 
 <div class="page-footer">辩论数据由多智能体辩论系统生成 · 仅供参考</div>
 

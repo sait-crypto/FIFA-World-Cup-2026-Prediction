@@ -37,7 +37,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.07);
+  --radius:10px;--shadow:0 2px 8px rgba(0,0,0,0.12);
   --max-w:1200px;
   --highlight:#aaa;
 }
@@ -185,7 +185,7 @@ a:hover{text-decoration:underline}
 
 /* ── Analyst Cards ── */
 .analyst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;padding:8px 0}
-.analyst-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;position:relative;border-left:4px solid var(--text3);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.analyst-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;position:relative;border-left:4px solid var(--text3);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
 .analyst-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
 .analyst-card.side-a{border-left-color:var(--side-a)}
 .analyst-card.side-b{border-left-color:var(--side-b)}
