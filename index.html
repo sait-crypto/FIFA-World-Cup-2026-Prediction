@@ -7,34 +7,35 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --primary:#1678F2;--primary-dark:#125ccc;--primary-light:#e8f0fe;
-  --bg:#f5f5f5;--card:#fff;--border:#e8e8e8;--divider:#f1f1f1;
-  --text:#222;--text2:#555;--text3:#888;
-  --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--blue:#2980b9;--yellow:#f0ad4e;
-  --side-a:#e74c3c;--side-b:#2980b9;--side-x:#f0ad4e;
-  --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.08);
+  --primary:#4a7bbf;--primary-dark:#3a65a0;--primary-light:#edf1f8;
+  --bg:#f4f4f6;--card:#fff;--border:#ddd;--divider:#ededee;
+  --text:#2a2a2a;--text2:#5a5a5a;--text3:#8a8a8a;
+  --red:#c0392b;--green:#1e8449;--orange:#d4850a;--blue:#2471a3;--yellow:#b8920a;
+  --side-a:#c0392b;--side-b:#2471a3;--side-x:#9a8a1e;
+  --radius:8px;--shadow:0 1px 4px rgba(0,0,0,0.07);
   --max-w:1080px;
+  --nav-bg:rgba(58,72,96,0.96);
 }
 html{font-size:17px;scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
 a{color:var(--primary);text-decoration:none}
 
 /* ── Sticky Nav ── */
-.sticky-nav{position:sticky;top:0;z-index:100;background:rgba(22,120,242,0.95);backdrop-filter:blur(8px);padding:8px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
-.nav-brand{color:#fff;font-size:14px;font-weight:700;letter-spacing:1px;white-space:nowrap}
+.sticky-nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);padding:8px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.12)}
+.nav-brand{color:#d0d8e4;font-size:13px;font-weight:700;letter-spacing:1px;white-space:nowrap}
 .nav-spacer{flex:1}
 .nav-links{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-.nav-link{color:rgba(255,255,255,0.65);font-size:12px;padding:4px 12px;border-radius:16px;transition:all .2s;text-decoration:none;white-space:nowrap}
-.nav-link:hover,.nav-link.active{background:rgba(255,255,255,0.2);color:#fff}
+.nav-link{color:rgba(255,255,255,0.55);font-size:12px;padding:4px 12px;border-radius:16px;transition:all .2s;text-decoration:none;white-space:nowrap}
+.nav-link:hover,.nav-link.active{background:rgba(255,255,255,0.14);color:rgba(255,255,255,0.95)}
 
 /* ── Hero ── */
 .hero-header{
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));
   color:#fff;padding:28px 20px 20px;text-align:center;position:relative;overflow:hidden;
 }
-.hero-header::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none}
+.hero-header::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;border-radius:50%;background:rgba(255,255,255,0.03);pointer-events:none}
 .hero-title{font-size:22px;font-weight:800;margin-bottom:4px}
-.hero-sub{font-size:13px;opacity:.7}
+.hero-sub{font-size:13px;opacity:.65}
 
 /* ── Container ── */
 .container{max-width:var(--max-w);margin:0 auto;padding:0 16px}
@@ -61,7 +62,7 @@ a{color:var(--primary);text-decoration:none}
 .sched-card.side-x{border-left-color:var(--side-x)}
 .card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;gap:6px}
 .stage-tag{background:var(--primary-light);color:var(--primary);padding:2px 8px;border-radius:4px;font-weight:600;white-space:nowrap;flex-shrink:0}
-.city-tag{color:var(--text3);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;text-align:right}
+.city-tag{color:var(--text3);font-size:11px;display:block;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
 
 /* Teams Row */
 .teams-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
@@ -74,7 +75,7 @@ a{color:var(--primary);text-decoration:none}
 
 /* Stance Bar: 红(主) → 黄(平) → 蓝(客) */
 .stance-bar{display:flex;height:20px;border-radius:10px;overflow:hidden;margin:8px 0;background:var(--divider)}
-.stance-bar .seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;min-width:22px}
+.stance-bar .seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;min-width:22px;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94)}
 .stance-bar .seg.seg-a{background:var(--side-a)}
 .stance-bar .seg.seg-x{background:var(--side-x)}
 .stance-bar .seg.seg-b{background:var(--side-b)}
@@ -90,7 +91,7 @@ a{color:var(--primary);text-decoration:none}
 .pred-winner.side-x{color:var(--side-x)}
 .pred-score{font-size:13px;color:var(--text2);font-weight:700;white-space:nowrap}
 .pred-conf-bar{flex:1;min-width:50px;max-width:80px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden}
-.pred-conf-fill{height:100%;border-radius:4px;width:0;transition:width 0.8s cubic-bezier(0.25,0.46,0.45,0.94)}
+.pred-conf-fill{height:100%;border-radius:4px;width:0%;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94)}
 .pred-conf-fill.high{background:var(--green)}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
@@ -98,8 +99,8 @@ a{color:var(--primary);text-decoration:none}
 
 /* Consensus Badge */
 .consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;flex-shrink:0}
-.consensus-badge.yes{background:#e8f5e9;color:var(--green)}
-.consensus-badge.no{background:#fff3e0;color:var(--orange)}
+.consensus-badge.yes{background:#e2efe6;color:var(--green)}
+.consensus-badge.no{background:#f5eadb;color:var(--orange)}
 
 /* ── Empty placeholder ── */
 .empty-slot{padding:10px 16px;margin:4px 0;background:var(--card);border-radius:var(--radius);border:1px dashed var(--border);font-size:13px;color:var(--text3);text-align:center}
@@ -126,14 +127,14 @@ a{color:var(--primary);text-decoration:none}
 <body>
 
 <nav class="sticky-nav" id="sticky-nav">
-  <span class="nav-brand">⚽ AI 辩论预测</span>
+  <span class="nav-brand">AI Arena · 多维辩论预测</span>
   <span class="nav-spacer"></span>
   <div class="nav-links" id="nav-links"></div>
 </nav>
 
 <div class="hero-header" id="hero-header">
   <div class="hero-title">2026 世界杯 · 赛程预测</div>
-  <div class="hero-sub">多智能体辩论系统 · 综合分析</div>
+  <div class="hero-sub">多智能体对抗辩论系统 · 综合研判</div>
 </div>
 
 <div class="container" id="main-content">
@@ -147,9 +148,9 @@ const DATA_DIR='data/';
 const MANIFEST=DATA_DIR+'manifest.json';
 const DETAIL_PAGE='match.html';
 const IMAGES_DIR='images/';
+const SCROLL_KEY='index_scroll_y';
 
 // ═══ 赛程结构定义 ═══
-// 决赛和淘汰赛同级，各为独立顶层阶段
 const TOURNAMENT=[
   {key:'group',label:'小组赛',subs:[
     {key:'g-r1',label:'小组赛第1轮',dates:['2026-06-12','2026-06-13','2026-06-14']},
@@ -157,6 +158,7 @@ const TOURNAMENT=[
     {key:'g-r3',label:'小组赛第3轮',dates:['2026-06-24','2026-06-25','2026-06-26']},
   ]},
   {key:'ko',label:'淘汰赛',subs:[
+    {key:'r32',label:'1/16 决赛',dates:['2026-06-27','2026-06-28']},
     {key:'r16',label:'1/8 决赛',dates:['2026-06-29','2026-06-30','2026-07-01','2026-07-02']},
     {key:'qf',label:'1/4 决赛',dates:['2026-07-05','2026-07-06']},
     {key:'sf',label:'半决赛',dates:['2026-07-09','2026-07-10']},
@@ -186,6 +188,16 @@ function sideOf(agent,topic){
   return'x';
 }
 
+// ═══ 滚动位置记忆 ═══
+function saveScrollPos(){sessionStorage.setItem(SCROLL_KEY,String(window.scrollY))}
+function restoreScrollPos(){
+  const y=parseInt(sessionStorage.getItem(SCROLL_KEY)||'0');
+  if(y>0){
+    setTimeout(()=>window.scrollTo(0,y),50);
+    sessionStorage.removeItem(SCROLL_KEY);
+  }
+}
+
 // ═══ 数据加载 ═══
 
 async function loadSchedule(){
@@ -194,7 +206,7 @@ async function loadSchedule(){
 
   let files=null;
   try{
-    const resp=await fetch(MANIFEST);
+    const resp=await fetch(MANIFEST+'?t='+Date.now());
     if(resp.ok) files=await resp.json();
   }catch(e){}
 
@@ -281,14 +293,13 @@ function extractCardData(data,filename){
 function renderSchedule(matches){
   const container=document.getElementById('main-content');
 
-  // 按日期索引比赛
   const byDate={};
   for(const m of matches){
     const d=m.date||'';
     if(d){if(!byDate[d])byDate[d]=[];byDate[d].push(m)}
   }
 
-  // 导航链接：小组赛 / 淘汰赛 / 决赛（同级）
+  // 导航：小组赛 / 淘汰赛 / 决赛
   const navLinks=document.getElementById('nav-links');
   let navHtml='';
   for(const stage of TOURNAMENT){
@@ -297,21 +308,14 @@ function renderSchedule(matches){
   navLinks.innerHTML=navHtml;
 
   let html='';
-
   for(const stage of TOURNAMENT){
     html+=`<div class="stage-section" id="stage-${stage.key}">`;
     html+=`<div class="stage-title">${stage.label}</div>`;
-
     for(const sub of stage.subs){
-      // 子阶段标题
       html+=`<div class="sub-stage-title">${sub.label}</div>`;
-
-      // 按日期渲染
       for(const d of sub.dates){
         const ms=byDate[d]||[];
-        const dateLabel=formatDate(d);
-        html+=`<div class="date-head">${dateLabel}</div>`;
-
+        html+=`<div class="date-head">${formatDate(d)}</div>`;
         if(ms.length){
           html+='<div class="cards">';
           for(const m of ms)html+=renderCard(m);
@@ -321,13 +325,15 @@ function renderSchedule(matches){
         }
       }
     }
-
-    html+='</div>'; // stage-section
+    html+='</div>';
   }
 
   container.innerHTML=html;
 
-  // 延迟触发进度条动画（确保浏览器已渲染 width:0 状态）
+  // 恢复滚动位置
+  restoreScrollPos();
+
+  // 进度条动画：确保浏览器先渲染 width:0% 状态
   requestAnimationFrame(()=>requestAnimationFrame(()=>animateProgressBars()));
 
   // 导航点击
@@ -338,7 +344,6 @@ function renderSchedule(matches){
     });
   });
 
-  // 滚动高亮
   setupScrollHighlight();
 }
 
@@ -359,29 +364,29 @@ function renderCard(m){
   const confClass=m.confidence>=7?'high':m.confidence>=4?'mid':'low';
 
   // 立场条：主场(红) → 平局(黄) → 客场(蓝)
-  let barSegs='';
-  if(m.pctA)barSegs+=`<div class="seg seg-a" style="width:${m.pctA}%">${m.pctA}%</div>`;
-  if(m.pctX)barSegs+=`<div class="seg seg-x" style="width:${m.pctX}%">${m.pctX}%</div>`;
-  if(m.pctB)barSegs+=`<div class="seg seg-b" style="width:${m.pctB}%">${m.pctB}%</div>`;
+  let barHtml='';
+  if(m.pctA)barHtml+=`<div class="seg seg-a" data-tw="${m.pctA}%">${m.pctA}%</div>`;
+  if(m.pctX)barHtml+=`<div class="seg seg-x" data-tw="${m.pctX}%">${m.pctX}%</div>`;
+  if(m.pctB)barHtml+=`<div class="seg seg-b" data-tw="${m.pctB}%">${m.pctB}%</div>`;
 
-  // 预测结果行
+  // 预测结果行（准确度进度条用 data-tw 存目标宽度）
   let predHtml='';
   if(m.winner){
     predHtml=`<div class="pred-row">
       <span class="pred-winner ${sideCls}">${esc(m.winner)}</span>
       <span class="pred-score">${esc(m.score)}</span>
-      <span class="pred-conf-bar"><span class="pred-conf-fill ${confClass}" data-target="${confPct}"></span></span>
+      <span class="pred-conf-bar"><span class="pred-conf-fill ${confClass}" data-tw="${confPct}%"></span></span>
       <span class="pred-conf-text">${m.confidence}/10</span>
     </div>`;
   }else{
     predHtml='<div class="pred-row" style="color:var(--text3);font-size:13px">暂无预测</div>';
   }
 
-  // 城市+场馆（过长截断）
-  const cityVenue=trimCityVenue(m.city,m.venue);
+  // 城市场馆（CSS 按宽度截断）
+  const cityVenue=(m.city?m.city:'')+(m.venue&&m.venue!==m.city?' · '+m.venue:'');
 
   return`
-  <a class="sched-card ${sideCls}" href="${DETAIL_PAGE}?json=${encodeURIComponent(DATA_DIR+m.file)}">
+  <a class="sched-card ${sideCls}" href="${DETAIL_PAGE}?json=${encodeURIComponent(DATA_DIR+m.file)}" onclick="saveScrollPos()">
     <div class="card-top">
       <span class="stage-tag">${esc(m.stage||m.matchId)}</span>
       <span style="display:flex;align-items:center;gap:6px;min-width:0">
@@ -402,7 +407,7 @@ function renderCard(m){
         ${m.rankingB?`<div class="team-rank">FIFA #${m.rankingB}</div>`:''}
       </div>
     </div>
-    ${barSegs?`<div class="stance-bar">${barSegs}</div>
+    ${barHtml?`<div class="stance-bar">${barHtml}</div>
     <div class="stance-legend">
       <span><span class="dot" style="background:var(--side-a)"></span>${esc(teamA)}</span>
       <span><span class="dot" style="background:var(--side-x)"></span>平局</span>
@@ -412,30 +417,21 @@ function renderCard(m){
   </a>`;
 }
 
-function trimCityVenue(city,venue){
-  if(!city&&!venue)return'';
-  let text=city||'';
-  if(venue&&venue!==city)text+=(text?' · ':'')+venue;
-  if(text.length>18)return text.slice(0,17)+'…';
-  return text;
-}
-
 function animateProgressBars(){
-  // 准确度进度条动画
-  document.querySelectorAll('.pred-conf-fill[data-target]').forEach(el=>{
-    const target=el.dataset.target;
-    if(!target||target==='0')return;
-    // 先确保 width:0 已被渲染，再设置目标宽度触发 CSS transition
-    el.offsetHeight; // 强制 reflow
-    el.style.width=target+'%';
+  // 准确度进度条：从 0% 动画到 data-tw
+  document.querySelectorAll('.pred-conf-fill[data-tw]').forEach(el=>{
+    const tw=el.dataset.tw;
+    if(!tw||tw==='0%')return;
+    // 强制浏览器先渲染 width:0%（CSS 默认），再设目标触发 transition
+    void el.offsetHeight;
+    el.style.width=tw;
   });
-  // 立场条段动画
-  document.querySelectorAll('.stance-bar .seg').forEach(el=>{
-    const w=el.style.width;
-    if(!w||w==='0%')return;
-    el.style.width='0';
-    el.style.transition='width 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.width=w}));
+  // 立场条段：从 0% 动画到 data-tw
+  document.querySelectorAll('.stance-bar .seg[data-tw]').forEach(el=>{
+    const tw=el.dataset.tw;
+    if(!tw||tw==='0%')return;
+    void el.offsetHeight;
+    el.style.width=tw;
   });
 }
 
