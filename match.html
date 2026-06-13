@@ -755,11 +755,6 @@ function renderContext(){
   if(!ctx.info.length&&!ctx.records.length&&!ctx.wcResults.length&&!ctx.travel.length)return;
   const{teamA,teamB}=parseTopic(DATA.topic);
   let html=`<div class="section-title">比赛信息与战绩</div>`;
-  if(ctx.info.length){
-    html+='<div class="context-card"><h3>赛事信息</h3>';
-    for(const item of ctx.info)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
-    html+='</div>';
-  }
 
   // 本届世界杯战绩 ⚽（视觉区分）
   if(ctx.wcResults.length){
@@ -994,13 +989,20 @@ function renderVerdict(){
     html+='<div class="phase-timeline">';
     const pn={1:'陈述',2:'自由质疑',3:'分配质疑'};
     for(const pv of DATA.phase_verdicts){
-      const rm=pv.content.match(/【理由】(.+)/s);
-      const reason=rm?rm[1].trim():'';
+      // 优先使用精简版 arena_summary，回退到原文【理由】
+      let desc='';
+      if(pv.arena_summary){
+        desc=renderRichText(pv.arena_summary);
+      }else{
+        const rm=pv.content.match(/【理由】(.+)/s);
+        const reason=rm?rm[1].trim():'';
+        desc=esc(reason.substring(0,240))+(reason.length>240?'...':'');
+      }
       html+=`<div class="phase-item">
         <div class="phase-badge ${pv.consensus?'yes':'no'}">${pv.phase}</div>
         <div class="phase-content">
           <div class="phase-title">${pn[pv.phase]||'第'+pv.phase+'阶段'} ${pv.consensus?'<span class="consensus-yes">✅ 共识达成</span>':'<span class="consensus-no">❌ 未达共识</span>'}</div>
-          <div class="phase-desc">${esc(reason.substring(0,240))}${reason.length>240?'...':''}</div>
+          <div class="phase-desc">${desc}</div>
         </div></div>`;
     }
     html+='</div>';
@@ -1043,7 +1045,13 @@ function renderVerdict(){
       ${confNum?`<div class="vf-conf-row"><div class="vf-conf-bar"><div class="vf-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="vf-conf-text">准确度 ${confNum}/10</span></div>`:''}
     </div>`;
 
-    if(rm)html+=`<div class="verdict-text" style="margin-top:8px">${escAndBold(rm[1].trim().substring(0,600))}</div>`;
+    // 裁定描述：优先使用精简版 arena_summary，回退到原文【理由】
+    const arbSummary=DATA.arbitrator_verdict?.arena_summary;
+    if(arbSummary){
+      html+=`<div class="verdict-text" style="margin-top:8px">${renderRichText(arbSummary)}</div>`;
+    }else if(rm){
+      html+=`<div class="verdict-text" style="margin-top:8px">${renderRichText(rm[1].trim().substring(0,600))}</div>`;
+    }
     html+='</div>';
 
     // ── 结构化分析（从仲裁者裁定中提取） ──
