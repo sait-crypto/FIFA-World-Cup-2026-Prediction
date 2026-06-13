@@ -1063,7 +1063,7 @@ function renderVerdict(){
     if(DATA.summary?.content){
       const summaryLabels=['关键共识','核心分歧','决定因素'];
       for(const sLabel of summaryLabels){
-        const re=new RegExp(`^##\\s*${sLabel}\\s*\\n([\\s\\S]+?)(?=\\n##\\s|$)`,'m');
+        const re=new RegExp(`(?:^|\\n)##\\s*${sLabel}\\s*\\n([\\s\\S]+?)(?=\\n##\\s|$)`);
         const sm=re.exec(DATA.summary.content);
         if(sm){
           let body=sm[1].trim();
