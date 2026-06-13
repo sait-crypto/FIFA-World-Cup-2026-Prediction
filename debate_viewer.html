@@ -2,6 +2,9 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>⚔️ 辩论竞技场</title>
 <style>
@@ -346,7 +349,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   </div>
   <div id="main">
     <div id="topbar">
-      <a href="index.html" id="btn-back" style="color:inherit;text-decoration:none;font-size:10px;padding:2px 8px;border:1px solid var(--border);border-radius:4px;cursor:pointer;white-space:nowrap">← 赛程</a>
       <span class="title" id="topic">---</span>
       <span class="tag" id="mode-tag">圆桌</span>
       <span class="tag" id="cons-tag">---</span>
@@ -476,7 +478,7 @@ const DUEL_ANIM_DELAY = 900;       // overlay显示后动画延迟ms
 const ARROW_AUTO_MS = 1500;        // 自动播放时箭头停留时间ms
 const CHALLENGE_ANIM_MS = 2500;    // 质疑动画总时长ms（用于auto-play节拍）
 const RESPONSE_ANIM_MS = 1000;     // 回应动画总时长ms
-const PROJECTILE_MS = 900;         // 投掷物飞行时间ms
+const PROJECTILE_MS = 700;         // 投掷物飞行时间ms
 const BATTLE_CRY_MS = 3000;        // 战吼气泡停留时间ms
 const FLOAT_TEXT_MS = 2200;        // 跳字停留时间ms
 const FX_ICON_MS = 1000;           // FX图标停留时间ms
@@ -488,14 +490,14 @@ const TW_BATCH = 3;           // 每帧字符数
 // ── 图片资源 ──
 // 图片统一放在 images/ 目录下，填写文件名即可
 const AVATAR_IMAGES = {
-  '分析师1': 'images/1.png',
-  '分析师2': 'images/2.png',
-  '分析师3': 'images/3.png',
-  '分析师4': 'images/4.png',
-  '分析师5': 'images/5.png',
-  '分析师6': 'images/6.png',
-  '分析师7': 'images/7.png',
-  '分析师8': 'images/8.png',
+  '智能体1': 'images/1.png',
+  '智能体2': 'images/2.png',
+  '智能体3': 'images/3.png',
+  '智能体4': 'images/4.png',
+  '智能体5': 'images/5.png',
+  '智能体6': 'images/6.png',
+  '智能体7': 'images/7.png',
+  '智能体8': 'images/8.png',
   
   // '审核员':   'images/curator.png',
   // '仲裁者':   'images/arbitrator.png',
@@ -671,7 +673,7 @@ function load(f){const r=new FileReader();r.onload=e=>{try{DATA=JSON.parse(e.tar
   const params=new URLSearchParams(window.location.search);
   const file=params.get('json')||JSON_FILE;
   if(!file)return;
-  fetch(file).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{DATA=d;init()}).catch(err=>{console.warn('自动加载JSON失败：',err)});
+  fetch(file+'?t='+Date.now()).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{DATA=d;init()}).catch(err=>{console.warn('自动加载JSON失败：',err)});
 })();
 
 // ═══════════════════════════════════════════════════════════
@@ -1744,13 +1746,13 @@ document.addEventListener('click',e=>{const p=document.getElementById('ev-popup'
 document.addEventListener('keydown',e=>{if(!DATA)return;if(e.key===' '||e.code==='Space'){e.preventDefault();playing?stopPlay():startPlay()}else if(e.key==='ArrowRight'){e.preventDefault();stopPlay();stepForward()}else if(e.key==='ArrowLeft'){e.preventDefault();stopPlay();stepBack()}});
 
 // Mouse click on game area: left = forward, right = backward
-document.getElementById('game').addEventListener('click',e=>{
+document.getElementById('arena-col').addEventListener('click',e=>{
   if(!DATA)return;
   // Don't intercept clicks on controls, evidence links, etc.
   if(e.target.closest('#ctrl')||e.target.closest('#ev-popup')||e.target.closest('.evidence-link')||e.target.closest('button')||e.target.closest('select'))return;
   stopPlay();stepForward();
 });
-document.getElementById('game').addEventListener('contextmenu',e=>{
+document.getElementById('arena-col').addEventListener('contextmenu',e=>{
   if(!DATA)return;
   e.preventDefault();
   if(e.target.closest('#ctrl')||e.target.closest('#ev-popup'))return;

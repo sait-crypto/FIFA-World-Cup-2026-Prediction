@@ -119,21 +119,23 @@ a:hover{text-decoration:underline}
 .stance-chip{font-size:12px;padding:3px 10px;border-radius:12px;font-weight:600;cursor:pointer;transition:all .15s;border:1px solid transparent}
 .stance-chip:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1)}
 .top-predictions{margin-top:14px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid var(--border)}
-.analyst-roster{margin-top:14px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid var(--border)}
+.analyst-roster{margin-top:14px}
 .analyst-roster-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
 .analyst-roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
-.roster-item{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:8px;cursor:pointer;transition:background .15s;font-size:13px}
+.roster-item{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:start;padding:5px 10px;border-radius:8px;cursor:pointer;transition:background .15s;font-size:13px;border:1px solid var(--border);position:relative}
 .roster-item:hover{background:var(--primary-light)}
-.roster-name{font-weight:700;color:var(--text)}
-.roster-perspective{color:var(--text3);font-size:12px;margin-left:2px}
-.roster-style{color:var(--primary);font-size:12px;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.roster-left{padding-right:8px;border-right:1px solid var(--divider)}
+.roster-name{font-weight:700;color:var(--text);line-height:1.4}
+.roster-perspective{color:var(--text3);font-size:12px;line-height:1.4}
+.roster-style{color:var(--text3);font-size:12px;word-break:break-word;line-height:1.4}
 .top-predictions-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
 .top-pred-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent)}
 .top-pred-item:last-child{border-bottom:none}
 .top-pred-best{font-weight:700}
-.top-pred-rank{font-size:11px;color:var(--text2);min-width:22px}
+.top-pred-rank{font-size:13px;color:var(--text2);min-width:22px;font-weight:600}
 .top-pred-score{font-size:13px;min-width:100px}
-.top-pred-conf-bar{flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
+.top-pred-conf-label-text{font-size:11px;color:var(--text3);white-space:nowrap}
+.top-pred-conf-bar{flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden;min-width:40px}
 .top-pred-conf-fill{height:100%;border-radius:3px;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .top-pred-conf-fill.high{background:linear-gradient(90deg,#22c55e,#16a34a)}
 .top-pred-conf-fill.mid{background:linear-gradient(90deg,#f59e0b,#d97706)}
@@ -212,22 +214,23 @@ a:hover{text-decoration:underline}
 .analyst-stance.pro-a{background:#fde8e8;color:var(--side-a)}
 .analyst-stance.pro-b{background:#e8f0fe;color:var(--side-b)}
 .analyst-stance.pro-x{background:#fef9e7;color:#b8860b}
+.card-expand-hint{position:absolute;top:8px;right:10px;font-size:12px;color:var(--text3);opacity:.4;line-height:1}
 .analyst-current-opinion{font-size:18px;font-weight:800;margin:8px 0 6px;padding:6px 10px;background:var(--primary-light);border-radius:var(--radius);color:var(--primary)}
 .analyst-current-opinion.side-a{color:var(--side-a);background:#fde8e8}
 .analyst-current-opinion.side-b{color:var(--side-b);background:#e8f0fe}
 .analyst-current-opinion.side-x{color:#b8860b;background:#fef9e7}
 .analyst-pred-chain{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin:6px 0;padding:4px 8px;background:var(--divider);border-radius:4px}
-.chain-node{padding:2px 6px;border-radius:4px;font-size:12px;font-weight:500;background:var(--card);color:var(--text2)}
+.chain-node{padding:1px 5px;border-radius:4px;font-size:11px;font-weight:500;background:var(--card);color:var(--text2);white-space:nowrap}
 .chain-node.initial{background:var(--primary-light);color:var(--primary)}
 .chain-node.changed{background:#fff3e0;color:var(--orange);font-weight:700;border:1px solid #ffe0b2}
-.chain-arrow{color:var(--text3);font-size:11px}
+.chain-arrow{color:var(--text3);font-size:10px}
 .confidence-bar{flex:1;height:4px;background:var(--divider);border-radius:2px;overflow:hidden}
 .confidence-fill{height:100%;border-radius:2px;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .confidence-fill.high{background:var(--green)}.confidence-fill.mid{background:var(--orange)}.confidence-fill.low{background:var(--red)}
 .confidence-label{font-size:11px;color:var(--text3);white-space:nowrap}
 .analyst-conf-bar{margin-top:4px}.analyst-conf-bar .confidence-bar{width:100%;height:6px;background:var(--divider);border-radius:3px;overflow:hidden}
-.analyst-summary{font-size:13px;color:var(--text2);line-height:1.5;margin-top:6px}
-.analyst-evolution{font-size:12px;color:var(--orange);margin-top:6px;padding:4px 8px;background:#fff8f0;border-radius:4px;border:1px solid #ffe0b2;font-weight:600}
+.analyst-summary{font-size:13px;color:var(--text2);line-height:1.5;margin-top:6px;text-align:left}
+.analyst-evolution{font-size:12px;color:var(--text3);margin-top:6px;padding:4px 8px;border-radius:4px;border:1px dashed var(--text3);font-weight:500}
 
 /* ── Modal ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center;padding:20px}
@@ -273,12 +276,16 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 .verdict-final-box .vf-conf-fill.mid{background:var(--orange)}
 .verdict-final-box .vf-conf-fill.low{background:var(--red)}
 .verdict-final-box .vf-conf-text{font-size:14px;color:var(--text2);font-weight:600}
-.structured-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:12px}
-.structured-item{background:var(--primary-light);border-radius:var(--radius);padding:10px 14px;border-left:3px solid var(--primary)}
-.structured-label{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px}
-.structured-value{font-size:12px;color:var(--text2);line-height:1.5}
-.summary-text{font-size:14px;color:var(--text2);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--divider)}
-.summary-text h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.structured-grid{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.structured-item{border:1px solid var(--border);border-radius:10px;padding:9px 14px;cursor:pointer;transition:border-color .15s}
+.structured-item:hover{border-color:var(--text3)}
+.structured-row{display:flex;align-items:flex-start;gap:8px}
+.structured-label{flex:0 0 6.8rem;font-weight:700;font-size:.85rem;color:var(--text);display:flex;align-items:center;gap:4px;white-space:nowrap;line-height:1.65}
+.structured-value{flex:1;min-width:0;font-size:.9rem;color:var(--text2);line-height:1.65;overflow-wrap:break-word}
+.structured-detail{display:none;padding:8px 0 0 0;margin-top:8px;border-top:1px solid var(--divider);font-size:.9rem;color:var(--text2);line-height:1.75;overflow-wrap:break-word;word-break:break-word}
+.structured-item.expanded .structured-detail{display:block}
+.structured-item .expand-hint{color:var(--text3);font-size:.7rem;margin-left:4px;transition:transform .2s}
+.structured-item.expanded .expand-hint{transform:rotate(90deg)}
 
 /* ── Evidence ── */
 .evidence-list{padding:4px 0}
@@ -402,9 +409,20 @@ const CONFIG = {
   JSON_FILE: 'data/2026-06-13加拿大_vs_波黑（小组赛）.json',
   VIEWER_FILE: 'debate_viewer.html',
   IMAGES_DIR: 'images/',
-  AVATAR_IMAGES: {
-    // '智能体1': 'images/analyst1.png',
-  },
+  AVATAR_IMAGES : {
+    '智能体1': 'images/1.png',
+    '智能体2': 'images/2.png',
+    '智能体3': 'images/3.png',
+    '智能体4': 'images/4.png',
+    '智能体5': 'images/5.png',
+    '智能体6': 'images/6.png',
+    '智能体7': 'images/7.png',
+    '智能体8': 'images/8.png',
+    
+    // '审核员':   'images/curator.png',
+    // '仲裁者':   'images/arbitrator.png',
+    // '场记':     'images/scribe.png',
+  }
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -430,16 +448,41 @@ function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t
 
 function parseStructuredAnalysis(content){
   if(!content)return[];
-  const labels=['实力对比','近期状态','攻防分析','场地因素','关键共识','核心分歧','决定性因素','综合结论'];
-  const emojiMap={'实力对比':'⚖️','近期状态':'📈','攻防分析':'⚽','场地因素':'🏟️','关键共识':'🤝','核心分歧':'⚡','决定性因素':'🎯','综合结论':'🏆'};
+  const labels=['实力对比','近期状态','攻防分析','场地因素','关键共识','核心分歧','决定因素'];
+  const emojiMap={'实力对比':'⚖️','近期状态':'📈','攻防分析':'⚽','场地因素':'🏟️','关键共识':'🤝','核心分歧':'⚡','决定因素':'🎯'};
+  const withDetail=['关键共识','核心分歧','决定因素']; // 有·简/·详格式的条目
   const results=[];
   for(const label of labels){
-    const re=new RegExp(`【${label}】\\s*(.+?)(?=【|$)`,'s');
-    const m=re.exec(content);
-    if(m){
-      let val=m[1].trim().replace(/\n+/g,' ').replace(/\s+/g,' ');
-      if(val.length>200)val=val.substring(0,200)+'...';
-      if(val)results.push({label,emoji:emojiMap[label]||'📌',value:val});
+    if(withDetail.includes(label)){
+      // 有简/详的条目
+      const reShort=new RegExp(`【${label}·简】\\s*(.+?)(?=【|$)`,'s');
+      const reFull=new RegExp(`【${label}·详】\\s*(.+?)(?=【|$)`,'s');
+      const mShort=reShort.exec(content);
+      const mFull=reFull.exec(content);
+      if(mShort&&mFull){
+        let shortVal=mShort[1].trim().replace(/\n+/g,' ').replace(/\s+/g,' ');
+        if(shortVal.length>200)shortVal=shortVal.substring(0,200)+'...';
+        let fullVal=mFull[1].trim();
+        if(shortVal&&fullVal)results.push({label,emoji:emojiMap[label]||'📌',short:shortVal,full:fullVal,hasDetail:true});
+      }else{
+        // 兼容旧格式
+        const reOld=new RegExp(`【${label}】\\s*(.+?)(?=【|$)`,'s');
+        const m=reOld.exec(content);
+        if(m){
+          let fullVal=m[1].trim();
+          let shortVal=fullVal.replace(/\n+/g,' ').replace(/\s+/g,' ');
+          if(shortVal.length>200)shortVal=shortVal.substring(0,200)+'...';
+          if(shortVal)results.push({label,emoji:emojiMap[label]||'📌',short:shortVal,full:fullVal,hasDetail:shortVal!==fullVal});
+        }
+      }
+    }else{
+      // 无简/详的条目，只有简洁版本
+      const reOld=new RegExp(`【${label}】\\s*(.+?)(?=【|$)`,'s');
+      const m=reOld.exec(content);
+      if(m){
+        let val=m[1].trim().replace(/\n+/g,' ').replace(/\s+/g,' ');
+        if(val)results.push({label,emoji:emojiMap[label]||'📌',short:val,full:null,hasDetail:false});
+      }
     }
   }
   return results;
@@ -448,6 +491,28 @@ function initialPred(a){return a.prediction_history?.[0]||{}}
 function finalPred(a){return a.prediction_history?.[a.prediction_history.length-1]||{}}
 function hasChanged(a){return(a.prediction_history||[]).some((p,i)=>i>0&&p.changed)}
 function sideOf(a,t){const{teamA,teamB}=parseTopic(t);const f=finalPred(a);if(!f.winner)return'x';if(f.winner.includes(teamA))return'a';if(f.winner.includes(teamB))return'b';return'x'}
+
+/** 将所有换行替换为空格，再交给 renderRichText 处理 */
+function flattenNewlines(text){
+  if(!text)return'';
+  return text.replace(/\n/g,' ');
+}
+
+/** 富文本渲染：**粗体**→<strong>，换行→<br>，- 分点→<li> */
+function renderRichText(text){
+  if(!text)return'';
+  let html=esc(text);
+  // 粗体：**text** → <strong>text</strong>
+  html=html.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  // 分点：行首 - text → <li>text</li>，连续li包裹<ul>
+  html=html.replace(/(?:^|\n)(- .+?)(?=\n(?!- )|$)/gs,(m,block)=>{
+    const items=block.trim().split(/\n- /).map(s=>s.replace(/^- /,''));
+    return '<ul style="margin:4px 0;padding-left:18px">'+items.map(i=>'<li>'+i+'</li>').join('')+'</ul>';
+  });
+  // 剩余换行 → <br>
+  html=html.replace(/\n/g,'<br>');
+  return html;
+}
 
 function flagImgHtml(name,cls=''){
   const url=CONFIG.IMAGES_DIR+encodeURIComponent(name)+'.webp';
@@ -646,8 +711,9 @@ function renderPredictionHero(){
       const pClass=pConf>=7?'high':pConf>=4?'mid':'low';
       const pPct=Math.round(pConf/10*100);
       html+=`<div class="top-pred-item ${i===0?'top-pred-best':''}">
-        <span class="top-pred-rank">#${i+1}</span>
-        <span class="top-pred-score">${esc(p.winner)} ${esc(p.score)} 胜</span>
+        <span class="top-pred-rank">${i+1}.</span>
+        <span class="top-pred-score">${smallFlagHtml(p.winner||'')} ${esc(p.winner)} ${esc(p.score)} 胜</span>
+        <span class="top-pred-conf-label-text">准确度</span>
         <div class="top-pred-conf-bar"><div class="top-pred-conf-fill ${pClass}" style="width:${pPct}%"></div></div>
         <span class="top-pred-conf-label">${pConf}/10</span>
       </div>`;
@@ -659,16 +725,17 @@ function renderPredictionHero(){
   const profiles=DATA.agent_profiles||{};
   if(agents.length){
     html+=`<div class="analyst-roster">`;
-    html+=`<div class="analyst-roster-title">🎭 智能体阵容</div>`;
+    html+=`<div class="analyst-roster-title">智能体阵容</div>`;
     html+=`<div class="analyst-roster-grid">`;
     for(const a of agents){
       const p=profiles[a.name]||{};
       const style=p.debate_style||'';
       const perspective=a.perspective_short||a.perspective||'';
       html+=`<div class="roster-item" onclick="jumpToAnalyst('${esc(a.name)}')">`;
-      html+=`${smallFlagHtml(finalPred(a).winner||'')} <span class="roster-name">${esc(a.name)}</span>`;
-      if(perspective) html+=`<span class="roster-perspective">${esc(perspective)}</span>`;
-      if(style) html+=`<span class="roster-style">${esc(style)}</span>`;
+      html+=`<div class="roster-left"><span class="roster-name">${esc(a.name)}</span>`;
+      if(perspective) html+=`<br><span class="roster-perspective">${esc(perspective)}</span>`;
+      html+=`</div>`;
+      if(style) html+=`<div class="roster-style">${esc(style)}</div>`;
       html+=`</div>`;
     }
     html+=`</div></div>`;
@@ -813,14 +880,15 @@ function renderAnalysts(){
       history.forEach((entry,hi)=>{
         if(hi>0)chainHtml+='<span class="chain-arrow">→</span>';
         const cls=hi===0?'initial':(entry.changed?'changed':'');
-        chainHtml+=`<span class="chain-node ${cls}">${esc(entry.winner||'')} ${esc(entry.score||'')}准${entry.confidence||''}</span>`;
+        chainHtml+=`<span class="chain-node ${cls}">${esc(entry.score||'')}准${entry.confidence||''}</span>`;
       });
       chainHtml+='</div>';
     }else if(history.length===1){
-      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(history[0].winner||'')} ${esc(history[0].score||'')}准${history[0].confidence||''}</span></div>`;
+      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(history[0].score||'')}准${history[0].confidence||''}</span></div>`;
     }
 
     html+=`<div class="analyst-card ${sideCls}" data-name="${esc(a.name)}" onclick="showAnalystModal('${esc(a.name)}')">
+      <span class="card-expand-hint">▸</span>
       <div class="analyst-header">
         ${avatarHtml(a.name,ai)}
         <div><div class="analyst-name">${esc(a.name)}</div><div class="analyst-perspective">${esc(a.perspective_short||'')}</div></div>
@@ -989,32 +1057,49 @@ function renderVerdict(){
     if(DATA.arbitrator_verdict?.content)arbContent=DATA.arbitrator_verdict.content;
     else{const pvs=DATA.phase_verdicts||[];for(let i=pvs.length-1;i>=0;i--){if(pvs[i].is_final&&pvs[i].content){arbContent=pvs[i].content;break}}}
     const structured=parseStructuredAnalysis(arbContent);
+
+    // 从 DATA.summary 提取关键共识/核心分歧/决定因素的完整内容（最全面的版本）
+    const summaryFulls={};
+    if(DATA.summary?.content){
+      const summaryLabels=['关键共识','核心分歧','决定因素'];
+      for(const sLabel of summaryLabels){
+        const re=new RegExp(`^##\\s*${sLabel}\\s*\\n([\\s\\S]+?)(?=\\n##\\s|$)`,'m');
+        const sm=re.exec(DATA.summary.content);
+        if(sm){
+          let body=sm[1].trim();
+          // 去掉预测汇总行
+          body=body.replace(/^胜方[：:].+$/m,'').replace(/^.*比分[：:].*准确度.*$/m,'').trim();
+          if(body)summaryFulls[sLabel]=body;
+        }
+      }
+    }
+
     if(structured.length){
       html+='<div class="structured-grid">';
-      for(const item of structured){
-        html+=`<div class="structured-item"><div class="structured-label">${item.emoji} ${esc(item.label)}</div><div class="structured-value">${esc(item.value)}</div></div>`;
+      for(let si=0;si<structured.length;si++){
+        const item=structured[si];
+        // 关键共识/核心分歧/决定因素优先使用 summary 的完整内容
+        let fullContent=item.full;
+        if(summaryFulls[item.label])fullContent=summaryFulls[item.label];
+        const canExpand=item.hasDetail||(fullContent&&fullContent.replace(/\n+/g,' ').replace(/\s+/g,' ')!==item.short);
+        html+=`<div class="structured-item"${canExpand?' onclick="toggleStructuredItem(this)"':''}>
+          <div class="structured-row">
+            <div class="structured-label">${item.emoji} ${esc(item.label)}${canExpand?'<span class="expand-hint">▸</span>':''}</div>
+            <div class="structured-value">${esc(item.short)}</div>
+          </div>
+          ${canExpand?`<div class="structured-detail">${renderRichText(flattenNewlines(fullContent))}</div>`:''}
+        </div>`;
       }
       html+='</div>';
     }
   }
 
-  if(DATA.summary?.content){
-    const secs=DATA.summary.content.split(/\n(?=##\s)/);
-    html+='<div class="summary-text">';
-    for(const sec of secs){
-      const lines=sec.trim().split('\n'),title=lines[0].replace(/^#+\s*/,''),body=lines.slice(1).join('\n').trim();
-      if(!body)continue;
-      // Skip summary sections that duplicate prediction info already shown above
-      if(title.includes('最终预测')||title.includes('总结'))continue;
-      // Skip sections whose body is just a prediction summary line
-      if(body.match(/^胜方[：:]/)||body.match(/^.*比分[：:].*准确度/))continue;
-      if(title)html+=`<h4>${esc(title)}</h4>`;
-      html+=`<div style="font-size:13px;color:var(--text2);line-height:1.5;padding-left:10px">${escAndBold(body.substring(0,600))}${body.length>600?'...':''}</div>`;
-    }
-    html+='</div>';
-  }
   html+='</div>';
   document.getElementById('verdict-section').innerHTML=html;
+}
+
+function toggleStructuredItem(el){
+  el.classList.toggle('expanded');
 }
 
 function renderEvidence(){
@@ -1057,7 +1142,7 @@ function toggleEvidencePool(el){
 }
 
 function renderFooter(){
-  let html=`<div class="viewer-title">辩论动画回放</div>
+  let html=`<div class="viewer-title">智能体辩论过程回放</div>
     <div class="viewer-toggle">
       <button class="toggle-btn active" id="toggle-embed" onclick="setMode('embed')">📦 嵌入模式</button>
       <button class="toggle-btn" id="toggle-link" onclick="setMode('link')">🔗 跳转模式</button>

@@ -178,7 +178,7 @@ a{color:var(--primary);text-decoration:none}
   <div class="loading">正在加载赛程数据...</div>
 </div>
 
-<div class="page-footer">辩论数据由多智能体辩论系统生成 · 仅供参考</div>
+<div class="page-footer">辩论数据由多智能体辩论系统生成<br><br>© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a></div>
 
 <script>
 const DATA_DIR='data/',MANIFEST=DATA_DIR+'manifest.json',DETAIL_PAGE='match.html',IMAGES_DIR='images/';
@@ -373,8 +373,8 @@ function renderCard(m){
     // Top-k alternative predictions
     let topkHtml='';
     if(m.topPreds&&m.topPreds.length){
-      const altScores=m.topPreds.map(p=>esc(p.score||'')).filter(s=>s&&s!==m.score).slice(0,2);
-      if(altScores.length) topkHtml=`<div class="topk-row"><span class="topk-label">其它可能比分</span>${altScores.map(s=>`<span class="topk-score">${s}</span>`).join('')}</div>`;
+      const altScores=m.topPreds.filter(p=>p.score&&(p.winner!==m.winner||p.score!==m.score)).slice(0,3);
+      if(altScores.length) topkHtml=`<div class="topk-row"><span class="topk-label">其它可能比分</span>${altScores.map(p=>`<span class="topk-score">${esc(p.winner)} ${esc(p.score)} 胜</span>`).join('')}</div>`;
     }
     predHtml=`<div class="pred-row">
       <span class="pred-winner ${sc}">${winLabel}</span>
