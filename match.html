@@ -492,12 +492,6 @@ function finalPred(a){return a.prediction_history?.[a.prediction_history.length-
 function hasChanged(a){return(a.prediction_history||[]).some((p,i)=>i>0&&p.changed)}
 function sideOf(a,t){const{teamA,teamB}=parseTopic(t);const f=finalPred(a);if(!f.winner)return'x';if(f.winner.includes(teamA))return'a';if(f.winner.includes(teamB))return'b';return'x'}
 
-/** 将所有换行替换为空格，再交给 renderRichText 处理 */
-function flattenNewlines(text){
-  if(!text)return'';
-  return text.replace(/\n/g,' ');
-}
-
 /** 富文本渲染：**粗体**→<strong>，换行→<br>，- 分点→<li> */
 function renderRichText(text){
   if(!text)return'';
@@ -1087,7 +1081,7 @@ function renderVerdict(){
             <div class="structured-label">${item.emoji} ${esc(item.label)}${canExpand?'<span class="expand-hint">▸</span>':''}</div>
             <div class="structured-value">${esc(item.short)}</div>
           </div>
-          ${canExpand?`<div class="structured-detail">${renderRichText(flattenNewlines(fullContent))}</div>`:''}
+          ${canExpand?`<div class="structured-detail">${renderRichText(fullContent)}</div>`:''}
         </div>`;
       }
       html+='</div>';
