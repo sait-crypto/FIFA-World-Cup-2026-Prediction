@@ -2,6 +2,9 @@
 <html lang="zh-CN" data-theme="default">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 辩论预测</title>
 <style>
@@ -116,6 +119,14 @@ a:hover{text-decoration:underline}
 .stance-chip{font-size:12px;padding:3px 10px;border-radius:12px;font-weight:600;cursor:pointer;transition:all .15s;border:1px solid transparent}
 .stance-chip:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1)}
 .top-predictions{margin-top:14px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid var(--border)}
+.analyst-roster{margin-top:14px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid var(--border)}
+.analyst-roster-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.analyst-roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.roster-item{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:8px;cursor:pointer;transition:background .15s;font-size:13px}
+.roster-item:hover{background:var(--primary-light)}
+.roster-name{font-weight:700;color:var(--text)}
+.roster-perspective{color:var(--text3);font-size:12px;margin-left:2px}
+.roster-style{color:var(--primary);font-size:12px;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
 .top-predictions-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
 .top-pred-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent)}
 .top-pred-item:last-child{border-bottom:none}
@@ -162,10 +173,10 @@ a:hover{text-decoration:underline}
 .travel-card{border-left:3px solid #60a5fa;background:color-mix(in srgb,#60a5fa 5%,var(--card))}
 .home-adv-card{border-left:3px solid #34d399;background:color-mix(in srgb,#34d399 5%,var(--card))}
 .record-header{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.team-flag-sm{width:22px;height:15px;border-radius:2px;object-fit:cover;border:1px solid var(--border);vertical-align:middle}
-.team-flag-sm-placeholder{display:inline-flex;width:22px;height:15px;border-radius:2px;background:var(--divider);align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
-.team-flag-md{width:30px;height:20px;border-radius:3px;object-fit:cover;border:1px solid var(--border);vertical-align:middle}
-.team-flag-md-placeholder{display:inline-flex;width:30px;height:20px;border-radius:3px;background:var(--divider);align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text3);vertical-align:middle;border:1px solid var(--border)}
+.team-flag-sm{width:22px;height:15px;border-radius:2px;object-fit:contain;border:none;background:none;vertical-align:middle}
+.team-flag-sm-placeholder{display:inline-flex;width:22px;height:15px;border-radius:2px;background:var(--divider);align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--text3);vertical-align:middle;border:none}
+.team-flag-md{width:30px;height:20px;border-radius:3px;object-fit:contain;border:none;background:none;vertical-align:middle}
+.team-flag-md-placeholder{display:inline-flex;width:30px;height:20px;border-radius:3px;background:var(--divider);align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text3);vertical-align:middle;border:none}
 .record-summary{display:flex;align-items:center;gap:8px;margin-left:6px;font-size:12px;color:var(--text2);font-weight:500}
 .record-summary-bar{width:80px;height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--divider);flex-shrink:0}
 .record-summary-bar .win-seg,.record-summary-bar .draw-seg,.record-summary-bar .lose-seg{clip-path:inset(0 100% 0 0);animation:bar-enter 1s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
@@ -338,6 +349,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
   <nav class="sticky-nav" id="sticky-nav">
     <a href="index.html" class="nav-back" onclick="sessionStorage.setItem('index_scroll_y',String(window.scrollY))">← 返回赛程</a>
     <span class="nav-title" id="nav-title"></span>
+    <span id="model-badge" style="display:none;font-size:11px;padding:2px 8px;border-radius:8px;background:rgba(255,255,255,0.12);color:var(--nav-muted);font-weight:500;white-space:nowrap"></span>
     <span class="nav-spacer"></span>
     <div class="theme-btns" id="theme-btns">
       <button class="theme-btn active" data-theme="default" title="默认灰调">◈</button>
@@ -391,7 +403,7 @@ const CONFIG = {
   VIEWER_FILE: 'debate_viewer.html',
   IMAGES_DIR: 'images/',
   AVATAR_IMAGES: {
-    // '分析师1': 'images/analyst1.png',
+    // '智能体1': 'images/analyst1.png',
   },
 };
 
@@ -408,7 +420,7 @@ dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.a
 dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('drag-over'));
 dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f){const r=new FileReader();r.onload=ev=>loadJson(ev.target.result);r.readAsText(f)}});
 
-(function(){const p=new URLSearchParams(location.search);const f=p.get('json')||CONFIG.JSON_FILE;if(!f)return;currentJsonFile=f;fetch(f).then(r=>r.text()).then(loadJson).catch(()=>console.warn('JSON auto-load failed:',f))})();
+(function(){const p=new URLSearchParams(location.search);const f=p.get('json')||CONFIG.JSON_FILE;if(!f)return;currentJsonFile=f;fetch(f+'?t='+Date.now()).then(r=>r.text()).then(loadJson).catch(()=>console.warn('JSON auto-load failed:',f))})();
 
 // ── Helpers ──
 function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}
@@ -512,6 +524,11 @@ function render(){
   document.getElementById('main').style.display='block';
   document.title=`${DATA.topic} · AI预测`;
   document.getElementById('nav-title').textContent=DATA.topic||'';
+  // 显示当前基模
+  if(DATA.llm_model){
+    const mb=document.getElementById('model-badge');
+    if(mb){mb.textContent=DATA.llm_model;mb.style.display='inline'}
+  }
   // 逐步渲染各区块，边读边显示
   const steps=[renderHeader,renderPredictionHero,renderContext,renderAnalysts,renderVerdict,renderEvidence,renderFooter];
   let i=0;
@@ -595,12 +612,12 @@ function renderPredictionHero(){
   html+=`<div class="pred-hero-main">`;
   if(fp){
     const winnerFlag=mediumFlagHtml(fp.winner);
-    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)}</span></div>
+    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)} 胜</span></div>
     <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
   }
   html+=`</div>`;
 
-  html+=`<div class="pred-hero-bar"><div class="pred-hero-bar-title">辩手预测分布</div>
+  html+=`<div class="pred-hero-bar"><div class="pred-hero-bar-title">智能体预测分布</div>
     <div class="pred-hero-bar-track">
       ${cA?`<div class="seg seg-a" style="width:${pctA}%">${esc(teamA)} ${pctA}%</div>`:''}
       ${cX>0?`<div class="seg seg-x" style="width:${pctX}%">平 ${pctX}%</div>`:''}
@@ -615,7 +632,7 @@ function renderPredictionHero(){
   html+=`<div class="pred-hero-stance">`;
   for(const a of agents){
     const s=sideOf(a,DATA.topic),f=finalPred(a);
-    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')}${esc(f.score||'')}</span>`;
+    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')} ${esc(f.score||'')}胜</span>`;
   }
   html+='</div>';
 
@@ -630,12 +647,31 @@ function renderPredictionHero(){
       const pPct=Math.round(pConf/10*100);
       html+=`<div class="top-pred-item ${i===0?'top-pred-best':''}">
         <span class="top-pred-rank">#${i+1}</span>
-        <span class="top-pred-score">${esc(p.winner)} ${esc(p.score)}</span>
+        <span class="top-pred-score">${esc(p.winner)} ${esc(p.score)} 胜</span>
         <div class="top-pred-conf-bar"><div class="top-pred-conf-fill ${pClass}" style="width:${pPct}%"></div></div>
         <span class="top-pred-conf-label">${pConf}/10</span>
       </div>`;
     });
     html+=`</div>`;
+  }
+
+  // 智能体阵容 — 显示每个agent的辩论风格
+  const profiles=DATA.agent_profiles||{};
+  if(agents.length){
+    html+=`<div class="analyst-roster">`;
+    html+=`<div class="analyst-roster-title">🎭 智能体阵容</div>`;
+    html+=`<div class="analyst-roster-grid">`;
+    for(const a of agents){
+      const p=profiles[a.name]||{};
+      const style=p.debate_style||'';
+      const perspective=a.perspective_short||a.perspective||'';
+      html+=`<div class="roster-item" onclick="jumpToAnalyst('${esc(a.name)}')">`;
+      html+=`${smallFlagHtml(finalPred(a).winner||'')} <span class="roster-name">${esc(a.name)}</span>`;
+      if(perspective) html+=`<span class="roster-perspective">${esc(perspective)}</span>`;
+      if(style) html+=`<span class="roster-style">${esc(style)}</span>`;
+      html+=`</div>`;
+    }
+    html+=`</div></div>`;
   }
 
   document.getElementById('prediction-hero').innerHTML=html;
@@ -756,7 +792,7 @@ function renderAnalysts(){
   const firstSummaries={};
   for(const msg of(DATA.rounds?.[0]||[]))if(msg.arena_summary&&msg.speaker)firstSummaries[msg.speaker]=msg.arena_summary;
 
-  let html=`<div class="section-title">辩手观点</div><div class="analyst-grid">`;
+  let html=`<div class="section-title">智能体观点</div><div class="analyst-grid">`;
   for(let ai=0;ai<agents.length;ai++){
     const a=agents[ai];
     const s=sideOf(a,DATA.topic),initial=initialPred(a),final=finalPred(a),changed=hasChanged(a);
@@ -764,10 +800,10 @@ function renderAnalysts(){
     const sideCls=changed?'changed':s==='a'?'side-a':s==='b'?'side-b':'side-x';
     const stanceCls=s==='a'?'pro-a':s==='b'?'pro-b':'pro-x';
     const stanceText=a.assigned_side?`支持${a.assigned_side}`:a.stance||'';
-    const summary=profile.initial||firstSummaries[a.name]||'';
+    const summary=profile.core_view||profile.initial||firstSummaries[a.name]||'';
 
     const curWinner=final.winner||'',curScore=final.score||'',curConf=final.confidence||0;
-    const opinionStr=`${curWinner} ${curScore}`;
+    const opinionStr=`${curWinner} ${curScore} 胜`;
     const opinionSideCls=s==='a'?'side-a':s==='b'?'side-b':'side-x';
 
     let chainHtml='';
@@ -777,11 +813,11 @@ function renderAnalysts(){
       history.forEach((entry,hi)=>{
         if(hi>0)chainHtml+='<span class="chain-arrow">→</span>';
         const cls=hi===0?'initial':(entry.changed?'changed':'');
-        chainHtml+=`<span class="chain-node ${cls}">${esc(entry.winner||'')}${esc(entry.score||'')}准${entry.confidence||''}</span>`;
+        chainHtml+=`<span class="chain-node ${cls}">${esc(entry.winner||'')} ${esc(entry.score||'')}准${entry.confidence||''}</span>`;
       });
       chainHtml+='</div>';
     }else if(history.length===1){
-      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(history[0].winner||'')}${esc(history[0].score||'')}准${history[0].confidence||''}</span></div>`;
+      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(history[0].winner||'')} ${esc(history[0].score||'')}准${history[0].confidence||''}</span></div>`;
     }
 
     html+=`<div class="analyst-card ${sideCls}" data-name="${esc(a.name)}" onclick="showAnalystModal('${esc(a.name)}')">
@@ -794,7 +830,7 @@ function renderAnalysts(){
       <div class="analyst-conf-bar"><div class="confidence-bar"><div class="confidence-fill ${curConf>=7?'high':curConf>=4?'mid':'low'}" style="width:${Math.round(curConf/10*100)}%"></div></div></div>
       ${chainHtml}
       ${summary?`<div class="analyst-summary">${escAndBold(summary.replace(/\*\*[^*]+\*\*[：:]/g,'').substring(0,180))}</div>`:''}
-      ${profile.evolution&&profile.evolution!=='立场坚定'?`<div class="analyst-evolution">${esc(profile.evolution)}</div>`:''}
+      ${profile.view_change||profile.evolution&&profile.evolution!=='立场坚定'?`<div class="analyst-evolution">${esc(profile.view_change||profile.evolution)}</div>`:''}
     </div>`;
   }
   html+='</div>';
@@ -841,7 +877,7 @@ function showAnalystModal(name){
     const entry=history[hi];
     if(!first)html+='<span class="chain-arrow">→</span>';
     const cls=first?'initial':(entry.changed?'changed':'');
-    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')}${esc(entry.score||'')}准${entry.confidence||''}</span>`;
+    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')} ${esc(entry.score||'')}胜 准${entry.confidence||''}</span>`;
     first=false;
   }
   html+='</div>';
@@ -850,7 +886,7 @@ function showAnalystModal(name){
   for(let si=0;si<speeches.length;si++){
     const sp=speeches[si];
     const actionLabel=sp.action+(sp.target?` → ${esc(sp.target)}`:'')+(sp.counter?' ↩️反质疑':'');
-    const predLabel=sp.prediction||history[si]?.winner+history[si]?.score+'准'+history[si]?.confidence||'';
+    const predLabel=sp.prediction||history[si]?.winner+' '+history[si]?.score+'胜 准'+history[si]?.confidence||'';
     html+=`<div class="modal-speech" id="modal-speech-${si}">
       ${predLabel?`<div class="speech-opinion">${escAndBold(predLabel)}</div>`:''}
       <div class="speech-action">第${sp.round}轮 · ${esc(actionLabel)}</div>
@@ -1028,7 +1064,8 @@ function renderFooter(){
     </div>
     <div class="embed-container" id="embed-mode"></div>
     <div id="link-mode" style="display:none"><button class="viewer-open-btn" onclick="openViewer()">▶ 观看动画回放</button></div>
-    <div class="hint">辩论数据由多智能体辩论系统生成</div>`;
+    <div class="hint">辩论数据由多智能体辩论系统生成</div>
+    <div style="margin-top:16px;font-size:12px;color:var(--text3);line-height:1.8">© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a></div>`;
   document.getElementById('footer-section').innerHTML=html;
   setMode('embed');
 }

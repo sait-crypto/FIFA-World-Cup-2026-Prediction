@@ -797,7 +797,7 @@ function updateAvatarHP(name){
   fill.style.width=(pred.confidence*10)+'%';fill.style.background='#fff';
   setTimeout(()=>{fill.style.background=hpC},300);
   const label=av.el.querySelector('.hp-label');
-  label.textContent=`${pred.winner} ${pred.score}`;label.style.color=pC;
+  label.textContent=`${pred.winner} ${pred.score} 胜`;label.style.color=pC;
 }
 
 function updateDuelAvatarHP(name){
@@ -807,7 +807,7 @@ function updateDuelAvatarHP(name){
   const hf=document.getElementById(isL?'dl-hp':'dr-hp');
   const pl=document.getElementById(isL?'dl-pred':'dr-pred');
   if(hf){hf.style.width=(pred.confidence*10)+'%';hf.style.background='#fff';setTimeout(()=>{hf.style.background=hpC},300)}
-  if(pl){pl.textContent=`${pred.winner} ${pred.score} 准${pred.confidence}/10`;pl.style.color=pC}
+  if(pl){pl.textContent=`${pred.winner} ${pred.score} 胜 准${pred.confidence}/10`;pl.style.color=pC}
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -869,7 +869,7 @@ function fillDuelAvatar(side,name){
   document.getElementById(side+'-name').style.color=color;
   document.getElementById(side+'-name').textContent=name;
   document.getElementById(side+'-persp').textContent=av?(DATA.agents[idx]?.perspective_short||''):'';
-  const pl=document.getElementById(side+'-pred');pl.textContent=pred?`${pred.winner} ${pred.score} 准${pred.confidence}/10`:'';pl.style.color=pC;
+  const pl=document.getElementById(side+'-pred');pl.textContent=pred?`${pred.winner} ${pred.score} 胜 准${pred.confidence}/10`:'';pl.style.color=pC;
   const hf=document.getElementById(side+'-hp');hf.style.width=pred?(pred.confidence*10)+'%':'0%';hf.style.background=hpC;
 }
 
@@ -1218,8 +1218,8 @@ function addLogRow(msg,predChanged){
   let tag=msg.action||'立场';
   if(msg.counter_challenge&&msg.action==='回应')tag='↩️反质疑';else if(msg.action==='质疑')tag='⚔️质疑';else if(msg.action==='回应')tag='🛡️回应';else tag='📝'+tag;
   const sp=predMap[msg.speaker],tp=predMap[msg.target||''];
-  const spStr=sp?`${sp.winner}${sp.score}准${sp.confidence}`:'';
-  const tpStr=tp?`${tp.winner}${tp.score}准${tp.confidence}`:'';
+  const spStr=sp?`${sp.winner} ${sp.score}胜 准${sp.confidence}`:'';
+  const tpStr=tp?`${tp.winner} ${tp.score}胜 准${tp.confidence}`:'';
   const targetInfo=msg.target?`→${msg.target}${tpStr?'('+tpStr+')':''}`:'';
   const speakerPred=spStr?`(${spStr})`:'';
   const changedMark=predChanged?'⚡':'';
@@ -1702,13 +1702,13 @@ function showVictoryScreen(){
   playSound('victory');
   const sides={};DATA.agents.forEach(agent=>{const hist=agent.prediction_history;const last=hist&&hist.length>0?hist[hist.length-1]:null;if(last){const key=last.winner;if(!sides[key])sides[key]={winner:last.winner,score:last.score,color:resolveSideColor(last.winner),agents:[]};sides[key].agents.push(agent)}});
   const sideList=Object.values(sides).sort((a,b)=>b.agents.length-a.agents.length);const winner=sideList[0];if(!winner)return;
-  const vPred=document.getElementById('v-pred');vPred.textContent=`${winner.winner} ${winner.score}`;vPred.style.color=winner.color;
+  const vPred=document.getElementById('v-pred');vPred.textContent=`${winner.winner} ${winner.score} 胜`;vPred.style.color=winner.color;
   const vSides=document.getElementById('v-sides');vSides.innerHTML='';
-  sideList.forEach(s=>{const sDiv=document.createElement('div');sDiv.className='vside';const sLabel=document.createElement('div');sLabel.className='vside-label';sLabel.style.color=s.color;sLabel.style.borderColor=s.color;sLabel.textContent=`${s.winner} ${s.score}（${s.agents.length}人）`;sDiv.appendChild(sLabel);
+  sideList.forEach(s=>{const sDiv=document.createElement('div');sDiv.className='vside';const sLabel=document.createElement('div');sLabel.className='vside-label';sLabel.style.color=s.color;sLabel.style.borderColor=s.color;sLabel.textContent=`${s.winner} ${s.score} 胜（${s.agents.length}人）`;sDiv.appendChild(sLabel);
   const aDiv=document.createElement('div');aDiv.className='vagents';
   s.agents.forEach(agent=>{const idx=DATA.agents.indexOf(agent);const color=COLORS_HEX[idx%COLORS_HEX.length];const last=agent.prediction_history?.[agent.prediction_history.length-1];
     const img=AVATAR_IMAGES[agent.name];const spriteStyle=img?`border-color:${color};background-image:url('${img}')`:`border-color:${color};background:${color}22`;const spriteInner=img?'':`<span style="color:${color}">${idx+1}</span>`;
-    const d=document.createElement('div');d.className='vagent';d.innerHTML=`<div class="sprite" style="${spriteStyle}">${spriteInner}</div><div class="vaname" style="color:${color}">${agent.name}</div><div class="vavpred" style="color:${s.color}">${last?last.winner+' '+last.score:''}</div>`;aDiv.appendChild(d)});
+    const d=document.createElement('div');d.className='vagent';d.innerHTML=`<div class="sprite" style="${spriteStyle}">${spriteInner}</div><div class="vaname" style="color:${color}">${agent.name}</div><div class="vavpred" style="color:${s.color}">${last?last.winner+' '+last.score+' 胜':''}</div>`;aDiv.appendChild(d)});
   sDiv.appendChild(aDiv);vSides.appendChild(sDiv)});
   // Top-N 预测 — 追加到 victory-screen（独立一行，不在 vsides 内）
   const topPreds=DATA.top_predictions||[];
@@ -1718,7 +1718,7 @@ function showVictoryScreen(){
     tpDiv.appendChild(tpTitle);
     topPreds.forEach((p,i)=>{
       const item=document.createElement('div');item.className='vtopn-item'+(i===0?' vtopn-best':'');
-      item.innerHTML=`<span class="vtopn-rank">#${i+1}</span><span class="vtopn-score">${escapeHtml(p.winner)} ${escapeHtml(p.score)}</span><span class="vtopn-conf">${p.confidence||0}/10</span>`;
+      item.innerHTML=`<span class="vtopn-rank">#${i+1}</span><span class="vtopn-score">${escapeHtml(p.winner)} ${escapeHtml(p.score)} 胜</span><span class="vtopn-conf">${p.confidence||0}/10</span>`;
       tpDiv.appendChild(item);
     });
     document.getElementById('victory-screen').appendChild(tpDiv);

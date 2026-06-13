@@ -2,6 +2,9 @@
 <html lang="zh-CN" data-theme="default">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>AI 辩论预测 · 赛程</title>
 <style>
@@ -184,18 +187,19 @@ const SCROLL_KEY='index_scroll_y',THEME_KEY='arena_theme';
 // ═══ 赛程结构 ═══
 const TOURNAMENT=[
   {key:'group',label:'小组赛',subs:[
-    {key:'g-r1',label:'小组赛第1轮',dates:['2026-06-12','2026-06-13','2026-06-14']},
-    {key:'g-r2',label:'小组赛第2轮',dates:['2026-06-17','2026-06-18','2026-06-19']},
-    {key:'g-r3',label:'小组赛第3轮',dates:['2026-06-24','2026-06-25','2026-06-26']},
+    {key:'g-r1',label:'小组赛第1轮',dates:['2026-06-12','2026-06-13','2026-06-14','2026-06-15','2026-06-16','2026-06-17','2026-06-18']},
+    {key:'g-r2',label:'小组赛第2轮',dates:['2026-06-19','2026-06-20','2026-06-21','2026-06-22','2026-06-23','2026-06-24']},
+    {key:'g-r3',label:'小组赛第3轮',dates:['2026-06-25','2026-06-26','2026-06-27','2026-06-28']},
   ]},
   {key:'ko',label:'淘汰赛',subs:[
-    {key:'r32',label:'1/16 决赛',dates:['2026-06-27','2026-06-28']},
-    {key:'r16',label:'1/8 决赛',dates:['2026-06-29','2026-06-30','2026-07-01','2026-07-02']},
-    {key:'qf',label:'1/4 决赛',dates:['2026-07-05','2026-07-06']},
-    {key:'sf',label:'半决赛',dates:['2026-07-09','2026-07-10']},
+    {key:'r32',label:'1/16 决赛',dates:['2026-06-29','2026-06-30','2026-07-01','2026-07-02','2026-07-03','2026-07-04']},
+    {key:'r16',label:'1/8 决赛',dates:['2026-07-05','2026-07-06','2026-07-07','2026-07-08']},
+    {key:'qf',label:'1/4 决赛',dates:['2026-07-10','2026-07-11','2026-07-12']},
+    {key:'sf',label:'半决赛',dates:['2026-07-15','2026-07-16']},
+    {key:'sf',label:'季军赛',dates:['2026-07-19']},
   ]},
   {key:'final',label:'决赛',subs:[
-    {key:'f1',label:'决赛',dates:['2026-07-13']},
+    {key:'f1',label:'决赛',dates:['2026-07-20']},
   ]},
 ];
 
@@ -268,7 +272,7 @@ async function loadSchedule(){
   container.innerHTML=sk.html;
   restoreScrollPos();
   // Show today button if there are matches today
-  const today=new Date().toISOString().slice(0,10);
+  const today=new Date().toLocaleDateString('sv-SE');
   const todayBtn=document.getElementById('today-btn');
   if(todayBtn && sk.byDate[today])todayBtn.style.display='inline-block';
   setupNavLinks();
@@ -277,7 +281,7 @@ async function loadSchedule(){
   // 逐条加载并插入
   for(const file of files){
     try{
-      const r=await fetch(DATA_DIR+file);
+      const r=await fetch(DATA_DIR+file+'?t='+Date.now());
       if(r.ok){const d=await r.json();insertCard(extractCardData(d,file),sk.byDate)}
     }catch(e){console.warn('跳过:',file)}
   }
@@ -341,12 +345,12 @@ function formatDate(d){
   if(!d)return'';const p=d.split('-');if(p.length!==3)return d;
   const w=['日','一','二','三','四','五','六'];
   const dt=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
-  const isToday=d===new Date().toISOString().slice(0,10);
+  const isToday=d===new Date().toLocaleDateString('sv-SE');
   return `🗓 ${parseInt(p[1])}月${parseInt(p[2])}日 周${w[dt.getDay()]}${isToday?' · 今天':''}`;
 }
 
 function jumpToToday(){
-  const today=new Date().toISOString().slice(0,10);
+  const today=new Date().toLocaleDateString('sv-SE');
   const el=document.getElementById('cards-'+today.replace(/-/g,''))||document.querySelector('.date-head');
   if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
 }
