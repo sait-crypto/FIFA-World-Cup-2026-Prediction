@@ -1059,7 +1059,7 @@ function renderAnalysts(){
     const stanceText=a.assigned_side?`支持${a.assigned_side}`:a.stance||'';
     const summary=profile.core_view||profile.initial||firstSummaries[a.name]||'';
 
-    const curWinner=final.winner||'',curScore=final.score||'',curConf=final.confidence||0;
+    const curWinner=final.winner||'',curScore=cleanScore(final.score||'',final.winner),curConf=final.confidence||0;
     const opinionStr=`${curWinner} ${curScore} 胜`;
     const opinionSideCls=s==='a'?'side-a':s==='b'?'side-b':'side-x';
 
@@ -1070,11 +1070,11 @@ function renderAnalysts(){
       history.forEach((entry,hi)=>{
         if(hi>0)chainHtml+='<span class="chain-arrow">→</span>';
         const cls=hi===0?'initial':(entry.changed?'changed':'');
-        chainHtml+=`<span class="chain-node ${cls}">${esc(entry.score||'')}准${entry.confidence||''}</span>`;
+        chainHtml+=`<span class="chain-node ${cls}">${esc(cleanScore(entry.score||'',entry.winner))}准${entry.confidence||''}</span>`;
       });
       chainHtml+='</div>';
     }else if(history.length===1){
-      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(history[0].score||'')}准${history[0].confidence||''}</span></div>`;
+      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(cleanScore(history[0].score||'',history[0].winner))}准${history[0].confidence||''}</span></div>`;
     }
 
     html+=`<div class="analyst-card ${sideCls}" data-name="${esc(a.name)}" onclick="showAnalystModal('${esc(a.name)}')">
@@ -1144,7 +1144,7 @@ function showAnalystModal(name){
   for(let si=0;si<speeches.length;si++){
     const sp=speeches[si];
     const actionLabel=sp.action+(sp.target?` → ${esc(sp.target)}`:'')+(sp.counter?' ↩️反质疑':'');
-    const predLabel=sp.prediction||history[si]?.winner+' '+history[si]?.score+(history[si]?.winner?winSuffix(history[si].winner):'')+' 准'+history[si]?.confidence||'';
+    const predLabel=sp.prediction||(history[si]?history[si].winner+' '+cleanScore(history[si].score||'',history[si].winner)+(history[si].winner?winSuffix(history[si].winner):'')+' 准'+(history[si].confidence||''):'');
     html+=`<div class="modal-speech" id="modal-speech-${si}">
       ${predLabel?`<div class="speech-opinion">${escAndBold(predLabel)}</div>`:''}
       <div class="speech-action">第${sp.round}轮 · ${esc(actionLabel)}</div>
@@ -1190,6 +1190,7 @@ function renderVerdict(){
     html+='<div class="phase-timeline">';
     const pn={1:'陈述',2:'自由质疑',3:'分配质疑'};
     for(const pv of DATA.phase_verdicts){
+      if(pv.is_final)continue; // 最终裁决在下方 ⚖️ 仲裁者裁定 区独立显示
       // 优先使用精简版 arena_summary，回退到原文【理由】
       let desc='';
       if(pv.arena_summary){

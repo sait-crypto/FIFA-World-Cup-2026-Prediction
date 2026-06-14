@@ -1265,8 +1265,11 @@ function addSep(label){
 
 function addEndCard(item){
   const area=document.getElementById('dialog-area');const card=document.createElement('div');card.className='end-card';
-  card.innerHTML=`<h3>${item.endTitle}</h3><div>${escapeHtml(item.msg.content)}</div>`;
-  area.appendChild(card);area.scrollTop=area.scrollHeight;currentChainRoot=null;
+  const bodyHtml=renderMdHtml(escapeHtml(item.msg.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
+  const truncated=truncateHtml(bodyHtml,200);const needsExpand=truncated.length<bodyHtml.length;
+  card.innerHTML=`<h3>${item.endTitle}</h3><div class="mr-body">${needsExpand?truncated+'<span class="expand-hint"> ▼展开</span>':bodyHtml}</div>`;
+  if(needsExpand){const body=card.querySelector('.mr-body');body.addEventListener('click',function toggle(){if(body.classList.contains('expanded')){body.innerHTML=truncated+'<span class="expand-hint"> ▼展开</span>'}else{body.innerHTML=bodyHtml;body.classList.add('expanded')}})}
+  area.appendChild(card);area.scrollTop=area.scrollHeight;currentChainRoot=null;bindEvLinks(card);
   if(inChain&&chainChanges.length){
     hideDuelOverlay();removeRoundTableArrow();
     showChainReport();inChain=false;chainChanges=[];
@@ -1634,13 +1637,21 @@ function showItem(i){
     return;
   }
   if(item.phaseVerdict){
+    // 先关闭对抗界面，再让仲裁者发言
+    hideDuelOverlay();removeRoundTableArrow();clearBattle();
     const summary=item.arena_summary||item.content;
     const isFinal=item.is_final||false;
-    showArbitratorBubble(summary,item.consensus);
+    // 共识检查使用导演精简内容，最终裁决使用完整内容
+    const bubbleContent=isFinal?summary:summary;
+    showArbitratorBubble(bubbleContent,item.consensus);
+    // 辩论记录：可展开（使用 addLogRow 风格）
     const area=document.getElementById('dialog-area');
     const row=document.createElement('div');row.className='msg-row stance';
     const tagLabel=isFinal?(item.consensus?'✅共识·终裁':'⚖️终裁'):(item.consensus?'✅共识':'⚖️未共识');
-    row.innerHTML=`<div class="mr-head"><span class="mr-name" style="color:var(--accent)">⚖️ 仲裁者</span><span class="mr-tag" style="border-color:var(--accent);color:var(--accent)">${tagLabel}</span></div><div class="mr-body">${renderMdHtml(escapeHtml(item.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>')}</div>`;
+    const bodyHtml=renderMdHtml(escapeHtml(item.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
+    const truncated=truncateHtml(bodyHtml,200);const needsExpand=truncated.length<bodyHtml.length;
+    row.innerHTML=`<div class="mr-head"><span class="mr-name" style="color:var(--accent)">⚖️ 仲裁者</span><span class="mr-tag" style="border-color:var(--accent);color:var(--accent)">${tagLabel}</span></div><div class="mr-body">${needsExpand?truncated+'<span class="expand-hint"> ▼展开</span>':bodyHtml}</div>`;
+    if(needsExpand){const body=row.querySelector('.mr-body');body.addEventListener('click',function toggle(){if(body.classList.contains('expanded')){body.innerHTML=truncated+'<span class="expand-hint"> ▼展开</span>'}else{body.innerHTML=bodyHtml;body.classList.add('expanded')}})}
     area.appendChild(row);area.scrollTop=area.scrollHeight;bindEvLinks(row);
     // 最终仲裁：播放奖杯动画
     if(isFinal&&!victoryShown){scheduleTrophyAfterArbitrator()}
