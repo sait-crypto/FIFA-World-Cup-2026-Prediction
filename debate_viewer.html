@@ -694,7 +694,7 @@ function init(){
     r.forEach((m,mi)=>flat.push({msg:m,ri:i,mi}));
     while(phaseVerdictIdx<phaseVerdicts.length&&phaseVerdicts[phaseVerdictIdx].phase===(i+1)){
       const pv=phaseVerdicts[phaseVerdictIdx];
-      flat.push({phaseVerdict:true,content:pv.content,consensus:pv.consensus,speaker:pv.speaker,arena_summary:pv.arena_summary||'',arena_bubble:pv.arena_bubble||''});
+      flat.push({phaseVerdict:true,content:pv.content,consensus:pv.consensus,speaker:pv.speaker,arena_summary:pv.arena_summary||'',arena_bubble:pv.arena_bubble||'',is_final:pv.is_final||false});
       phaseVerdictIdx++;
     }
   });
@@ -1233,7 +1233,9 @@ function addLogRow(msg,predChanged){
     const evLinks=newEvIds.map(eid=>`<a class="evidence-link" data-eid="${eid}" style="margin-right:4px">${eid}</a>`).join('');
     newEvHtml=`<div style="margin-top:3px;font-size:10px;color:#ffa502">🔍 新证据：${evLinks}</div>`;
   }
-  const truncated=truncateHtml(bodyHtml,200);const needsExpand=truncated.length<bodyHtml.length;
+  const plainText=msg.content.replace(/<[^>]+>/g,'').replace(/\s+/g,' ');
+  const needsExpand=plainText.length>200;
+  const truncated=needsExpand?truncateHtml(bodyHtml,200):bodyHtml;
   const fullContent=bodyHtml+newEvHtml;
   const truncatedContent=truncated+newEvHtml+(needsExpand?'<span class="expand-hint"> ▼展开</span>':'');
   row.innerHTML=`
@@ -1242,14 +1244,22 @@ function addLogRow(msg,predChanged){
       <span class="mr-tag" style="border-color:${nc};color:${nc}">${tag}</span>
       <span style="color:var(--fg2)">${targetInfo}</span>
     </div>
-    <div class="mr-body" data-full="${attrEscape(fullContent)}" data-short="${attrEscape(truncatedContent)}">${truncatedContent}</div>
+    <div class="mr-body">${truncatedContent}</div>
   `;
-  const bodyEl=row.querySelector('.mr-body');
-  bodyEl.addEventListener('click',()=>{
-    if(bodyEl.classList.contains('expanded')){bodyEl.classList.remove('expanded');bodyEl.innerHTML=truncated+(needsExpand?'<span class="expand-hint"> ▼展开</span>':'')}
-    else{bodyEl.classList.add('expanded');bodyEl.innerHTML=bodyHtml+'<span class="expand-hint"> ▲收起</span>'}
-    bindEvLinks(bodyEl);
-  });
+  if(needsExpand){
+    const bodyEl=row.querySelector('.mr-body');
+    bodyEl.style.cursor='pointer';
+    bodyEl.addEventListener('click',()=>{
+      if(bodyEl.classList.contains('expanded')){
+        bodyEl.classList.remove('expanded');
+        bodyEl.innerHTML=truncatedContent;
+      }else{
+        bodyEl.classList.add('expanded');
+        bodyEl.innerHTML=fullContent+'<span class="expand-hint"> ▲收起</span>';
+      }
+      bindEvLinks(bodyEl);
+    });
+  }
   container.appendChild(row);bindEvLinks(row);area.scrollTop=area.scrollHeight;
 }
 
@@ -1266,9 +1276,24 @@ function addSep(label){
 function addEndCard(item){
   const area=document.getElementById('dialog-area');const card=document.createElement('div');card.className='end-card';
   const bodyHtml=renderMdHtml(escapeHtml(item.msg.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
-  const truncated=truncateHtml(bodyHtml,200);const needsExpand=truncated.length<bodyHtml.length;
+  const plainText=item.msg.content.replace(/<[^>]+>/g,'').replace(/\s+/g,' ');
+  const needsExpand=plainText.length>200;
+  const truncated=needsExpand?truncateHtml(bodyHtml,200):bodyHtml;
   card.innerHTML=`<h3>${item.endTitle}</h3><div class="mr-body">${needsExpand?truncated+'<span class="expand-hint"> ▼展开</span>':bodyHtml}</div>`;
-  if(needsExpand){const body=card.querySelector('.mr-body');body.addEventListener('click',function toggle(){if(body.classList.contains('expanded')){body.innerHTML=truncated+'<span class="expand-hint"> ▼展开</span>'}else{body.innerHTML=bodyHtml;body.classList.add('expanded')}})}
+  if(needsExpand){
+    const body=card.querySelector('.mr-body');
+    body.style.cursor='pointer';
+    body.addEventListener('click',function(){
+      if(body.classList.contains('expanded')){
+        body.classList.remove('expanded');
+        body.innerHTML=truncated+'<span class="expand-hint"> ▼展开</span>';
+      }else{
+        body.classList.add('expanded');
+        body.innerHTML=bodyHtml;
+      }
+      bindEvLinks(card);
+    });
+  }
   area.appendChild(card);area.scrollTop=area.scrollHeight;currentChainRoot=null;bindEvLinks(card);
   if(inChain&&chainChanges.length){
     hideDuelOverlay();removeRoundTableArrow();
@@ -1639,21 +1664,34 @@ function showItem(i){
   if(item.phaseVerdict){
     // 先关闭对抗界面，再让仲裁者发言
     hideDuelOverlay();removeRoundTableArrow();clearBattle();
-    const summary=item.arena_summary||item.content;
     const isFinal=item.is_final||false;
-    // 共识检查使用导演精简内容，最终裁决使用完整内容
-    const bubbleContent=isFinal?summary:summary;
-    showArbitratorBubble(bubbleContent,item.consensus);
-    // 辩论记录：可展开（使用 addLogRow 风格）
+    // 气泡：使用导演精简版 arena_summary；辩论记录：使用完整版 content
+    const bubbleText=item.arena_summary||item.content;
+    showArbitratorBubble(bubbleText,item.consensus);
+    // 辩论记录：可展开
     const area=document.getElementById('dialog-area');
     const row=document.createElement('div');row.className='msg-row stance';
     const tagLabel=isFinal?(item.consensus?'✅共识·终裁':'⚖️终裁'):(item.consensus?'✅共识':'⚖️未共识');
-    const bodyHtml=renderMdHtml(escapeHtml(item.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
-    const truncated=truncateHtml(bodyHtml,200);const needsExpand=truncated.length<bodyHtml.length;
-    row.innerHTML=`<div class="mr-head"><span class="mr-name" style="color:var(--accent)">⚖️ 仲裁者</span><span class="mr-tag" style="border-color:var(--accent);color:var(--accent)">${tagLabel}</span></div><div class="mr-body">${needsExpand?truncated+'<span class="expand-hint"> ▼展开</span>':bodyHtml}</div>`;
-    if(needsExpand){const body=row.querySelector('.mr-body');body.addEventListener('click',function toggle(){if(body.classList.contains('expanded')){body.innerHTML=truncated+'<span class="expand-hint"> ▼展开</span>'}else{body.innerHTML=bodyHtml;body.classList.add('expanded')}})}
+    const fullHtml=renderMdHtml(escapeHtml(item.content)).replace(/E(\d{3})/g,'<a class="evidence-link" data-eid="E$1">E$1</a>');
+    const plainText=item.content.replace(/<[^>]+>/g,'').replace(/\s+/g,' ');
+    const needsExpand=plainText.length>200;
+    const truncated=needsExpand?truncateHtml(fullHtml,200):fullHtml;
+    row.innerHTML=`<div class="mr-head"><span class="mr-name" style="color:var(--accent)">⚖️ 仲裁者</span><span class="mr-tag" style="border-color:var(--accent);color:var(--accent)">${tagLabel}</span></div><div class="mr-body">${needsExpand?truncated+'<span class="expand-hint"> ▼展开</span>':fullHtml}</div>`;
+    if(needsExpand){
+      const body=row.querySelector('.mr-body');
+      body.style.cursor='pointer';
+      body.addEventListener('click',function(){
+        if(body.classList.contains('expanded')){
+          body.classList.remove('expanded');
+          body.innerHTML=truncated+'<span class="expand-hint"> ▼展开</span>';
+        }else{
+          body.classList.add('expanded');
+          body.innerHTML=fullHtml;
+        }
+        bindEvLinks(row);
+      });
+    }
     area.appendChild(row);area.scrollTop=area.scrollHeight;bindEvLinks(row);
-    // 最终仲裁：播放奖杯动画
     if(isFinal&&!victoryShown){scheduleTrophyAfterArbitrator()}
     return;
   }
