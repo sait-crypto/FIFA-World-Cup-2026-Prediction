@@ -492,8 +492,8 @@ function renderAccuracyStats(allCards){
   const pct1=withResult.length?Math.round(winnerCorrect/withResult.length*100):0;
   const pct2=withResult.length?Math.round(scoreHit/withResult.length*100):0;
   const statsHtml=`<div class="accuracy-stats">
-    <span class="accuracy-stat" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中（如「德国 胜」vs 实际德国胜即命中）" onclick="showStatTooltip(this,event)">胜负准确率 <strong>${winnerCorrect}/${withResult.length}</strong> (${pct1}%)</span>
-    <span class="accuracy-stat" title="预测的比分与实际比分完全一致（如预测「2-0」vs 实际「2-0」）即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">比分命中率 <strong>${scoreHit}/${withResult.length}</strong> (${pct2}%)</span>
+    <span class="accuracy-stat" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中（如「德国 胜」vs 实际德国胜即命中）" onclick="showStatTooltip(this,event)">胜负准确率 <strong>${pct1}%</strong></span>
+    <span class="accuracy-stat" title="预测的比分与实际比分完全一致（如预测「2-0」vs 实际「2-0」）即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">比分命中率 <strong>${pct2}%</strong></span>
     <span class="accuracy-stat" title="综合评分（满分 10）：胜负正确 +5 分，比分命中 +3 分，进球差 ±1 内各 +1 分，总进球数相同 +1 分" onclick="showStatTooltip(this,event)">综合评分 <strong>${totalScore}/${maxScore}</strong></span>
   </div>`;
   heroEl.insertAdjacentHTML('beforeend',statsHtml);
