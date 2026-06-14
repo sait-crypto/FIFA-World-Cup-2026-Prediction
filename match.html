@@ -609,6 +609,8 @@ function sideOf(a,t){const{teamA,teamB}=parseTopic(t);const f=finalPred(a);if(!f
 function isDraw(winner,t){const{teamA,teamB}=parseTopic(t||DATA.topic);return winner&&!winner.includes(teamA)&&!winner.includes(teamB)}
 /** 比分后缀：平局无后缀，否则显示"胜" */
 function winSuffix(winner,t){return isDraw(winner,t)?'':' 胜'}
+/** 清理比分中 LLM 误加的胜方名前缀（如 "德国 2-1" → "2-1"） */
+function cleanScore(score,winner){if(!score||!winner)return score||'';let s=score.trim();if(s.startsWith('胜'))s=s.slice(1).trim();const w=winner.trim();if(s.startsWith(w))s=s.slice(w.length).trim();if(s.startsWith('胜'))s=s.slice(1).trim();return s}
 
 /** 富文本渲染：**粗体**→<strong>，换行→<br>，- 分点→<li> */
 function renderRichText(text){
@@ -819,7 +821,7 @@ function renderPredictionHero(){
   html+=`<div class="pred-hero-main">`;
   if(fp){
     const winnerFlag=mediumFlagHtml(fp.winner);
-    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)}${winSuffix(fp.winner)}</span></div>
+    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(cleanScore(fp.score,fp.winner))}${winSuffix(fp.winner)}</span></div>
     <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
   }
   html+=`</div>`;
@@ -839,7 +841,7 @@ function renderPredictionHero(){
   html+=`<div class="pred-hero-stance">`;
   for(const a of agents){
     const s=sideOf(a,DATA.topic),f=finalPred(a);
-    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')} ${esc(f.score||'')}${f.winner?winSuffix(f.winner):''}</span>`;
+    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')} ${esc(cleanScore(f.score||'',f.winner))}${f.winner?winSuffix(f.winner):''}</span>`;
   }
   html+='</div>';
 
@@ -862,7 +864,7 @@ function renderPredictionHero(){
       if(actualWinner&&p.winner===actualWinner&&p.score===actualPredScore)itemCls+=' exact-score-match';
       html+=`<div class="top-pred-item ${itemCls}">
         <span class="top-pred-rank">${i+1}.</span>
-        <span class="top-pred-score">${smallFlagHtml(p.winner||'')} ${esc(p.winner)} ${esc(p.score)}${winSuffix(p.winner)}</span>
+        <span class="top-pred-score">${smallFlagHtml(p.winner||'')} ${esc(p.winner)} ${esc(cleanScore(p.score,p.winner))}${winSuffix(p.winner)}</span>
         <span class="top-pred-conf-label-text">准确度</span>
         <div class="top-pred-conf-bar"><div class="top-pred-conf-fill ${pClass}" style="width:${pPct}%"></div></div>
         <span class="top-pred-conf-label">${pConf}/10</span>
@@ -1133,7 +1135,7 @@ function showAnalystModal(name){
     const entry=history[hi];
     if(!first)html+='<span class="chain-arrow">→</span>';
     const cls=first?'initial':(entry.changed?'changed':'');
-    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')} ${esc(entry.score||'')}${entry.winner?winSuffix(entry.winner):''} 准${entry.confidence||''}</span>`;
+    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')} ${esc(cleanScore(entry.score||'',entry.winner))}${entry.winner?winSuffix(entry.winner):''} 准${entry.confidence||''}</span>`;
     first=false;
   }
   html+='</div>';
@@ -1240,7 +1242,7 @@ function renderVerdict(){
       <div style="font-size:15px;font-weight:700;margin-bottom:8px">⚖️ 仲裁者裁定</div>`;
 
     html+=`<div class="verdict-final-box">
-      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}${score?` <span style="color:var(--text3);font-weight:400">|</span> 比分：${esc(score)}`:''}</div>
+      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}${score?` <span style="color:var(--text3);font-weight:400">|</span> 比分：${esc(cleanScore(score,winner))}`:''}</div>
       ${confNum?`<div class="vf-conf-row"><div class="vf-conf-bar"><div class="vf-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="vf-conf-text">准确度 ${confNum}/10</span></div>`:''}
     </div>`;
 

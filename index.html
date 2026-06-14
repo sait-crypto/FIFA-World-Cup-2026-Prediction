@@ -253,6 +253,8 @@ function updateThemeBtns(){
 
 // ═══ 工具函数 ═══
 function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
+/** 清理比分中 LLM 误加的胜方名前缀 */
+function cleanScore(score,winner){if(!score||!winner)return score||'';let s=score.trim();if(s.startsWith('胜'))s=s.slice(1).trim();const w=winner.trim();if(s.startsWith(w))s=s.slice(w.length).trim();if(s.startsWith('胜'))s=s.slice(1).trim();return s}
 function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t,teamB:p[1]?.split('（')[0]?.trim()||''}}
 function flagImgHtml(name){
   const url=IMAGES_DIR+encodeURIComponent(name)+'.webp';
@@ -541,16 +543,17 @@ function renderCard(m){
       const altScores=m.topPreds.filter(p=>p.score&&(p.winner!==m.winner||p.score!==m.score)).slice(0,3);
       if(altScores.length) topkHtml=`<div class="topk-row"><span class="topk-label">其它可能比分</span>${altScores.map(p=>{
         const pDraw=p.winner&&!p.winner.includes(teamA)&&!p.winner.includes(teamB);
-        const pLabel=pDraw?esc(p.winner):esc(p.winner)+' 胜';
+        const pLabel=esc(p.winner);
+        const pSuffix=pDraw?'':' 胜';
         let cls='topk-score';
         if(m.actualPredScore&&p.winner===m.actualWinner&&p.score===m.actualPredScore){
           cls+=' exact-match';
         }
-        return`<span class="${cls}">${pLabel} ${esc(p.score)}</span>`;
+        return`<span class="${cls}">${pLabel} ${esc(cleanScore(p.score,p.winner))}${pSuffix}</span>`;
       }).join('')}</div>`;
     }
     predHtml=`<div class="pred-row">
-      <span class="pred-score-group${m.scoreMatchRank===1?' pred-score-match':''}"><span class="pred-winner ${sc}">${winLabel}</span> <span class="pred-score">${esc(m.score)}</span></span>
+      <span class="pred-score-group${m.scoreMatchRank===1?' pred-score-match':''}"><span class="pred-winner ${sc}">${winLabel}</span> <span class="pred-score">${esc(cleanScore(m.score,m.winner))}</span></span>
       <span class="pred-conf-label">准确度</span>
       <span class="pred-conf-bar"><span class="pred-conf-fill ${cc}" style="width:${confPct}%"></span></span>
       <span class="pred-conf-text">${m.confidence}/10</span>
