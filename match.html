@@ -845,7 +845,7 @@ function renderPredictionHero(){
 
   // Top-N 预测列表（高亮真实比分匹配）
   const topPreds=DATA.top_predictions||[];
-  if(topPreds.length>1){
+  if(topPreds.length>0){
     // 计算真实比分（预测格式）
     let actualWinner=null,actualPredScore=null;
     if(REAL_RESULT){
@@ -1256,6 +1256,7 @@ function renderVerdict(){
     // ── 结构化分析（从仲裁者裁定中提取） ──
     let arbContent='';
     if(DATA.arbitrator_verdict?.content)arbContent=DATA.arbitrator_verdict.content;
+    else if(DATA.verdict?.content)arbContent=DATA.verdict.content;
     else{const pvs=DATA.phase_verdicts||[];for(let i=pvs.length-1;i>=0;i--){if(pvs[i].is_final&&pvs[i].content){arbContent=pvs[i].content;break}}}
     const structured=parseStructuredAnalysis(arbContent);
 
