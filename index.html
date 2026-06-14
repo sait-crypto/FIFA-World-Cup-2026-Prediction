@@ -82,7 +82,7 @@ a{color:var(--primary);text-decoration:none}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;align-items:start}
 
 /* ── Schedule Card ── */
-.sched-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .3s;text-decoration:none;color:var(--text);display:block;border-left:4px solid var(--text3);animation:card-in .5s ease both}
+.sched-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .3s;text-decoration:none;color:var(--text);display:block;border-left:4px solid var(--text3);animation:card-in .5s ease both;min-width:0;overflow:hidden}
 .sched-card:hover{transform:translateY(-4px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
 .sched-card.side-a{border-left-color:var(--side-a)}
 .sched-card.side-b{border-left-color:var(--side-b)}
@@ -125,7 +125,7 @@ a{color:var(--primary);text-decoration:none}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
 .pred-conf-text{font-size:11px;color:var(--text3);white-space:nowrap}
-.topk-row{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px}
+.topk-row{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;flex-wrap:wrap}
 .topk-label{color:var(--text3);white-space:nowrap}
 .topk-score{color:var(--text2);font-weight:600;padding:1px 5px;background:var(--primary-light);border-radius:3px}
 
@@ -236,10 +236,22 @@ function sideOf(agent,topic){
   if(!last)return'x';const w=last.winner||'';
   if(w.includes(teamA))return'a';if(w.includes(teamB))return'b';return'x';
 }
-function saveScrollPos(){sessionStorage.setItem(SCROLL_KEY,String(window.scrollY))}
+function saveScrollPos(cardEl){
+  // 保存卡片的文件标识而非像素位置，避免异步加载导致偏移
+  const href=cardEl?.getAttribute('href')||'';
+  sessionStorage.setItem(SCROLL_KEY,href);
+}
 function restoreScrollPos(){
-  const y=parseInt(sessionStorage.getItem(SCROLL_KEY)||'0');
-  if(y>0){setTimeout(()=>window.scrollTo(0,y),80);sessionStorage.removeItem(SCROLL_KEY)}
+  const saved=sessionStorage.getItem(SCROLL_KEY)||'';
+  if(!saved)return;
+  sessionStorage.removeItem(SCROLL_KEY);
+  // 延迟尝试查找目标卡片（等待异步加载完成）
+  const tryScroll=(attempt)=>{
+    const card=document.querySelector(`.sched-card[href="${CSS.escape(saved)}"]`);
+    if(card){card.scrollIntoView({behavior:'instant',block:'center'})}
+    else if(attempt<10){setTimeout(()=>tryScroll(attempt+1),300)}
+  };
+  setTimeout(()=>tryScroll(0),200);
 }
 
 // ═══ 数据提取 ═══
@@ -270,7 +282,6 @@ async function loadSchedule(){
   // 先渲染骨架
   const sk=buildSkeleton();
   container.innerHTML=sk.html;
-  restoreScrollPos();
   // Show today button if there are matches today
   const today=new Date().toLocaleDateString('sv-SE');
   const todayBtn=document.getElementById('today-btn');
@@ -290,6 +301,8 @@ async function loadSchedule(){
     if(!el.parentElement.querySelector('.sched-card'))el.textContent='等待最新数据，还未开始预测';
     else el.remove();
   });
+  // 所有卡片加载完毕后恢复滚动位置
+  restoreScrollPos();
 }
 
 function buildSkeleton(){
@@ -390,7 +403,7 @@ function renderCard(m){
   const cv=(m.city||'')+(m.venue&&m.venue!==m.city?' · '+m.venue:'');
 
   return`
-  <a class="sched-card ${sc}" href="${DETAIL_PAGE}?json=${encodeURIComponent(DATA_DIR+m.file)}" onclick="saveScrollPos()">
+  <a class="sched-card ${sc}" href="${DETAIL_PAGE}?json=${encodeURIComponent(DATA_DIR+m.file)}" onclick="saveScrollPos(this)">
     <div class="card-top">
       <span class="stage-tag">${esc(m.stage||m.matchId)}</span>
       <span style="display:flex;align-items:center;gap:6px;min-width:0">
