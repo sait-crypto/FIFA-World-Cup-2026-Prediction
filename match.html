@@ -145,6 +145,29 @@ a:hover{text-decoration:underline}
 .stance-chip.side-b{background:#e8f0fe;color:var(--side-b);border-color:var(--side-b)}
 .stance-chip.side-x{background:#fef9e7;color:#b8860b;border-color:var(--side-x)}
 
+/* ── Header Real Score (replaces VS) ── */
+.header-real-score{display:flex;flex-direction:column;align-items:center;flex-shrink:0;min-width:80px}
+.header-score-line{display:flex;align-items:center;gap:6px}
+.header-score-num{font-size:32px;font-weight:800;color:#fff;line-height:1}
+.header-score-sep{font-size:24px;font-weight:300;opacity:.5;line-height:1}
+.header-acc-info{text-align:center;margin-top:4px;line-height:1.4}
+.header-acc-line{font-size:10px;color:rgba(255,255,255,0.7);white-space:nowrap}
+.header-acc-line.rank-1{color:#4ade80;font-weight:700}
+.header-acc-line.no-match{color:#fca5a5;font-weight:600}
+.header-acc-line strong{font-weight:700}
+
+/* ── Top Prediction Highlight ── */
+.top-pred-item.exact-score-match{background:color-mix(in srgb,var(--green) 6%,var(--card));border:1px solid var(--green);border-radius:6px;padding:5px 8px!important}
+.top-pred-item.exact-score-match .top-pred-rank{color:var(--green)}
+.top-pred-item.exact-score-match .top-pred-score{color:var(--green);font-weight:700}
+
+/* ── Review Section ── */
+.review-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin:10px 0;border-left:4px solid var(--primary)}
+.review-content{font-size:15px;color:var(--text);line-height:1.8}
+.review-meta{margin-top:12px;font-size:12px;color:var(--text3);text-align:right}
+.review-agent-link{color:var(--primary);cursor:pointer;text-decoration:underline;font-weight:600}
+.review-agent-link:hover{color:var(--primary-dark)}
+
 /* ── Section ═══ */
 .section{padding:16px 0}
 .section-title{font-size:18px;font-weight:800;padding:12px 0 8px;border-bottom:2px solid var(--divider);cursor:default}
@@ -173,6 +196,7 @@ a:hover{text-decoration:underline}
 .wc-results-card{border-left:3px solid var(--accent,#f59e0b);background:color-mix(in srgb,var(--accent,#f59e0b) 5%,var(--card))}
 .wc-results-table td{font-size:12px;padding:2px 6px}
 .travel-card{border-left:3px solid #60a5fa;background:color-mix(in srgb,#60a5fa 5%,var(--card))}
+.pre-wc-mood-card{border-left:3px solid #c084fc;background:color-mix(in srgb,#c084fc 5%,var(--card))}
 .home-adv-card{border-left:3px solid #34d399;background:color-mix(in srgb,#34d399 5%,var(--card))}
 .record-header{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
 .team-flag-sm{width:22px;height:15px;border-radius:2px;object-fit:contain;border:none;background:none;vertical-align:middle}
@@ -284,6 +308,10 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 .structured-row{display:flex;align-items:flex-start;gap:8px}
 .structured-label{flex:0 0 6.8rem;font-weight:700;font-size:.85rem;color:var(--text);display:flex;align-items:center;gap:4px;white-space:nowrap;line-height:1.65}
 .structured-value{flex:1;min-width:0;font-size:.9rem;color:var(--text2);line-height:1.65;overflow-wrap:break-word}
+@media(max-width:560px){
+  .structured-row{flex-direction:column;gap:2px}
+  .structured-label{flex:none}
+}
 .structured-detail{display:none;padding:8px 0 0 0;margin-top:8px;border-top:1px solid var(--divider);font-size:.9rem;color:var(--text2);line-height:1.75;overflow-wrap:break-word;word-break:break-word}
 .structured-item.expanded .structured-detail{display:block}
 .structured-item .expand-hint{color:var(--text3);font-size:.7rem;margin-left:4px;transition:transform .2s}
@@ -370,6 +398,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
   <div class="container">
     <div class="prediction-hero" id="prediction-hero"></div>
     <div class="section" id="context-section"></div>
+    <div class="section" id="review-section"></div>
     <div class="section" id="analysts-section"></div>
     <div class="section" id="verdict-section"></div>
     <div class="section" id="evidence-section"></div>
@@ -411,6 +440,7 @@ const CONFIG = {
   JSON_FILE: 'data/2026-06-13加拿大_vs_波黑（小组赛）.json',
   VIEWER_FILE: 'debate_viewer.html',
   IMAGES_DIR: 'images/',
+  SHOW_GENERATED_AT: false,  // 是否显示预测复盘的生成时间
   AVATAR_IMAGES : {
     '智能体1': 'images/1.png',
     '智能体2': 'images/2.png',
@@ -429,9 +459,91 @@ const CONFIG = {
 
 // ═══════════════════════════════════════════════════════════
 
-let DATA = null, currentJsonFile = '';
+let DATA = null, currentJsonFile = '', REAL_RESULT = null;
 
-function loadJson(text){try{DATA=JSON.parse(text);render()}catch(e){alert('JSON error: '+e.message)}}
+function loadJson(text){try{DATA=JSON.parse(text);loadRealResult();render()}catch(e){alert('JSON error: '+e.message)}}
+
+function loadRealResult(){
+  REAL_RESULT=null;
+  if(!DATA)return;
+  const{teamA,teamB}=parseTopic(DATA.topic||'');
+  const rrPath='data/real_results.json';
+  fetch(rrPath+'?t='+Date.now()).then(r=>r.json()).then(d=>{
+    const matches=d.matches||{};
+    for(const key in matches){
+      const m=matches[key];
+      if(m.home_team===teamA&&m.away_team===teamB&&m.status==='已结束'){
+        REAL_RESULT=m;break;
+      }
+    }
+    if(REAL_RESULT){
+      updateHeroWithRealResult();
+      renderReview();
+    }
+  }).catch(()=>{});
+}
+
+function updateHeroWithRealResult(){
+  // 增量更新 header 的 VS 区域，替换为真实比分
+  const vsDivider=document.querySelector('.match-header .vs-divider');
+  if(!vsDivider||!REAL_RESULT)return;
+  const{teamA,teamB}=parseTopic(DATA.topic||'');
+  const hs=REAL_RESULT.home_score,as_=REAL_RESULT.away_score;
+  const fmt=actualToPredFormat(teamA,teamB,hs,as_);
+
+  // 计算匹配排名
+  let winnerMatchRank=null,scoreMatchRank=null;
+  const allPreds=DATA.top_predictions||[];
+  for(let i=0;i<allPreds.length;i++){
+    if(winnerMatchRank===null&&allPreds[i].winner===fmt.winner)winnerMatchRank=i+1;
+    if(scoreMatchRank===null&&allPreds[i].winner===fmt.winner&&allPreds[i].score===fmt.predScore)scoreMatchRank=i+1;
+  }
+  // 回退：无 top_predictions 时，检查 final_prediction / verdict 是否命中
+  if(!allPreds.length){
+    const fp=DATA.final_prediction||DATA.verdict;
+    if(fp){
+      if(fp.winner===fmt.winner)winnerMatchRank=1;
+      if(fp.winner===fmt.winner&&fp.score===fmt.predScore)scoreMatchRank=1;
+    }
+  }
+
+  let accLines='';
+  if(winnerMatchRank!==null){
+    const cls=winnerMatchRank===1?'rank-1':winnerMatchRank<=3?'':'no-match';
+    accLines+=`<div class="header-acc-line ${cls}"><strong>胜负</strong>匹配<strong>第${winnerMatchRank}可能</strong></div>`;
+  }else{accLines+=`<div class="header-acc-line no-match"><strong>胜负</strong>未命中</div>`}
+  if(scoreMatchRank!==null){
+    const cls=scoreMatchRank===1?'rank-1':scoreMatchRank<=3?'':'no-match';
+    accLines+=`<div class="header-acc-line ${cls}"><strong>比分</strong>匹配<strong>第${scoreMatchRank}可能</strong></div>`;
+  }else{accLines+=`<div class="header-acc-line no-match"><strong>比分</strong>未命中</div>`}
+
+  vsDivider.outerHTML=`<div class="header-real-score">
+    <div class="header-score-line">
+      <span class="header-score-num">${hs}</span>
+      <span class="header-score-sep">:</span>
+      <span class="header-score-num">${as_}</span>
+    </div>
+    <div class="header-acc-info">${accLines}</div>
+  </div>`;
+
+  // 高亮 top_predictions 中匹配的项
+  const heroEl=document.getElementById('prediction-hero');
+  if(!heroEl)return;
+  const topPredItems=heroEl.querySelectorAll('.top-pred-item');
+  topPredItems.forEach((item,i)=>{
+    if(!allPreds[i])return;
+    const p=allPreds[i];
+    if(p.winner===fmt.winner&&p.score===fmt.predScore){
+      item.classList.add('exact-score-match');
+    }
+  });
+}
+
+function actualToPredFormat(homeTeam,awayTeam,homeScore,awayScore){
+  if(homeScore>awayScore)return{winner:homeTeam,predScore:`${homeScore}-${awayScore}`};
+  if(awayScore>homeScore)return{winner:awayTeam,predScore:`${awayScore}-${homeScore}`};
+  return{winner:'平局',predScore:`${homeScore}-${awayScore}`};
+}
 
 const dropZone=document.getElementById('drop-zone'),fileInput=document.getElementById('file-input');
 dropZone.addEventListener('click',()=>fileInput.click());
@@ -537,8 +649,8 @@ function avatarHtml(name,idx,cls='analyst-avatar'){
 }
 
 function parseMatchContext(md){
-  if(!md)return{info:[],records:[],wcResults:[],travel:[],homeAdvantage:[]};
-  const lines=md.split('\n'),info=[],records=[],wcResults=[],travel=[],homeAdvantage=[];
+  if(!md)return{info:[],records:[],wcResults:[],travel:[],homeAdvantage:[],preWcMood:[]};
+  const lines=md.split('\n'),info=[],records=[],wcResults=[],travel=[],homeAdvantage=[],preWcMood=[];
   let cur=null,inR=false,sectionType='',skipSection=false;
   function push(){if(cur&&(cur.summary||cur.matches.length)){
     if(sectionType==='wc')wcResults.push(cur);else records.push(cur);
@@ -558,6 +670,8 @@ function parseMatchContext(md){
         cur={title,summary:'',matches:[]};inR=true;sectionType='record';
       }else if(title.includes('舟车劳顿')){
         sectionType='travel';inR=false;
+      }else if(title.includes('赛前心态')||title.includes('世界杯前状态')||title.includes('赛前状态')){
+        sectionType='preWcMood';inR=false;
       }else if(title.includes('主客场')){
         sectionType='homeAdvantage';inR=false;
       }else{
@@ -570,6 +684,7 @@ function parseMatchContext(md){
       const content=t.slice(2);
       if(inR&&cur)cur.matches.push(content);
       else if(sectionType==='travel')travel.push(content);
+      else if(sectionType==='preWcMood')preWcMood.push(content);
       else if(sectionType==='homeAdvantage')homeAdvantage.push(content);
       else info.push(content);
       continue;
@@ -577,11 +692,12 @@ function parseMatchContext(md){
     if(inR&&cur&&t.startsWith('总计')){cur.summary=t;continue}
     if(!inR&&!t.startsWith('#')){
       if(sectionType==='travel')travel.push(t);
+      else if(sectionType==='preWcMood')preWcMood.push(t);
       else if(sectionType==='homeAdvantage')homeAdvantage.push(t);
       else info.push(t);
     }
   }
-  push();return{info,records,wcResults,travel,homeAdvantage};
+  push();return{info,records,wcResults,travel,homeAdvantage,preWcMood};
 }
 
 function render(){
@@ -595,7 +711,7 @@ function render(){
     if(mb){mb.textContent=DATA.llm_model;mb.style.display='inline'}
   }
   // 逐步渲染各区块，边读边显示
-  const steps=[renderHeader,renderPredictionHero,renderContext,renderAnalysts,renderVerdict,renderEvidence,renderFooter];
+  const steps=[renderHeader,renderPredictionHero,renderContext,renderReview,renderAnalysts,renderVerdict,renderEvidence,renderFooter];
   let i=0;
   function nextStep(){
     if(i<steps.length){steps[i]();i++;requestAnimationFrame(nextStep)}
@@ -640,6 +756,37 @@ function renderHeader(){
   const venue=mm.venue||'',city=mm.city||'';
   if(city)metaParts.push(`<span style="opacity:0.7">${esc(city)}${venue?' · '+esc(venue):''}</span>`);
 
+  // 中间区域：真实比分 + 匹配 or VS
+  let middleHtml=`<div class="vs-divider"><div class="vs-text">VS</div></div>`;
+  if(REAL_RESULT){
+    const hs=REAL_RESULT.home_score,as_=REAL_RESULT.away_score;
+    const fmt=actualToPredFormat(teamA,teamB,hs,as_);
+    // 计算匹配排名
+    let winnerMatchRank=null,scoreMatchRank=null;
+    const allPreds=DATA.top_predictions||[];
+    for(let i=0;i<allPreds.length;i++){
+      if(winnerMatchRank===null&&allPreds[i].winner===fmt.winner)winnerMatchRank=i+1;
+      if(scoreMatchRank===null&&allPreds[i].winner===fmt.winner&&allPreds[i].score===fmt.predScore)scoreMatchRank=i+1;
+    }
+    let accLines='';
+    if(winnerMatchRank!==null){
+      const cls=winnerMatchRank===1?'rank-1':winnerMatchRank<=3?'':'no-match';
+      accLines+=`<div class="header-acc-line ${cls}"><strong>胜负</strong>匹配<strong>第${winnerMatchRank}可能</strong></div>`;
+    }else{accLines+=`<div class="header-acc-line no-match"><strong>胜负</strong>未命中</div>`}
+    if(scoreMatchRank!==null){
+      const cls=scoreMatchRank===1?'rank-1':scoreMatchRank<=3?'':'no-match';
+      accLines+=`<div class="header-acc-line ${cls}"><strong>比分</strong>匹配<strong>第${scoreMatchRank}可能</strong></div>`;
+    }else{accLines+=`<div class="header-acc-line no-match"><strong>比分</strong>未命中</div>`}
+    middleHtml=`<div class="header-real-score">
+      <div class="header-score-line">
+        <span class="header-score-num">${hs}</span>
+        <span class="header-score-sep">:</span>
+        <span class="header-score-num">${as_}</span>
+      </div>
+      <div class="header-acc-info">${accLines}</div>
+    </div>`;
+  }
+
   document.getElementById('match-header').innerHTML=`
     <div class="match-brand">AI DEBATE PREDICTION</div>
     ${metaParts.length?`<div class="match-meta">${metaParts.join('')}</div>`:''}
@@ -649,9 +796,7 @@ function renderHeader(){
         <div class="team-name">${esc(teamA)}</div>
         ${rankA?`<div class="team-rank">世界排名 ${rankA}</div>`:''}
       </div>
-      <div class="vs-divider">
-        <div class="vs-text">VS</div>
-      </div>
+      ${middleHtml}
       <div class="team-block">
         ${flagImgHtml(teamB)}
         <div class="team-name">${esc(teamB)}</div>
@@ -670,10 +815,7 @@ function renderPredictionHero(){
   const fp=DATA.final_prediction,confPct=fp?Math.round((fp.confidence||0)/10*100):0;
   const confClass=fp?.confidence>=7?'high':fp?.confidence>=4?'mid':'low';
 
-  // Label on its own line, centered
   let html=`<div class="pred-hero-label">最终预测</div>`;
-
-  // Main result centered
   html+=`<div class="pred-hero-main">`;
   if(fp){
     const winnerFlag=mediumFlagHtml(fp.winner);
@@ -701,16 +843,24 @@ function renderPredictionHero(){
   }
   html+='</div>';
 
-  // Top-N 预测列表（如果有多个）
+  // Top-N 预测列表（高亮真实比分匹配）
   const topPreds=DATA.top_predictions||[];
   if(topPreds.length>1){
+    // 计算真实比分（预测格式）
+    let actualWinner=null,actualPredScore=null;
+    if(REAL_RESULT){
+      const fmt=actualToPredFormat(teamA,teamB,REAL_RESULT.home_score,REAL_RESULT.away_score);
+      actualWinner=fmt.winner;actualPredScore=fmt.predScore;
+    }
     html+=`<div class="top-predictions">`;
     html+=`<div class="top-predictions-title">可能比分</div>`;
     topPreds.forEach((p,i)=>{
       const pConf=p.confidence||0;
       const pClass=pConf>=7?'high':pConf>=4?'mid':'low';
       const pPct=Math.round(pConf/10*100);
-      html+=`<div class="top-pred-item ${i===0?'top-pred-best':''}">
+      let itemCls=i===0?'top-pred-best':'';
+      if(actualWinner&&p.winner===actualWinner&&p.score===actualPredScore)itemCls+=' exact-score-match';
+      html+=`<div class="top-pred-item ${itemCls}">
         <span class="top-pred-rank">${i+1}.</span>
         <span class="top-pred-score">${smallFlagHtml(p.winner||'')} ${esc(p.winner)} ${esc(p.score)}${winSuffix(p.winner)}</span>
         <span class="top-pred-conf-label-text">准确度</span>
@@ -785,9 +935,31 @@ function buildRecordTable(rec){
   }
   return html+'</tbody></table>';
 }
+function renderReview(){
+  const el=document.getElementById('review-section');
+  if(!el)return;
+  if(!REAL_RESULT||!REAL_RESULT.review||!REAL_RESULT.review.content){el.innerHTML='';return}
+  const review=REAL_RESULT.review;
+  // 将智能体名字替换为可点击链接
+  let content=esc(review.content);
+  content=content.replace(/(智能体\d+)/g,'<a class="review-agent-link" onclick="jumpToAnalyst(\'$1\')">$1</a>');
+  // 粗体
+  content=content.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  // 换行
+  content=content.replace(/\n/g,'<br>');
+  let html=`<div class="section-title">预测复盘</div>`;
+  html+=`<div class="review-card">`;
+  html+=`<div class="review-content">${content}</div>`;
+  if(CONFIG.SHOW_GENERATED_AT&&review.generated_at){
+    html+=`<div class="review-meta" style="margin-top:8px;font-size:11px;color:var(--text3);text-align:right">生成时间：${esc(review.generated_at)}</div>`;
+  }
+  html+=`</div>`;
+  el.innerHTML=html;
+}
+
 function renderContext(){
   const ctx=parseMatchContext(DATA.match_context);
-  if(!ctx.info.length&&!ctx.records.length&&!ctx.wcResults.length&&!ctx.travel.length)return;
+  if(!ctx.info.length&&!ctx.records.length&&!ctx.wcResults.length&&!ctx.travel.length&&!ctx.preWcMood.length)return;
   const{teamA,teamB}=parseTopic(DATA.topic);
   let html=`<div class="section-title">比赛信息与战绩</div>`;
 
@@ -818,6 +990,13 @@ function renderContext(){
   if(ctx.travel.length){
     html+=`<div class="context-card travel-card"><h3>✈️ 舟车劳顿分析</h3>`;
     for(const item of ctx.travel)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
+    html+='</div>';
+  }
+
+  // 赛前心态分析
+  if(ctx.preWcMood.length){
+    html+=`<div class="context-card pre-wc-mood-card"><h3>🧠 赛前心态分析</h3>`;
+    for(const item of ctx.preWcMood)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
     html+='</div>';
   }
 
