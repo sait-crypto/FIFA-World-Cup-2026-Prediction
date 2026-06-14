@@ -1190,7 +1190,9 @@ function renderVerdict(){
     html+='<div class="phase-timeline">';
     const pn={1:'陈述',2:'自由质疑',3:'分配质疑'};
     for(const pv of DATA.phase_verdicts){
-      if(pv.is_final)continue; // 最终裁决在下方 ⚖️ 仲裁者裁定 区独立显示
+      // 若同一 phase 已有非 is_final 条目，说明 is_final 是重复的最终裁决，跳过
+      // 若同一 phase 仅有 is_final 条目（旧数据），它就是那次共识裁定，正常显示
+      if(pv.is_final && DATA.phase_verdicts.some(p=>p.phase===pv.phase&&!p.is_final))continue;
       // 优先使用精简版 arena_summary，回退到原文【理由】
       let desc='';
       if(pv.arena_summary){
@@ -1210,8 +1212,17 @@ function renderVerdict(){
     html+='</div>';
   }
 
-  if(DATA.arbitrator_verdict?.content){
-    const c=DATA.arbitrator_verdict.content;
+  // ── ⚖️ 仲裁者裁定：多源退化逻辑（新→旧） ──
+  // 1) arbitrator_verdict（新规范）2) verdict（旧字段）3) phase_verdicts 中 is_final 条目
+  let arbVerdict=DATA.arbitrator_verdict;
+  if(!arbVerdict?.content)arbVerdict=DATA.verdict;
+  if(!arbVerdict?.content){
+    const pvs=DATA.phase_verdicts||[];
+    for(let i=pvs.length-1;i>=0;i--){if(pvs[i].is_final&&pvs[i].content){arbVerdict=pvs[i];break}}
+  }
+
+  if(arbVerdict?.content){
+    const c=arbVerdict.content;
     const rm=c.match(/【理由】(.+?)(?=\n---|\n【预测】|$)/s);
     const pm=c.match(/【预测】(.+?)(?=\n【论点】|\n【引用】|$)/s);
 
@@ -1248,7 +1259,7 @@ function renderVerdict(){
     </div>`;
 
     // 裁定描述：优先使用精简版 arena_summary，回退到原文【理由】
-    const arbSummary=DATA.arbitrator_verdict?.arena_summary;
+    const arbSummary=arbVerdict.arena_summary;
     if(arbSummary){
       html+=`<div class="verdict-text" style="margin-top:8px">${renderRichText(arbSummary)}</div>`;
     }else if(rm){
@@ -1257,11 +1268,7 @@ function renderVerdict(){
     html+='</div>';
 
     // ── 结构化分析（从仲裁者裁定中提取） ──
-    let arbContent='';
-    if(DATA.arbitrator_verdict?.content)arbContent=DATA.arbitrator_verdict.content;
-    else if(DATA.verdict?.content)arbContent=DATA.verdict.content;
-    else{const pvs=DATA.phase_verdicts||[];for(let i=pvs.length-1;i>=0;i--){if(pvs[i].is_final&&pvs[i].content){arbContent=pvs[i].content;break}}}
-    const structured=parseStructuredAnalysis(arbContent);
+    const structured=parseStructuredAnalysis(arbVerdict.content);
 
     // 从 DATA.summary 提取关键共识/核心分歧/决定因素的完整内容（最全面的版本）
     const summaryFulls={};
@@ -1272,7 +1279,6 @@ function renderVerdict(){
         const sm=re.exec(DATA.summary.content);
         if(sm){
           let body=sm[1].trim();
-          // 去掉预测汇总行
           body=body.replace(/^胜方[：:].+$/m,'').replace(/^.*比分[：:].*准确度.*$/m,'').trim();
           if(body)summaryFulls[sLabel]=body;
         }
@@ -1283,7 +1289,6 @@ function renderVerdict(){
       html+='<div class="structured-grid">';
       for(let si=0;si<structured.length;si++){
         const item=structured[si];
-        // 关键共识/核心分歧/决定因素优先使用 summary 的完整内容
         let fullContent=item.full;
         if(summaryFulls[item.label])fullContent=summaryFulls[item.label];
         const canExpand=item.hasDetail||(fullContent&&fullContent.replace(/\n+/g,' ').replace(/\s+/g,' ')!==item.short);

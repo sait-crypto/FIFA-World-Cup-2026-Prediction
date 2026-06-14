@@ -255,6 +255,8 @@ function updateThemeBtns(){
 function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
 /** 清理比分中 LLM 误加的胜方名前缀 */
 function cleanScore(score,winner){if(!score||!winner)return score||'';let s=score.trim();if(s.startsWith('胜'))s=s.slice(1).trim();const w=winner.trim();if(s.startsWith(w))s=s.slice(w.length).trim();if(s.startsWith('胜'))s=s.slice(1).trim();return s}
+/** 点击统计数字时显示悬浮解释（移动端/无 hover 设备友好） */
+function showStatTooltip(el,ev){ev.stopPropagation();const tip=el.getAttribute('title');if(!tip)return;const old=document.querySelector('.stat-pop');if(old)old.remove();const pop=document.createElement('div');pop.className='stat-pop';pop.textContent=tip;pop.style.cssText='position:absolute;background:rgba(0,0,0,0.85);color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;max-width:260px;z-index:999;pointer-events:none;white-space:normal;line-height:1.5';document.body.appendChild(pop);const r=el.getBoundingClientRect();const pr=pop.getBoundingClientRect();pop.style.left=Math.max(4,r.left+window.scrollX+r.width/2-pr.width/2)+'px';pop.style.top=(r.top+window.scrollY-pr.height-6)+'px';setTimeout(()=>pop.remove(),2500)}
 function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t,teamB:p[1]?.split('（')[0]?.trim()||''}}
 function flagImgHtml(name){
   const url=IMAGES_DIR+encodeURIComponent(name)+'.webp';
@@ -490,9 +492,9 @@ function renderAccuracyStats(allCards){
   const pct1=withResult.length?Math.round(winnerCorrect/withResult.length*100):0;
   const pct2=withResult.length?Math.round(scoreHit/withResult.length*100):0;
   const statsHtml=`<div class="accuracy-stats">
-    <span class="accuracy-stat" title="预测声明的胜方与实际比赛胜方一致即算命中（如「德国 胜」vs 实际德国胜即命中）">胜负准确率 <strong>${winnerCorrect}/${withResult.length}</strong> (${pct1}%)</span>
-    <span class="accuracy-stat" title="预测的比分与实际比分完全一致（如预测「2-0」vs 实际「2-0」）即算命中；仅统计 top_predictions 中出现的比分">比分命中率 <strong>${scoreHit}/${withResult.length}</strong> (${pct2}%)</span>
-    <span class="accuracy-stat" title="综合评分（满分 10）：胜负正确 +5 分，比分命中 +3 分，进球差 ±1 内各 +1 分，总进球数相同 +1 分">综合评分 <strong>${totalScore}/${maxScore}</strong></span>
+    <span class="accuracy-stat" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中（如「德国 胜」vs 实际德国胜即命中）" onclick="showStatTooltip(this,event)">胜负准确率 <strong>${winnerCorrect}/${withResult.length}</strong> (${pct1}%)</span>
+    <span class="accuracy-stat" title="预测的比分与实际比分完全一致（如预测「2-0」vs 实际「2-0」）即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">比分命中率 <strong>${scoreHit}/${withResult.length}</strong> (${pct2}%)</span>
+    <span class="accuracy-stat" title="综合评分（满分 10）：胜负正确 +5 分，比分命中 +3 分，进球差 ±1 内各 +1 分，总进球数相同 +1 分" onclick="showStatTooltip(this,event)">综合评分 <strong>${totalScore}/${maxScore}</strong></span>
   </div>`;
   heroEl.insertAdjacentHTML('beforeend',statsHtml);
 }
