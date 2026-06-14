@@ -58,6 +58,7 @@ body{
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--scanline) 2px,var(--scanline) 4px)}
 
 #game{max-width:1200px;width:100%;height:820px;position:relative;overflow:hidden;background:var(--bg2);border:3px solid var(--border2)}
+@media(max-width:640px){#game{height:100dvh;max-height:820px}}
 
 /* Loading */
 #load-screen{position:absolute;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:var(--bg)}

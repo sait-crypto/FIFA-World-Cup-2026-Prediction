@@ -491,6 +491,10 @@ function initialPred(a){return a.prediction_history?.[0]||{}}
 function finalPred(a){return a.prediction_history?.[a.prediction_history.length-1]||{}}
 function hasChanged(a){return(a.prediction_history||[]).some((p,i)=>i>0&&p.changed)}
 function sideOf(a,t){const{teamA,teamB}=parseTopic(t);const f=finalPred(a);if(!f.winner)return'x';if(f.winner.includes(teamA))return'a';if(f.winner.includes(teamB))return'b';return'x'}
+/** 判断胜方是否为平局 */
+function isDraw(winner,t){const{teamA,teamB}=parseTopic(t||DATA.topic);return winner&&!winner.includes(teamA)&&!winner.includes(teamB)}
+/** 比分后缀：平局显示"平"，否则显示"胜" */
+function winSuffix(winner,t){return isDraw(winner,t)?' 平':' 胜'}
 
 /** 富文本渲染：**粗体**→<strong>，换行→<br>，- 分点→<li> */
 function renderRichText(text){
@@ -671,7 +675,7 @@ function renderPredictionHero(){
   html+=`<div class="pred-hero-main">`;
   if(fp){
     const winnerFlag=mediumFlagHtml(fp.winner);
-    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)} 胜</span></div>
+    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(fp.score)}${winSuffix(fp.winner)}</span></div>
     <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
   }
   html+=`</div>`;
@@ -691,7 +695,7 @@ function renderPredictionHero(){
   html+=`<div class="pred-hero-stance">`;
   for(const a of agents){
     const s=sideOf(a,DATA.topic),f=finalPred(a);
-    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')} ${esc(f.score||'')}胜</span>`;
+    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')} ${esc(f.score||'')}${f.winner?winSuffix(f.winner):''}</span>`;
   }
   html+='</div>';
 
@@ -706,7 +710,7 @@ function renderPredictionHero(){
       const pPct=Math.round(pConf/10*100);
       html+=`<div class="top-pred-item ${i===0?'top-pred-best':''}">
         <span class="top-pred-rank">${i+1}.</span>
-        <span class="top-pred-score">${smallFlagHtml(p.winner||'')} ${esc(p.winner)} ${esc(p.score)} 胜</span>
+        <span class="top-pred-score">${smallFlagHtml(p.winner||'')} ${esc(p.winner)} ${esc(p.score)}${winSuffix(p.winner)}</span>
         <span class="top-pred-conf-label-text">准确度</span>
         <div class="top-pred-conf-bar"><div class="top-pred-conf-fill ${pClass}" style="width:${pPct}%"></div></div>
         <span class="top-pred-conf-label">${pConf}/10</span>
@@ -770,7 +774,7 @@ function renderContext(){
           const pm=m.match(/^(\d{4}-\d{2}-\d{2})\s+vs\s+(.+?)(?:\s+-\s+(.+))?$/);
           if(pm){
             const[,date,opponent,stage]=pm;
-            html+=`<tr><td class="date-col">${date.slice(5)}</td><td>vs ${esc(opponent)}</td><td class="comp-col">${stage?esc(stage):''}</td></tr>`;
+            html+=`<tr><td class="date-col">${date}</td><td>vs ${esc(opponent)}</td><td class="comp-col">${stage?esc(stage):''}</td></tr>`;
           }else html+=`<tr><td colspan="3">${esc(m)}</td></tr>`;
         }
         html+='</tbody></table>';
@@ -793,51 +797,66 @@ function renderContext(){
     html+='</div>';
   }
 
-  // 历史战绩
-  for(const rec of ctx.records){
-    let teamTag='';
-    if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
-    html+='<div class="context-card">';
-    let summaryHtml='';
-    if(rec.summary){
-      // 独立解析胜平负（任意组合均可：4胜2平、3胜1负、2平等）
-      const wm=rec.summary.match(/(\d+)胜/);
-      const dm=rec.summary.match(/(\d+)平/);
-      const lm=rec.summary.match(/(\d+)负/);
-      const w=wm?parseInt(wm[1]):0;
-      const d=dm?parseInt(dm[1]):0;
-      const l=lm?parseInt(lm[1]):0;
-      const t=w+d+l;
-      if(t>0){
-        const wp=Math.round(w/t*100),dp=Math.round(d/t*100),lp=100-wp-dp;
-        const winSeg=w>0?`<span class="win-seg" style="width:${wp}%"></span>`:'';
-        const drawSeg=d>0?`<span class="draw-seg" style="width:${dp}%"></span>`:'';
-        const loseSeg=l>0?`<span class="lose-seg" style="width:${lp}%"></span>`:'';
-        const winText=w>0?`<span class="w">${w}胜</span>`:'';
-        const drawText=d>0?`<span class="d">${d}平</span>`:'';
-        const loseText=l>0?`<span class="l">${l}负</span>`:'';
-        summaryHtml=`<span class="record-summary">
-          <span class="record-summary-bar">${winSeg}${drawSeg}${loseSeg}</span>
-          <span class="record-summary-text">${winText}${drawText}${loseText}</span>
-        </span>`;
-      }else{
-        summaryHtml=`<span class="record-summary">${esc(rec.summary)}</span>`;
+  // 历史战绩（两队并排显示）
+  if(ctx.records.length>0){
+    const recA=ctx.records.find(r=>r.title.includes(teamA));
+    const recB=ctx.records.find(r=>r.title.includes(teamB));
+    const otherRecs=ctx.records.filter(r=>r!==recA&&r!==recB);
+    const pairs=[];
+    if(recA&&recB)pairs.push([recA,recB]);
+    else if(recA)pairs.push([recA,null]);
+    else if(recB)pairs.push([null,recB]);
+    for(const r of otherRecs)pairs.push([r,null]);
+
+    for(const[leftRec,rightRec] of pairs){
+      html+=`<div style="display:flex;gap:8px;align-items:flex-start">`;
+      for(const rec of [leftRec,rightRec]){
+        if(!rec){html+=`<div style="flex:1"></div>`;continue}
+        let teamTag='';
+        if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
+        html+=`<div class="context-card" style="flex:1;min-width:0">`;
+        let summaryHtml='';
+        if(rec.summary){
+          const wm=rec.summary.match(/(\d+)胜/);
+          const dm=rec.summary.match(/(\d+)平/);
+          const lm=rec.summary.match(/(\d+)负/);
+          const w=wm?parseInt(wm[1]):0;
+          const d=dm?parseInt(dm[1]):0;
+          const l=lm?parseInt(lm[1]):0;
+          const t=w+d+l;
+          if(t>0){
+            const wp=Math.round(w/t*100),dp=Math.round(d/t*100),lp=100-wp-dp;
+            const winSeg=w>0?`<span class="win-seg" style="width:${wp}%"></span>`:'';
+            const drawSeg=d>0?`<span class="draw-seg" style="width:${dp}%"></span>`:'';
+            const loseSeg=l>0?`<span class="lose-seg" style="width:${lp}%"></span>`:'';
+            const winText=w>0?`<span class="w">${w}胜</span>`:'';
+            const drawText=d>0?`<span class="d">${d}平</span>`:'';
+            const loseText=l>0?`<span class="l">${l}负</span>`:'';
+            summaryHtml=`<span class="record-summary">
+              <span class="record-summary-bar">${winSeg}${drawSeg}${loseSeg}</span>
+              <span class="record-summary-text">${winText}${drawText}${loseText}</span>
+            </span>`;
+          }else{
+            summaryHtml=`<span class="record-summary">${esc(rec.summary)}</span>`;
+          }
+        }
+        html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title)}${summaryHtml}</div>`;
+        if(rec.matches.length){
+          html+=`<table class="record-table"><thead><tr><th class="date-col">日期</th><th>对阵</th><th class="comp-col">赛事</th></tr></thead><tbody>`;
+          for(const m of rec.matches){
+            const pm=m.match(/^(\d{4}-\d{2}-\d{2})\s+(.+?)\s+(\d+-\d+)\s+(.+?)(?:\s+\((.+)\))?$/);
+            if(pm){
+              const[,date,teams,score,opp,comp]=pm;
+              const sp=score.split('-'),isW=parseInt(sp[0])>parseInt(sp[1]),isL=parseInt(sp[0])<parseInt(sp[1]);
+              html+=`<tr><td class="date-col">${date}</td><td>${esc(teams)} <span class="score-col ${isW?'win':isL?'lose':''}">${score}</span> ${esc(opp)}</td><td class="comp-col">${comp?esc(comp):''}</td></tr>`;
+            }else html+=`<tr><td colspan="3">${esc(m)}</td></tr>`;
+          }
+          html+='</tbody></table>';
+        }
+        html+='</div>';
       }
+      html+='</div>';
     }
-    html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title)}${summaryHtml}</div>`;
-    if(rec.matches.length){
-      html+=`<table class="record-table"><thead><tr><th class="date-col">日期</th><th>对阵</th><th class="comp-col">赛事</th></tr></thead><tbody>`;
-      for(const m of rec.matches){
-        const pm=m.match(/^(\d{4}-\d{2}-\d{2})\s+(.+?)\s+(\d+-\d+)\s+(.+?)(?:\s+\((.+)\))?$/);
-        if(pm){
-          const[,date,teams,score,opp,comp]=pm;
-          const sp=score.split('-'),isW=parseInt(sp[0])>parseInt(sp[1]),isL=parseInt(sp[0])<parseInt(sp[1]);
-          html+=`<tr><td class="date-col">${date.slice(5)}</td><td>${esc(teams)} <span class="score-col ${isW?'win':isL?'lose':''}">${score}</span> ${esc(opp)}</td><td class="comp-col">${comp?esc(comp):''}</td></tr>`;
-        }else html+=`<tr><td colspan="3">${esc(m)}</td></tr>`;
-      }
-      html+='</tbody></table>';
-    }
-    html+='</div>';
   }
   document.getElementById('context-section').innerHTML=html;
 }
@@ -934,7 +953,7 @@ function showAnalystModal(name){
     const entry=history[hi];
     if(!first)html+='<span class="chain-arrow">→</span>';
     const cls=first?'initial':(entry.changed?'changed':'');
-    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')} ${esc(entry.score||'')}胜 准${entry.confidence||''}</span>`;
+    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')} ${esc(entry.score||'')}${entry.winner?winSuffix(entry.winner):''} 准${entry.confidence||''}</span>`;
     first=false;
   }
   html+='</div>';
@@ -943,7 +962,7 @@ function showAnalystModal(name){
   for(let si=0;si<speeches.length;si++){
     const sp=speeches[si];
     const actionLabel=sp.action+(sp.target?` → ${esc(sp.target)}`:'')+(sp.counter?' ↩️反质疑':'');
-    const predLabel=sp.prediction||history[si]?.winner+' '+history[si]?.score+'胜 准'+history[si]?.confidence||'';
+    const predLabel=sp.prediction||history[si]?.winner+' '+history[si]?.score+(history[si]?.winner?winSuffix(history[si].winner):'')+' 准'+history[si]?.confidence||'';
     html+=`<div class="modal-speech" id="modal-speech-${si}">
       ${predLabel?`<div class="speech-opinion">${escAndBold(predLabel)}</div>`:''}
       <div class="speech-action">第${sp.round}轮 · ${esc(actionLabel)}</div>

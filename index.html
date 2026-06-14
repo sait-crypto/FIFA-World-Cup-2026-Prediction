@@ -382,12 +382,12 @@ function renderCard(m){
 
   let predHtml='';
   if(m.winner){
-    const winLabel=ws!=='x'?esc(m.winner)+' 胜':esc(m.winner);
+    const winLabel=ws!=='x'?esc(m.winner)+' 胜':esc(m.winner)+(m.score&&m.score.includes('-')?' 平':'');
     // Top-k alternative predictions
     let topkHtml='';
     if(m.topPreds&&m.topPreds.length){
       const altScores=m.topPreds.filter(p=>p.score&&(p.winner!==m.winner||p.score!==m.score)).slice(0,3);
-      if(altScores.length) topkHtml=`<div class="topk-row"><span class="topk-label">其它可能比分</span>${altScores.map(p=>`<span class="topk-score">${esc(p.winner)} ${esc(p.score)} 胜</span>`).join('')}</div>`;
+      if(altScores.length) topkHtml=`<div class="topk-row"><span class="topk-label">其它可能比分</span>${altScores.map(p=>{const isDraw=p.winner.includes(teamA)&&p.winner.includes(teamB)||(p.winner!=='')&&!p.winner.includes(teamA)&&!p.winner.includes(teamB);const label=isDraw?esc(p.winner)+' 平':esc(p.winner)+' 胜';return`<span class="topk-score">${label} ${esc(p.score)}</span>`}).join('')}</div>`;
     }
     predHtml=`<div class="pred-row">
       <span class="pred-winner ${sc}">${winLabel}</span>
