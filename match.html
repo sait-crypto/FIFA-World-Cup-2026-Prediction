@@ -145,6 +145,10 @@ a:hover{text-decoration:underline}
 .stance-chip.side-b{background:#e8f0fe;color:var(--side-b);border-color:var(--side-b)}
 .stance-chip.side-x{background:#fef9e7;color:#b8860b;border-color:var(--side-x)}
 
+/* ── Upset tag (white text, orange background, no border) ── */
+.upset-tag{font-size:10px;font-weight:700;text-align:center;border-radius:3px;padding:1px 6px;margin-bottom:3px;display:inline-block;line-height:1.4;color:#fff;border:none}
+.upset-major{background:#ea580c}
+.upset-minor{background:#f59e0b}
 /* ── Header Real Score (replaces VS) ── */
 .header-real-score{display:flex;flex-direction:column;align-items:center;flex-shrink:0;min-width:80px}
 .header-score-line{display:flex;align-items:center;gap:6px}
@@ -517,7 +521,14 @@ function updateHeroWithRealResult(){
     accLines+=`<div class="header-acc-line ${cls}"><strong>比分</strong>匹配<strong>第${scoreMatchRank}可能</strong></div>`;
   }else{accLines+=`<div class="header-acc-line no-match"><strong>比分</strong>未命中</div>`}
 
+  const upsetData=(REAL_RESULT.review||{}).upset;
+  let upsetTag='';
+  if(upsetData&&upsetData.level&&upsetData.level!=='正常'){
+    const uc=upsetData.level==='大爆冷'?'upset-major':'upset-minor';
+    upsetTag=`<div class="upset-tag ${uc}">${esc(upsetData.level)}</div>`;
+  }
   vsDivider.outerHTML=`<div class="header-real-score">
+    ${upsetTag}
     <div class="header-score-line">
       <span class="header-score-num">${hs}</span>
       <span class="header-score-sep">:</span>
@@ -704,6 +715,18 @@ function parseMatchContext(md){
   push();return{info,records,wcResults,travel,homeAdvantage,preWcMood};
 }
 
+function parseContextAnalysis(md){
+  if(!md)return[];
+  const items=[],lines=md.split('\n');
+  for(const line of lines){
+    const t=line.trim();if(!t)continue;
+    if(t.startsWith('## ')||t.startsWith('### '))continue;
+    if(t.startsWith('- '))items.push(t.slice(2));
+    else if(!t.startsWith('#'))items.push(t);
+  }
+  return items;
+}
+
 function render(){
   document.getElementById('load-screen').style.display='none';
   document.getElementById('main').style.display='block';
@@ -781,7 +804,14 @@ function renderHeader(){
       const cls=scoreMatchRank===1?'rank-1':scoreMatchRank<=3?'':'no-match';
       accLines+=`<div class="header-acc-line ${cls}"><strong>比分</strong>匹配<strong>第${scoreMatchRank}可能</strong></div>`;
     }else{accLines+=`<div class="header-acc-line no-match"><strong>比分</strong>未命中</div>`}
+    const upsetData2=(REAL_RESULT.review||{}).upset;
+    let upsetTag2='';
+    if(upsetData2&&upsetData2.level&&upsetData2.level!=='正常'){
+      const uc2=upsetData2.level==='大爆冷'?'upset-major':'upset-minor';
+      upsetTag2=`<div class="upset-tag ${uc2}">${esc(upsetData2.level)}</div>`;
+    }
     middleHtml=`<div class="header-real-score">
+      ${upsetTag2}
       <div class="header-score-line">
         <span class="header-score-num">${hs}</span>
         <span class="header-score-sep">:</span>
@@ -964,7 +994,12 @@ function renderReview(){
 
 function renderContext(){
   const ctx=parseMatchContext(DATA.match_context);
-  if(!ctx.info.length&&!ctx.records.length&&!ctx.wcResults.length&&!ctx.travel.length&&!ctx.preWcMood.length)return;
+  // 优先从 context_analyses 读取三个分析（新格式），parseMatchContext 结果作为回退（兼容旧 JSON）
+  const cas=DATA.context_analyses||{};
+  const travelItems=cas.travel?parseContextAnalysis(cas.travel):ctx.travel;
+  const moodItems=cas.pre_wc_mood?parseContextAnalysis(cas.pre_wc_mood):ctx.preWcMood;
+  const homeItems=cas.home_advantage?parseContextAnalysis(cas.home_advantage):ctx.homeAdvantage;
+  if(!ctx.info.length&&!ctx.records.length&&!ctx.wcResults.length&&!travelItems.length&&!moodItems.length)return;
   const{teamA,teamB}=parseTopic(DATA.topic);
   let html=`<div class="section-title">比赛信息与战绩</div>`;
 
@@ -992,23 +1027,23 @@ function renderContext(){
   }
 
   // 舟车劳顿分析
-  if(ctx.travel.length){
+  if(travelItems.length){
     html+=`<div class="context-card travel-card"><h3>✈️ 舟车劳顿分析</h3>`;
-    for(const item of ctx.travel)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
+    for(const item of travelItems)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
     html+='</div>';
   }
 
   // 赛前心态分析
-  if(ctx.preWcMood.length){
+  if(moodItems.length){
     html+=`<div class="context-card pre-wc-mood-card"><h3>🧠 赛前心态分析</h3>`;
-    for(const item of ctx.preWcMood)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
+    for(const item of moodItems)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
     html+='</div>';
   }
 
   // 主客场信息
-  if(ctx.homeAdvantage.length){
+  if(homeItems.length){
     html+=`<div class="context-card home-adv-card"><h3>🏟️ 主客场</h3>`;
-    for(const item of ctx.homeAdvantage)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
+    for(const item of homeItems)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
     html+='</div>';
   }
 

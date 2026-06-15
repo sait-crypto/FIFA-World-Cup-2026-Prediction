@@ -142,6 +142,10 @@ a{color:var(--primary);text-decoration:none}
 .real-score-sep{color:var(--text3);font-size:22px;margin:0 2px}
 .real-score.exact-match{border:2px solid var(--green);border-radius:8px;padding:2px 10px;background:color-mix(in srgb,var(--green) 6%,transparent)}
 
+/* Upset tag - above score, zero layout shift, white text on orange */
+.upset-tag{font-size:10px;font-weight:700;text-align:center;border-radius:3px;padding:1px 6px;margin-bottom:2px;display:inline-block;line-height:1.4;color:#fff;border:none}
+.upset-major{background:#ea580c}
+.upset-minor{background:#f59e0b}
 /* Accuracy Info - compact, between score and stance bar */
 .real-accuracy-info{text-align:center;line-height:1.4;margin-top:6px}
 .accuracy-line{font-size:10px;color:var(--text3);white-space:nowrap}
@@ -186,7 +190,7 @@ a{color:var(--primary);text-decoration:none}
 <body>
 
 <nav class="sticky-nav" id="sticky-nav">
-  <span class="nav-brand">AI Arena · 多AI辩论预测</span>
+  <span class="nav-brand">AI Arena · 多智能体辩论预测</span>
   <span class="nav-spacer"></span>
   <div class="nav-links" id="nav-links"></div>
   <div class="theme-btns" id="theme-btns">
@@ -313,9 +317,11 @@ function extractCardData(data,filename){
   const topPreds=(data.top_predictions||[]).slice(1,4);
   // 真实结果匹配
   const realResult=findRealResult(teamA,teamB,meta.date||'');
-  let realScore=null,actualWinner=null,actualPredScore=null,winnerMatchRank=null,scoreMatchRank=null;
+  let realScore=null,actualWinner=null,actualPredScore=null,winnerMatchRank=null,scoreMatchRank=null,upset=null;
   if(realResult){
     realScore=realResult.score_display;
+    const upsetData=(realResult.review||{}).upset;
+    if(upsetData&&upsetData.level&&upsetData.level!=='正常')upset=upsetData;
     const fmt=actualToPredFormat(teamA,teamB,realResult.home_score,realResult.away_score);
     actualWinner=fmt.winner;
     actualPredScore=fmt.predScore;
@@ -340,7 +346,7 @@ function extractCardData(data,filename){
     pctA:Math.round(cA/total*100),pctB:Math.round(cB/total*100),
     pctX:Math.max(0,100-Math.round(cA/total*100)-Math.round(cB/total*100)),
     consensus:data.consensus,topPreds,
-    realScore,actualWinner,actualPredScore,winnerMatchRank,scoreMatchRank};
+    realScore,actualWinner,actualPredScore,winnerMatchRank,scoreMatchRank,upset};
 }
 
 // ═══ 渲染 ═══
@@ -517,7 +523,13 @@ function renderCard(m){
   if(m.realScore){
     const parts=m.realScore.split('-');
     const isExact1=m.scoreMatchRank===1;
-    let scoreHtml=`<div class="real-score"><span class="real-score-num">${esc(parts[0]||'')}</span><span class="real-score-sep">:</span><span class="real-score-num">${esc(parts[1]||'')}</span></div>`;
+    // 爆冷标签（比分正上方，不移动比分位置）
+    let upsetHtml='';
+    if(m.upset){
+      const cls=m.upset.level==='大爆冷'?'upset-major':'upset-minor';
+      upsetHtml=`<div class="upset-tag ${cls}">${esc(m.upset.level)}</div>`;
+    }
+    let scoreHtml=`${upsetHtml}<div class="real-score"><span class="real-score-num">${esc(parts[0]||'')}</span><span class="real-score-sep">:</span><span class="real-score-num">${esc(parts[1]||'')}</span></div>`;
     // 准确度信息
     let lines='';
     if(m.winnerMatchRank!==null){
