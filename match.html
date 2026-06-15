@@ -611,6 +611,8 @@ function isDraw(winner,t){const{teamA,teamB}=parseTopic(t||DATA.topic);return wi
 function winSuffix(winner,t){return isDraw(winner,t)?'':' 胜'}
 /** 清理比分中 LLM 误加的胜方名前缀（如 "德国 2-1" → "2-1"） */
 function cleanScore(score,winner){if(!score||!winner)return score||'';let s=score.trim();if(s.startsWith('胜'))s=s.slice(1).trim();const w=winner.trim();if(s.startsWith(w))s=s.slice(w.length).trim();if(s.startsWith('胜'))s=s.slice(1).trim();return s}
+/** 将胜者优先比分转为主客场比分（用于卡片外部观点变化链） */
+function homeAwayScore(score,winner){if(!score||!winner)return score||'';const{teamA,teamB}=parseTopic(DATA.topic);if(isDraw(winner))return score;const parts=score.split('-');if(parts.length!==2)return score;if(winner.includes(teamA))return score;return parts[1].trim()+'-'+parts[0].trim()}
 
 /** 富文本渲染：**粗体**→<strong>，换行→<br>，- 分点→<li> */
 function renderRichText(text){
@@ -940,8 +942,9 @@ function buildRecordTable(rec){
 function renderReview(){
   const el=document.getElementById('review-section');
   if(!el)return;
-  if(!REAL_RESULT||!REAL_RESULT.review||!REAL_RESULT.review.content){el.innerHTML='';return}
-  const review=REAL_RESULT.review;
+  // review 现在存储在各 match JSON 中（不再在 real_results.json）
+  const review=(DATA&&DATA.review)||(REAL_RESULT&&REAL_RESULT.review)||null;
+  if(!review||!review.content){el.innerHTML='';return}
   // 将智能体名字替换为可点击链接
   let content=esc(review.content);
   content=content.replace(/(智能体\d+)/g,'<a class="review-agent-link" onclick="jumpToAnalyst(\'$1\')">$1</a>');
@@ -1060,7 +1063,7 @@ function renderAnalysts(){
     const summary=profile.core_view||profile.initial||firstSummaries[a.name]||'';
 
     const curWinner=final.winner||'',curScore=cleanScore(final.score||'',final.winner),curConf=final.confidence||0;
-    const opinionStr=`${curWinner} ${curScore} 胜`;
+    const opinionStr=`${curWinner} ${curScore}${isDraw(curWinner)?'':' 胜'}`;
     const opinionSideCls=s==='a'?'side-a':s==='b'?'side-b':'side-x';
 
     let chainHtml='';
@@ -1070,11 +1073,11 @@ function renderAnalysts(){
       history.forEach((entry,hi)=>{
         if(hi>0)chainHtml+='<span class="chain-arrow">→</span>';
         const cls=hi===0?'initial':(entry.changed?'changed':'');
-        chainHtml+=`<span class="chain-node ${cls}">${esc(cleanScore(entry.score||'',entry.winner))}准${entry.confidence||''}</span>`;
+        chainHtml+=`<span class="chain-node ${cls}">${esc(homeAwayScore(cleanScore(entry.score||'',entry.winner),entry.winner))}准${entry.confidence||''}</span>`;
       });
       chainHtml+='</div>';
     }else if(history.length===1){
-      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(cleanScore(history[0].score||'',history[0].winner))}准${history[0].confidence||''}</span></div>`;
+      chainHtml=`<div class="analyst-pred-chain"><span class="chain-node initial">${esc(homeAwayScore(cleanScore(history[0].score||'',history[0].winner),history[0].winner))}准${history[0].confidence||''}</span></div>`;
     }
 
     html+=`<div class="analyst-card ${sideCls}" data-name="${esc(a.name)}" onclick="showAnalystModal('${esc(a.name)}')">

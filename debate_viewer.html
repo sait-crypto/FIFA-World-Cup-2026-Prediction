@@ -799,7 +799,7 @@ function updateAvatarHP(name){
   fill.style.width=(pred.confidence*10)+'%';fill.style.background='#fff';
   setTimeout(()=>{fill.style.background=hpC},300);
   const label=av.el.querySelector('.hp-label');
-  label.textContent=`${pred.winner} ${cleanScore(pred.score,pred.winner)} 胜`;label.style.color=pC;
+  label.textContent=`${pred.winner} ${cleanScore(pred.score,pred.winner)}${winSuffixDV(pred.winner)}`;label.style.color=pC;
 }
 
 function updateDuelAvatarHP(name){
@@ -809,7 +809,7 @@ function updateDuelAvatarHP(name){
   const hf=document.getElementById(isL?'dl-hp':'dr-hp');
   const pl=document.getElementById(isL?'dl-pred':'dr-pred');
   if(hf){hf.style.width=(pred.confidence*10)+'%';hf.style.background='#fff';setTimeout(()=>{hf.style.background=hpC},300)}
-  if(pl){pl.textContent=`${pred.winner} ${cleanScore(pred.score,pred.winner)} 胜 准${pred.confidence}/10`;pl.style.color=pC}
+  if(pl){pl.textContent=`${pred.winner} ${cleanScore(pred.score,pred.winner)}${winSuffixDV(pred.winner)} 准${pred.confidence}/10`;pl.style.color=pC}
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -871,7 +871,7 @@ function fillDuelAvatar(side,name){
   document.getElementById(side+'-name').style.color=color;
   document.getElementById(side+'-name').textContent=name;
   document.getElementById(side+'-persp').textContent=av?(DATA.agents[idx]?.perspective_short||''):'';
-  const pl=document.getElementById(side+'-pred');pl.textContent=pred?`${pred.winner} ${cleanScore(pred.score,pred.winner)} 胜 准${pred.confidence}/10`:'';pl.style.color=pC;
+  const pl=document.getElementById(side+'-pred');pl.textContent=pred?`${pred.winner} ${cleanScore(pred.score,pred.winner)}${winSuffixDV(pred.winner)} 准${pred.confidence}/10`:'';pl.style.color=pC;
   const hf=document.getElementById(side+'-hp');hf.style.width=pred?(pred.confidence*10)+'%':'0%';hf.style.background=hpC;
 }
 
@@ -1220,8 +1220,8 @@ function addLogRow(msg,predChanged){
   let tag=msg.action||'立场';
   if(msg.counter_challenge&&msg.action==='回应')tag='↩️反质疑';else if(msg.action==='质疑')tag='⚔️质疑';else if(msg.action==='回应')tag='🛡️回应';else tag='📝'+tag;
   const sp=predMap[msg.speaker],tp=predMap[msg.target||''];
-  const spStr=sp?`${sp.winner} ${cleanScore(sp.score,sp.winner)}胜 准${sp.confidence}`:'';
-  const tpStr=tp?`${tp.winner} ${cleanScore(tp.score,tp.winner)}胜 准${tp.confidence}`:'';
+  const spStr=sp?`${sp.winner} ${cleanScore(sp.score,sp.winner)}${winSuffixDV(sp.winner)} 准${sp.confidence}`:'';
+  const tpStr=tp?`${tp.winner} ${cleanScore(tp.score,tp.winner)}${winSuffixDV(tp.winner)} 准${tp.confidence}`:'';
   const targetInfo=msg.target?`→${msg.target}${tpStr?'('+tpStr+')':''}`:'';
   const speakerPred=spStr?`(${spStr})`:'';
   const changedMark=predChanged?'⚡':'';
@@ -1753,13 +1753,13 @@ function showVictoryScreen(){
   playSound('victory');
   const sides={};DATA.agents.forEach(agent=>{const hist=agent.prediction_history;const last=hist&&hist.length>0?hist[hist.length-1]:null;if(last){const key=last.winner;if(!sides[key])sides[key]={winner:last.winner,score:last.score,color:resolveSideColor(last.winner),agents:[]};sides[key].agents.push(agent)}});
   const sideList=Object.values(sides).sort((a,b)=>b.agents.length-a.agents.length);const winner=sideList[0];if(!winner)return;
-  const vPred=document.getElementById('v-pred');vPred.textContent=`${winner.winner} ${cleanScore(winner.score,winner.winner)} 胜`;vPred.style.color=winner.color;
+  const vPred=document.getElementById('v-pred');vPred.textContent=`${winner.winner} ${cleanScore(winner.score,winner.winner)}${winSuffixDV(winner.winner)}`;vPred.style.color=winner.color;
   const vSides=document.getElementById('v-sides');vSides.innerHTML='';
-  sideList.forEach(s=>{const sDiv=document.createElement('div');sDiv.className='vside';const sLabel=document.createElement('div');sLabel.className='vside-label';sLabel.style.color=s.color;sLabel.style.borderColor=s.color;sLabel.textContent=`${s.winner} ${cleanScore(s.score,s.winner)} 胜（${s.agents.length}人）`;sDiv.appendChild(sLabel);
+  sideList.forEach(s=>{const sDiv=document.createElement('div');sDiv.className='vside';const sLabel=document.createElement('div');sLabel.className='vside-label';sLabel.style.color=s.color;sLabel.style.borderColor=s.color;sLabel.textContent=`${s.winner} ${cleanScore(s.score,s.winner)}${winSuffixDV(s.winner)}（${s.agents.length}人）`;sDiv.appendChild(sLabel);
   const aDiv=document.createElement('div');aDiv.className='vagents';
   s.agents.forEach(agent=>{const idx=DATA.agents.indexOf(agent);const color=COLORS_HEX[idx%COLORS_HEX.length];const last=agent.prediction_history?.[agent.prediction_history.length-1];
     const img=AVATAR_IMAGES[agent.name];const spriteStyle=img?`border-color:${color};background-image:url('${img}')`:`border-color:${color};background:${color}22`;const spriteInner=img?'':`<span style="color:${color}">${idx+1}</span>`;
-    const d=document.createElement('div');d.className='vagent';d.innerHTML=`<div class="sprite" style="${spriteStyle}">${spriteInner}</div><div class="vaname" style="color:${color}">${agent.name}</div><div class="vavpred" style="color:${s.color}">${last?last.winner+' '+cleanScore(last.score,last.winner)+' 胜':''}</div>`;aDiv.appendChild(d)});
+    const d=document.createElement('div');d.className='vagent';d.innerHTML=`<div class="sprite" style="${spriteStyle}">${spriteInner}</div><div class="vaname" style="color:${color}">${agent.name}</div><div class="vavpred" style="color:${s.color}">${last?last.winner+' '+cleanScore(last.score,last.winner)+winSuffixDV(last.winner):''}</div>`;aDiv.appendChild(d)});
   sDiv.appendChild(aDiv);vSides.appendChild(sDiv)});
   // Top-N 预测 — 追加到 victory-screen（独立一行，不在 vsides 内）
   const topPreds=DATA.top_predictions||[];
@@ -1769,7 +1769,7 @@ function showVictoryScreen(){
     tpDiv.appendChild(tpTitle);
     topPreds.forEach((p,i)=>{
       const item=document.createElement('div');item.className='vtopn-item'+(i===0?' vtopn-best':'');
-      item.innerHTML=`<span class="vtopn-rank">#${i+1}</span><span class="vtopn-score">${escapeHtml(p.winner)} ${escapeHtml(cleanScore(p.score,p.winner))} 胜</span><span class="vtopn-conf">${p.confidence||0}/10</span>`;
+      item.innerHTML=`<span class="vtopn-rank">#${i+1}</span><span class="vtopn-score">${escapeHtml(p.winner)} ${escapeHtml(cleanScore(p.score,p.winner))}${winSuffixDV(p.winner)}</span><span class="vtopn-conf">${p.confidence||0}/10</span>`;
       tpDiv.appendChild(item);
     });
     document.getElementById('victory-screen').appendChild(tpDiv);
@@ -1836,6 +1836,12 @@ function dismissArbBubbleAndShowTrophy(){
 function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
 function attrEscape(t){return t.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function truncateHtml(html,max){const text=html.replace(/<[^>]+>/g,'');if(text.length<=max)return html;let r='',l=0,inTag=false;for(let i=0;i<html.length&&l<max;i++){const c=html[i];if(c==='<')inTag=true;r+=c;if(!inTag)l++;if(c==='>')inTag=false}return r+'...'}
+/** 解析比赛标题获取主客队名 */
+function parseTopic(t){const m=(t||DATA.topic||'').match(/^(.+?)\s*(?:vs|VS|对阵| Versus )\s*(.+?)(?:[（(]|$)/);if(m)return{teamA:m[1].trim(),teamB:m[2].trim()};return{teamA:'',teamB:''}}
+/** 判断胜方是否为平局 */
+function isDraw(winner){const{teamA,teamB}=parseTopic();return winner&&!winner.includes(teamA)&&!winner.includes(teamB)}
+/** 胜方后缀：平局无后缀，否则显示"胜" */
+function winSuffixDV(winner){return isDraw(winner)?'':' 胜'}
 /** 清理比分中 LLM 误加的胜方名前缀 */
 function cleanScore(score,winner){if(!score||!winner)return score||'';let s=score.trim();if(s.startsWith('胜'))s=s.slice(1).trim();const w=winner.trim();if(s.startsWith(w))s=s.slice(w.length).trim();if(s.startsWith('胜'))s=s.slice(1).trim();return s}
 
