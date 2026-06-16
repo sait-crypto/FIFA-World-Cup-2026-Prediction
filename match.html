@@ -573,8 +573,9 @@ function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t
 
 function parseStructuredAnalysis(content){
   if(!content)return[];
-  const labels=['实力对比','近期状态','攻防分析','场地因素','关键共识','核心分歧','决定因素'];
-  const emojiMap={'实力对比':'⚖️','近期状态':'📈','攻防分析':'⚽','场地因素':'🏟️','关键共识':'🤝','核心分歧':'⚡','决定因素':'🎯'};
+  const labels=['实力对比','攻防分析','场地因素','近期状态','关键共识','核心分歧','决定因素'];
+  //const emojiMap={'实力对比':'⚖️','近期状态':'📈','攻防分析':'⚽','场地因素':'🏟️','关键共识':'🤝','核心分歧':'⚡','决定因素':'🎯'};
+  const emojiMap={'实力对比':'🆚','近期状态':'📈','攻防分析':'📊','场地因素':'⚽️','关键共识':'🤝','核心分歧':'⚡','决定因素':'🎯'};
   const withDetail=['关键共识','核心分歧','决定因素']; // 有·简/·详格式的条目
   const results=[];
   for(const label of labels){
