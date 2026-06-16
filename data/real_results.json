@@ -1565,10 +1565,358 @@
         "generated_at": "2026-06-16T04:47:38.611680",
         "content": ""
       }
+    },
+    "2026-06-16_伊朗_vs_新西兰": {
+      "date": "2026-06-16",
+      "home_team": "伊朗",
+      "away_team": "新西兰",
+      "home_score": 2,
+      "away_score": 2,
+      "score_display": "2-2",
+      "match_stage": "小组赛G组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "64'",
+            "team": "伊朗",
+            "type": "进球",
+            "player": "莫赫比",
+            "description": "第4个进球 - 莫赫比(伊朗) - 头球 (助攻: 雷扎伊安)"
+          },
+          {
+            "time": "55'",
+            "team": "新西兰",
+            "type": "进球",
+            "player": "贾斯特",
+            "description": "第3个进球 - 贾斯特(新西兰) - 射门 (助攻: 伍德)"
+          },
+          {
+            "time": "33'",
+            "team": "伊朗",
+            "type": "进球",
+            "player": "雷扎伊安",
+            "description": "第2个进球 - 雷扎伊安(伊朗) - 射门"
+          },
+          {
+            "time": "7'",
+            "team": "新西兰",
+            "type": "进球",
+            "player": "贾斯特",
+            "description": "第1个进球！Goooooooal！贾斯特(新西兰 射门 (助攻: 伍德))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "64'",
+              "team": "伊朗",
+              "player": "莫赫比"
+            },
+            {
+              "time": "55'",
+              "team": "新西兰",
+              "player": "贾斯特"
+            },
+            {
+              "time": "33'",
+              "team": "伊朗",
+              "player": "雷扎伊安"
+            },
+            {
+              "time": "7'",
+              "team": "新西兰",
+              "player": "贾斯特"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 5,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 48,
+            "right": 52
+          },
+          {
+            "title": "进攻",
+            "left": 96,
+            "right": 101
+          },
+          {
+            "title": "危险进攻",
+            "left": 56,
+            "right": 44
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 8
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "伊朗排名20远高于新西兰的85，赛前一致预测伊朗胜（置信度7/10），但最终被排名低65位的新西兰2-2逼平，且新西兰射正数（8）和危险进攻（44）均占优，属于明显冷门。"
+        },
+        "generated_at": "2026-06-16T18:50:45.285056",
+        "content": ""
+      }
+    },
+    "2026-06-16_比利时_vs_埃及": {
+      "date": "2026-06-16",
+      "home_team": "比利时",
+      "away_team": "埃及",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛G组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "66'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "哈尼",
+            "description": "第2个进球 - 哈尼(比利时) - 乌龙球"
+          },
+          {
+            "time": "20'",
+            "team": "埃及",
+            "type": "进球",
+            "player": "阿舒尔",
+            "description": "第1个进球！Goooooooal！阿舒尔(埃及 射门 (助攻: 萨拉赫))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "66'",
+              "team": "比利时",
+              "player": "哈尼"
+            },
+            {
+              "time": "20'",
+              "team": "埃及",
+              "player": "阿舒尔"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 9,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 54,
+            "right": 46
+          },
+          {
+            "title": "进攻",
+            "left": 119,
+            "right": 77
+          },
+          {
+            "title": "危险进攻",
+            "left": 64,
+            "right": 33
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 7,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 7
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "世界排名第9的比利时被排名第29的埃及1-1逼平，赛前预测比利时胜出为主，且比利时在控球率、进攻和危险进攻上占优，但未能取胜，属于爆冷。"
+        },
+        "generated_at": "2026-06-16T18:50:30.255078",
+        "content": ""
+      }
+    },
+    "2026-06-16_沙特阿拉伯_vs_乌拉圭": {
+      "date": "2026-06-16",
+      "home_team": "沙特阿拉伯",
+      "away_team": "乌拉圭",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛H组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "80'",
+            "team": "乌拉圭",
+            "type": "进球",
+            "player": "阿劳霍",
+            "description": "第2个进球 - M.阿劳霍(乌拉圭) - 射门"
+          },
+          {
+            "time": "41'",
+            "team": "沙特阿拉伯",
+            "type": "进球",
+            "player": "阿姆里",
+            "description": "第1个进球！球进啦！阿姆里(沙特阿拉伯 射门)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "80'",
+              "team": "乌拉圭",
+              "player": "阿劳霍"
+            },
+            {
+              "time": "41'",
+              "team": "沙特阿拉伯",
+              "player": "阿姆里"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 18,
+          "越位": 6
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 33,
+            "right": 67
+          },
+          {
+            "title": "进攻",
+            "left": 75,
+            "right": 145
+          },
+          {
+            "title": "危险进攻",
+            "left": 27,
+            "right": 79
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 10
+          },
+          {
+            "title": "射偏",
+            "left": 3,
+            "right": 10
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 14
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "世界排名第61的沙特阿拉伯逼平第16的乌拉圭，赛前预测乌拉圭胜出，且乌拉圭在控球率（67%）、射正（10-3）等数据上全面占优却未能取胜。"
+        },
+        "generated_at": "2026-06-16T18:50:37.854335",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-16T04:48:31.535622",
-    "total_matches": 13
+    "last_updated": "2026-06-16T18:50:51.826284",
+    "total_matches": 16
   }
 }
