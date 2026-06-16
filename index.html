@@ -473,7 +473,7 @@ function renderAccuracyStats(allCards){
   for(const m of withResult){
     if(m.scoreMatchRank!==null)scoreHit++;
   }
-  // 综合评分
+  // 预测总评分
   let totalScore=0,maxScore=0;
   for(const m of withResult){
     maxScore+=10;
@@ -493,14 +493,26 @@ function renderAccuracyStats(allCards){
       }
     }
   }
+  // 赛事爆冷率：从 real_results.json 读取，review.upset.level 为「爆冷」或「大爆冷」
+  let upsetTotal=0,upsetCount=0;
+  if(REAL_DATA&&REAL_DATA.matches){
+    const matches=Object.values(REAL_DATA.matches);
+    upsetTotal=matches.filter(m=>m.status==='已结束').length;
+    upsetCount=matches.filter(m=>{
+      const u=m.review&&m.review.upset;
+      return u&&(u.level==='爆冷'||u.level==='大爆冷');
+    }).length;
+  }
   const heroEl=document.getElementById('hero-header');
   if(!heroEl)return;
   const pct1=withResult.length?Math.round(winnerCorrect/withResult.length*100):0;
   const pct2=withResult.length?Math.round(scoreHit/withResult.length*100):0;
+  const pct3=upsetTotal?Math.round(upsetCount/upsetTotal*100):0;
   const statsHtml=`<div class="accuracy-stats">
     <span class="accuracy-stat" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中（如「德国 胜」vs 实际德国胜即命中）" onclick="showStatTooltip(this,event)">胜负准确率 <strong>${pct1}%</strong></span>
     <span class="accuracy-stat" title="预测的比分与实际比分完全一致（如预测「2-0」vs 实际「2-0」）即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">比分命中率 <strong>${pct2}%</strong></span>
-    <span class="accuracy-stat" title="综合评分（满分 10）：胜负正确 +5 分，比分命中 +3 分，进球差 ±1 内各 +1 分，总进球数相同 +1 分" onclick="showStatTooltip(this,event)">综合评分 <strong>${totalScore}/${maxScore}</strong></span>
+    <span class="accuracy-stat" title="预测总评分（满分 10）：胜负正确 +4 分，比分命中 +3 分，进球差 ±1 内各 +1 分，总进球数相同 +1 分" onclick="showStatTooltip(this,event)">预测总评分 <strong>${totalScore}/${maxScore}</strong></span>
+    <span class="accuracy-stat" title="截止最新数据更新，本届世界杯已结束比赛中，标记为「爆冷」或「大爆冷」的比赛所占比例（基于赛前赔率与实力对比的客观评估，与本网页预测无关）" onclick="showStatTooltip(this,event)">赛事爆冷率 <strong>${pct3}%</strong></span>
   </div>`;
   heroEl.insertAdjacentHTML('beforeend',statsHtml);
 }
