@@ -257,8 +257,8 @@ function updateThemeBtns(){
 
 // ═══ 工具函数 ═══
 function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
-/** 清理比分中 LLM 误加的胜方名前缀 */
-function cleanScore(score,winner){if(!score||!winner)return score||'';let s=score.trim();if(s.startsWith('胜'))s=s.slice(1).trim();const w=winner.trim();if(s.startsWith(w))s=s.slice(w.length).trim();if(s.startsWith('胜'))s=s.slice(1).trim();return s}
+/** 最小兼容清洗：数据已标准化，仅去除可能的残留前缀 */
+function cleanScore(score,winner){if(!score)return'';let s=score.trim();if(s.endsWith(' 胜'))s=s.slice(0,-2);else if(s.endsWith('胜'))s=s.slice(0,-1);if(s.startsWith('胜 '))s=s.slice(2);if(winner&&s.startsWith(winner+' '))s=s.slice(winner.length+1);s=s.replace(/^(\d+-\d+)\s+\S+$/,'$1');return s.trim()}
 /** 点击统计数字时显示悬浮解释（移动端/无 hover 设备友好） */
 function showStatTooltip(el,ev){ev.stopPropagation();const tip=el.getAttribute('title');if(!tip)return;const old=document.querySelector('.stat-pop');if(old)old.remove();const pop=document.createElement('div');pop.className='stat-pop';pop.textContent=tip;pop.style.cssText='position:absolute;background:rgba(0,0,0,0.85);color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;max-width:260px;z-index:999;pointer-events:none;white-space:normal;line-height:1.5';document.body.appendChild(pop);const r=el.getBoundingClientRect();const pr=pop.getBoundingClientRect();pop.style.left=Math.max(4,r.left+window.scrollX+r.width/2-pr.width/2)+'px';pop.style.top=(r.top+window.scrollY-pr.height-6)+'px';setTimeout(()=>pop.remove(),2500)}
 function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t,teamB:p[1]?.split('（')[0]?.trim()||''}}

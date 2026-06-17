@@ -620,11 +620,11 @@ function sideOf(a,t){const{teamA,teamB}=parseTopic(t);const f=finalPred(a);if(!f
 /** 判断胜方是否为平局 */
 function isDraw(winner,t){const{teamA,teamB}=parseTopic(t||DATA.topic);return winner&&!winner.includes(teamA)&&!winner.includes(teamB)}
 /** 比分后缀：平局无后缀，否则显示"胜" */
-function winSuffix(winner,t){return isDraw(winner,t)?'':' 胜'}
-/** 清理比分中 LLM 误加的胜方名前缀（如 "德国 2-1" → "2-1"） */
-function cleanScore(score,winner){if(!score||!winner)return score||'';let s=score.trim();if(s.startsWith('胜'))s=s.slice(1).trim();const w=winner.trim();if(s.startsWith(w))s=s.slice(w.length).trim();if(s.startsWith('胜'))s=s.slice(1).trim();return s}
-/** 将胜者优先比分转为主客场比分（用于卡片外部观点变化链） */
-function homeAwayScore(score,winner){if(!score||!winner)return score||'';const{teamA,teamB}=parseTopic(DATA.topic);if(isDraw(winner))return score;const parts=score.split('-');if(parts.length!==2)return score;if(winner.includes(teamA))return score;return parts[1].trim()+'-'+parts[0].trim()}
+function winSuffix(winner){return (!winner||winner==='平局')?'':' 胜'}
+/** 清理比分中可能的残留前缀（数据已标准化，此函数仅做最小兼容清洗） */
+function cleanScore(score,winner){if(!score)return'';let s=score.trim();if(s.endsWith(' 胜'))s=s.slice(0,-2);else if(s.endsWith('胜'))s=s.slice(0,-1);if(s.startsWith('胜 '))s=s.slice(2);if(winner&&s.startsWith(winner+' '))s=s.slice(winner.length+1);s=s.replace(/^(\d+-\d+)\s+\S+$/,'$1');return s.trim()}
+/** 将胜者优先比分转为主客场比分 */
+function homeAwayScore(score,winner){if(!score||!winner||isDraw(winner))return score||'';const{teamA,teamB}=parseTopic(DATA.topic);const parts=score.split('-');if(parts.length!==2)return score;if(winner.includes(teamA))return score;return parts[1].trim()+'-'+parts[0].trim()}
 
 /** 富文本渲染：**粗体**→<strong>，换行→<br>，- 分点→<li> */
 function renderRichText(text){
