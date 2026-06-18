@@ -98,68 +98,68 @@ a{color:var(--primary);text-decoration:none}
 .team-flag{width:72px;height:48px;border-radius:4px;object-fit:contain;margin:0 auto 4px;border:none;background:none}
 .team-flag-ph{width:72px;height:48px;border-radius:4px;margin:0 auto 4px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--primary);border:none}
 .team-name{font-size:16px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
-.vs-text{font-size:20px;font-weight:800;color:var(--text3);flex-shrink:0}
+/* Prediction Middle Area (reuses original real-score layout) */
+.pred-middle-area{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:4px}
+.pred-middle-score{display:flex;align-items:center;justify-content:center;gap:2px;font-size:28px;font-weight:800;line-height:1;border-radius:8px;padding:2px 10px;transition:background .3s}
+.pred-middle-num{min-width:22px;text-align:center}
+.pred-middle-sep{color:var(--text3);font-size:22px;margin:0 2px}
+.pred-middle-score.pred-score-match{background:color-mix(in srgb,var(--green) 12%,transparent)}
+.pred-middle-bar-row{display:flex;justify-content:center;width:100%}
+.pred-conf-bar-full{flex:1;max-width:100px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden;transition:background .3s}
+.pred-conf-text-dark{font-size:11px;color:var(--text);white-space:nowrap;font-weight:600}
 
-/* Stance Bar */
-.stance-bar{display:flex;height:20px;border-radius:10px;overflow:hidden;margin:8px 0;background:var(--divider);transition:background .3s}
-.stance-bar .seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;min-width:22px;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
-.stance-bar .seg.seg-a{background:var(--side-a)}
-.stance-bar .seg.seg-x{background:var(--side-x)}
-.stance-bar .seg.seg-b{background:var(--side-b)}
-@keyframes bar-enter{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
-.stance-legend{display:flex;gap:14px;font-size:11px;color:var(--text3);margin-top:3px}
-.stance-legend .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:3px}
-.stance-legend span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Stance Distribution (布局4: voting dots + legend) */
+.stance-row{display:flex;align-items:center;gap:8px;margin:8px 0 0;font-size:11px;flex-wrap:wrap}
+.stance-label-text{color:var(--text3);font-size:10px;font-weight:600;letter-spacing:.5px;flex-shrink:0}
+.stance-dots{display:flex;gap:2px;align-items:center;flex-wrap:wrap}
+.stance-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;transition:opacity .3s}
+.stance-sep{width:4px;flex-shrink:0}
+.stance-legend{display:flex;gap:8px;font-size:10px;color:var(--text3);align-items:center;margin-left:auto;flex-shrink:0}
+.stance-legend-item{display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
+.stance-legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* Prediction Row */
-.pred-row{display:flex;align-items:center;gap:8px;margin-top:8px}
-.pred-winner{font-size:14px;font-weight:800;white-space:nowrap}
-.pred-winner.side-a{color:var(--side-a)}
-.pred-winner.side-b{color:var(--side-b)}
-.pred-winner.side-x{color:var(--side-x)}
-.pred-score{font-size:13px;color:var(--text2);font-weight:700;white-space:nowrap}
-.pred-conf-bar{flex:1;min-width:50px;max-width:80px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden;transition:background .3s}
-.pred-conf-label{font-size:11px;color:var(--text3);white-space:nowrap}
+/* Prediction shared styles */
 .pred-conf-fill{height:100%;border-radius:4px;display:block;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
+@keyframes bar-enter{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 .pred-conf-fill.high{background:var(--green)}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
-.pred-conf-text{font-size:11px;color:var(--text3);white-space:nowrap}
 .topk-row{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;flex-wrap:wrap}
 .topk-label{color:var(--text3);white-space:nowrap}
 .topk-score{color:var(--text2);font-weight:600;padding:1px 5px;background:var(--primary-light);border-radius:3px}
 .topk-score.exact-match{background:var(--green);color:#fff;font-weight:700;padding:1px 6px;border-radius:3px}
 
-/* Prediction score group highlight when matching #1 */
-.pred-score-group{display:inline-flex;align-items:center;gap:4px;border-radius:4px;padding:1px 4px}
-.pred-score-group.pred-score-match{background:var(--green)}
-.pred-score-group.pred-score-match .pred-winner{color:#fff!important}
-.pred-score-group.pred-score-match .pred-score{color:#fff!important;font-weight:800}
+/* Review Section (复盘区) */
+.review-divider{height:1px;background:var(--border);margin:10px 6px 8px;transition:background .3s}
+.review-section{padding:0 4px 4px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:11px;line-height:1.5}
+.review-tag{color:var(--text3);font-weight:700;font-size:10px;letter-spacing:.3px;flex-shrink:0}
+.review-score{font-weight:700;color:var(--text2);white-space:nowrap}
+.review-match{white-space:nowrap}
 
-/* Real Score Display */
-.real-score{display:flex;align-items:center;justify-content:center;gap:2px;font-size:28px;font-weight:800;flex-shrink:0;line-height:1}
-.real-score-num{min-width:22px;text-align:center}
-.real-score-sep{color:var(--text3);font-size:22px;margin:0 2px}
-.real-score.exact-match{border:2px solid var(--green);border-radius:8px;padding:2px 10px;background:color-mix(in srgb,var(--green) 6%,transparent)}
+/* Stats Section (below hero, aligned with cards grid) */
+.stats-section{margin:16px 0 8px;padding:0 4px}
+.stats-row{display:flex;gap:12px;align-items:stretch;flex-wrap:wrap}
+.stat-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;flex:1;min-width:140px;cursor:default;transition:transform .2s ease,box-shadow .2s ease,background .3s;border:1px solid var(--border);display:flex;flex-direction:column;justify-content:space-between}
+.stat-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.12)}
+.stat-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.stat-label{font-size:12px;color:var(--text3);font-weight:600}
+.stat-value{font-size:24px;font-weight:800;line-height:1.2}
+.stat-total{font-size:14px;font-weight:600;color:var(--text3)}
+.stat-bar{height:6px;background:var(--divider);border-radius:3px;overflow:hidden;transition:background .3s}
+.stat-bar-fill{height:100%;border-radius:3px;display:block;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
+.stat-bar-fill.green{background:var(--green)}
+.stat-bar-fill.primary{background:var(--primary)}
+.stat-bar-fill.orange{background:var(--orange)}
 
-/* Upset tag - above score, zero layout shift, white text on orange */
-.upset-tag{font-size:10px;font-weight:700;text-align:center;border-radius:3px;padding:1px 6px;margin-bottom:2px;display:inline-block;line-height:1.4;color:#fff;border:none}
+/* Upset tag - compact inline badge */
+.upset-tag{font-size:10px;font-weight:700;text-align:center;border-radius:3px;padding:1px 6px;display:inline-block;line-height:1.4;color:#fff;border:none}
 .upset-major{background:#ea580c}
 .upset-minor{background:#f59e0b}
-/* Accuracy Info - compact, between score and stance bar */
-.real-accuracy-info{text-align:center;line-height:1.4;margin-top:6px}
+/* Accuracy Info lines (used in review section) */
 .accuracy-line{font-size:10px;color:var(--text3);white-space:nowrap}
 .accuracy-line.rank-1{color:var(--green);font-weight:700}
 .accuracy-line.no-match{color:var(--red);font-weight:600}
 .accuracy-line strong{font-weight:700}
-
-/* Score + accuracy wrapper - vertical centering with team flags */
-.score-result-area{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
-
-/* Global Accuracy Stats */
-.accuracy-stats{display:flex;gap:16px;justify-content:center;margin-top:8px;font-size:12px;color:rgba(255,255,255,0.85);flex-wrap:wrap}
-.accuracy-stat{background:rgba(255,255,255,0.12);padding:3px 10px;border-radius:12px;white-space:nowrap}
-.accuracy-stat strong{color:#fff}
 
 /* Consensus Badge */
 .consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;flex-shrink:0;transition:background .3s}
@@ -184,6 +184,11 @@ a{color:var(--primary);text-decoration:none}
   .sticky-nav{padding:7px 12px;gap:6px}
   .nav-brand{font-size:13px}
   .nav-link{font-size:12px;padding:3px 8px}
+  .stats-row{gap:8px}
+  .stat-card{min-width:100px;padding:10px 12px}
+  .stat-value{font-size:20px}
+  .stance-row{gap:4px}
+  .review-section{gap:4px 8px}
 }
 </style>
 </head>
@@ -210,7 +215,7 @@ a{color:var(--primary);text-decoration:none}
   <div class="loading">正在加载赛程数据...</div>
 </div>
 
-<div class="page-footer">辩论数据由多智能体辩论系统生成<br><br>© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a></div>
+<div class="page-footer">辩论数据由多智能体辩论系统生成<br><br>© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a><br><a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备2026007739号</a></div>
 
 <script>
 const DATA_DIR='data/',MANIFEST=DATA_DIR+'manifest.json',DETAIL_PAGE='match.html',IMAGES_DIR='images/',REAL_RESULTS=DATA_DIR+'real_results.json';
@@ -343,6 +348,7 @@ function extractCardData(data,filename){
   return{file:filename,teamA,teamB,stage:meta.stage||'',matchId:meta.match_id||'',
     date:meta.date||'',city:meta.city||'',venue:meta.venue_zh||meta.venue||'',
     winner:fp?.winner||'',score:fp?.score||'',confidence:fp?.confidence||0,
+    countA:cA,countB:cB,countX:cX,
     pctA:Math.round(cA/total*100),pctB:Math.round(cB/total*100),
     pctX:Math.max(0,100-Math.round(cA/total*100)-Math.round(cB/total*100)),
     consensus:data.consensus,topPreds,
@@ -463,24 +469,23 @@ function jumpToToday(){
 function renderAccuracyStats(allCards){
   const withResult=allCards.filter(m=>m.realScore);
   if(!withResult.length)return;
-  // 胜负准确率
+  // 胜负命中数
   let winnerCorrect=0;
   for(const m of withResult){
     if(m.actualWinner&&m.winner===m.actualWinner)winnerCorrect++;
   }
-  // 比分命中率（top_predictions任一项命中）
+  // 比分命中数
   let scoreHit=0;
   for(const m of withResult){
     if(m.scoreMatchRank!==null)scoreHit++;
   }
-  // 预测总评分
+  // 综合分数（满分10/场）
   let totalScore=0,maxScore=0;
   for(const m of withResult){
     maxScore+=10;
     if(!m.actualWinner)continue;
     if(m.winner===m.actualWinner)totalScore+=5;
     if(m.scoreMatchRank!==null)totalScore+=3;
-    // 进球差
     const r=REAL_DATA&&Object.values(REAL_DATA.matches||{}).find(x=>x.home_team===m.teamA&&x.away_team===m.teamB);
     if(r){
       const ap=actualToPredFormat(m.teamA,m.teamB,r.home_score,r.away_score);
@@ -493,7 +498,7 @@ function renderAccuracyStats(allCards){
       }
     }
   }
-  // 赛事爆冷率：从 real_results.json 读取，review.upset.level 为「爆冷」或「大爆冷」
+  // 爆冷率
   let upsetTotal=0,upsetCount=0;
   if(REAL_DATA&&REAL_DATA.matches){
     const matches=Object.values(REAL_DATA.matches);
@@ -503,18 +508,33 @@ function renderAccuracyStats(allCards){
       return u&&(u.level==='爆冷'||u.level==='大爆冷');
     }).length;
   }
-  const heroEl=document.getElementById('hero-header');
-  if(!heroEl)return;
-  const pct1=withResult.length?Math.round(winnerCorrect/withResult.length*100):0;
-  const pct2=withResult.length?Math.round(scoreHit/withResult.length*100):0;
-  const pct3=upsetTotal?Math.round(upsetCount/upsetTotal*100):0;
-  const statsHtml=`<div class="accuracy-stats">
-    <span class="accuracy-stat" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中（如「德国 胜」vs 实际德国胜即命中）" onclick="showStatTooltip(this,event)">胜负准确率 <strong>${pct1}%</strong></span>
-    <span class="accuracy-stat" title="预测的比分与实际比分完全一致（如预测「2-0」vs 实际「2-0」）即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">比分命中率 <strong>${pct2}%</strong></span>
-    <span class="accuracy-stat" title="预测总评分（满分 10）：胜负正确 +4 分，比分命中 +3 分，进球差 ±1 内各 +1 分，总进球数相同 +1 分" onclick="showStatTooltip(this,event)">预测总评分 <strong>${totalScore}/${maxScore}</strong></span>
-    <span class="accuracy-stat" title="截止最新数据更新，本届世界杯已结束比赛中，标记为「爆冷」或「大爆冷」的比赛所占比例（基于赛前赔率与实力对比的客观评估，与本网页预测无关）" onclick="showStatTooltip(this,event)">赛事爆冷率 <strong>${pct3}%</strong></span>
+  const container=document.getElementById('main-content');
+  if(!container)return;
+  const winnerPct=withResult.length?Math.round(winnerCorrect/withResult.length*100):0;
+  const scorePct=withResult.length?Math.round(scoreHit/withResult.length*100):0;
+  const scoreRate=maxScore?Math.round(totalScore/maxScore*100):0;
+  const upsetPct=upsetTotal?Math.round(upsetCount/upsetTotal*100):0;
+  const statsHtml=`<div class="stats-section">
+    <div class="stats-row">
+      <div class="stat-card" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">胜负命中</span><span class="stat-value" style="color:var(--green)">${winnerCorrect}<span class="stat-total">/${withResult.length}</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill green" style="width:${winnerPct}%"></span></div>
+      </div>
+      <div class="stat-card" title="预测的比分与实际比分完全一致即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">比分命中</span><span class="stat-value" style="color:var(--primary)">${scoreHit}<span class="stat-total">/${withResult.length}</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scorePct}%"></span></div>
+      </div>
+      <div class="stat-card" title="综合评分：胜负正确+5分，比分命中+3分，进球差±1内各+1分，总进球数相同+1分（满分10/场）" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">综合分数</span><span class="stat-value" style="color:var(--primary)">${totalScore}<span class="stat-total">/${maxScore}</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scoreRate}%"></span></div>
+      </div>
+      <div class="stat-card" title="已结束比赛中标记为「爆冷」或「大爆冷」的比例（基于赛前赔率与实力对比的客观评估，与本网页预测无关）" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">赛事爆冷率</span><span class="stat-value" style="color:var(--orange)">${upsetPct}<span class="stat-total">%</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill orange" style="width:${upsetPct}%"></span></div>
+      </div>
+    </div>
   </div>`;
-  heroEl.insertAdjacentHTML('beforeend',statsHtml);
+  container.insertAdjacentHTML('afterbegin',statsHtml);
 }
 
 function renderCard(m){
@@ -524,46 +544,54 @@ function renderCard(m){
   const confPct=Math.round(m.confidence/10*100);
   const cc=m.confidence>=7?'high':m.confidence>=4?'mid':'low';
 
-  let barHtml='';
-  if(m.pctA)barHtml+=`<div class="seg seg-a" style="width:${m.pctA}%">${m.pctA}%</div>`;
-  if(m.pctX)barHtml+=`<div class="seg seg-x" style="width:${m.pctX}%">${m.pctX}%</div>`;
-  if(m.pctB)barHtml+=`<div class="seg seg-b" style="width:${m.pctB}%">${m.pctB}%</div>`;
-
-  // 中间区域：真实比分 or VS
-  let middleHtml='<div class="vs-text">VS</div>';
-  let accuracyHtml='';
-  if(m.realScore){
-    const parts=m.realScore.split('-');
-    const isExact1=m.scoreMatchRank===1;
-    // 爆冷标签（比分正上方，不移动比分位置）
-    let upsetHtml='';
-    if(m.upset){
-      const cls=m.upset.level==='大爆冷'?'upset-major':'upset-minor';
-      upsetHtml=`<div class="upset-tag ${cls}">${esc(m.upset.level)}</div>`;
-    }
-    let scoreHtml=`${upsetHtml}<div class="real-score"><span class="real-score-num">${esc(parts[0]||'')}</span><span class="real-score-sep">:</span><span class="real-score-num">${esc(parts[1]||'')}</span></div>`;
-    // 准确度信息
-    let lines='';
-    if(m.winnerMatchRank!==null){
-      const cls=m.winnerMatchRank===1?'rank-1':m.winnerMatchRank<=3?'':'no-match';
-      lines+=`<div class="accuracy-line ${cls}"><strong>胜负</strong>匹配<strong>第${m.winnerMatchRank}可能</strong></div>`;
-    }else if(m.actualWinner){
-      lines+=`<div class="accuracy-line no-match"><strong>胜负</strong>未命中</div>`;
-    }
-    if(m.scoreMatchRank!==null){
-      const cls=m.scoreMatchRank===1?'rank-1':m.scoreMatchRank<=3?'':'no-match';
-      lines+=`<div class="accuracy-line ${cls}"><strong>比分</strong>匹配<strong>第${m.scoreMatchRank}可能</strong></div>`;
-    }else if(m.actualPredScore){
-      lines+=`<div class="accuracy-line no-match"><strong>比分</strong>未命中</div>`;
-    }
-    if(lines) accuracyHtml=`<div class="real-accuracy-info">${lines}</div>`;
-    middleHtml=`<div class="score-result-area">${scoreHtml}${accuracyHtml}</div>`;
+  // ── 中间区域：原真实比分位置，现显示第一可能预测比分 ──
+  let middleHtml='';
+  if(m.winner){
+    const scoreStr=cleanScore(m.score,m.winner);
+    const scoreParts=scoreStr.split('-');
+    const sA=scoreParts[0]||'';
+    const sB=scoreParts[1]||'';
+    const matchCls=m.scoreMatchRank===1?' pred-score-match':'';
+    middleHtml=`<div class="pred-middle-area">
+      <div class="pred-middle-score${matchCls}">
+        <span class="pred-middle-num">${esc(sA)}</span>
+        <span class="pred-middle-sep">:</span>
+        <span class="pred-middle-num">${esc(sB)}</span>
+      </div>
+      <span class="pred-conf-text-dark">准确度 ${m.confidence}/10</span>
+      <div class="pred-middle-bar-row">
+        <span class="pred-conf-bar-full"><span class="pred-conf-fill ${cc}" style="width:${confPct}%"></span></span>
+      </div>
+    </div>`;
+  }else{
+    middleHtml='<div class="pred-middle-area"><div style="color:var(--text3);font-size:13px">暂无预测</div></div>';
   }
 
+  // ── 立场分布（布局4：投票圆点 + 图例） ──
+  let stanceHtml='';
+  const totalAgents=m.countA+m.countB+m.countX;
+  if(totalAgents>0){
+    // 生成投票圆点：按侧排列，中间加分隔
+    let dotsHtml='';
+    for(let i=0;i<m.countA;i++)dotsHtml+=`<span class="stance-dot" style="background:var(--side-a)"></span>`;
+    if(m.countA&&m.countX)dotsHtml+=`<span class="stance-sep"></span>`;
+    for(let i=0;i<m.countX;i++)dotsHtml+=`<span class="stance-dot" style="background:var(--side-x)"></span>`;
+    if((m.countA||m.countX)&&m.countB)dotsHtml+=`<span class="stance-sep"></span>`;
+    for(let i=0;i<m.countB;i++)dotsHtml+=`<span class="stance-dot" style="background:var(--side-b)"></span>`;
+    stanceHtml=`<div class="stance-row">
+      <span class="stance-label-text">立场</span>
+      <div class="stance-dots">${dotsHtml}</div>
+      <div class="stance-legend">
+        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-a)"></span>${m.countA}</span>
+        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-x)"></span>${m.countX}</span>
+        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-b)"></span>${m.countB}</span>
+      </div>
+    </div>`;
+  }
+
+  // ── 其它可能比分 ──
   let predHtml='';
   if(m.winner){
-    const winLabel=ws!=='x'?esc(m.winner)+' 胜':esc(m.winner);
-    // Top-k alternative predictions with highlighting
     let topkHtml='';
     if(m.topPreds&&m.topPreds.length){
       const altScores=m.topPreds.filter(p=>p.score&&(p.winner!==m.winner||p.score!==m.score)).slice(0,3);
@@ -572,20 +600,42 @@ function renderCard(m){
         const pLabel=esc(p.winner);
         const pSuffix=pDraw?'':' 胜';
         let cls='topk-score';
-        if(m.actualPredScore&&p.winner===m.actualWinner&&p.score===m.actualPredScore){
-          cls+=' exact-match';
-        }
+        if(m.actualPredScore&&p.winner===m.actualWinner&&p.score===m.actualPredScore)cls+=' exact-match';
         return`<span class="${cls}">${pLabel} ${esc(cleanScore(p.score,p.winner))}${pSuffix}</span>`;
       }).join('')}</div>`;
     }
-    predHtml=`<div class="pred-row">
-      <span class="pred-score-group${m.scoreMatchRank===1?' pred-score-match':''}"><span class="pred-winner ${sc}">${winLabel}</span> <span class="pred-score">${esc(cleanScore(m.score,m.winner))}</span></span>
-      <span class="pred-conf-label">准确度</span>
-      <span class="pred-conf-bar"><span class="pred-conf-fill ${cc}" style="width:${confPct}%"></span></span>
-      <span class="pred-conf-text">${m.confidence}/10</span>
-    </div>${topkHtml}`;
-  }else{
-    predHtml='<div class="pred-row" style="color:var(--text3);font-size:13px">暂无预测</div>';
+    predHtml=topkHtml;
+  }
+
+  // ── 复盘区（仅在有真实结果时显示，紧凑1-2行） ──
+  let reviewHtml='';
+  if(m.realScore){
+    const parts=m.realScore.split('-');
+    let upsetHtml='';
+    if(m.upset){
+      const cls=m.upset.level==='大爆冷'?'upset-major':'upset-minor';
+      upsetHtml=` <span class="upset-tag ${cls}">${esc(m.upset.level)}</span>`;
+    }
+    // 匹配信息
+    let matchHtml='';
+    if(m.winnerMatchRank!==null){
+      const cls=m.winnerMatchRank===1?'rank-1':m.winnerMatchRank<=3?'':'no-match';
+      matchHtml+=`<span class="accuracy-line review-match ${cls}">胜负匹配第${m.winnerMatchRank}可能</span>`;
+    }else if(m.actualWinner){
+      matchHtml+=`<span class="accuracy-line review-match no-match">胜负未命中</span>`;
+    }
+    if(m.scoreMatchRank!==null){
+      const cls=m.scoreMatchRank===1?'rank-1':m.scoreMatchRank<=3?'':'no-match';
+      matchHtml+=`<span class="accuracy-line review-match ${cls}">比分匹配第${m.scoreMatchRank}可能</span>`;
+    }else if(m.actualPredScore){
+      matchHtml+=`<span class="accuracy-line review-match no-match">比分未命中</span>`;
+    }
+    reviewHtml=`<div class="review-divider"></div>
+    <div class="review-section">
+      <span class="review-tag">比赛结果</span>${upsetHtml}
+      <span class="review-score">${esc(teamA)} ${esc(parts[0]||'')}-${esc(parts[1]||'')} ${esc(teamB)}</span>
+      ${matchHtml}
+    </div>`;
   }
 
   const cv=(m.city||'')+(m.venue&&m.venue!==m.city?' · '+m.venue:'');
@@ -604,8 +654,9 @@ function renderCard(m){
       ${middleHtml}
       <div class="team-col">${flagImgHtml(teamB)}<div class="team-name">${esc(teamB)}</div></div>
     </div>
-    ${barHtml?`<div class="stance-bar">${barHtml}</div><div class="stance-legend"><span><span class="dot" style="background:var(--side-a)"></span>${esc(teamA)}</span><span><span class="dot" style="background:var(--side-x)"></span>平局</span><span><span class="dot" style="background:var(--side-b)"></span>${esc(teamB)}</span></div>`:''}
+    ${stanceHtml}
     ${predHtml}
+    ${reviewHtml}
   </a>`;
 }
 
