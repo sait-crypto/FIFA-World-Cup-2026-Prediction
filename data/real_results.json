@@ -2909,10 +2909,10 @@
         "key_events": [
           {
             "time": "45+5'",
-            "team": "刚果(金)",
+            "team": "刚果民主共和国",
             "type": "进球",
             "player": "维萨",
-            "description": "第2个进球 - 维萨(刚果(金)) - 头球 (助攻: 马苏亚库)"
+            "description": "第2个进球 - 维萨(刚果民主共和国) - 头球 (助攻: 马苏亚库)"
           },
           {
             "time": "6'",
@@ -2926,7 +2926,7 @@
           "进球": [
             {
               "time": "45+5'",
-              "team": "刚果(金)",
+              "team": "刚果民主共和国",
               "player": "维萨"
             },
             {
@@ -2994,10 +2994,121 @@
           }
         ]
       }
+    },
+    "2026-06-19_捷克_vs_南非": {
+      "date": "2026-06-19",
+      "home_team": "捷克",
+      "away_team": "南非",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛A组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "83'",
+            "team": "南非",
+            "type": "进球",
+            "player": "莫科纳",
+            "description": "第2个进球 - 莫科纳(南非) - 点球"
+          },
+          {
+            "time": "6'",
+            "team": "捷克",
+            "type": "进球",
+            "player": "萨迪莱克",
+            "description": "第1个进球！球进啦！萨迪莱克(捷克 射门 (助攻: 索伊卡))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "83'",
+              "team": "南非",
+              "player": "莫科纳"
+            },
+            {
+              "time": "6'",
+              "team": "捷克",
+              "player": "萨迪莱克"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 8,
+          "角球": 10,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 38,
+            "right": 62
+          },
+          {
+            "title": "进攻",
+            "left": 69,
+            "right": 119
+          },
+          {
+            "title": "危险进攻",
+            "left": 31,
+            "right": 40
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Mercedes-Benz Stadium",
+      "city": "亚特兰大",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "排名40的捷克被排名60的南非逼平，赛前预测高度一致看好捷克（终局8票全胜），且南非在控球率（62%）、进攻（119-69）等技术统计上全面占优，捷克未能取胜属明显冷门。"
+        },
+        "generated_at": "2026-06-19T03:25:02.076658",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-19T03:00:59.540945",
-    "total_matches": 24
+    "last_updated": "2026-06-19T03:25:08.106523",
+    "total_matches": 25
   }
 }
