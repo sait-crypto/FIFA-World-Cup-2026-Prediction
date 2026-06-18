@@ -385,10 +385,20 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 <div id="load-screen">
   <div class="inner">
     <h2>AI 辩论预测</h2>
-    <p>加载辩论数据以查看赛果分析</p>
+    <p id="load-msg">加载辩论数据以查看赛果分析</p>
     <div class="drop-zone" id="drop-zone">拖放 JSON 文件到此处<br>或点击选择文件<input type="file" id="file-input" accept=".json"></div>
   </div>
 </div>
+<script>
+(function(){
+  const p=new URLSearchParams(location.search);
+  const hasJson=!!p.get('json');
+  if(hasJson){
+    document.getElementById('load-msg').textContent='正在加载预测数据…';
+    document.getElementById('drop-zone').style.display='none';
+  }
+})();
+</script>
 
 <div id="main">
   <nav class="sticky-nav" id="sticky-nav">

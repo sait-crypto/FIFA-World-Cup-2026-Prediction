@@ -1,0 +1,3114 @@
+{
+  "matches": {
+    "2026-06-12_墨西哥_vs_南非": {
+      "date": "2026-06-12",
+      "home_team": "墨西哥",
+      "away_team": "南非",
+      "home_score": 2,
+      "away_score": 0,
+      "score_display": "2-0",
+      "match_stage": "小组赛A组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+2'",
+            "team": "墨西哥",
+            "type": "红牌",
+            "player": "蒙特斯",
+            "description": "第3张红牌 - 蒙特斯(墨西哥)"
+          },
+          {
+            "time": "84'",
+            "team": "南非",
+            "type": "红牌",
+            "player": "兹瓦内",
+            "description": "第2张红牌 - 兹瓦内(南非)"
+          },
+          {
+            "time": "67'",
+            "team": "墨西哥",
+            "type": "进球",
+            "player": "希门尼斯",
+            "description": "第2个进球 - R.希门尼斯(墨西哥) - 头球 (助攻: 阿尔瓦拉多)"
+          },
+          {
+            "time": "50'",
+            "team": "南非",
+            "type": "红牌",
+            "player": "西索尔",
+            "description": "第1张红牌 - 西索尔(南非)"
+          },
+          {
+            "time": "9'",
+            "team": "墨西哥",
+            "type": "进球",
+            "player": "基尼奥内斯",
+            "description": "第1个进球！Goooooooal！基尼奥内斯(墨西哥 射门 (助攻: 利拉))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "67'",
+              "team": "墨西哥",
+              "player": "希门尼斯"
+            },
+            {
+              "time": "9'",
+              "team": "墨西哥",
+              "player": "基尼奥内斯"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 3,
+          "换人": 9,
+          "角球": 4,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 60,
+            "right": 40
+          },
+          {
+            "title": "进攻",
+            "left": 98,
+            "right": 69
+          },
+          {
+            "title": "危险进攻",
+            "left": 48,
+            "right": 27
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 7,
+            "right": 1
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 1,
+            "right": 2
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:46:05.554779",
+        "content": "",
+        "upset": {
+          "level": "正常",
+          "reason": "墨西哥排名14远高于南非的60，赛前预测一致看好墨西哥，最终2-0获胜且控球率、射正等数据全面占优，结果完全符合预期，无冷门迹象。"
+        }
+      },
+      "venue": "Estadio Azteca",
+      "city": "墨西哥城",
+      "country": "墨西哥"
+    },
+    "2026-06-12_韩国_vs_捷克": {
+      "date": "2026-06-12",
+      "home_team": "韩国",
+      "away_team": "捷克",
+      "home_score": 2,
+      "away_score": 1,
+      "score_display": "2-1",
+      "match_stage": "小组赛A组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "80'",
+            "team": "韩国",
+            "type": "进球",
+            "player": "吴贤揆",
+            "description": "第3个进球 - 吴贤揆(韩国) - 射门 (助攻: 黄仁范)"
+          },
+          {
+            "time": "67'",
+            "team": "韩国",
+            "type": "进球",
+            "player": "黄仁范",
+            "description": "第2个进球 - 黄仁范(韩国) - 射门 (助攻: 李刚仁)"
+          },
+          {
+            "time": "59'",
+            "team": "捷克",
+            "type": "进球",
+            "player": "克雷伊奇",
+            "description": "第1个进球！Goooooooal！克雷伊奇(捷克 头球 (助攻: 曹法尔))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "80'",
+              "team": "韩国",
+              "player": "吴贤揆"
+            },
+            {
+              "time": "67'",
+              "team": "韩国",
+              "player": "黄仁范"
+            },
+            {
+              "time": "59'",
+              "team": "捷克",
+              "player": "克雷伊奇"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 9,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 62,
+            "right": 38
+          },
+          {
+            "title": "进攻",
+            "left": 98,
+            "right": 90
+          },
+          {
+            "title": "危险进攻",
+            "left": 38,
+            "right": 42
+          },
+          {
+            "title": "射正",
+            "left": 6,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:46:13.823966",
+        "content": "",
+        "upset": {
+          "level": "正常",
+          "reason": "韩国排名25高于捷克40，赛前预测平局但韩国2-1小胜，排名差距不大且比分接近，技术统计韩国稍占优，属于正常结果"
+        }
+      },
+      "venue": "Estadio Akron",
+      "city": "瓜达拉哈拉",
+      "country": "墨西哥"
+    },
+    "2026-06-13_加拿大_vs_波黑": {
+      "date": "2026-06-13",
+      "home_team": "加拿大",
+      "away_team": "波黑",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛B组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "78'",
+            "team": "加拿大",
+            "type": "进球",
+            "player": "拉林",
+            "description": "第2个进球 - 拉林(加拿大) - 射门 (助攻: P.戴维)"
+          },
+          {
+            "time": "21'",
+            "team": "波黑",
+            "type": "进球",
+            "player": "卢基奇",
+            "description": "第1个进球！Goooooooal！卢基奇(波黑 头球 (助攻: 科拉希纳茨))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "78'",
+              "team": "加拿大",
+              "player": "拉林"
+            },
+            {
+              "time": "21'",
+              "team": "波黑",
+              "player": "卢基奇"
+            }
+          ],
+          "黄牌": 5,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 13,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 61,
+            "right": 39
+          },
+          {
+            "title": "进攻",
+            "left": 134,
+            "right": 110
+          },
+          {
+            "title": "危险进攻",
+            "left": 80,
+            "right": 19
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 9,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:46:22.335082",
+        "content": "",
+        "upset": {
+          "level": "正常",
+          "reason": "赛前预测平局置信度6/10，排名差距34位但加拿大未取胜，但最终比分1-1完全符合多数预测，且技术统计虽有优势但未转化为胜果，属于预期内的平局结果。"
+        }
+      },
+      "venue": "BMO Field",
+      "city": "多伦多",
+      "country": "加拿大"
+    },
+    "2026-06-13_澳大利亚_vs_土耳其": {
+      "date": "2026-06-13",
+      "home_team": "澳大利亚",
+      "away_team": "土耳其",
+      "home_score": 2,
+      "away_score": 0,
+      "score_display": "2-0",
+      "match_stage": "小组赛D组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "75'",
+            "team": "澳大利亚",
+            "type": "进球",
+            "player": "梅特卡夫",
+            "description": "第2个进球 - 梅特卡夫(澳大利亚) - 射门"
+          },
+          {
+            "time": "27'",
+            "team": "澳大利亚",
+            "type": "进球",
+            "player": "伊兰昆达",
+            "description": "第1个进球！球进啦！伊兰昆达(澳大利亚 射门 (助攻: 奥孔))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "75'",
+              "team": "澳大利亚",
+              "player": "梅特卡夫"
+            },
+            {
+              "time": "27'",
+              "team": "澳大利亚",
+              "player": "伊兰昆达"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 13,
+          "越位": 7
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 28,
+            "right": 72
+          },
+          {
+            "title": "进攻",
+            "left": 51,
+            "right": 150
+          },
+          {
+            "title": "危险进攻",
+            "left": 35,
+            "right": 104
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 8
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 10
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 8
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:46:59.503516",
+        "content": "",
+        "upset": {
+          "level": "爆冷",
+          "reason": "土耳其排名高于澳大利亚（22 vs 27），赛前预测平局且土耳其被看好，但澳大利亚在控球率仅28%、射正4-8劣势下2-0完胜，净胜2球且场面被压制却逆转，符合大爆冷标准。"
+        }
+      },
+      "venue": "BC Place",
+      "city": "温哥华",
+      "country": "加拿大"
+    },
+    "2026-06-13_美国_vs_巴拉圭": {
+      "date": "2026-06-13",
+      "home_team": "美国",
+      "away_team": "巴拉圭",
+      "home_score": 4,
+      "away_score": 1,
+      "score_display": "4-1",
+      "match_stage": "小组赛D组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+8'",
+            "team": "美国",
+            "type": "进球",
+            "player": "",
+            "description": "5个进球 - 雷纳  (美国) - 射门 (助攻: 弗里曼)"
+          },
+          {
+            "time": "74'",
+            "team": "巴拉圭",
+            "type": "进球",
+            "player": "毛里西奥",
+            "description": "第4个进球 - 毛里西奥(巴拉圭) - 射门 (助攻: 恩西索)"
+          },
+          {
+            "time": "45+5'",
+            "team": "美国",
+            "type": "进球",
+            "player": "巴洛贡",
+            "description": "第3个进球 - 巴洛贡(美国) - 射门 (助攻: 蒂尔曼)"
+          },
+          {
+            "time": "31'",
+            "team": "美国",
+            "type": "进球",
+            "player": "巴洛贡",
+            "description": "第2个进球 - 巴洛贡(美国) - 射门 (助攻: 普利希奇)"
+          },
+          {
+            "time": "8'",
+            "team": "美国",
+            "type": "进球",
+            "player": "博瓦迪利亚",
+            "description": "第1个进球！球进啦！博瓦迪利亚(美国 乌龙球)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+8'",
+              "team": "美国",
+              "player": ""
+            },
+            {
+              "time": "74'",
+              "team": "巴拉圭",
+              "player": "毛里西奥"
+            },
+            {
+              "time": "45+5'",
+              "team": "美国",
+              "player": "巴洛贡"
+            },
+            {
+              "time": "31'",
+              "team": "美国",
+              "player": "巴洛贡"
+            },
+            {
+              "time": "8'",
+              "team": "美国",
+              "player": "博瓦迪利亚"
+            }
+          ],
+          "黄牌": 6,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 4,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 4,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 65,
+            "right": 35
+          },
+          {
+            "title": "进攻",
+            "left": 158,
+            "right": 58
+          },
+          {
+            "title": "危险进攻",
+            "left": 92,
+            "right": 22
+          },
+          {
+            "title": "射正",
+            "left": 6,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 5
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:46:30.463305",
+        "content": "",
+        "upset": {
+          "level": "正常",
+          "reason": "美国排名第17远高于巴拉圭第41，赛前预测美国胜出且实际4-1大胜，技术统计全面占优，结果符合预期，无冷门迹象。"
+        }
+      },
+      "venue": "SoFi Stadium",
+      "city": "洛杉矶",
+      "country": "美国"
+    },
+    "2026-06-14_卡塔尔_vs_瑞士": {
+      "date": "2026-06-14",
+      "home_team": "卡塔尔",
+      "away_team": "瑞士",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛B组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+5'",
+            "team": "卡塔尔",
+            "type": "进球",
+            "player": "穆海姆",
+            "description": "第2个进球 - 穆海姆(卡塔尔) - 乌龙球"
+          },
+          {
+            "time": "17'",
+            "team": "瑞士",
+            "type": "进球",
+            "player": "",
+            "description": "第1个进球！球进啦！恩博洛(瑞士 点球)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+5'",
+              "team": "卡塔尔",
+              "player": "穆海姆"
+            },
+            {
+              "time": "17'",
+              "team": "瑞士",
+              "player": ""
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 13,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 32,
+            "right": 68
+          },
+          {
+            "title": "进攻",
+            "left": 48,
+            "right": 132
+          },
+          {
+            "title": "危险进攻",
+            "left": 16,
+            "right": 88
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 7
+          },
+          {
+            "title": "射偏",
+            "left": 3,
+            "right": 10
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 10
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:46:38.491362",
+        "content": "",
+        "upset": {
+          "level": "爆冷",
+          "reason": "世界排名56的卡塔尔逼平排名19的瑞士，赛前预测一致看好瑞士2-0胜，瑞士控球率68%、射正7-3全面占优却未能取胜，属于明显冷门。"
+        }
+      },
+      "venue": "Levi's Stadium",
+      "city": "旧金山",
+      "country": "美国"
+    },
+    "2026-06-14_巴西_vs_摩洛哥": {
+      "date": "2026-06-14",
+      "home_team": "巴西",
+      "away_team": "摩洛哥",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛C组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "32'",
+            "team": "巴西",
+            "type": "进球",
+            "player": "维尼修斯",
+            "description": "第2个进球 - 维尼修斯(巴西) - 射门 (助攻: 吉马良斯)"
+          },
+          {
+            "time": "21'",
+            "team": "摩洛哥",
+            "type": "进球",
+            "player": "萨伊瓦里",
+            "description": "第1个进球！Goooooooal！萨伊瓦里(摩洛哥 射门 (助攻: 迪亚斯))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "32'",
+              "team": "巴西",
+              "player": "维尼修斯"
+            },
+            {
+              "time": "21'",
+              "team": "摩洛哥",
+              "player": "萨伊瓦里"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 8,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 52,
+            "right": 48
+          },
+          {
+            "title": "进攻",
+            "left": 101,
+            "right": 103
+          },
+          {
+            "title": "危险进攻",
+            "left": 33,
+            "right": 47
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 6,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:46:44.669494",
+        "content": "",
+        "upset": {
+          "level": "正常",
+          "reason": "巴西与摩洛哥FIFA排名仅差1位，实力接近；赛前预测初始分布平局占4票，终局虽偏向巴西但实际平局符合预期；技术统计双方数据均衡，无显著一方碾压，故判定为正常结果。"
+        }
+      },
+      "venue": "MetLife Stadium",
+      "city": "新泽西纽约",
+      "country": "美国"
+    },
+    "2026-06-14_海地_vs_苏格兰": {
+      "date": "2026-06-14",
+      "home_team": "海地",
+      "away_team": "苏格兰",
+      "home_score": 0,
+      "away_score": 1,
+      "score_display": "0-1",
+      "match_stage": "小组赛C组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "苏格兰凭借麦金29分钟进球小胜海地",
+        "key_events": [
+          {
+            "time": "29'",
+            "team": "苏格兰",
+            "type": "进球",
+            "player": "麦金",
+            "description": "第1个进球！Goooooooal！麦金(苏格兰 射门)打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "29'",
+              "team": "苏格兰",
+              "player": "麦金"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 8,
+          "角球": 7,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 54,
+            "right": 46
+          },
+          {
+            "title": "进攻",
+            "left": 111,
+            "right": 76
+          },
+          {
+            "title": "危险进攻",
+            "left": 47,
+            "right": 39
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 9,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 3
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:46:52.476079",
+        "content": "",
+        "upset": {
+          "level": "正常",
+          "reason": "苏格兰排名42远高于海地83，赛前预测苏格兰胜出且实际1-0小胜，比分差距小，技术统计海地控球率54%但射正2-2持平，未形成明显爆冷条件。"
+        }
+      },
+      "venue": "Gillette Stadium",
+      "city": "波士顿",
+      "country": "美国"
+    },
+    "2026-06-15_德国_vs_库拉索": {
+      "date": "2026-06-15",
+      "home_team": "德国",
+      "away_team": "库拉索",
+      "home_score": 7,
+      "away_score": 1,
+      "score_display": "7-1",
+      "match_stage": "小组赛E组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "88'",
+            "team": "德国",
+            "type": "进球",
+            "player": "哈弗茨",
+            "description": "第8个进球 - 哈弗茨(德国) - 射门 (助攻: 翁达夫)"
+          },
+          {
+            "time": "78'",
+            "team": "德国",
+            "type": "进球",
+            "player": "翁达夫",
+            "description": "第7个进球 - 翁达夫(德国) - 射门 (助攻: 基米希)"
+          },
+          {
+            "time": "68'",
+            "team": "德国",
+            "type": "进球",
+            "player": "布朗",
+            "description": "第6个进球 - 布朗(德国) - 射门 (助攻: 翁达夫)"
+          },
+          {
+            "time": "47'",
+            "team": "德国",
+            "type": "进球",
+            "player": "穆西亚拉",
+            "description": "第5个进球 - 穆西亚拉(德国) - 射门 (助攻: 基米希)"
+          },
+          {
+            "time": "45+5'",
+            "team": "德国",
+            "type": "进球",
+            "player": "哈弗茨",
+            "description": "第4个进球 - 哈弗茨(德国) - 点球"
+          },
+          {
+            "time": "38'",
+            "team": "德国",
+            "type": "进球",
+            "player": "施洛特贝克",
+            "description": "第3个进球 - 施洛特贝克(德国) - 头球 (助攻: 布朗)"
+          },
+          {
+            "time": "21'",
+            "team": "库拉索",
+            "type": "进球",
+            "player": "科梅内西亚",
+            "description": "第2个进球 - 科梅内西亚(库拉索) - 射门"
+          },
+          {
+            "time": "6'",
+            "team": "德国",
+            "type": "进球",
+            "player": "恩梅查",
+            "description": "第1个进球！Goooooooal！恩梅查(德国 射门 (助攻: 维尔茨))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "88'",
+              "team": "德国",
+              "player": "哈弗茨"
+            },
+            {
+              "time": "78'",
+              "team": "德国",
+              "player": "翁达夫"
+            },
+            {
+              "time": "68'",
+              "team": "德国",
+              "player": "布朗"
+            },
+            {
+              "time": "47'",
+              "team": "德国",
+              "player": "穆西亚拉"
+            },
+            {
+              "time": "45+5'",
+              "team": "德国",
+              "player": "哈弗茨"
+            },
+            {
+              "time": "38'",
+              "team": "德国",
+              "player": "施洛特贝克"
+            },
+            {
+              "time": "21'",
+              "team": "库拉索",
+              "player": "科梅内西亚"
+            },
+            {
+              "time": "6'",
+              "team": "德国",
+              "player": "恩梅查"
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 8,
+          "角球": 9,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 7,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 65,
+            "right": 35
+          },
+          {
+            "title": "进攻",
+            "left": 137,
+            "right": 76
+          },
+          {
+            "title": "危险进攻",
+            "left": 81,
+            "right": 21
+          },
+          {
+            "title": "射正",
+            "left": 12,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 7,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 8,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "generated_at": "2026-06-16T04:47:07.070307",
+        "content": "",
+        "upset": {
+          "level": "正常",
+          "reason": "德国排名第10，库拉索排名第82，实力悬殊；赛前预测德国4-0且全场技术统计全面碾压（控球率65%对35%，射正12对2），最终7-1大胜完全符合预期。"
+        }
+      },
+      "venue": "NRG Stadium",
+      "city": "休斯顿",
+      "country": "美国"
+    },
+    "2026-06-15_瑞典_vs_突尼斯": {
+      "date": "2026-06-15",
+      "home_team": "瑞典",
+      "away_team": "突尼斯",
+      "home_score": 5,
+      "away_score": 1,
+      "score_display": "5-1",
+      "match_stage": "小组赛F组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+6'",
+            "team": "瑞典",
+            "type": "进球",
+            "player": "阿亚里",
+            "description": "第6个进球 - 阿亚里(瑞典) - 射门 (助攻: 贝里瓦尔)"
+          },
+          {
+            "time": "86'",
+            "team": "瑞典",
+            "type": "进球",
+            "player": "斯万贝里",
+            "description": "第5个进球 - 斯万贝里(瑞典) - 射门"
+          },
+          {
+            "time": "60'",
+            "team": "瑞典",
+            "type": "进球",
+            "player": "哲凯赖什",
+            "description": "第4个进球 - 哲凯赖什(瑞典) - 射门 (助攻: 伊萨克)"
+          },
+          {
+            "time": "43'",
+            "team": "突尼斯",
+            "type": "进球",
+            "player": "雷基克",
+            "description": "第3个进球 - 雷基克(突尼斯) - 头球 (助攻: 汉尼拔)"
+          },
+          {
+            "time": "30'",
+            "team": "瑞典",
+            "type": "进球",
+            "player": "伊萨克",
+            "description": "第2个进球 - 伊萨克(瑞典) - 射门 (助攻: 哲凯赖什)"
+          },
+          {
+            "time": "7'",
+            "team": "瑞典",
+            "type": "进球",
+            "player": "阿亚里",
+            "description": "第1个进球！球进啦！阿亚里(瑞典 射门)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+6'",
+              "team": "瑞典",
+              "player": "阿亚里"
+            },
+            {
+              "time": "86'",
+              "team": "瑞典",
+              "player": "斯万贝里"
+            },
+            {
+              "time": "60'",
+              "team": "瑞典",
+              "player": "哲凯赖什"
+            },
+            {
+              "time": "43'",
+              "team": "突尼斯",
+              "player": "雷基克"
+            },
+            {
+              "time": "30'",
+              "team": "瑞典",
+              "player": "伊萨克"
+            },
+            {
+              "time": "7'",
+              "team": "瑞典",
+              "player": "阿亚里"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 6,
+          "越位": 11
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 5,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 49,
+            "right": 51
+          },
+          {
+            "title": "进攻",
+            "left": 91,
+            "right": 91
+          },
+          {
+            "title": "危险进攻",
+            "left": 44,
+            "right": 41
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 3,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Estadio BBVA",
+      "city": "蒙特雷",
+      "country": "墨西哥",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "瑞典排名38、突尼斯排名45，差距仅7位且赛前预测分歧较大（4胜2平1负），5-1大胜虽比分悬殊但双方实力接近，技术统计控球率49%-51%基本持平，不属于爆冷。"
+        },
+        "generated_at": "2026-06-16T04:47:31.292715",
+        "content": ""
+      }
+    },
+    "2026-06-15_科特迪瓦_vs_厄瓜多尔": {
+      "date": "2026-06-15",
+      "home_team": "科特迪瓦",
+      "away_team": "厄瓜多尔",
+      "home_score": 1,
+      "away_score": 0,
+      "score_display": "1-0",
+      "match_stage": "小组赛E组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90'",
+            "team": "科特迪瓦",
+            "type": "进球",
+            "player": "迪亚洛",
+            "description": "第1个进球！Goooooooal！迪亚洛(科特迪瓦 射门 (助攻: 辛戈))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90'",
+              "team": "科特迪瓦",
+              "player": "迪亚洛"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 8
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 48,
+            "right": 52
+          },
+          {
+            "title": "进攻",
+            "left": 91,
+            "right": 101
+          },
+          {
+            "title": "危险进攻",
+            "left": 61,
+            "right": 47
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 8
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lincoln Financial Field",
+      "city": "费城",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "厄瓜多尔排名高于科特迪瓦10位，赛前预测平局为主但科特迪瓦1-0获胜，且射正4-1占优，属于预期优势方输球的冷门。"
+        },
+        "generated_at": "2026-06-16T04:47:23.078455",
+        "content": ""
+      }
+    },
+    "2026-06-15_荷兰_vs_日本": {
+      "date": "2026-06-15",
+      "home_team": "荷兰",
+      "away_team": "日本",
+      "home_score": 2,
+      "away_score": 2,
+      "score_display": "2-2",
+      "match_stage": "小组赛F组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "89'",
+            "team": "日本",
+            "type": "进球",
+            "player": "镰田大地",
+            "description": "第4个进球 - 镰田大地(日本) - 头球 (助攻: 小川航基)"
+          },
+          {
+            "time": "64'",
+            "team": "荷兰",
+            "type": "进球",
+            "player": "萨默维尔",
+            "description": "第3个进球 - 萨默维尔(荷兰) - 射门 (助攻: 赫拉芬贝赫)"
+          },
+          {
+            "time": "57'",
+            "team": "日本",
+            "type": "进球",
+            "player": "中村敬斗",
+            "description": "第2个进球 - 中村敬斗(日本) - 射门 (助攻: 久保建英)"
+          },
+          {
+            "time": "51'",
+            "team": "荷兰",
+            "type": "进球",
+            "player": "范戴克",
+            "description": "第1个进球！球进啦！范戴克(荷兰 头球 (助攻: 赫拉芬贝赫))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "89'",
+              "team": "日本",
+              "player": "镰田大地"
+            },
+            {
+              "time": "64'",
+              "team": "荷兰",
+              "player": "萨默维尔"
+            },
+            {
+              "time": "57'",
+              "team": "日本",
+              "player": "中村敬斗"
+            },
+            {
+              "time": "51'",
+              "team": "荷兰",
+              "player": "范戴克"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 9,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 60,
+            "right": 40
+          },
+          {
+            "title": "进攻",
+            "left": 106,
+            "right": 76
+          },
+          {
+            "title": "危险进攻",
+            "left": 60,
+            "right": 43
+          },
+          {
+            "title": "射正",
+            "left": 6,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 6
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 3,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "AT&T Stadium",
+      "city": "达拉斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "世界排名第8的荷兰队被排名第18的日本队逼平，且赛前预测分布均衡，荷兰在控球率（60%对40%）和射正（6对3）等数据占优却未能取胜，属于预期优势方被逼平的爆冷结果。"
+        },
+        "generated_at": "2026-06-16T04:47:14.693728",
+        "content": ""
+      }
+    },
+    "2026-06-16_西班牙_vs_佛得角": {
+      "date": "2026-06-16",
+      "home_team": "西班牙",
+      "away_team": "佛得角",
+      "home_score": 0,
+      "away_score": 0,
+      "score_display": "0-0",
+      "match_stage": "小组赛H组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [],
+        "stats_summary": {
+          "进球": [],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 12,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 74,
+            "right": 26
+          },
+          {
+            "title": "进攻",
+            "left": 187,
+            "right": 32
+          },
+          {
+            "title": "危险进攻",
+            "left": 139,
+            "right": 7
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 12,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 11,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Mercedes-Benz Stadium",
+      "city": "亚特兰大",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "大爆冷",
+          "reason": "世界排名第2的西班牙被排名第67的佛得角0-0逼平，赛前预测一致看好西班牙大胜（3-0），且西班牙控球率74%、射正7-1、危险进攻139-7全面碾压却未能进球，符合大爆冷标准。"
+        },
+        "generated_at": "2026-06-16T04:47:38.611680",
+        "content": ""
+      }
+    },
+    "2026-06-16_伊朗_vs_新西兰": {
+      "date": "2026-06-16",
+      "home_team": "伊朗",
+      "away_team": "新西兰",
+      "home_score": 2,
+      "away_score": 2,
+      "score_display": "2-2",
+      "match_stage": "小组赛G组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "64'",
+            "team": "伊朗",
+            "type": "进球",
+            "player": "莫赫比",
+            "description": "第4个进球 - 莫赫比(伊朗) - 头球 (助攻: 雷扎伊安)"
+          },
+          {
+            "time": "55'",
+            "team": "新西兰",
+            "type": "进球",
+            "player": "贾斯特",
+            "description": "第3个进球 - 贾斯特(新西兰) - 射门 (助攻: 伍德)"
+          },
+          {
+            "time": "33'",
+            "team": "伊朗",
+            "type": "进球",
+            "player": "雷扎伊安",
+            "description": "第2个进球 - 雷扎伊安(伊朗) - 射门"
+          },
+          {
+            "time": "7'",
+            "team": "新西兰",
+            "type": "进球",
+            "player": "贾斯特",
+            "description": "第1个进球！Goooooooal！贾斯特(新西兰 射门 (助攻: 伍德))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "64'",
+              "team": "伊朗",
+              "player": "莫赫比"
+            },
+            {
+              "time": "55'",
+              "team": "新西兰",
+              "player": "贾斯特"
+            },
+            {
+              "time": "33'",
+              "team": "伊朗",
+              "player": "雷扎伊安"
+            },
+            {
+              "time": "7'",
+              "team": "新西兰",
+              "player": "贾斯特"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 5,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 48,
+            "right": 52
+          },
+          {
+            "title": "进攻",
+            "left": 96,
+            "right": 101
+          },
+          {
+            "title": "危险进攻",
+            "left": 56,
+            "right": 44
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 8
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "SoFi Stadium",
+      "city": "洛杉矶",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "伊朗FIFA排名20远高于新西兰的85，赛前预测高度一致伊朗2-0胜（置信度8/10），但实际被排名低65位的新西兰2-2逼平，且射正数4-8落后，场面未占优。"
+        },
+        "generated_at": "2026-06-16T18:50:45.285056",
+        "content": ""
+      }
+    },
+    "2026-06-16_比利时_vs_埃及": {
+      "date": "2026-06-16",
+      "home_team": "比利时",
+      "away_team": "埃及",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛G组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "66'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "哈尼",
+            "description": "第2个进球 - 哈尼(比利时) - 乌龙球"
+          },
+          {
+            "time": "20'",
+            "team": "埃及",
+            "type": "进球",
+            "player": "阿舒尔",
+            "description": "第1个进球！Goooooooal！阿舒尔(埃及 射门 (助攻: 萨拉赫))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "66'",
+              "team": "比利时",
+              "player": "哈尼"
+            },
+            {
+              "time": "20'",
+              "team": "埃及",
+              "player": "阿舒尔"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 9,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 54,
+            "right": 46
+          },
+          {
+            "title": "进攻",
+            "left": 119,
+            "right": 77
+          },
+          {
+            "title": "危险进攻",
+            "left": 64,
+            "right": 33
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 7,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 7
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lumen Field",
+      "city": "西雅图",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "比利时世界排名第9远高于埃及第29，赛前预测一致看好比利时获胜，但最终被世界排名低20位的埃及1-1逼平，且埃及在危险进攻和角球数据上占优，属于明显冷门。"
+        },
+        "generated_at": "2026-06-16T18:50:30.255078",
+        "content": ""
+      }
+    },
+    "2026-06-16_沙特阿拉伯_vs_乌拉圭": {
+      "date": "2026-06-16",
+      "home_team": "沙特阿拉伯",
+      "away_team": "乌拉圭",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛H组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "80'",
+            "team": "乌拉圭",
+            "type": "进球",
+            "player": "阿劳霍",
+            "description": "第2个进球 - M.阿劳霍(乌拉圭) - 射门"
+          },
+          {
+            "time": "41'",
+            "team": "沙特阿拉伯",
+            "type": "进球",
+            "player": "阿姆里",
+            "description": "第1个进球！球进啦！阿姆里(沙特阿拉伯 射门)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "80'",
+              "team": "乌拉圭",
+              "player": "阿劳霍"
+            },
+            {
+              "time": "41'",
+              "team": "沙特阿拉伯",
+              "player": "阿姆里"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 18,
+          "越位": 6
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 33,
+            "right": 67
+          },
+          {
+            "title": "进攻",
+            "left": 75,
+            "right": 145
+          },
+          {
+            "title": "危险进攻",
+            "left": 27,
+            "right": 79
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 10
+          },
+          {
+            "title": "射偏",
+            "left": 3,
+            "right": 10
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 14
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Hard Rock Stadium",
+      "city": "迈阿密",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "世界排名第61的沙特阿拉伯逼平第16的乌拉圭，赛前预测乌拉圭胜出，且乌拉圭在控球率（67%）、射正（10-3）等数据上全面占优却未能取胜。"
+        },
+        "generated_at": "2026-06-16T18:50:37.854335",
+        "content": ""
+      }
+    },
+    "2026-06-16_伊拉克_vs_挪威": {
+      "date": "2026-06-16",
+      "home_team": "伊拉克",
+      "away_team": "挪威",
+      "home_score": 1,
+      "away_score": 4,
+      "score_display": "1-4",
+      "match_stage": "小组赛I组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+7'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "侯赛因",
+            "description": "第5个进球 - 侯赛因(挪威) - 乌龙球"
+          },
+          {
+            "time": "77'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "厄斯蒂高",
+            "description": "第4个进球 - 厄斯蒂高(挪威) - 头球 (助攻: 厄德高)"
+          },
+          {
+            "time": "43'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "哈兰德",
+            "description": "第3个进球 - 哈兰德(挪威) - 射门"
+          },
+          {
+            "time": "39'",
+            "team": "伊拉克",
+            "type": "进球",
+            "player": "侯赛因",
+            "description": "第2个进球 - 侯赛因(伊拉克) - 头球 (助攻: 阿马里)"
+          },
+          {
+            "time": "29'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "哈兰德",
+            "description": "第1个进球！球进啦！哈兰德(挪威 射门 (助攻: 沃尔费))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+7'",
+              "team": "挪威",
+              "player": "侯赛因"
+            },
+            {
+              "time": "77'",
+              "team": "挪威",
+              "player": "厄斯蒂高"
+            },
+            {
+              "time": "43'",
+              "team": "挪威",
+              "player": "哈兰德"
+            },
+            {
+              "time": "39'",
+              "team": "伊拉克",
+              "player": "侯赛因"
+            },
+            {
+              "time": "29'",
+              "team": "挪威",
+              "player": "哈兰德"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 7,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 4
+          },
+          {
+            "title": "控球率",
+            "left": 39,
+            "right": 61
+          },
+          {
+            "title": "进攻",
+            "left": 79,
+            "right": 89
+          },
+          {
+            "title": "危险进攻",
+            "left": 27,
+            "right": 39
+          },
+          {
+            "title": "射正",
+            "left": 1,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Gillette Stadium",
+      "city": "波士顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "挪威排名31远高于伊拉克的57，赛前预测一致看好挪威（8票全胜），实际4-1大胜符合预期，技术统计全面占优，无冷门迹象。"
+        },
+        "generated_at": "2026-06-17T14:15:09.251163",
+        "content": ""
+      }
+    },
+    "2026-06-16_法国_vs_塞内加尔": {
+      "date": "2026-06-16",
+      "home_team": "法国",
+      "away_team": "塞内加尔",
+      "home_score": 3,
+      "away_score": 1,
+      "score_display": "3-1",
+      "match_stage": "小组赛I组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+6'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第4个进球 - 姆巴佩(法国) - 射门"
+          },
+          {
+            "time": "90+5'",
+            "team": "塞内加尔",
+            "type": "进球",
+            "player": "姆巴耶",
+            "description": "第3个进球 - 姆巴耶(塞内加尔) - 射门 (助攻: I.恩迪亚耶)"
+          },
+          {
+            "time": "82'",
+            "team": "法国",
+            "type": "进球",
+            "player": "巴尔科拉",
+            "description": "第2个进球 - 巴尔科拉(法国) - 射门 (助攻: 拉比奥)"
+          },
+          {
+            "time": "66'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第1个进球！Goooooooal！姆巴佩(法国 射门 (助攻: 奥利塞))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+6'",
+              "team": "法国",
+              "player": "姆巴佩"
+            },
+            {
+              "time": "90+5'",
+              "team": "塞内加尔",
+              "player": "姆巴耶"
+            },
+            {
+              "time": "82'",
+              "team": "法国",
+              "player": "巴尔科拉"
+            },
+            {
+              "time": "66'",
+              "team": "法国",
+              "player": "姆巴佩"
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 7,
+          "角球": 10,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 54,
+            "right": 46
+          },
+          {
+            "title": "进攻",
+            "left": 113,
+            "right": 99
+          },
+          {
+            "title": "危险进攻",
+            "left": 32,
+            "right": 27
+          },
+          {
+            "title": "射正",
+            "left": 8,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 1,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 6,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "MetLife Stadium",
+      "city": "新泽西纽约",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "法国排名第3、塞内加尔排名第15，差距12位，法国3-1获胜符合预期，赛前预测法国胜率最高，技术统计全面占优，净胜2球属正常结果。"
+        },
+        "generated_at": "2026-06-17T14:15:00.503220",
+        "content": ""
+      }
+    },
+    "2026-06-17_奥地利_vs_约旦": {
+      "date": "2026-06-17",
+      "home_team": "奥地利",
+      "away_team": "约旦",
+      "home_score": 3,
+      "away_score": 1,
+      "score_display": "3-1",
+      "match_stage": "小组赛J组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+12'",
+            "team": "奥地利",
+            "type": "进球",
+            "player": "阿瑙托维奇",
+            "description": "第4个进球 - 阿瑙托维奇(奥地利) - 点球"
+          },
+          {
+            "time": "77'",
+            "team": "奥地利",
+            "type": "进球",
+            "player": "亚赞",
+            "description": "第3个进球 - 亚赞(奥地利) - 乌龙球"
+          },
+          {
+            "time": "50'",
+            "team": "约旦",
+            "type": "进球",
+            "player": "乌勒万",
+            "description": "第2个进球 - 乌勒万(约旦) - 射门 (助攻: 拉瓦卜迪赫)"
+          },
+          {
+            "time": "21'",
+            "team": "奥地利",
+            "type": "进球",
+            "player": "施密德",
+            "description": "第1个进球！Goooooooal！施密德(奥地利 射门 (助攻: 施拉格尔))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+12'",
+              "team": "奥地利",
+              "player": "阿瑙托维奇"
+            },
+            {
+              "time": "77'",
+              "team": "奥地利",
+              "player": "亚赞"
+            },
+            {
+              "time": "50'",
+              "team": "约旦",
+              "player": "乌勒万"
+            },
+            {
+              "time": "21'",
+              "team": "奥地利",
+              "player": "施密德"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 7,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 63,
+            "right": 37
+          },
+          {
+            "title": "进攻",
+            "left": 132,
+            "right": 86
+          },
+          {
+            "title": "危险进攻",
+            "left": 55,
+            "right": 45
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 3
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Levi's Stadium",
+      "city": "旧金山",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "奥地利排名24远高于约旦的63，且赛前预测偏向奥地利，最终3-1获胜符合预期，控球率63%占优，净胜2球属于正常结果。"
+        },
+        "generated_at": "2026-06-17T14:15:22.418870",
+        "content": ""
+      }
+    },
+    "2026-06-17_阿根廷_vs_阿尔及利亚": {
+      "date": "2026-06-17",
+      "home_team": "阿根廷",
+      "away_team": "阿尔及利亚",
+      "home_score": 3,
+      "away_score": 0,
+      "score_display": "3-0",
+      "match_stage": "小组赛J组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "76'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "梅西",
+            "description": "第3个进球 - 梅西(阿根廷) - 射门 (助攻: 冈萨雷斯)"
+          },
+          {
+            "time": "60'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "梅西",
+            "description": "第2个进球 - 梅西(阿根廷) - 射门"
+          },
+          {
+            "time": "17'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "梅西",
+            "description": "第1个进球！球进啦！梅西(阿根廷 射门 (助攻: 德保罗))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "76'",
+              "team": "阿根廷",
+              "player": "梅西"
+            },
+            {
+              "time": "60'",
+              "team": "阿根廷",
+              "player": "梅西"
+            },
+            {
+              "time": "17'",
+              "team": "阿根廷",
+              "player": "梅西"
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 4,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 48,
+            "right": 52
+          },
+          {
+            "title": "进攻",
+            "left": 85,
+            "right": 119
+          },
+          {
+            "title": "危险进攻",
+            "left": 24,
+            "right": 45
+          },
+          {
+            "title": "射正",
+            "left": 6,
+            "right": 0
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Arrowhead Stadium",
+      "city": "堪萨斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "阿根廷世界排名第1远高于阿尔及利亚第28，赛前预测阿根廷胜出且实际3-0大胜，虽然控球率等数据略低但射正6-0碾压，结果完全符合预期，无冷门迹象。"
+        },
+        "generated_at": "2026-06-17T14:15:16.210101",
+        "content": ""
+      }
+    },
+    "2026-06-18_乌兹别克斯坦_vs_哥伦比亚": {
+      "date": "2026-06-18",
+      "home_team": "乌兹别克斯坦",
+      "away_team": "哥伦比亚",
+      "home_score": 1,
+      "away_score": 3,
+      "score_display": "1-3",
+      "match_stage": "小组赛K组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+11'",
+            "team": "哥伦比亚",
+            "type": "进球",
+            "player": "坎帕斯",
+            "description": "第4个进球 - 坎帕斯(哥伦比亚) - 头球 (助攻: 埃尔南德斯)"
+          },
+          {
+            "time": "66'",
+            "team": "哥伦比亚",
+            "type": "进球",
+            "player": "迪亚斯",
+            "description": "第3个进球 - 迪亚斯(哥伦比亚) - 射门 (助攻: 普埃尔塔)"
+          },
+          {
+            "time": "61'",
+            "team": "乌兹别克斯坦",
+            "type": "进球",
+            "player": "法伊祖拉耶夫",
+            "description": "第2个进球 - 法伊祖拉耶夫(乌兹别克斯坦) - 头球"
+          },
+          {
+            "time": "41'",
+            "team": "哥伦比亚",
+            "type": "进球",
+            "player": "穆尼奥斯",
+            "description": "第1个进球！球进啦！穆尼奥斯(哥伦比亚 射门 (助攻: 迪亚斯))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+11'",
+              "team": "哥伦比亚",
+              "player": "坎帕斯"
+            },
+            {
+              "time": "66'",
+              "team": "哥伦比亚",
+              "player": "迪亚斯"
+            },
+            {
+              "time": "61'",
+              "team": "乌兹别克斯坦",
+              "player": "法伊祖拉耶夫"
+            },
+            {
+              "time": "41'",
+              "team": "哥伦比亚",
+              "player": "穆尼奥斯"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 7,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 3
+          },
+          {
+            "title": "控球率",
+            "left": 40,
+            "right": 60
+          },
+          {
+            "title": "进攻",
+            "left": 67,
+            "right": 98
+          },
+          {
+            "title": "危险进攻",
+            "left": 28,
+            "right": 41
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 7
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Estadio Azteca",
+      "city": "墨西哥城",
+      "country": "墨西哥",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "哥伦比亚排名第13，乌兹别克斯坦排名第50，排名差距37位，且哥伦比亚在控球率（60%）、射正（4-2）等数据上全面占优，3-1的比分符合强队取胜的预期，不属于冷门。"
+        },
+        "generated_at": "2026-06-19T02:56:36.526904",
+        "content": ""
+      }
+    },
+    "2026-06-18_加纳_vs_巴拿马": {
+      "date": "2026-06-18",
+      "home_team": "加纳",
+      "away_team": "巴拿马",
+      "home_score": 1,
+      "away_score": 0,
+      "score_display": "1-0",
+      "match_stage": "小组赛L组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+5'",
+            "team": "加纳",
+            "type": "进球",
+            "player": "伊伦基",
+            "description": "第1个进球！Goooooooal！伊伦基(加纳 射门 (助攻: 阿桑特))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+5'",
+              "team": "加纳",
+              "player": "伊伦基"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 4,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 38,
+            "right": 62
+          },
+          {
+            "title": "进攻",
+            "left": 93,
+            "right": 101
+          },
+          {
+            "title": "危险进攻",
+            "left": 35,
+            "right": 60
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "BMO Field",
+      "city": "多伦多",
+      "country": "加拿大",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "排名第73的加纳击败排名第34的巴拿马，排名差距39位，且巴拿马在控球率（62%）、射正（4-2）等数据上占优，但加纳1-0取胜，属于明显冷门。"
+        },
+        "generated_at": "2026-06-19T02:56:59.321951",
+        "content": ""
+      }
+    },
+    "2026-06-18_英格兰_vs_克罗地亚": {
+      "date": "2026-06-18",
+      "home_team": "英格兰",
+      "away_team": "克罗地亚",
+      "home_score": 4,
+      "away_score": 2,
+      "score_display": "4-2",
+      "match_stage": "小组赛L组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "85'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "拉什福德",
+            "description": "第6个进球 - 拉什福德(英格兰) - 射门 (助攻: 萨卡)"
+          },
+          {
+            "time": "47'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "贝林厄姆",
+            "description": "第5个进球 - 贝林厄姆(英格兰) - 射门 (助攻: 安德森)"
+          },
+          {
+            "time": "45+6'",
+            "team": "克罗地亚",
+            "type": "进球",
+            "player": "穆萨",
+            "description": "第4个进球 - 穆萨(克罗地亚) - 射门 (助攻: 佩里西奇)"
+          },
+          {
+            "time": "42'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "凯恩",
+            "description": "第3个进球 - 凯恩(英格兰) - 头球 (助攻: 赖斯)"
+          },
+          {
+            "time": "36'",
+            "team": "克罗地亚",
+            "type": "进球",
+            "player": "巴图里纳",
+            "description": "第2个进球 - 巴图里纳(克罗地亚) - 射门 (助攻: 苏契奇)"
+          },
+          {
+            "time": "12'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "",
+            "description": "第1个进球！球进啦！凯恩(英格兰 点球)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "85'",
+              "team": "英格兰",
+              "player": "拉什福德"
+            },
+            {
+              "time": "47'",
+              "team": "英格兰",
+              "player": "贝林厄姆"
+            },
+            {
+              "time": "45+6'",
+              "team": "克罗地亚",
+              "player": "穆萨"
+            },
+            {
+              "time": "42'",
+              "team": "英格兰",
+              "player": "凯恩"
+            },
+            {
+              "time": "36'",
+              "team": "克罗地亚",
+              "player": "巴图里纳"
+            },
+            {
+              "time": "12'",
+              "team": "英格兰",
+              "player": ""
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 10,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 4,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 52,
+            "right": 48
+          },
+          {
+            "title": "进攻",
+            "left": 87,
+            "right": 81
+          },
+          {
+            "title": "危险进攻",
+            "left": 33,
+            "right": 38
+          },
+          {
+            "title": "射正",
+            "left": 11,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 8,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "AT&T Stadium",
+      "city": "达拉斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "英格兰排名第4、克罗地亚排名第11，排名差距不大且赛前预测英格兰胜出，实际4-2获胜符合预期，技术统计英格兰占优，非冷门。"
+        },
+        "generated_at": "2026-06-19T02:56:51.288088",
+        "content": ""
+      }
+    },
+    "2026-06-18_葡萄牙_vs_刚果(金)": {
+      "date": "2026-06-18",
+      "home_team": "葡萄牙",
+      "away_team": "刚果(金)",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛K组第1轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "45+5'",
+            "team": "刚果民主共和国",
+            "type": "进球",
+            "player": "维萨",
+            "description": "第2个进球 - 维萨(刚果民主共和国) - 头球 (助攻: 马苏亚库)"
+          },
+          {
+            "time": "6'",
+            "team": "葡萄牙",
+            "type": "进球",
+            "player": "J.内维斯",
+            "description": "第1个进球！Goooooooal！J.内维斯(葡萄牙 头球 (助攻: 内托))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "45+5'",
+              "team": "刚果民主共和国",
+              "player": "维萨"
+            },
+            {
+              "time": "6'",
+              "team": "葡萄牙",
+              "player": "J.内维斯"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 9,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 75,
+            "right": 25
+          },
+          {
+            "title": "进攻",
+            "left": 135,
+            "right": 56
+          },
+          {
+            "title": "危险进攻",
+            "left": 75,
+            "right": 28
+          },
+          {
+            "title": "射正",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      }
+    },
+    "2026-06-19_捷克_vs_南非": {
+      "date": "2026-06-19",
+      "home_team": "捷克",
+      "away_team": "南非",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "match_stage": "小组赛A组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "83'",
+            "team": "南非",
+            "type": "进球",
+            "player": "莫科纳",
+            "description": "第2个进球 - 莫科纳(南非) - 点球"
+          },
+          {
+            "time": "6'",
+            "team": "捷克",
+            "type": "进球",
+            "player": "萨迪莱克",
+            "description": "第1个进球！球进啦！萨迪莱克(捷克 射门 (助攻: 索伊卡))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "83'",
+              "team": "南非",
+              "player": "莫科纳"
+            },
+            {
+              "time": "6'",
+              "team": "捷克",
+              "player": "萨迪莱克"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 8,
+          "角球": 10,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 38,
+            "right": 62
+          },
+          {
+            "title": "进攻",
+            "left": 69,
+            "right": 119
+          },
+          {
+            "title": "危险进攻",
+            "left": 31,
+            "right": 40
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Mercedes-Benz Stadium",
+      "city": "亚特兰大",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "排名40的捷克被排名60的南非逼平，赛前预测高度一致看好捷克（终局8票全胜），且南非在控球率（62%）、进攻（119-69）等技术统计上全面占优，捷克未能取胜属明显冷门。"
+        },
+        "generated_at": "2026-06-19T03:25:02.076658",
+        "content": ""
+      }
+    }
+  },
+  "meta": {
+    "last_updated": "2026-06-19T03:25:08.106523",
+    "total_matches": 25
+  }
+}
