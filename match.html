@@ -13,7 +13,7 @@
   --primary:#4a7bbf;--primary-dark:#3a65a0;--primary-light:#edf1f8;
   --bg:#f4f4f6;--card:#fff;--border:#ddd;--divider:#ebebec;
   --text:#2a2a2a;--text2:#5a5a5a;--text3:#8a8a8a;
-  --red:#b03d3d;--green:#27ae60;--orange:#ec852b;--blue:#3a65a0;--yellow:#a4a380;
+  --red:#b03d3d;--green:#2d9e5c;--orange:#c06e27;--blue:#3a65a0;--yellow:#a4a380;
   --side-a:#b03d3d;--side-b:#3a65a0;--side-x:#a4a380;
   --nav-bg:rgba(58,72,96,0.96);--nav-text:#d0d8e4;--nav-muted:rgba(255,255,255,0.55);
   --badge-yes-bg:#e2efe6;--badge-no-bg:#f5eadb;
@@ -388,7 +388,7 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
 
 <div id="main">
   <nav class="sticky-nav" id="sticky-nav">
-    <a href="index.html" class="nav-back" onclick="sessionStorage.setItem('index_scroll_y',String(window.scrollY))">← 返回赛程</a>
+    <a href="index.html" class="nav-back" onclick="sessionStorage.setItem('from_match','1')">← 返回赛程</a>
     <span class="nav-title" id="nav-title"></span>
     <span id="model-badge" style="display:none;font-size:11px;padding:2px 8px;border-radius:8px;background:rgba(255,255,255,0.12);color:var(--nav-muted);font-weight:500;white-space:nowrap"></span>
     <span class="nav-spacer"></span>
@@ -1398,7 +1398,7 @@ function renderFooter(){
     </div>
     <div class="embed-container" id="embed-mode"></div>
     <div id="link-mode" style="display:none"><button class="viewer-open-btn" onclick="openViewer()">▶ 观看动画回放</button></div>
-    <div class="hint">辩论数据由多智能体辩论系统生成</div>
+    <div class="hint">辩论数据由多智能体辩论系统生成<br>使用结束比赛的数据进行提示词学习以提升预测效果</div>
     <div style="margin-top:16px;font-size:12px;color:var(--text3);line-height:1.8">© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a><br><a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备2026007739号</a></div>`;
   document.getElementById('footer-section').innerHTML=html;
   setMode('embed');

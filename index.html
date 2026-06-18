@@ -13,7 +13,8 @@
   --primary:#4a7bbf;--primary-dark:#3a65a0;--primary-light:#edf1f8;
   --bg:#f4f4f6;--card:#fff;--border:#ddd;--divider:#ebebec;
   --text:#2a2a2a;--text2:#5a5a5a;--text3:#8a8a8a;
-  --red:#b03d3d;--green:#27ae60;--orange:#ec852b;--blue:#3a65a0;--yellow:#a4a380;
+  --red:#b03d3d;--green:#2d9e5c;--orange:#c06e27;--blue:#3a65a0;--yellow:#a4a380;
+  --green-light:#e2efe6;--orange-light:#f5eadb;
   --side-a:#b03d3d;--side-b:#3a65a0;--side-x:#a4a380;
   --nav-bg:rgba(58,72,96,0.96);--nav-text:#d0d8e4;--nav-muted:rgba(255,255,255,0.55);
   --badge-yes-bg:#e2efe6;--badge-no-bg:#f5eadb;
@@ -24,6 +25,7 @@
   --bg:#f5f5f5;--card:#fff;--border:#e8e8e8;--divider:#f1f1f1;
   --text:#222;--text2:#555;--text3:#888;
   --red:#e74c3c;--green:#27ae60;--orange:#f39c12;--blue:#2980b9;--yellow:#f0ad4e;
+  --green-light:#e8f5e9;--orange-light:#fff3e0;
   --side-a:#e74c3c;--side-b:#2980b9;--side-x:#f0ad4e;
   --nav-bg:rgba(22,120,242,0.95);--nav-text:#fff;--nav-muted:rgba(255,255,255,0.65);
   --badge-yes-bg:#e8f5e9;--badge-no-bg:#fff3e0;
@@ -34,6 +36,7 @@
   --bg:#1a1a24;--card:#242432;--border:#363648;--divider:#2a2a38;
   --text:#c8c8d4;--text2:#8a8aa4;--text3:#5a5a72;
   --red:#dd6550;--green:#27ae60;--orange:#e9842c;--blue:#5790d6;--yellow:#bdccab;
+  --green-light:#1e2e28;--orange-light:#2e2818;
   --side-a:#dd6550;--side-b:#5790d6;--side-x:#bdccab;
   --nav-bg:rgba(18,18,28,0.97);--nav-text:#a8a8bc;--nav-muted:rgba(255,255,255,0.4);
   --badge-yes-bg:#1e2e28;--badge-no-bg:#2e2818;
@@ -93,30 +96,35 @@ a{color:var(--primary);text-decoration:none}
 .city-tag{color:var(--text3);font-size:11px;display:block;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;transition:color .3s}
 
 /* Teams Row */
-.teams-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+.teams-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px}
 .team-col{text-align:center;flex:1;min-width:0}
 .team-flag{width:72px;height:48px;border-radius:4px;object-fit:contain;margin:0 auto 4px;border:none;background:none}
 .team-flag-ph{width:72px;height:48px;border-radius:4px;margin:0 auto 4px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--primary);border:none}
 .team-name{font-size:16px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 /* Prediction Middle Area (reuses original real-score layout) */
-.pred-middle-area{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:4px}
-.pred-middle-score{display:flex;align-items:center;justify-content:center;gap:2px;font-size:28px;font-weight:800;line-height:1;border-radius:8px;padding:2px 10px;transition:background .3s}
+.pred-middle-area{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:5px}
+.pred-middle-score{display:flex;align-items:center;justify-content:center;gap:2px;font-size:28px;font-weight:800;line-height:1;border-radius:8px;padding:2px 10px;transition:background .3s;margin-top:2px}
 .pred-middle-num{min-width:22px;text-align:center}
 .pred-middle-sep{color:var(--text3);font-size:22px;margin:0 2px}
-.pred-middle-score.pred-score-match{background:color-mix(in srgb,var(--green) 12%,transparent)}
+.pred-middle-score.pred-score-match{background:var(--green);color:#fff}
+.pred-middle-score.pred-score-match .pred-middle-num{color:#fff}
+.pred-middle-score.pred-score-match .pred-middle-sep{color:rgba(255,255,255,0.6)}
 .pred-middle-bar-row{display:flex;justify-content:center;width:100%}
 .pred-conf-bar-full{flex:1;max-width:100px;height:8px;background:var(--divider);border-radius:4px;overflow:hidden;transition:background .3s}
 .pred-conf-text-dark{font-size:11px;color:var(--text);white-space:nowrap;font-weight:600}
 
-/* Stance Distribution (布局4: voting dots + legend) */
-.stance-row{display:flex;align-items:center;gap:8px;margin:8px 0 0;font-size:11px;flex-wrap:wrap}
-.stance-label-text{color:var(--text3);font-size:10px;font-weight:600;letter-spacing:.5px;flex-shrink:0}
-.stance-dots{display:flex;gap:2px;align-items:center;flex-wrap:wrap}
-.stance-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;transition:opacity .3s}
-.stance-sep{width:4px;flex-shrink:0}
-.stance-legend{display:flex;gap:8px;font-size:10px;color:var(--text3);align-items:center;margin-left:auto;flex-shrink:0}
+/* Stance Distribution (label + dots inline + legend right) */
+.stance-row{display:flex;align-items:center;gap:6px;margin:10px 0 0}
+.stance-label{font-size:11px;color:var(--text3);white-space:nowrap;flex-shrink:0;font-weight:700}
+.stance-dots{display:inline-flex;align-items:center;gap:3px;flex-shrink:0}
+.stance-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.stance-dot.dot-a{background:var(--side-a)}
+.stance-dot.dot-x{background:var(--side-x)}
+.stance-dot.dot-b{background:var(--side-b)}
+.stance-sep{width:1px;height:12px;background:var(--text3);opacity:.4;flex-shrink:0}
+.stance-legend-area{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--text3);margin-left:auto;flex-shrink:0}
 .stance-legend-item{display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
-.stance-legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.stance-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
 /* Prediction shared styles */
 .pred-conf-fill{height:100%;border-radius:4px;display:block;clip-path:inset(0 100% 0 0);animation:bar-enter 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
@@ -124,17 +132,34 @@ a{color:var(--primary);text-decoration:none}
 .pred-conf-fill.high{background:var(--green)}
 .pred-conf-fill.mid{background:var(--orange)}
 .pred-conf-fill.low{background:var(--red)}
-.topk-row{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;flex-wrap:wrap}
-.topk-label{color:var(--text3);white-space:nowrap}
+.topk-row{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:11px;flex-wrap:wrap}
+.topk-label{color:var(--text3);white-space:nowrap;font-weight:700}
 .topk-score{color:var(--text2);font-weight:600;padding:1px 5px;background:var(--primary-light);border-radius:3px}
 .topk-score.exact-match{background:var(--green);color:#fff;font-weight:700;padding:1px 6px;border-radius:3px}
 
+/* Flag prediction: stamp overlay on flag img */
+.team-flag-wrap{position:relative;display:inline-flex;flex-direction:column;align-items:center;margin:0 auto 4px}
+.team-flag-wrap .team-flag,.team-flag-wrap .team-flag-ph{margin:0 auto 0}
+.pred-stamp{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;pointer-events:none;border-radius:4px;border:3px solid var(--green);background:rgba(255,255,255,0.65)}
+.pred-stamp.stamp-wrong{border-color:var(--red);background:rgba(255,255,255,0.65)}
+.pred-stamp .stamp-main{font-size:14px;font-weight:900;line-height:1;letter-spacing:1px;color:var(--green);text-shadow:0 1px 2px rgba(0,0,0,0.3)}
+.pred-stamp .stamp-sub{font-size:10px;font-weight:800;line-height:1.3;letter-spacing:.3px;text-align:center;color:var(--green);text-shadow:0 1px 2px rgba(0,0,0,0.3)}
+.pred-stamp.stamp-wrong .stamp-main{color:var(--red)}
+.pred-stamp.stamp-wrong .stamp-sub{color:var(--red)}
+.pred-stamp.stamp-pending{background:rgba(255,255,255,0.5)}
+.pred-stamp.stamp-pending .stamp-main{font-size:24px;text-shadow:0 1px 3px rgba(0,0,0,0.35)}
+
 /* Review Section (复盘区) */
-.review-divider{height:1px;background:var(--border);margin:10px 6px 8px;transition:background .3s}
-.review-section{padding:0 4px 4px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:11px;line-height:1.5}
-.review-tag{color:var(--text3);font-weight:700;font-size:10px;letter-spacing:.3px;flex-shrink:0}
-.review-score{font-weight:700;color:var(--text2);white-space:nowrap}
-.review-match{white-space:nowrap}
+.review-divider{height:1px;background:var(--text3);margin:10px 0 6px;border-top:1.5px dashed var(--text3);background:none}
+.review-section{padding:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:11px;color:var(--text3)}
+.review-label{color:var(--text3);font-weight:600;white-space:nowrap}
+.review-score-box{display:inline-flex;align-items:center;border:1.5px solid var(--border);border-radius:5px;overflow:hidden}
+.review-score-num{font-size:16px;font-weight:900;color:var(--text);min-width:20px;text-align:center;line-height:1;padding:2px 6px}
+.review-score-num.score-left{background:var(--divider)}
+.review-score-sep{width:1.5px;align-self:stretch;background:var(--border)}
+.review-match-text{white-space:nowrap}
+.review-match-text.match-hit{color:var(--green);font-weight:700}
+.review-match-text.match-miss{color:var(--red);font-weight:600}
 
 /* Stats Section (below hero, aligned with cards grid) */
 .stats-section{margin:16px 0 8px;padding:0 4px}
@@ -151,15 +176,11 @@ a{color:var(--primary);text-decoration:none}
 .stat-bar-fill.primary{background:var(--primary)}
 .stat-bar-fill.orange{background:var(--orange)}
 
-/* Upset tag - compact inline badge */
+/* Upset tag - half-overlapping below winner flag */
 .upset-tag{font-size:10px;font-weight:700;text-align:center;border-radius:3px;padding:1px 6px;display:inline-block;line-height:1.4;color:#fff;border:none}
 .upset-major{background:#ea580c}
 .upset-minor{background:#f59e0b}
 /* Accuracy Info lines (used in review section) */
-.accuracy-line{font-size:10px;color:var(--text3);white-space:nowrap}
-.accuracy-line.rank-1{color:var(--green);font-weight:700}
-.accuracy-line.no-match{color:var(--red);font-weight:600}
-.accuracy-line strong{font-weight:700}
 
 /* Consensus Badge */
 .consensus-badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;flex-shrink:0;transition:background .3s}
@@ -184,11 +205,12 @@ a{color:var(--primary);text-decoration:none}
   .sticky-nav{padding:7px 12px;gap:6px}
   .nav-brand{font-size:13px}
   .nav-link{font-size:12px;padding:3px 8px}
-  .stats-row{gap:8px}
-  .stat-card{min-width:100px;padding:10px 12px}
+  .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .stat-card{min-width:0;padding:10px 10px}
   .stat-value{font-size:20px}
+  .stat-label{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .stance-row{gap:4px}
-  .review-section{gap:4px 8px}
+  .review-section{gap:4px}
 }
 </style>
 </head>
@@ -215,7 +237,7 @@ a{color:var(--primary);text-decoration:none}
   <div class="loading">正在加载赛程数据...</div>
 </div>
 
-<div class="page-footer">辩论数据由多智能体辩论系统生成<br><br>© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a><br><a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备2026007739号</a></div>
+<div class="page-footer">辩论数据由多智能体辩论系统生成<br>使用结束比赛的数据进行提示词学习以提升预测效果<br><br>© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a><br><a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备2026007739号</a></div>
 
 <script>
 const DATA_DIR='data/',MANIFEST=DATA_DIR+'manifest.json',DETAIL_PAGE='match.html',IMAGES_DIR='images/',REAL_RESULTS=DATA_DIR+'real_results.json';
@@ -279,19 +301,35 @@ function sideOf(agent,topic){
   if(w.includes(teamA))return'a';if(w.includes(teamB))return'b';return'x';
 }
 function saveScrollPos(cardEl){
-  // 保存卡片的文件标识而非像素位置，避免异步加载导致偏移
+  // 同时保存卡片标识和像素位置
   const href=cardEl?.getAttribute('href')||'';
   sessionStorage.setItem(SCROLL_KEY,href);
+  sessionStorage.setItem(SCROLL_KEY+'_y',String(window.scrollY));
 }
 function restoreScrollPos(){
+  // 优先使用卡片标识定位，回退使用像素位置
   const saved=sessionStorage.getItem(SCROLL_KEY)||'';
-  if(!saved)return;
-  sessionStorage.removeItem(SCROLL_KEY);
-  // 延迟尝试查找目标卡片（等待异步加载完成）
-  const tryScroll=(attempt)=>{
-    const card=document.querySelector(`.sched-card[href="${CSS.escape(saved)}"]`);
-    if(card){card.scrollIntoView({behavior:'instant',block:'center'})}
-    else if(attempt<10){setTimeout(()=>tryScroll(attempt+1),300)}
+  const savedY=sessionStorage.getItem(SCROLL_KEY+'_y')||'';
+  const fromMatch=sessionStorage.getItem('from_match');
+  sessionStorage.removeItem('from_match');
+  if(!saved&&!savedY)return;
+  // 立即尝试像素位置（最快恢复）
+  if(savedY&&parseInt(savedY)>0){
+    window.scrollTo(0,parseInt(savedY));
+  }
+  // 延迟尝试卡片精准定位（覆盖像素位置）
+  const tryCard=(attempt)=>{
+    const card=saved?document.querySelector(`.sched-card[href="${CSS.escape(saved)}"]`):null;
+    if(card){
+      card.scrollIntoView({behavior:'instant',block:'center'});
+      sessionStorage.removeItem(SCROLL_KEY);
+      sessionStorage.removeItem(SCROLL_KEY+'_y');
+    }else if(attempt<20){
+      setTimeout(()=>tryCard(attempt+1),250);
+    }else{
+      sessionStorage.removeItem(SCROLL_KEY);
+      sessionStorage.removeItem(SCROLL_KEY+'_y');
+    }
   };
   setTimeout(()=>tryScroll(0),200);
 }
@@ -376,12 +414,15 @@ async function loadSchedule(){
   setupNavLinks();
   setupScrollHighlight();
 
-  // 逐条加载并插入，同时收集准确度数据
+  // 尽早渲染全局准确度统计（不依赖卡片数据，直接从 REAL_DATA 和 JSON 文件计算）
+  renderAccuracyStatsFromFiles(files);
+
+  // 逐条加载，插入到时间排序的正确位置（渐进式显示）
   const allCards=[];
   for(const file of files){
     try{
       const r=await fetch(DATA_DIR+file+'?t='+Date.now());
-      if(r.ok){const d=await r.json();const m=extractCardData(d,file);insertCard(m,sk.byDate);allCards.push(m)}
+      if(r.ok){const d=await r.json();const m=extractCardData(d,file);allCards.push(m);insertCardSorted(m,sk.byDate)}
     }catch(e){console.warn('跳过:',file)}
   }
   // 清除空位 loading
@@ -391,8 +432,6 @@ async function loadSchedule(){
   });
   // 所有卡片加载完毕后恢复滚动位置
   restoreScrollPos();
-  // 渲染全局准确度统计
-  renderAccuracyStats(allCards);
 }
 
 function buildSkeleton(){
@@ -413,11 +452,23 @@ function buildSkeleton(){
   return{html,byDate};
 }
 
-function insertCard(m,byDate){
+function insertCardSorted(m,byDate){
   const grid=document.getElementById(byDate[m.date]);
   if(!grid)return;
   const ld=grid.querySelector('.date-loading');if(ld)ld.remove();
-  grid.insertAdjacentHTML('beforeend',renderCard(m));
+  const myTime=m.file.match(/-\d{4}-/)?.[0]||'';
+  // 找到同一日期网格中应插入的位置（按文件名中的开球时间升序）
+  const cards=grid.querySelectorAll('.sched-card');
+  let inserted=false;
+  for(const card of cards){
+    const cardHref=card.getAttribute('href')||'';
+    const cardTime=decodeURIComponent(cardHref).match(/-\d{4}-/)?.[0]||'';
+    if(myTime&&cardTime&&myTime<cardTime){
+      card.insertAdjacentHTML('beforebegin',renderCard(m));
+      inserted=true;break;
+    }
+  }
+  if(!inserted)grid.insertAdjacentHTML('beforeend',renderCard(m));
 }
 
 function showDropZone(){
@@ -464,6 +515,94 @@ function jumpToToday(){
   const today=new Date().toLocaleDateString('sv-SE');
   const el=document.getElementById('cards-'+today.replace(/-/g,''))||document.querySelector('.date-head');
   if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/** 从 REAL_DATA 和预测 JSON 文件直接计算统计（无需等卡片渲染完） */
+async function renderAccuracyStatsFromFiles(files){
+  if(!REAL_DATA||!REAL_DATA.matches)return;
+  const endedMatches=Object.values(REAL_DATA.matches).filter(m=>m.status==='已结束');
+  if(!endedMatches.length)return;
+
+  // 并行加载所有预测 JSON 的 final_prediction
+  const preds=[];
+  const fetches=files.map(async f=>{
+    try{
+      const r=await fetch(DATA_DIR+f+'?t='+Date.now());
+      if(!r.ok)return null;
+      const d=await r.json();
+      const{teamA,teamB}=parseTopic(d.topic||'');
+      const fp=d.final_prediction;
+      const allPreds=d.top_predictions||[];
+      const meta=d.match_meta||{};
+      const realResult=findRealResult(teamA,teamB,meta.date||'');
+      if(!realResult)return null;
+      let winnerMatchRank=null,scoreMatchRank=null;
+      const fmt=actualToPredFormat(teamA,teamB,realResult.home_score,realResult.away_score);
+      for(let i=0;i<allPreds.length;i++){
+        if(winnerMatchRank===null&&allPreds[i].winner===fmt.winner)winnerMatchRank=i+1;
+        if(scoreMatchRank===null&&allPreds[i].winner===fmt.winner&&allPreds[i].score===fmt.predScore)scoreMatchRank=i+1;
+      }
+      if(!allPreds.length&&fp){
+        if(fp.winner===fmt.winner)winnerMatchRank=1;
+        if(fp.winner===fmt.winner&&fp.score===fmt.predScore)scoreMatchRank=1;
+      }
+      return{winner:fp?.winner||'',score:fp?.score||'',actualWinner:fmt.winner,actualPredScore:fmt.predScore,winnerMatchRank,scoreMatchRank,teamA,teamB};
+    }catch(e){return null}
+  });
+  const results=await Promise.all(fetches);
+  const withResult=results.filter(Boolean);
+  if(!withResult.length)return;
+
+  let winnerCorrect=0,scoreHit=0,totalScore=0,maxScore=0;
+  for(const m of withResult){
+    maxScore+=10;
+    if(!m.actualWinner)continue;
+    if(m.winner===m.actualWinner){winnerCorrect++;totalScore+=5;}
+    if(m.scoreMatchRank!==null){scoreHit++;totalScore+=3;}
+    const r=endedMatches.find(x=>x.home_team===m.teamA&&x.away_team===m.teamB);
+    if(r){
+      const ap=actualToPredFormat(m.teamA,m.teamB,r.home_score,r.away_score);
+      const predParts=m.score.split('-').map(Number);
+      const actualParts=ap.predScore.split('-').map(Number);
+      if(predParts.length===2&&actualParts.length===2){
+        if(Math.abs(predParts[0]-actualParts[0])<=1)totalScore+=1;
+        if(Math.abs(predParts[1]-actualParts[1])<=1)totalScore+=1;
+        if(predParts[0]+predParts[1]===actualParts[0]+actualParts[1])totalScore+=1;
+      }
+    }
+  }
+  let upsetCount=0;
+  for(const m of endedMatches){
+    const u=m.review&&m.review.upset;
+    if(u&&(u.level==='爆冷'||u.level==='大爆冷'))upsetCount++;
+  }
+  const container=document.getElementById('main-content');
+  if(!container)return;
+  const winnerPct=withResult.length?Math.round(winnerCorrect/withResult.length*100):0;
+  const scorePct=withResult.length?Math.round(scoreHit/withResult.length*100):0;
+  const scoreRate=maxScore?Math.round(totalScore/maxScore*100):0;
+  const upsetPct=endedMatches.length?Math.round(upsetCount/endedMatches.length*100):0;
+  const statsHtml=`<div class="stats-section">
+    <div class="stats-row">
+      <div class="stat-card" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">胜负命中</span><span class="stat-value" style="color:var(--green)">${winnerCorrect}<span class="stat-total">/${withResult.length} (${winnerPct}%)</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill green" style="width:${winnerPct}%"></span></div>
+      </div>
+      <div class="stat-card" title="预测的比分与实际比分完全一致即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">比分命中</span><span class="stat-value" style="color:var(--primary)">${scoreHit}<span class="stat-total">/${withResult.length} (${scorePct}%)</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scorePct}%"></span></div>
+      </div>
+      <div class="stat-card" title="综合评分：胜负正确+5分，比分命中+3分，进球差±1内各+1分，总进球数相同+1分（满分10/场）" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">综合分数</span><span class="stat-value" style="color:var(--primary)">${totalScore}<span class="stat-total">/${maxScore} (${scoreRate}%)</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scoreRate}%"></span></div>
+      </div>
+      <div class="stat-card" title="已结束比赛中标记为「爆冷」或「大爆冷」的比例（基于赛前赔率与实力对比的客观评估，与本网页预测无关）" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">赛事爆冷率</span><span class="stat-value" style="color:var(--green)">${upsetPct}<span class="stat-total">%</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill green" style="width:${upsetPct}%"></span></div>
+      </div>
+    </div>
+  </div>`;
+  container.insertAdjacentHTML('afterbegin',statsHtml);
 }
 
 function renderAccuracyStats(allCards){
@@ -517,20 +656,20 @@ function renderAccuracyStats(allCards){
   const statsHtml=`<div class="stats-section">
     <div class="stats-row">
       <div class="stat-card" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">胜负命中</span><span class="stat-value" style="color:var(--green)">${winnerCorrect}<span class="stat-total">/${withResult.length}</span></span></div>
+        <div class="stat-header"><span class="stat-label">胜负命中</span><span class="stat-value" style="color:var(--green)">${winnerCorrect}<span class="stat-total">/${withResult.length} (${winnerPct}%)</span></span></div>
         <div class="stat-bar"><span class="stat-bar-fill green" style="width:${winnerPct}%"></span></div>
       </div>
       <div class="stat-card" title="预测的比分与实际比分完全一致即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">比分命中</span><span class="stat-value" style="color:var(--primary)">${scoreHit}<span class="stat-total">/${withResult.length}</span></span></div>
+        <div class="stat-header"><span class="stat-label">比分命中</span><span class="stat-value" style="color:var(--primary)">${scoreHit}<span class="stat-total">/${withResult.length} (${scorePct}%)</span></span></div>
         <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scorePct}%"></span></div>
       </div>
       <div class="stat-card" title="综合评分：胜负正确+5分，比分命中+3分，进球差±1内各+1分，总进球数相同+1分（满分10/场）" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">综合分数</span><span class="stat-value" style="color:var(--primary)">${totalScore}<span class="stat-total">/${maxScore}</span></span></div>
+        <div class="stat-header"><span class="stat-label">综合分数</span><span class="stat-value" style="color:var(--primary)">${totalScore}<span class="stat-total">/${maxScore} (${scoreRate}%)</span></span></div>
         <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scoreRate}%"></span></div>
       </div>
       <div class="stat-card" title="已结束比赛中标记为「爆冷」或「大爆冷」的比例（基于赛前赔率与实力对比的客观评估，与本网页预测无关）" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">赛事爆冷率</span><span class="stat-value" style="color:var(--orange)">${upsetPct}<span class="stat-total">%</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill orange" style="width:${upsetPct}%"></span></div>
+        <div class="stat-header"><span class="stat-label">赛事爆冷率</span><span class="stat-value" style="color:var(--green)">${upsetPct}<span class="stat-total">%</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill green" style="width:${upsetPct}%"></span></div>
       </div>
     </div>
   </div>`;
@@ -544,19 +683,65 @@ function renderCard(m){
   const confPct=Math.round(m.confidence/10*100);
   const cc=m.confidence>=7?'high':m.confidence>=4?'mid':'low';
 
-  // ── 中间区域：原真实比分位置，现显示第一可能预测比分 ──
+  // ── 国旗上的预测章（叠加在国旗上） ──
+  const winnerSide=ws;
+  let stampClsA='',stampHtmlA='',stampClsB='',stampHtmlB='';
+  if(m.realScore){
+    if(winnerSide==='a'){
+      if(m.scoreMatchRank===1){stampClsA='stamp-correct';stampHtmlA='<span class="stamp-main">胜</span><span class="stamp-sub">完全准确</span>';}
+      else if(m.winnerMatchRank!==null){stampClsA='stamp-partial';stampHtmlA='<span class="stamp-main">胜</span><span class="stamp-sub">部分准确</span>';}
+      else{stampClsA='stamp-wrong';stampHtmlA='<span class="stamp-main">胜</span><span class="stamp-sub">预测错误</span>';}
+    }else if(winnerSide==='b'){
+      if(m.scoreMatchRank===1){stampClsB='stamp-correct';stampHtmlB='<span class="stamp-main">胜</span><span class="stamp-sub">完全准确</span>';}
+      else if(m.winnerMatchRank!==null){stampClsB='stamp-partial';stampHtmlB='<span class="stamp-main">胜</span><span class="stamp-sub">部分准确</span>';}
+      else{stampClsB='stamp-wrong';stampHtmlB='<span class="stamp-main">胜</span><span class="stamp-sub">预测错误</span>';}
+    }
+  }else if(m.winner){
+    // 无结果时只显示一个大"胜"
+    if(winnerSide==='a'){stampClsA='stamp-pending';stampHtmlA='<span class="stamp-main">胜</span>';}
+    else if(winnerSide==='b'){stampClsB='stamp-pending';stampHtmlB='<span class="stamp-main">胜</span>';}
+  }
+  // ── 爆冷标签 ──
+  let upsetHtml='';
+  if(m.upset){
+    const cls=m.upset.level==='大爆冷'?'upset-major':'upset-minor';
+    upsetHtml=`<span class="upset-tag ${cls}">${esc(m.upset.level)}</span>`;
+  }
+
+  const makeFlag=(name,cls,inner)=>{
+    const stampDiv=inner?`<div class="pred-stamp ${cls}">${inner}</div>`:'';
+    return`<div class="team-flag-wrap"><img class="team-flag" src="${IMAGES_DIR+encodeURIComponent(name)}.webp" onerror="if(!this.dataset.retry){this.dataset.retry='1';this.src='${IMAGES_DIR+encodeURIComponent(name)}.png'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}" alt="${esc(name)}"><div class="team-flag-ph" style="display:none">${esc(name.charAt(0))}</div>${stampDiv}</div>`;
+  };
+  const flagA=makeFlag(teamA,stampClsA,stampHtmlA);
+  const flagB=makeFlag(teamB,stampClsB,stampHtmlB);
+
+  // ── 中间区域：第一可能预测比分（主场-客场格式） ──
   let middleHtml='';
   if(m.winner){
+    // 主场-客场格式：直接从 realResult 取或从 score 推导
+    let homeScore='',awayScore='';
+    if(m.realScore){
+      // 已有结果时不显示预测比分在中间... 不，始终显示预测
+    }
+    // 从预测比分解析：cleanScore 得到 "胜者分数-败者分数"，需转为 "主场-客场"
     const scoreStr=cleanScore(m.score,m.winner);
-    const scoreParts=scoreStr.split('-');
-    const sA=scoreParts[0]||'';
-    const sB=scoreParts[1]||'';
+    const parts=scoreStr.split('-');
+    if(ws==='a'){
+      // 预测主队胜，格式已是 主场-客场
+      homeScore=parts[0]||'';awayScore=parts[1]||'';
+    }else if(ws==='b'){
+      // 预测客队胜，score 是 "客分-主分"，需反转
+      awayScore=parts[0]||'';homeScore=parts[1]||'';
+    }else{
+      // 平局
+      homeScore=parts[0]||'';awayScore=parts[1]||'';
+    }
     const matchCls=m.scoreMatchRank===1?' pred-score-match':'';
     middleHtml=`<div class="pred-middle-area">
       <div class="pred-middle-score${matchCls}">
-        <span class="pred-middle-num">${esc(sA)}</span>
-        <span class="pred-middle-sep">:</span>
-        <span class="pred-middle-num">${esc(sB)}</span>
+        <span class="pred-middle-num">${esc(homeScore)}</span>
+        <span class="pred-middle-sep">-</span>
+        <span class="pred-middle-num">${esc(awayScore)}</span>
       </div>
       <span class="pred-conf-text-dark">准确度 ${m.confidence}/10</span>
       <div class="pred-middle-bar-row">
@@ -567,29 +752,28 @@ function renderCard(m){
     middleHtml='<div class="pred-middle-area"><div style="color:var(--text3);font-size:13px">暂无预测</div></div>';
   }
 
-  // ── 立场分布（布局4：投票圆点 + 图例） ──
+  // ── 立场分布（label+bar同一行，图例右对齐在框外） ──
   let stanceHtml='';
   const totalAgents=m.countA+m.countB+m.countX;
   if(totalAgents>0){
-    // 生成投票圆点：按侧排列，中间加分隔
     let dotsHtml='';
-    for(let i=0;i<m.countA;i++)dotsHtml+=`<span class="stance-dot" style="background:var(--side-a)"></span>`;
-    if(m.countA&&m.countX)dotsHtml+=`<span class="stance-sep"></span>`;
-    for(let i=0;i<m.countX;i++)dotsHtml+=`<span class="stance-dot" style="background:var(--side-x)"></span>`;
-    if((m.countA||m.countX)&&m.countB)dotsHtml+=`<span class="stance-sep"></span>`;
-    for(let i=0;i<m.countB;i++)dotsHtml+=`<span class="stance-dot" style="background:var(--side-b)"></span>`;
+    const groups=[];
+    if(m.countA){let g='';for(let i=0;i<m.countA;i++)g+=`<span class="stance-dot dot-a"></span>`;groups.push(g);}
+    if(m.countX){let g='';for(let i=0;i<m.countX;i++)g+=`<span class="stance-dot dot-x"></span>`;groups.push(g);}
+    if(m.countB){let g='';for(let i=0;i<m.countB;i++)g+=`<span class="stance-dot dot-b"></span>`;groups.push(g);}
+    dotsHtml='<span class="stance-sep"></span>'+groups.join('<span class="stance-sep"></span>')+'<span class="stance-sep"></span>';
     stanceHtml=`<div class="stance-row">
-      <span class="stance-label-text">立场</span>
+      <span class="stance-label">智能体投票</span>
       <div class="stance-dots">${dotsHtml}</div>
-      <div class="stance-legend">
-        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-a)"></span>${m.countA}</span>
-        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-x)"></span>${m.countX}</span>
-        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-b)"></span>${m.countB}</span>
+      <div class="stance-legend-area">
+        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-a)"></span>${esc(teamA.length>3?teamA.slice(0,2)+'…':teamA)}</span>
+        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-x)"></span>平局</span>
+        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-b)"></span>${esc(teamB.length>3?teamB.slice(0,2)+'…':teamB)}</span>
       </div>
     </div>`;
   }
 
-  // ── 其它可能比分 ──
+  // ── 其它可能比分（格式：主场-客场 胜者队名胜/平局） ──
   let predHtml='';
   if(m.winner){
     let topkHtml='';
@@ -597,44 +781,47 @@ function renderCard(m){
       const altScores=m.topPreds.filter(p=>p.score&&(p.winner!==m.winner||p.score!==m.score)).slice(0,3);
       if(altScores.length) topkHtml=`<div class="topk-row"><span class="topk-label">其它可能比分</span>${altScores.map(p=>{
         const pDraw=p.winner&&!p.winner.includes(teamA)&&!p.winner.includes(teamB);
+        // 转为主场-客场格式
+        const pScoreStr=cleanScore(p.score,p.winner);
+        const pParts=pScoreStr.split('-');
+        const pSide=p.winner.includes(teamA)?'a':p.winner.includes(teamB)?'b':'x';
+        let pHome=pParts[0]||'',pAway=pParts[1]||'';
+        if(pSide==='b'){pHome=pParts[1]||'';pAway=pParts[0]||'';}
         const pLabel=esc(p.winner);
+        // 平局时winner已含"平局"，不需再追加
         const pSuffix=pDraw?'':' 胜';
+        const pDisp=`${esc(pHome)}-${esc(pAway)} ${pLabel}${pSuffix}`;
         let cls='topk-score';
         if(m.actualPredScore&&p.winner===m.actualWinner&&p.score===m.actualPredScore)cls+=' exact-match';
-        return`<span class="${cls}">${pLabel} ${esc(cleanScore(p.score,p.winner))}${pSuffix}</span>`;
+        return`<span class="${cls}">${pDisp}</span>`;
       }).join('')}</div>`;
     }
     predHtml=topkHtml;
   }
 
-  // ── 复盘区（仅在有真实结果时显示，紧凑1-2行） ──
+  // ── 复盘区（比赛结果+记分牌+匹配文本） ──
   let reviewHtml='';
   if(m.realScore){
     const parts=m.realScore.split('-');
-    let upsetHtml='';
-    if(m.upset){
-      const cls=m.upset.level==='大爆冷'?'upset-major':'upset-minor';
-      upsetHtml=` <span class="upset-tag ${cls}">${esc(m.upset.level)}</span>`;
-    }
-    // 匹配信息
-    let matchHtml='';
+    let matchText='';
     if(m.winnerMatchRank!==null){
-      const cls=m.winnerMatchRank===1?'rank-1':m.winnerMatchRank<=3?'':'no-match';
-      matchHtml+=`<span class="accuracy-line review-match ${cls}">胜负匹配第${m.winnerMatchRank}可能</span>`;
+      const cls=m.winnerMatchRank===1?'match-hit':m.winnerMatchRank<=3?'':'match-miss';
+      matchText+=`<span class="review-match-text ${cls}"><strong>胜负</strong>匹配预测<strong>${m.winnerMatchRank}</strong></span>`;
     }else if(m.actualWinner){
-      matchHtml+=`<span class="accuracy-line review-match no-match">胜负未命中</span>`;
+      matchText+=`<span class="review-match-text match-miss">胜负未命中</span>`;
     }
     if(m.scoreMatchRank!==null){
-      const cls=m.scoreMatchRank===1?'rank-1':m.scoreMatchRank<=3?'':'no-match';
-      matchHtml+=`<span class="accuracy-line review-match ${cls}">比分匹配第${m.scoreMatchRank}可能</span>`;
+      const cls=m.scoreMatchRank===1?'match-hit':m.scoreMatchRank<=3?'':'match-miss';
+      matchText+=`<span class="review-match-text ${cls}"><strong>比分</strong>匹配预测<strong>${m.scoreMatchRank}</strong></span>`;
     }else if(m.actualPredScore){
-      matchHtml+=`<span class="accuracy-line review-match no-match">比分未命中</span>`;
+      matchText+=`<span class="review-match-text match-miss">比分未命中</span>`;
     }
     reviewHtml=`<div class="review-divider"></div>
     <div class="review-section">
-      <span class="review-tag">比赛结果</span>${upsetHtml}
-      <span class="review-score">${esc(teamA)} ${esc(parts[0]||'')}-${esc(parts[1]||'')} ${esc(teamB)}</span>
-      ${matchHtml}
+      <span class="review-label">比赛结果</span>
+      <span class="review-score-box"><span class="review-score-num score-left">${esc(parts[0])}</span><span class="review-score-sep"></span><span class="review-score-num">${esc(parts[1])}</span></span>
+      ${upsetHtml}
+      ${matchText}
     </div>`;
   }
 
@@ -650,9 +837,9 @@ function renderCard(m){
       </span>
     </div>
     <div class="teams-row">
-      <div class="team-col">${flagImgHtml(teamA)}<div class="team-name">${esc(teamA)}</div></div>
+      <div class="team-col">${flagA}<div class="team-name">${esc(teamA)}</div></div>
       ${middleHtml}
-      <div class="team-col">${flagImgHtml(teamB)}<div class="team-name">${esc(teamB)}</div></div>
+      <div class="team-col">${flagB}<div class="team-name">${esc(teamB)}</div></div>
     </div>
     ${stanceHtml}
     ${predHtml}
