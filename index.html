@@ -315,11 +315,18 @@ function saveScrollPos(cardEl){
   sessionStorage.setItem(SCROLL_KEY+'_y',String(window.scrollY));
 }
 function restoreScrollPos(){
-  // 优先使用卡片标识定位，回退使用像素位置
+  // 仅在浏览器返回（back_forward）或点击"返回赛程"时恢复，刷新页面不恢复
+  const navEntry=performance.getEntriesByType('navigation')[0];
+  const isBack=navEntry&&navEntry.type==='back_forward';
+  const fromMatch=sessionStorage.getItem('from_match')==='1';
+  sessionStorage.removeItem('from_match');
+  if(!isBack&&!fromMatch){
+    sessionStorage.removeItem(SCROLL_KEY);
+    sessionStorage.removeItem(SCROLL_KEY+'_y');
+    return;
+  }
   const saved=sessionStorage.getItem(SCROLL_KEY)||'';
   const savedY=sessionStorage.getItem(SCROLL_KEY+'_y')||'';
-  const fromMatch=sessionStorage.getItem('from_match');
-  sessionStorage.removeItem('from_match');
   if(!saved&&!savedY)return;
   // 立即尝试像素位置（最快恢复）
   if(savedY&&parseInt(savedY)>0){
@@ -339,7 +346,7 @@ function restoreScrollPos(){
       sessionStorage.removeItem(SCROLL_KEY+'_y');
     }
   };
-  setTimeout(()=>tryScroll(0),200);
+  setTimeout(()=>tryCard(0),200);
 }
 
 // ═══ 数据提取 ═══
