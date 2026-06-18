@@ -692,22 +692,25 @@ function renderCard(m){
   const cc=m.confidence>=7?'high':m.confidence>=4?'mid':'low';
 
   // ── 国旗上的预测章（叠加在国旗上） ──
-  const winnerSide=ws;
+  // 有结果时按实际赛果描边：平局则两面都不描；无结果时按预测描
+  const actualWS=m.realScore?(m.actualWinner===teamA?'a':m.actualWinner===teamB?'b':'x'):null;
+  const stampSide=m.realScore?actualWS:ws;
   let stampClsA='',stampHtmlA='',stampClsB='',stampHtmlB='';
   if(m.realScore){
-    if(winnerSide==='a'){
+    if(stampSide==='a'){
       if(m.scoreMatchRank===1){stampClsA='stamp-correct';stampHtmlA='<span class="stamp-main">胜</span><span class="stamp-sub">完全准确</span>';}
       else if(m.winnerMatchRank!==null){stampClsA='stamp-partial';stampHtmlA='<span class="stamp-main">胜</span><span class="stamp-sub">部分准确</span>';}
       else{stampClsA='stamp-wrong';stampHtmlA='<span class="stamp-main">胜</span><span class="stamp-sub">预测错误</span>';}
-    }else if(winnerSide==='b'){
+    }else if(stampSide==='b'){
       if(m.scoreMatchRank===1){stampClsB='stamp-correct';stampHtmlB='<span class="stamp-main">胜</span><span class="stamp-sub">完全准确</span>';}
       else if(m.winnerMatchRank!==null){stampClsB='stamp-partial';stampHtmlB='<span class="stamp-main">胜</span><span class="stamp-sub">部分准确</span>';}
       else{stampClsB='stamp-wrong';stampHtmlB='<span class="stamp-main">胜</span><span class="stamp-sub">预测错误</span>';}
     }
+    // stampSide==='x'（平局）→ 两面都不描
   }else if(m.winner){
     // 无结果时只显示一个大"胜"
-    if(winnerSide==='a'){stampClsA='stamp-pending';stampHtmlA='<span class="stamp-main">胜</span>';}
-    else if(winnerSide==='b'){stampClsB='stamp-pending';stampHtmlB='<span class="stamp-main">胜</span>';}
+    if(stampSide==='a'){stampClsA='stamp-pending';stampHtmlA='<span class="stamp-main">胜</span>';}
+    else if(stampSide==='b'){stampClsB='stamp-pending';stampHtmlB='<span class="stamp-main">胜</span>';}
   }
   // ── 爆冷标签 ──
   let upsetHtml='';
