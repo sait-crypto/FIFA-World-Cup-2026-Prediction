@@ -374,6 +374,10 @@ body.modal-open{overflow:hidden;padding-right:var(--scrollbar-w,0px)}
   .team-block{max-width:100%}
   .team-flag,.team-flag-placeholder{width:48px;height:32px}
 }
+.back-top{position:fixed;right:16px;bottom:40px;width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.18);opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;z-index:90}
+.back-top:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.22)}
+.back-top.show{opacity:.85;pointer-events:auto}
+.back-top svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </head>
 <body>
@@ -1398,7 +1402,7 @@ function renderFooter(){
     </div>
     <div class="embed-container" id="embed-mode"></div>
     <div id="link-mode" style="display:none"><button class="viewer-open-btn" onclick="openViewer()">▶ 观看动画回放</button></div>
-    <div class="hint">辩论数据由多智能体辩论系统生成<br>使用结束比赛的数据进行提示词学习以提升预测效果</div>
+    <div class="hint">辩论数据由多智能体辩论系统生成<br>会使用以结束比赛的数据进行提示词学习</div>
     <div style="margin-top:16px;font-size:12px;color:var(--text3);line-height:1.8">© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a><br><a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备2026007739号</a></div>`;
   document.getElementById('footer-section').innerHTML=html;
   setMode('embed');
@@ -1446,6 +1450,12 @@ function openViewer(){
   const jp=currentJsonFile?`?json=${encodeURIComponent(currentJsonFile)}`:'';
   window.open(CONFIG.VIEWER_FILE+jp,'_blank');
 }
+</script>
+<button class="back-top" id="back-top" title="返回顶端"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg></button>
+<script>
+const _bt=document.getElementById('back-top');
+window.addEventListener('scroll',()=>_bt.classList.toggle('show',window.scrollY>400));
+_bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 </script>
 </body>
 </html>

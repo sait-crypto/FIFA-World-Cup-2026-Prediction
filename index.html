@@ -151,7 +151,8 @@ a{color:var(--primary);text-decoration:none}
 
 /* Review Section (复盘区) */
 .review-divider{height:1px;background:var(--text3);margin:10px 0 6px;border-top:1.5px dashed var(--text3);background:none}
-.review-section{padding:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:11px;color:var(--text3)}
+.review-section{padding:0;display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px;color:var(--text3)}
+.review-section .review-score-box{margin-right:4px}
 .review-label{color:var(--text3);font-weight:600;white-space:nowrap}
 .review-score-box{display:inline-flex;align-items:center;border:1.5px solid var(--border);border-radius:5px;overflow:hidden}
 .review-score-num{font-size:16px;font-weight:900;color:var(--text);min-width:20px;text-align:center;line-height:1;padding:2px 6px}
@@ -199,6 +200,12 @@ a{color:var(--primary);text-decoration:none}
 /* ── Footer ── */
 .page-footer{text-align:center;padding:20px;font-size:12px;color:var(--text3);margin-top:40px}
 
+/* ── Back to Top ── */
+.back-top{position:fixed;right:16px;bottom:40px;width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.18);opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;z-index:90}
+.back-top:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.22)}
+.back-top.show{opacity:.85;pointer-events:auto}
+.back-top svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
 /* ── Responsive ── */
 @media(max-width:760px){
   .cards{grid-template-columns:1fr}
@@ -237,7 +244,9 @@ a{color:var(--primary);text-decoration:none}
   <div class="loading">正在加载赛程数据...</div>
 </div>
 
-<div class="page-footer">辩论数据由多智能体辩论系统生成<br>使用结束比赛的数据进行提示词学习以提升预测效果<br><br>© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a><br><a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备2026007739号</a></div>
+<div class="page-footer">辩论数据由多智能体辩论系统生成<br>会使用以结束比赛的数据进行提示词学习<br><br>© 2026 华中科技大学智能媒体计算与网络安全实验室<br>仅供学术研究，不作商业用途<br>实验室主页: <a href="https://media.hust.edu.cn/" target="_blank">https://media.hust.edu.cn/</a><br>邮箱: <a href="mailto:skyesong@hust.edu.cn">skyesong@hust.edu.cn</a><br><a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备2026007739号</a></div>
+
+<button class="back-top" id="back-top" title="返回顶端"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg></button>
 
 <script>
 const DATA_DIR='data/',MANIFEST=DATA_DIR+'manifest.json',DETAIL_PAGE='match.html',IMAGES_DIR='images/',REAL_RESULTS=DATA_DIR+'real_results.json';
@@ -766,9 +775,9 @@ function renderCard(m){
       <span class="stance-label">智能体投票</span>
       <div class="stance-dots">${dotsHtml}</div>
       <div class="stance-legend-area">
-        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-a)"></span>${esc(teamA.length>3?teamA.slice(0,2)+'…':teamA)}</span>
+        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-a)"></span>${esc(teamA.length>3?teamA.slice(0,3)+'…':teamA)}</span>
         <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-x)"></span>平局</span>
-        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-b)"></span>${esc(teamB.length>3?teamB.slice(0,2)+'…':teamB)}</span>
+        <span class="stance-legend-item"><span class="stance-legend-dot" style="background:var(--side-b)"></span>${esc(teamB.length>3?teamB.slice(0,3)+'…':teamB)}</span>
       </div>
     </div>`;
   }
@@ -806,13 +815,13 @@ function renderCard(m){
     let matchText='';
     if(m.winnerMatchRank!==null){
       const cls=m.winnerMatchRank===1?'match-hit':m.winnerMatchRank<=3?'':'match-miss';
-      matchText+=`<span class="review-match-text ${cls}"><strong>胜负</strong>匹配预测<strong>${m.winnerMatchRank}</strong></span>`;
+      matchText+=`<span class="review-match-text ${cls}"><strong>胜负</strong>匹配第<strong>${m.winnerMatchRank}</strong>可能</span>`;
     }else if(m.actualWinner){
       matchText+=`<span class="review-match-text match-miss">胜负未命中</span>`;
     }
     if(m.scoreMatchRank!==null){
       const cls=m.scoreMatchRank===1?'match-hit':m.scoreMatchRank<=3?'':'match-miss';
-      matchText+=`<span class="review-match-text ${cls}"><strong>比分</strong>匹配预测<strong>${m.scoreMatchRank}</strong></span>`;
+      matchText+=`<span class="review-match-text ${cls}"><strong>比分</strong>匹配第<strong>${m.scoreMatchRank}</strong>可能</span>`;
     }else if(m.actualPredScore){
       matchText+=`<span class="review-match-text match-miss">比分未命中</span>`;
     }
@@ -866,6 +875,11 @@ function setupScrollHighlight(){
 
 initTheme();
 loadSchedule();
+
+// ── Back to Top ──
+const backTopBtn=document.getElementById('back-top');
+window.addEventListener('scroll',()=>{backTopBtn.classList.toggle('show',window.scrollY>400)});
+backTopBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 </script>
 </body>
 </html>
