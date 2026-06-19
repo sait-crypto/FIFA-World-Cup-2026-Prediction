@@ -448,9 +448,12 @@ async function loadSchedule(){
   ALL_CARDS=allCards; // 保存供 rerender
 
   // 按日期→开球时间→生成序号排序
+  // match_time 格式不统一（"03:00"/"3:00:00"/"11:00:00"），需标准化为 HHMM 整数排序
+  const normTime=t=>{if(!t)return 9999;const p=t.split(':').map(Number);return(p[0]||0)*100+(p[1]||0)};
   allCards.sort((a,b)=>{
     if(a.date!==b.date)return a.date<b.date?-1:1;
-    if(a.matchTime!==b.matchTime)return(a.matchTime||'99:99')<(b.matchTime||'99:99')?-1:1;
+    const ta=normTime(a.matchTime),tb=normTime(b.matchTime);
+    if(ta!==tb)return ta-tb;
     // 同一场比赛按生成序号升序
     const ga=a.file.match(/-(\d+(?:-\d+)*)\.\w+$/)?.[1]||'0';
     const gb=b.file.match(/-(\d+(?:-\d+)*)\.\w+$/)?.[1]||'0';
