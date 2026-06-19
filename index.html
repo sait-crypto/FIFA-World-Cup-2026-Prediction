@@ -415,7 +415,7 @@ function extractCardData(data,filename){
     }
   }
   return{file:filename,teamA,teamB,stage:meta.stage||'',matchId:meta.match_id||'',
-    date:meta.date||'',city:meta.city||'',venue:meta.venue_zh||meta.venue||'',
+    date:meta.date||'',matchTime:meta.match_time||'',city:meta.city||'',venue:meta.venue_zh||meta.venue||'',
     winner:fp?.winner||'',score:fp?.score||'',confidence:fp?.confidence||0,
     countA:cA,countB:cB,countX:cX,
     pctA:Math.round(cA/total*100),pctB:Math.round(cB/total*100),
@@ -450,9 +450,7 @@ async function loadSchedule(){
   // 按日期→开球时间→生成序号排序
   allCards.sort((a,b)=>{
     if(a.date!==b.date)return a.date<b.date?-1:1;
-    const ta=a.file.match(/-\d{4}-/)?.[0]||'';
-    const tb=b.file.match(/-\d{4}-/)?.[0]||'';
-    if(ta!==tb)return ta<tb?-1:1;
+    if(a.matchTime!==b.matchTime)return(a.matchTime||'99:99')<(b.matchTime||'99:99')?-1:1;
     // 同一场比赛按生成序号升序
     const ga=a.file.match(/-(\d+(?:-\d+)*)\.\w+$/)?.[1]||'0';
     const gb=b.file.match(/-(\d+(?:-\d+)*)\.\w+$/)?.[1]||'0';
