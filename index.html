@@ -419,33 +419,55 @@ async function loadSchedule(){
   try{const r=await fetch(REAL_RESULTS+'?t='+Date.now());if(r.ok)REAL_DATA=await r.json()}catch(e){}
   if(!files||!files.length){showDropZone();return}
 
-  // 先渲染骨架
+  // 一次性并行加载所有 JSON
+  const allCards=[];
+  const results=await Promise.all(files.map(async file=>{
+    try{
+      const r=await fetch(DATA_DIR+file+'?t='+Date.now());
+      if(r.ok){const d=await r.json();return extractCardData(d,file)}
+    }catch(e){console.warn('跳过:',file)}
+    return null;
+  }));
+  results.filter(Boolean).forEach(m=>allCards.push(m));
+
+  // 按日期→开球时间→生成序号排序
+  allCards.sort((a,b)=>{
+    if(a.date!==b.date)return a.date<b.date?-1:1;
+    const ta=a.file.match(/-\d{4}-/)?.[0]||'';
+    const tb=b.file.match(/-\d{4}-/)?.[0]||'';
+    if(ta!==tb)return ta<tb?-1:1;
+    // 同一场比赛按生成序号升序
+    const ga=a.file.match(/-(\d+(?:-\d+)*)\.\w+$/)?.[1]||'0';
+    const gb=b.file.match(/-(\d+(?:-\d+)*)\.\w+$/)?.[1]||'0';
+    return ga.localeCompare(gb,undefined,{numeric:true});
+  });
+
+  // 渲染骨架
   const sk=buildSkeleton();
   container.innerHTML=sk.html;
-  // Show today button if there are matches today
   const today=new Date().toLocaleDateString('sv-SE');
   const todayBtn=document.getElementById('today-btn');
   if(todayBtn && sk.byDate[today])todayBtn.style.display='inline-block';
   setupNavLinks();
   setupScrollHighlight();
 
-  // 尽早渲染全局准确度统计（不依赖卡片数据，直接从 REAL_DATA 和 JSON 文件计算）
-  renderAccuracyStatsFromFiles(files);
-
-  // 逐条加载，插入到时间排序的正确位置（渐进式显示）
-  const allCards=[];
-  for(const file of files){
-    try{
-      const r=await fetch(DATA_DIR+file+'?t='+Date.now());
-      if(r.ok){const d=await r.json();const m=extractCardData(d,file);allCards.push(m);insertCardSorted(m,sk.byDate)}
-    }catch(e){console.warn('跳过:',file)}
+  // 一次性插入所有卡片
+  for(const m of allCards){
+    const grid=document.getElementById(sk.byDate[m.date]);
+    if(grid){
+      const ld=grid.querySelector('.date-loading');if(ld)ld.remove();
+      grid.insertAdjacentHTML('beforeend',renderCard(m));
+    }
   }
+
   // 清除空位 loading
   document.querySelectorAll('.date-loading').forEach(el=>{
     if(!el.parentElement.querySelector('.sched-card'))el.textContent='等待最新数据，还未开始预测';
     else el.remove();
   });
-  // 所有卡片加载完毕后恢复滚动位置
+
+  // 渲染统计 + 恢复滚动位置
+  renderAccuracyStats(allCards);
   restoreScrollPos();
 }
 
@@ -465,25 +487,6 @@ function buildSkeleton(){
     html+='</div>';
   }
   return{html,byDate};
-}
-
-function insertCardSorted(m,byDate){
-  const grid=document.getElementById(byDate[m.date]);
-  if(!grid)return;
-  const ld=grid.querySelector('.date-loading');if(ld)ld.remove();
-  const myTime=m.file.match(/-\d{4}-/)?.[0]||'';
-  // 找到同一日期网格中应插入的位置（按文件名中的开球时间升序）
-  const cards=grid.querySelectorAll('.sched-card');
-  let inserted=false;
-  for(const card of cards){
-    const cardHref=card.getAttribute('href')||'';
-    const cardTime=decodeURIComponent(cardHref).match(/-\d{4}-/)?.[0]||'';
-    if(myTime&&cardTime&&myTime<cardTime){
-      card.insertAdjacentHTML('beforebegin',renderCard(m));
-      inserted=true;break;
-    }
-  }
-  if(!inserted)grid.insertAdjacentHTML('beforeend',renderCard(m));
 }
 
 function showDropZone(){
@@ -530,94 +533,6 @@ function jumpToToday(){
   const today=new Date().toLocaleDateString('sv-SE');
   const el=document.getElementById('cards-'+today.replace(/-/g,''))||document.querySelector('.date-head');
   if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
-}
-
-/** 从 REAL_DATA 和预测 JSON 文件直接计算统计（无需等卡片渲染完） */
-async function renderAccuracyStatsFromFiles(files){
-  if(!REAL_DATA||!REAL_DATA.matches)return;
-  const endedMatches=Object.values(REAL_DATA.matches).filter(m=>m.status==='已结束');
-  if(!endedMatches.length)return;
-
-  // 并行加载所有预测 JSON 的 final_prediction
-  const preds=[];
-  const fetches=files.map(async f=>{
-    try{
-      const r=await fetch(DATA_DIR+f+'?t='+Date.now());
-      if(!r.ok)return null;
-      const d=await r.json();
-      const{teamA,teamB}=parseTopic(d.topic||'');
-      const fp=d.final_prediction;
-      const allPreds=d.top_predictions||[];
-      const meta=d.match_meta||{};
-      const realResult=findRealResult(teamA,teamB,meta.date||'');
-      if(!realResult)return null;
-      let winnerMatchRank=null,scoreMatchRank=null;
-      const fmt=actualToPredFormat(teamA,teamB,realResult.home_score,realResult.away_score);
-      for(let i=0;i<allPreds.length;i++){
-        if(winnerMatchRank===null&&allPreds[i].winner===fmt.winner)winnerMatchRank=i+1;
-        if(scoreMatchRank===null&&allPreds[i].winner===fmt.winner&&allPreds[i].score===fmt.predScore)scoreMatchRank=i+1;
-      }
-      if(!allPreds.length&&fp){
-        if(fp.winner===fmt.winner)winnerMatchRank=1;
-        if(fp.winner===fmt.winner&&fp.score===fmt.predScore)scoreMatchRank=1;
-      }
-      return{winner:fp?.winner||'',score:fp?.score||'',actualWinner:fmt.winner,actualPredScore:fmt.predScore,winnerMatchRank,scoreMatchRank,teamA,teamB};
-    }catch(e){return null}
-  });
-  const results=await Promise.all(fetches);
-  const withResult=results.filter(Boolean);
-  if(!withResult.length)return;
-
-  let winnerCorrect=0,scoreHit=0,totalScore=0,maxScore=0;
-  for(const m of withResult){
-    maxScore+=10;
-    if(!m.actualWinner)continue;
-    if(m.winner===m.actualWinner){winnerCorrect++;totalScore+=5;}
-    if(m.scoreMatchRank!==null){scoreHit++;totalScore+=3;}
-    const r=endedMatches.find(x=>x.home_team===m.teamA&&x.away_team===m.teamB);
-    if(r){
-      const ap=actualToPredFormat(m.teamA,m.teamB,r.home_score,r.away_score);
-      const predParts=m.score.split('-').map(Number);
-      const actualParts=ap.predScore.split('-').map(Number);
-      if(predParts.length===2&&actualParts.length===2){
-        if(Math.abs(predParts[0]-actualParts[0])<=1)totalScore+=1;
-        if(Math.abs(predParts[1]-actualParts[1])<=1)totalScore+=1;
-        if(predParts[0]+predParts[1]===actualParts[0]+actualParts[1])totalScore+=1;
-      }
-    }
-  }
-  let upsetCount=0;
-  for(const m of endedMatches){
-    const u=m.review&&m.review.upset;
-    if(u&&(u.level==='爆冷'||u.level==='大爆冷'))upsetCount++;
-  }
-  const container=document.getElementById('main-content');
-  if(!container)return;
-  const winnerPct=withResult.length?Math.round(winnerCorrect/withResult.length*100):0;
-  const scorePct=withResult.length?Math.round(scoreHit/withResult.length*100):0;
-  const scoreRate=maxScore?Math.round(totalScore/maxScore*100):0;
-  const upsetPct=endedMatches.length?Math.round(upsetCount/endedMatches.length*100):0;
-  const statsHtml=`<div class="stats-section">
-    <div class="stats-row">
-      <div class="stat-card" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">胜负命中</span><span class="stat-value" style="color:var(--green)">${winnerCorrect}<span class="stat-total">/${withResult.length} (${winnerPct}%)</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill green" style="width:${winnerPct}%"></span></div>
-      </div>
-      <div class="stat-card" title="预测的比分与实际比分完全一致即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">比分命中</span><span class="stat-value" style="color:var(--primary)">${scoreHit}<span class="stat-total">/${withResult.length} (${scorePct}%)</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scorePct}%"></span></div>
-      </div>
-      <div class="stat-card" title="综合评分：胜负正确+5分，比分命中+3分，进球差±1内各+1分，总进球数相同+1分（满分10/场）" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">综合分数</span><span class="stat-value" style="color:var(--primary)">${totalScore}<span class="stat-total">/${maxScore} (${scoreRate}%)</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scoreRate}%"></span></div>
-      </div>
-      <div class="stat-card" title="已结束比赛中标记为「爆冷」或「大爆冷」的比例（基于赛前赔率与实力对比的客观评估，与本网页预测无关）" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">赛事爆冷率</span><span class="stat-value" style="color:var(--green)">${upsetPct}<span class="stat-total">%</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill green" style="width:${upsetPct}%"></span></div>
-      </div>
-    </div>
-  </div>`;
-  container.insertAdjacentHTML('afterbegin',statsHtml);
 }
 
 function renderAccuracyStats(allCards){
