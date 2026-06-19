@@ -763,7 +763,7 @@ function renderCard(m){
     if(scoreInFirst3){
       badgesHtml+='<span class="review-badge badge-accurate">比分预测准确</span>';
     }else{
-      badgesHtml+=`<span class="review-badge badge-inaccurate">比分预测不准确 (结果${esc(m.realScore)})</span>`;
+      badgesHtml+=`<span class="review-badge badge-inaccurate">比分预测不准确(结果${esc(m.realScore)})</span>`;
     }
     const winnerCorrect=m.actualWinner&&m.winner===m.actualWinner;
     if(winnerCorrect){
