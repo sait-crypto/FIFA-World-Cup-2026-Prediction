@@ -3531,10 +3531,449 @@
         "generated_at": "2026-06-19T15:34:58.670568",
         "content": ""
       }
+    },
+    "2026-06-19_土耳其_vs_巴拉圭": {
+      "date": "2026-06-19",
+      "home_team": "土耳其",
+      "away_team": "巴拉圭",
+      "home_score": 0,
+      "away_score": 1,
+      "score_display": "0-1",
+      "match_stage": "小组赛D组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "45+3'",
+            "team": "巴拉圭",
+            "type": "红牌",
+            "player": "阿尔米隆",
+            "description": "阿尔米隆(巴拉圭)"
+          },
+          {
+            "time": "2'",
+            "team": "巴拉圭",
+            "type": "进球",
+            "player": "加拉尔萨",
+            "description": "第1个进球！Goooooooal！加拉尔萨(巴拉圭 射门 (助攻: 恩西索))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "2'",
+              "team": "巴拉圭",
+              "player": "加拉尔萨"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 1,
+          "换人": 10,
+          "角球": 12,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 72,
+            "right": 28
+          },
+          {
+            "title": "进攻",
+            "left": 161,
+            "right": 80
+          },
+          {
+            "title": "危险进攻",
+            "left": 125,
+            "right": 20
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 15,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 12,
+            "right": 0
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 1
+          }
+        ]
+      },
+      "venue": "Levi's Stadium",
+      "city": "旧金山",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "土耳其排名22远高于巴拉圭41，赛前预测偏向土耳其，但巴拉圭在控球率仅28%、危险进攻20比125的绝对劣势下1-0获胜，场面数据悬殊，属于明显冷门。"
+        },
+        "generated_at": "2026-06-20T18:23:10.945765",
+        "content": ""
+      }
+    },
+    "2026-06-20_巴西_vs_海地": {
+      "date": "2026-06-20",
+      "home_team": "巴西",
+      "away_team": "海地",
+      "home_score": 3,
+      "away_score": 0,
+      "score_display": "3-0",
+      "match_stage": "小组赛C组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "45+3'",
+            "team": "巴西",
+            "type": "进球",
+            "player": "维尼修斯",
+            "description": "第3个进球 - 维尼修斯(巴西) - 射门 (助攻: 帕奎塔)"
+          },
+          {
+            "time": "36'",
+            "team": "巴西",
+            "type": "进球",
+            "player": "库尼亚",
+            "description": "第2个进球 - 库尼亚(巴西) - 射门 (助攻: 维尼修斯)"
+          },
+          {
+            "time": "23'",
+            "team": "巴西",
+            "type": "进球",
+            "player": "",
+            "description": "第1个进球！Goooooooal！库尼亚  (巴西 射门）打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "45+3'",
+              "team": "巴西",
+              "player": "维尼修斯"
+            },
+            {
+              "time": "36'",
+              "team": "巴西",
+              "player": "库尼亚"
+            },
+            {
+              "time": "23'",
+              "team": "巴西",
+              "player": ""
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 8,
+          "越位": 12
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 56,
+            "right": 44
+          },
+          {
+            "title": "进攻",
+            "left": 102,
+            "right": 94
+          },
+          {
+            "title": "危险进攻",
+            "left": 40,
+            "right": 32
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lincoln Financial Field",
+      "city": "费城",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "巴西世界排名第6远高于海地第83，赛前预测巴西4-0大胜，实际3-0完胜符合预期，比分差距合理，无冷门迹象。"
+        },
+        "generated_at": "2026-06-20T18:23:32.638284",
+        "content": ""
+      }
+    },
+    "2026-06-20_美国_vs_澳大利亚": {
+      "date": "2026-06-20",
+      "home_team": "美国",
+      "away_team": "澳大利亚",
+      "home_score": 2,
+      "away_score": 0,
+      "score_display": "2-0",
+      "match_stage": "小组赛D组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "43'",
+            "team": "美国",
+            "type": "进球",
+            "player": "弗里曼",
+            "description": "第2个进球 - 弗里曼(美国) - 头球"
+          },
+          {
+            "time": "11'",
+            "team": "美国",
+            "type": "进球",
+            "player": "伯吉斯",
+            "description": "第1个进球！Goooooooal！伯吉斯(美国 乌龙球)打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "43'",
+              "team": "美国",
+              "player": "弗里曼"
+            },
+            {
+              "time": "11'",
+              "team": "美国",
+              "player": "伯吉斯"
+            }
+          ],
+          "黄牌": 7,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 11,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 62,
+            "right": 38
+          },
+          {
+            "title": "进攻",
+            "left": 124,
+            "right": 78
+          },
+          {
+            "title": "危险进攻",
+            "left": 60,
+            "right": 40
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 7,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 3,
+            "right": 4
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lumen Field",
+      "city": "西雅图",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "美国排名17高于澳大利亚27，赛前预测平局但美国2-0获胜，控球率62%占优，净胜2球符合排名差距，未构成冷门"
+        },
+        "generated_at": "2026-06-20T18:23:18.166823",
+        "content": ""
+      }
+    },
+    "2026-06-20_苏格兰_vs_摩洛哥": {
+      "date": "2026-06-20",
+      "home_team": "苏格兰",
+      "away_team": "摩洛哥",
+      "home_score": 0,
+      "away_score": 1,
+      "score_display": "0-1",
+      "match_stage": "小组赛C组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "2'",
+            "team": "摩洛哥",
+            "type": "进球",
+            "player": "赛巴里",
+            "description": "第1个进球！球进啦！赛巴里(摩洛哥 射门 (助攻: 迪亚斯))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "2'",
+              "team": "摩洛哥",
+              "player": "赛巴里"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 7,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 41,
+            "right": 59
+          },
+          {
+            "title": "进攻",
+            "left": 78,
+            "right": 97
+          },
+          {
+            "title": "危险进攻",
+            "left": 41,
+            "right": 42
+          },
+          {
+            "title": "射正",
+            "left": 0,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 3,
+            "right": 6
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Gillette Stadium",
+      "city": "波士顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "摩洛哥排名远高于苏格兰（第7 vs 第42），赛前预测一致看好摩洛哥，实际结果符合预期，且摩洛哥在控球率（59%）、射正（2-0）等数据上占优，1-0小胜属于正常赛果。"
+        },
+        "generated_at": "2026-06-20T18:23:25.916877",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-19T22:01:03.157084",
-    "total_matches": 28
+    "last_updated": "2026-06-20T18:23:37.364081",
+    "total_matches": 32
   }
 }
