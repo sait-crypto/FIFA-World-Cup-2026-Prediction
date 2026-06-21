@@ -223,6 +223,13 @@ a:hover{text-decoration:underline}
 .record-table .score-col.lose{color:var(--red)}
 .record-table .comp-col{color:var(--text3);text-align:right}
 
+/* ── Standings Table (赛段形势) ── */
+.standings-table{width:100%;border-collapse:collapse;font-size:12px;margin:6px 0}
+.standings-table td{padding:3px 6px;border-bottom:1px solid var(--divider);color:var(--text2);text-align:center}
+.standings-table td:first-child{text-align:center;width:30px}
+.standings-table td:nth-child(2){text-align:left;font-weight:500}
+.standings-table td b,.standings-table td strong{color:var(--text1)}
+
 /* ── Analyst Cards ── */
 .analyst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;padding:8px 0}
 .record-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
@@ -678,8 +685,8 @@ function avatarHtml(name,idx,cls='analyst-avatar'){
 }
 
 function parseMatchContext(md){
-  if(!md)return{info:[],records:[],wcResults:[],travel:[],homeAdvantage:[],preWcMood:[]};
-  const lines=md.split('\n'),info=[],records=[],wcResults=[],travel=[],homeAdvantage=[],preWcMood=[];
+  if(!md)return{info:[],records:[],wcResults:[],travel:[],homeAdvantage:[],preWcMood:[],stageContext:[]};
+  const lines=md.split('\n'),info=[],records=[],wcResults=[],travel=[],homeAdvantage=[],preWcMood=[],stageContext=[];
   let cur=null,inR=false,sectionType='',skipSection=false;
   function push(){if(cur&&(cur.summary||cur.matches.length)){
     if(sectionType==='wc')wcResults.push(cur);else records.push(cur);
@@ -699,10 +706,12 @@ function parseMatchContext(md){
         cur={title,summary:'',matches:[]};inR=true;sectionType='record';
       }else if(title.includes('舟车劳顿')){
         sectionType='travel';inR=false;
-      }else if(title.includes('赛前心态')||title.includes('世界杯前状态')||title.includes('赛前状态')){
+      }else if(title.includes('赛前形势')||title.includes('赛前形态')||title.includes('赛前心态')||title.includes('世界杯前状态')||title.includes('赛前状态')){
         sectionType='preWcMood';inR=false;
       }else if(title.includes('主客场')){
         sectionType='homeAdvantage';inR=false;
+      }else if(title.includes('赛段形势')){
+        sectionType='stageContext';inR=false;
       }else{
         inR=false;sectionType='';
       }
@@ -715,6 +724,7 @@ function parseMatchContext(md){
       else if(sectionType==='travel')travel.push(content);
       else if(sectionType==='preWcMood')preWcMood.push(content);
       else if(sectionType==='homeAdvantage')homeAdvantage.push(content);
+      else if(sectionType==='stageContext')stageContext.push(content);
       else info.push(content);
       continue;
     }
@@ -723,10 +733,11 @@ function parseMatchContext(md){
       if(sectionType==='travel')travel.push(t);
       else if(sectionType==='preWcMood')preWcMood.push(t);
       else if(sectionType==='homeAdvantage')homeAdvantage.push(t);
+      else if(sectionType==='stageContext')stageContext.push(t);
       else info.push(t);
     }
   }
-  push();return{info,records,wcResults,travel,homeAdvantage,preWcMood};
+  push();return{info,records,wcResults,travel,homeAdvantage,preWcMood,stageContext};
 }
 
 function parseContextAnalysis(md){
@@ -1011,7 +1022,7 @@ function renderContext(){
   // 优先从 context_analyses 读取三个分析（新格式），parseMatchContext 结果作为回退（兼容旧 JSON）
   const cas=DATA.context_analyses||{};
   const travelItems=cas.travel?parseContextAnalysis(cas.travel):ctx.travel;
-  const moodItems=cas.pre_wc_mood?parseContextAnalysis(cas.pre_wc_mood):ctx.preWcMood;
+  const moodItems=cas.pre_match_situation?parseContextAnalysis(cas.pre_match_situation):cas.pre_wc_mood?parseContextAnalysis(cas.pre_wc_mood):ctx.preWcMood;
   const homeItems=cas.home_advantage?parseContextAnalysis(cas.home_advantage):ctx.homeAdvantage;
   if(!ctx.info.length&&!ctx.records.length&&!ctx.wcResults.length&&!travelItems.length&&!moodItems.length)return;
   const{teamA,teamB}=parseTopic(DATA.topic);
@@ -1047,9 +1058,9 @@ function renderContext(){
     html+='</div>';
   }
 
-  // 赛前心态分析
+  // 赛前形势分析（原赛前心态分析，现含积分/出线/赛制等）
   if(moodItems.length){
-    html+=`<div class="context-card pre-wc-mood-card"><h3>🧠 赛前心态分析</h3>`;
+    html+=`<div class="context-card pre-wc-mood-card"><h3>🧠 赛前形势分析</h3>`;
     for(const item of moodItems)html+=`<div style="font-size:13px;color:var(--text2);padding:1px 0">${escAndBold(item)}</div>`;
     html+='</div>';
   }
@@ -1366,7 +1377,12 @@ function toggleStructuredItem(el){
 
 function renderEvidence(){
   const pool=DATA.evidence_pool||[];if(!pool.length)return;
-  const shared=pool.filter(e=>e.shared).sort((a,b)=>b.confidence-a.confidence);
+  const shared=pool.filter(e=>e.shared).sort((a,b)=>{
+    const _so={'local_analysis':0,'local':1,'default':2};
+    const sa=_so[a.source]??9,sb=_so[b.source]??9;
+    if(sa!==sb)return sa-sb;
+    return b.confidence-a.confidence;
+  });
   const priv=pool.filter(e=>!e.shared).sort((a,b)=>b.confidence-a.confidence);
   const display=[...shared,...priv];
 
