@@ -3970,10 +3970,512 @@
         "generated_at": "2026-06-20T18:23:25.916877",
         "content": ""
       }
+    },
+    "2026-06-20_突尼斯_vs_日本": {
+      "date": "2026-06-20",
+      "home_team": "突尼斯",
+      "away_team": "日本",
+      "home_score": 0,
+      "away_score": 4,
+      "score_display": "0-4",
+      "match_stage": "小组赛F组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "84'",
+            "team": "日本",
+            "type": "进球",
+            "player": "上田绮世",
+            "description": "第4个进球 - 上田绮世(日本) - 头球 (助攻: 佐野海舟)"
+          },
+          {
+            "time": "69'",
+            "team": "日本",
+            "type": "进球",
+            "player": "伊东纯也",
+            "description": "第3个进球 - 伊东纯也(日本) - 射门 (助攻: 上田绮世)"
+          },
+          {
+            "time": "31'",
+            "team": "日本",
+            "type": "进球",
+            "player": "上田绮世",
+            "description": "第2个进球 - 上田绮世(日本) - 射门 (助攻: 板仓滉)"
+          },
+          {
+            "time": "4'",
+            "team": "日本",
+            "type": "进球",
+            "player": "镰田大地",
+            "description": "第1个进球！Goooooooal！镰田大地(日本 射门 (助攻: 中村敬斗))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "84'",
+              "team": "日本",
+              "player": "上田绮世"
+            },
+            {
+              "time": "69'",
+              "team": "日本",
+              "player": "伊东纯也"
+            },
+            {
+              "time": "31'",
+              "team": "日本",
+              "player": "上田绮世"
+            },
+            {
+              "time": "4'",
+              "team": "日本",
+              "player": "镰田大地"
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 8,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 4
+          },
+          {
+            "title": "控球率",
+            "left": 38,
+            "right": 62
+          },
+          {
+            "title": "进攻",
+            "left": 78,
+            "right": 112
+          },
+          {
+            "title": "危险进攻",
+            "left": 21,
+            "right": 36
+          },
+          {
+            "title": "射正",
+            "left": 0,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Estadio BBVA",
+      "city": "蒙特雷",
+      "country": "墨西哥",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "日本排名第18远高于突尼斯第45，赛前预测日本胜出且实际4-0大胜，技术统计全面占优，结果完全符合预期，无冷门迹象。"
+        },
+        "generated_at": "2026-06-21T16:24:33.460759",
+        "content": ""
+      }
+    },
+    "2026-06-21_厄瓜多尔_vs_库拉索": {
+      "date": "2026-06-21",
+      "home_team": "厄瓜多尔",
+      "away_team": "库拉索",
+      "home_score": 0,
+      "away_score": 0,
+      "score_display": "0-0",
+      "match_stage": "小组赛E组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [],
+        "stats_summary": {
+          "进球": [],
+          "黄牌": 6,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 9,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 75,
+            "right": 25
+          },
+          {
+            "title": "进攻",
+            "left": 156,
+            "right": 68
+          },
+          {
+            "title": "危险进攻",
+            "left": 95,
+            "right": 20
+          },
+          {
+            "title": "射正",
+            "left": 15,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 11,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 9,
+            "right": 0
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 5
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Arrowhead Stadium",
+      "city": "堪萨斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "大爆冷",
+          "reason": "世界排名第23的厄瓜多尔主场0-0战平排名第82的库拉索，赛前一致预测厄瓜多尔2-0胜（置信度8/10），且厄瓜多尔控球率75%、射正15次、角球9-0，场面完全压制却未能进球，属于预期强队被弱队逼平且场面一边倒的明显冷门。"
+        },
+        "generated_at": "2026-06-21T16:24:49.023304",
+        "content": ""
+      }
+    },
+    "2026-06-21_德国_vs_科特迪瓦": {
+      "date": "2026-06-21",
+      "home_team": "德国",
+      "away_team": "科特迪瓦",
+      "home_score": 2,
+      "away_score": 1,
+      "score_display": "2-1",
+      "match_stage": "小组赛E组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+4'",
+            "team": "德国",
+            "type": "进球",
+            "player": "翁达夫",
+            "description": "第3个进球 - 翁达夫(德国) - 射门 (助攻: 恩梅查)"
+          },
+          {
+            "time": "68'",
+            "team": "德国",
+            "type": "进球",
+            "player": "翁达夫",
+            "description": "第2个进球 - 翁达夫(德国) - 射门 (助攻: 阿米里)"
+          },
+          {
+            "time": "30'",
+            "team": "科特迪瓦",
+            "type": "进球",
+            "player": "凯西",
+            "description": "第1个进球！球进啦！凯西(科特迪瓦 射门)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+4'",
+              "team": "德国",
+              "player": "翁达夫"
+            },
+            {
+              "time": "68'",
+              "team": "德国",
+              "player": "翁达夫"
+            },
+            {
+              "time": "30'",
+              "team": "科特迪瓦",
+              "player": "凯西"
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 11,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 59,
+            "right": 41
+          },
+          {
+            "title": "进攻",
+            "left": 134,
+            "right": 98
+          },
+          {
+            "title": "危险进攻",
+            "left": 73,
+            "right": 51
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 2
+          },
+          {
+            "title": "角球",
+            "left": 8,
+            "right": 3
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "BMO Field",
+      "city": "多伦多",
+      "country": "加拿大",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "德国排名第10，科特迪瓦排名第33，排名差距23位，但德国仅以2-1小胜且赛前预测一致，比分和场面均符合预期，无冷门特征。"
+        },
+        "generated_at": "2026-06-21T16:24:40.631376",
+        "content": ""
+      }
+    },
+    "2026-06-21_荷兰_vs_瑞典": {
+      "date": "2026-06-21",
+      "home_team": "荷兰",
+      "away_team": "瑞典",
+      "home_score": 5,
+      "away_score": 1,
+      "score_display": "5-1",
+      "match_stage": "小组赛F组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "89'",
+            "team": "荷兰",
+            "type": "进球",
+            "player": "萨默维尔",
+            "description": "第6个进球 - 萨默维尔(荷兰) - 射门 (助攻: 德佩)"
+          },
+          {
+            "time": "59'",
+            "team": "瑞典",
+            "type": "进球",
+            "player": "埃兰加",
+            "description": "第5个进球 - 埃兰加(瑞典) - 射门 (助攻: 伊萨克)"
+          },
+          {
+            "time": "54'",
+            "team": "荷兰",
+            "type": "进球",
+            "player": "加克波",
+            "description": "第4个进球 - 加克波(荷兰) - 射门 (助攻: 萨默维尔)"
+          },
+          {
+            "time": "47'",
+            "team": "荷兰",
+            "type": "进球",
+            "player": "加克波",
+            "description": "第3个进球 - 加克波(荷兰) - 射门 (助攻: 邓弗里斯)"
+          },
+          {
+            "time": "17'",
+            "team": "荷兰",
+            "type": "进球",
+            "player": "布罗比",
+            "description": "第2个进球 - 布罗比(荷兰) - 射门 (助攻: 邓弗里斯)"
+          },
+          {
+            "time": "5'",
+            "team": "荷兰",
+            "type": "进球",
+            "player": "布罗比",
+            "description": "第1个进球！Goooooooal！布罗比(荷兰 射门 (助攻: 加克波))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "89'",
+              "team": "荷兰",
+              "player": "萨默维尔"
+            },
+            {
+              "time": "59'",
+              "team": "瑞典",
+              "player": "埃兰加"
+            },
+            {
+              "time": "54'",
+              "team": "荷兰",
+              "player": "加克波"
+            },
+            {
+              "time": "47'",
+              "team": "荷兰",
+              "player": "加克波"
+            },
+            {
+              "time": "17'",
+              "team": "荷兰",
+              "player": "布罗比"
+            },
+            {
+              "time": "5'",
+              "team": "荷兰",
+              "player": "布罗比"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 7,
+          "越位": 6
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 5,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 51,
+            "right": 49
+          },
+          {
+            "title": "进攻",
+            "left": 109,
+            "right": 65
+          },
+          {
+            "title": "危险进攻",
+            "left": 50,
+            "right": 49
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 8
+          },
+          {
+            "title": "射偏",
+            "left": 2,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "NRG Stadium",
+      "city": "休斯顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "荷兰世界排名第8远高于瑞典第38，且赛前预测荷兰胜出（6/8票），实际5-1大胜符合预期，技术统计虽接近但荷兰效率更高，无冷门迹象。"
+        },
+        "generated_at": "2026-06-21T16:24:27.288270",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-20T18:23:37.364081",
-    "total_matches": 32
+    "last_updated": "2026-06-21T16:24:55.142453",
+    "total_matches": 36
   }
 }
