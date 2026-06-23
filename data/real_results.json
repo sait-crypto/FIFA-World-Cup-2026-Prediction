@@ -4970,10 +4970,514 @@
         "generated_at": "2026-06-22T20:34:10.371650",
         "content": ""
       }
+    },
+    "2026-06-23_挪威_vs_塞内加尔": {
+      "date": "2026-06-23",
+      "home_team": "挪威",
+      "away_team": "塞内加尔",
+      "home_score": 3,
+      "away_score": 2,
+      "score_display": "3-2",
+      "match_stage": "小组赛I组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+3'",
+            "team": "塞内加尔",
+            "type": "进球",
+            "player": "萨尔",
+            "description": "第5个进球 - I.萨尔(塞内加尔) - 射门 (助攻: 杰克逊)"
+          },
+          {
+            "time": "58'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "哈兰德",
+            "description": "第4个进球 - 哈兰德(挪威) - 射门 (助攻: P.贝格)"
+          },
+          {
+            "time": "53'",
+            "team": "塞内加尔",
+            "type": "进球",
+            "player": "萨尔",
+            "description": "第3个进球 - I.萨尔(塞内加尔) - 射门 (助攻: 马内)"
+          },
+          {
+            "time": "48'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "哈兰德",
+            "description": "第2个进球 - 哈兰德(挪威) - 射门 (助攻: 厄德高)"
+          },
+          {
+            "time": "43'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "彼得森",
+            "description": "第1个进球！Goooooooal！彼得森(挪威 射门)打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+3'",
+              "team": "塞内加尔",
+              "player": "萨尔"
+            },
+            {
+              "time": "58'",
+              "team": "挪威",
+              "player": "哈兰德"
+            },
+            {
+              "time": "53'",
+              "team": "塞内加尔",
+              "player": "萨尔"
+            },
+            {
+              "time": "48'",
+              "team": "挪威",
+              "player": "哈兰德"
+            },
+            {
+              "time": "43'",
+              "team": "挪威",
+              "player": "彼得森"
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 9,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 42,
+            "right": 58
+          },
+          {
+            "title": "进攻",
+            "left": 87,
+            "right": 100
+          },
+          {
+            "title": "危险进攻",
+            "left": 32,
+            "right": 60
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 3,
+            "right": 7
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "MetLife Stadium",
+      "city": "新泽西纽约",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "尽管塞内加尔排名更高（15 vs 31），但赛前预测一致看好挪威（8:1），且挪威最终3-2获胜符合预期，比分接近、场面数据虽有劣势但射正占优，不构成爆冷。"
+        },
+        "generated_at": "2026-06-23T19:38:46.568092",
+        "content": ""
+      }
+    },
+    "2026-06-23_法国_vs_伊拉克": {
+      "date": "2026-06-23",
+      "home_team": "法国",
+      "away_team": "伊拉克",
+      "home_score": 3,
+      "away_score": 0,
+      "score_display": "3-0",
+      "match_stage": "小组赛I组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "66'",
+            "team": "法国",
+            "type": "进球",
+            "player": "登贝莱",
+            "description": "第3个进球 - 登贝莱(法国) - 射门 (助攻: 奥利塞)"
+          },
+          {
+            "time": "55'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第2个进球 - 姆巴佩(法国) - 射门 (助攻: 登贝莱)"
+          },
+          {
+            "time": "15'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第1个进球！球进啦！姆巴佩(法国 射门 (助攻: 奥利塞))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "66'",
+              "team": "法国",
+              "player": "登贝莱"
+            },
+            {
+              "time": "55'",
+              "team": "法国",
+              "player": "姆巴佩"
+            },
+            {
+              "time": "15'",
+              "team": "法国",
+              "player": "姆巴佩"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 6,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 55,
+            "right": 45
+          },
+          {
+            "title": "进攻",
+            "left": 123,
+            "right": 94
+          },
+          {
+            "title": "危险进攻",
+            "left": 99,
+            "right": 29
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 0
+          },
+          {
+            "title": "射偏",
+            "left": 10,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lincoln Financial Field",
+      "city": "费城",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "法国排名第3远高于伊拉克第57，赛前预测一致法国3-0胜，实际比分完全符合预期，技术统计全面占优，无任何冷门迹象。"
+        },
+        "generated_at": "2026-06-23T19:38:38.673211",
+        "content": ""
+      }
+    },
+    "2026-06-23_约旦_vs_阿尔及利亚": {
+      "date": "2026-06-23",
+      "home_team": "约旦",
+      "away_team": "阿尔及利亚",
+      "home_score": 1,
+      "away_score": 2,
+      "score_display": "1-2",
+      "match_stage": "小组赛J组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "82'",
+            "team": "阿尔及利亚",
+            "type": "进球",
+            "player": "古伊里",
+            "description": "第3个进球 - 古伊里(阿尔及利亚) - 射门"
+          },
+          {
+            "time": "69'",
+            "team": "阿尔及利亚",
+            "type": "进球",
+            "player": "本布阿利",
+            "description": "第2个进球 - 本布阿利(阿尔及利亚) - 头球 (助攻: 马赫雷斯)"
+          },
+          {
+            "time": "36'",
+            "team": "约旦",
+            "type": "进球",
+            "player": "拉什丹",
+            "description": "第1个进球！球进啦！拉什丹(约旦 射门 (助攻: 塔迈里))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "82'",
+              "team": "阿尔及利亚",
+              "player": "古伊里"
+            },
+            {
+              "time": "69'",
+              "team": "阿尔及利亚",
+              "player": "本布阿利"
+            },
+            {
+              "time": "36'",
+              "team": "约旦",
+              "player": "拉什丹"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 11,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 28,
+            "right": 72
+          },
+          {
+            "title": "进攻",
+            "left": 66,
+            "right": 152
+          },
+          {
+            "title": "危险进攻",
+            "left": 24,
+            "right": 75
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 8
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 1,
+            "right": 10
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Levi's Stadium",
+      "city": "旧金山",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "阿尔及利亚排名第28远高于约旦第63，赛前预测一致看好阿尔及利亚2-0获胜，实际2-1小胜符合预期，技术统计全面占优，无冷门迹象。"
+        },
+        "generated_at": "2026-06-23T19:38:31.946876",
+        "content": ""
+      }
+    },
+    "2026-06-23_阿根廷_vs_奥地利": {
+      "date": "2026-06-23",
+      "home_team": "阿根廷",
+      "away_team": "奥地利",
+      "home_score": 2,
+      "away_score": 0,
+      "score_display": "2-0",
+      "match_stage": "小组赛J组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+5'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "梅西",
+            "description": "第2个进球 - 梅西(阿根廷) - 射门"
+          },
+          {
+            "time": "39'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "梅西",
+            "description": "第1个进球！Goooooooal！梅西(阿根廷 射门 (助攻: 梅迪纳))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+5'",
+              "team": "阿根廷",
+              "player": "梅西"
+            },
+            {
+              "time": "39'",
+              "team": "阿根廷",
+              "player": "梅西"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 4,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 54,
+            "right": 46
+          },
+          {
+            "title": "进攻",
+            "left": 82,
+            "right": 114
+          },
+          {
+            "title": "危险进攻",
+            "left": 33,
+            "right": 59
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 1,
+            "right": 3
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "AT&T Stadium",
+      "city": "达拉斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "阿根廷世界排名第1远高于奥地利第24，赛前预测一致看好阿根廷，最终2-0获胜符合预期，比分差距合理，无冷门迹象。"
+        },
+        "generated_at": "2026-06-23T19:38:24.281475",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-22T20:34:43.527098",
-    "total_matches": 40
+    "last_updated": "2026-06-23T20:24:38.566228",
+    "total_matches": 44
   }
 }
