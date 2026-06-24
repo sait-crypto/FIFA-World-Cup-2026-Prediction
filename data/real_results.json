@@ -2631,7 +2631,7 @@
       "review": {
         "upset": {
           "level": "正常",
-          "reason": "哥伦比亚排名第13远高于乌兹别克斯坦第50，赛前预测哥伦比亚2-0获胜，实际3-1取胜符合预期，技术统计全面占优，无冷门迹象。"
+          "reason": "比赛结果与排名差距（葡萄牙第5 vs 刚果金第46）及赛前预测（葡萄牙胜）一致，且哥伦比亚并非弱队，实际胜方符合预期，无冷门特征。"
         },
         "generated_at": "2026-06-22T05:49:27.024328",
         "content": ""
@@ -5474,10 +5474,437 @@
         "generated_at": "2026-06-23T19:38:24.281475",
         "content": ""
       }
+    },
+    "2026-06-24_哥伦比亚_vs_刚果(金)": {
+      "date": "2026-06-24",
+      "home_team": "哥伦比亚",
+      "away_team": "刚果(金)",
+      "home_score": 1,
+      "away_score": 0,
+      "score_display": "1-0",
+      "match_stage": "小组赛K组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "76'",
+            "team": "哥伦比亚",
+            "type": "进球",
+            "player": "穆尼奥斯",
+            "description": "第1个进球！Goooooooal！穆尼奥斯(哥伦比亚 射门 (助攻: 金特罗))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "76'",
+              "team": "哥伦比亚",
+              "player": "穆尼奥斯"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 8,
+          "角球": 9,
+          "越位": 7
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 64,
+            "right": 36
+          },
+          {
+            "title": "进攻",
+            "left": 102,
+            "right": 68
+          },
+          {
+            "title": "危险进攻",
+            "left": 31,
+            "right": 22
+          },
+          {
+            "title": "射正",
+            "left": 9,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "哥伦比亚排名13远高于刚果(金)的46，赛前预测一致看好哥伦比亚，实际1-0小胜符合预期，场面占优但仅净胜1球，无冷门特征。"
+        },
+        "generated_at": "2026-06-24T17:41:33.555262",
+        "content": ""
+      }
+    },
+    "2026-06-24_巴拿马_vs_克罗地亚": {
+      "date": "2026-06-24",
+      "home_team": "巴拿马",
+      "away_team": "克罗地亚",
+      "home_score": 0,
+      "away_score": 1,
+      "score_display": "0-1",
+      "match_stage": "小组赛L组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "54'",
+            "team": "克罗地亚",
+            "type": "进球",
+            "player": "布迪米尔",
+            "description": "第1个进球！球进啦！布迪米尔(克罗地亚 射门 (助攻: 斯塔尼希奇))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "54'",
+              "team": "克罗地亚",
+              "player": "布迪米尔"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 9,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 42,
+            "right": 58
+          },
+          {
+            "title": "进攻",
+            "left": 96,
+            "right": 110
+          },
+          {
+            "title": "危险进攻",
+            "left": 59,
+            "right": 43
+          },
+          {
+            "title": "射正",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 7,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "BMO Field",
+      "city": "多伦多",
+      "country": "加拿大",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "克罗地亚排名第11远高于巴拿马第34，赛前预测克罗地亚胜出且实际1-0小胜，比分、控球率等数据均符合预期，无冷门特征。"
+        },
+        "generated_at": "2026-06-24T16:22:10.601729",
+        "content": ""
+      }
+    },
+    "2026-06-24_英格兰_vs_加纳": {
+      "date": "2026-06-24",
+      "home_team": "英格兰",
+      "away_team": "加纳",
+      "home_score": 0,
+      "away_score": 0,
+      "score_display": "0-0",
+      "match_stage": "小组赛L组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [],
+        "stats_summary": {
+          "进球": [],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 11,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 79,
+            "right": 21
+          },
+          {
+            "title": "进攻",
+            "left": 131,
+            "right": 40
+          },
+          {
+            "title": "危险进攻",
+            "left": 78,
+            "right": 10
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 10,
+            "right": 0
+          },
+          {
+            "title": "角球",
+            "left": 9,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Gillette Stadium",
+      "city": "波士顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "大爆冷",
+          "reason": "世界排名第4的英格兰全场控球率79%、射正3次，却被排名第73的加纳逼平0-0，赛前预测高度倾向英格兰胜，技术统计完全占优却未能进球，属于大爆冷。"
+        },
+        "generated_at": "2026-06-24T16:22:02.854842",
+        "content": ""
+      }
+    },
+    "2026-06-24_葡萄牙_vs_乌兹别克斯坦": {
+      "date": "2026-06-24",
+      "home_team": "葡萄牙",
+      "away_team": "乌兹别克斯坦",
+      "home_score": 5,
+      "away_score": 0,
+      "score_display": "5-0",
+      "match_stage": "小组赛K组第2轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "87'",
+            "team": "葡萄牙",
+            "type": "进球",
+            "player": "莱奥",
+            "description": "第5个进球 - 莱奥(葡萄牙) - 射门"
+          },
+          {
+            "time": "60'",
+            "team": "葡萄牙",
+            "type": "进球",
+            "player": "内马托夫",
+            "description": "第4个进球 - 内马托夫(葡萄牙) - 乌龙球"
+          },
+          {
+            "time": "39'",
+            "team": "葡萄牙",
+            "type": "进球",
+            "player": "C罗",
+            "description": "第3个进球 - C罗(葡萄牙) - 射门 (助攻: B费)"
+          },
+          {
+            "time": "17'",
+            "team": "葡萄牙",
+            "type": "进球",
+            "player": "门德斯",
+            "description": "第2个进球 - 门德斯(葡萄牙) - 任意球"
+          },
+          {
+            "time": "6'",
+            "team": "葡萄牙",
+            "type": "进球",
+            "player": "C罗",
+            "description": "第1个进球！球进啦！C罗(葡萄牙 射门 (助攻: 坎塞洛))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "87'",
+              "team": "葡萄牙",
+              "player": "莱奥"
+            },
+            {
+              "time": "60'",
+              "team": "葡萄牙",
+              "player": "内马托夫"
+            },
+            {
+              "time": "39'",
+              "team": "葡萄牙",
+              "player": "C罗"
+            },
+            {
+              "time": "17'",
+              "team": "葡萄牙",
+              "player": "门德斯"
+            },
+            {
+              "time": "6'",
+              "team": "葡萄牙",
+              "player": "C罗"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 5,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 5,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 66,
+            "right": 34
+          },
+          {
+            "title": "进攻",
+            "left": 144,
+            "right": 79
+          },
+          {
+            "title": "危险进攻",
+            "left": 60,
+            "right": 25
+          },
+          {
+            "title": "射正",
+            "left": 9,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 2
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "NRG Stadium",
+      "city": "休斯顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "葡萄牙世界排名第5，乌兹别克斯坦第50，排名差距45位，且葡萄牙5-0大胜完全符合实力差距和赛前预测（3-0），技术统计全面碾压，无任何冷门迹象。"
+        },
+        "generated_at": "2026-06-24T16:21:55.052447",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-23T20:24:38.566228",
-    "total_matches": 44
+    "last_updated": "2026-06-24T17:41:47.174450",
+    "total_matches": 48
   }
 }
