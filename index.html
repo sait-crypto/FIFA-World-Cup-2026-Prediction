@@ -167,6 +167,7 @@ a{color:var(--primary);text-decoration:none}
 .stat-bar-fill.green{background:var(--green)}
 .stat-bar-fill.primary{background:var(--primary)}
 .stat-bar-fill.orange{background:var(--orange)}
+.stat-bar-fill.red{background:var(--red)}
 
 /* Upset tag - half-overlapping below winner flag */
 .upset-tag{font-size:10px;font-weight:700;text-align:center;border-radius:3px;padding:1px 6px;display:inline-block;line-height:1.4;color:#fff;border:none}
@@ -630,23 +631,27 @@ function renderAccuracyStats(allCards){
   const combinedMax=withResult.length;
   const combinedPct=combinedMax?Math.round(combinedHit/combinedMax*100):0;
   const upsetPct=upsetTotal?Math.round(upsetCount/upsetTotal*100):0;
+  // 命中率颜色：低=orange, 中=primary, 高=green（爆冷率相反）
+  const _hitColor=pct=>pct>=60?'green':pct>=40?'primary':'orange';
+  const _upsetColor=pct=>pct>=60?'red':pct>=40?'orange':'green';
+  const wc=_hitColor(winnerPct),sc=_hitColor(scorePct),cc=_hitColor(combinedPct),uc=_upsetColor(upsetPct);
   const statsHtml=`<div class="stats-section">
     <div class="stats-row">
       <div class="stat-card" title="第一可能比分所声明的胜方与实际比赛胜方一致即算命中" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">胜负命中</span><span class="stat-value" style="color:var(--green)">${winnerCorrect}<span class="stat-total">/${withResult.length} (${winnerPct}%)</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill green" style="width:${winnerPct}%"></span></div>
+        <div class="stat-header"><span class="stat-label">胜负命中</span><span class="stat-value" style="color:var(--${wc})">${winnerCorrect}<span class="stat-total">/${withResult.length} (${winnerPct}%)</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill ${wc}" style="width:${winnerPct}%"></span></div>
       </div>
       <div class="stat-card" title="预测的比分与实际比分完全一致即算命中；仅统计前n可能比分" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">比分命中</span><span class="stat-value" style="color:var(--primary)">${scoreHit}<span class="stat-total">/${withResult.length} (${scorePct}%)</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scorePct}%"></span></div>
+        <div class="stat-header"><span class="stat-label">比分命中</span><span class="stat-value" style="color:var(--${sc})">${scoreHit}<span class="stat-total">/${withResult.length} (${scorePct}%)</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill ${sc}" style="width:${scorePct}%"></span></div>
       </div>
       <div class="stat-card" title="综合命中率＝命中场数÷已赛场次；胜负命中或比分命中任一命中即该场记1分" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">综合命中</span><span class="stat-value" style="color:var(--primary)">${combinedHit}<span class="stat-total">/${combinedMax} (${combinedPct}%)</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${combinedPct}%"></span></div>
+        <div class="stat-header"><span class="stat-label">综合命中</span><span class="stat-value" style="color:var(--${cc})">${combinedHit}<span class="stat-total">/${combinedMax} (${combinedPct}%)</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill ${cc}" style="width:${combinedPct}%"></span></div>
       </div>
       <div class="stat-card" title="已结束比赛中标记为「爆冷」或「大爆冷」的比例（基于赛前赔率与实力对比的客观评估，与本网页预测无关）" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">赛事爆冷率</span><span class="stat-value" style="color:var(--green)">${upsetPct}<span class="stat-total">%</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill green" style="width:${upsetPct}%"></span></div>
+        <div class="stat-header"><span class="stat-label">赛事爆冷率</span><span class="stat-value" style="color:var(--${uc})">${upsetPct}<span class="stat-total">%</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill ${uc}" style="width:${upsetPct}%"></span></div>
       </div>
     </div>
   </div>`;
