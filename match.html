@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="default">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="max-age=300, must-revalidate">
+<meta http-equiv="Cache-Control" content="max-age=60, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="./icon.png">
 <title>AI 辩论预测</title>
@@ -492,7 +492,7 @@ function loadRealResult(){
   if(!DATA)return;
   const{teamA,teamB}=parseTopic(DATA.topic||'');
   const rrPath='data/real_results.json';
-  fetch(rrPath+'?t='+Date.now()).then(r=>r.json()).then(d=>{
+  fetch(rrPath,{cache:'no-cache'}).then(r=>r.json()).then(d=>{
     const matches=d.matches||{};
     for(const key in matches){
       const m=matches[key];
@@ -583,7 +583,7 @@ dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.a
 dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('drag-over'));
 dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f){const r=new FileReader();r.onload=ev=>loadJson(ev.target.result);r.readAsText(f)}});
 
-(function(){const p=new URLSearchParams(location.search);const f=p.get('json')||CONFIG.JSON_FILE;if(!f)return;currentJsonFile=f;fetch(f+'?t='+Date.now()).then(r=>r.text()).then(loadJson).catch(()=>console.warn('JSON auto-load failed:',f))})();
+(function(){const p=new URLSearchParams(location.search);const f=p.get('json')||CONFIG.JSON_FILE;if(!f)return;currentJsonFile=f;fetch(f).then(r=>r.text()).then(loadJson).catch(()=>console.warn('JSON auto-load failed:',f))})();
 
 // ── Helpers ──
 function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}

@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="default">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="max-age=300, must-revalidate">
+<meta http-equiv="Cache-Control" content="max-age=60, must-revalidate">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" href="./icon.png">
 <title>AI 辩论预测 · 赛程</title>
@@ -430,17 +430,25 @@ function extractCardData(data,filename){
 async function loadSchedule(){
   const container=document.getElementById('main-content');
   container.innerHTML='<div class="loading">正在加载赛程数据...</div>';
-  let files=null;
-  try{const r=await fetch(MANIFEST+'?t='+Date.now());if(r.ok)files=await r.json()}catch(e){}
+  let files=null,dataVersion='';
+  try{
+    const r=await fetch(MANIFEST,{cache:'no-cache'});
+    if(r.ok){
+      const mf=await r.json();
+      // 兼容新旧格式：新格式 {files:[], _version:""}，旧格式纯数组
+      if(Array.isArray(mf)){files=mf}else{files=mf.files||[];dataVersion=mf._version||''}
+    }
+  }catch(e){}
   // 并行加载真实结果
-  try{const r=await fetch(REAL_RESULTS+'?t='+Date.now());if(r.ok)REAL_DATA=await r.json()}catch(e){}
+  try{const r=await fetch(REAL_RESULTS,{cache:'no-cache'});if(r.ok)REAL_DATA=await r.json()}catch(e){}
   if(!files||!files.length){showDropZone();return}
 
-  // 一次性并行加载所有 JSON
+  // 一次性并行加载所有 JSON（带版本号查询参数，CDN 可缓存 gzip 版本，数据更新时版本变化自动失效）
+  const vParam=dataVersion?'?v='+dataVersion:'';
   const allCards=[];
   const results=await Promise.all(files.map(async file=>{
     try{
-      const r=await fetch(DATA_DIR+file+'?t='+Date.now());
+      const r=await fetch(DATA_DIR+file+vParam);
       if(r.ok){const d=await r.json();return extractCardData(d,file)}
     }catch(e){console.warn('跳过:',file)}
     return null;
@@ -600,50 +608,6 @@ function renderAccuracyStats(allCards){
   for(const m of withResult){
     if(m.scoreMatchRank!==null)scoreHit++;
   }
-  // 综合分数（与 prompt_evolve 对齐：基础满分10 + top-k加权满分5，归10化）
-  const SCORE_WINNER=4,SCORE_SCORE=3,SCORE_GOAL_DIFF=1,SCORE_TOTAL_GOALS=1;
-  let totalRaw=0,maxRaw=0;
-  for(const m of withResult){
-    maxRaw+=15; // 基础10 + top-k加权5
-    if(!m.actualWinner)continue;
-    let base=0;
-    if(m.winner===m.actualWinner)base+=SCORE_WINNER;
-    // 比分正确：top-1
-    const fp=m.first3Preds&&m.first3Preds[0];
-    const top1Score=fp&&fp.score;
-    if(top1Score===m.actualPredScore)base+=SCORE_SCORE;
-    // 进球差 ±1
-    const r=REAL_DATA&&Object.values(REAL_DATA.matches||{}).find(x=>x.home_team===m.teamA&&x.away_team===m.teamB);
-    if(r){
-      const ap=actualToPredFormat(m.teamA,m.teamB,r.home_score,r.away_score);
-      const predParts=m.score.split('-').map(Number);
-      const actualParts=ap.predScore.split('-').map(Number);
-      if(predParts.length===2&&actualParts.length===2){
-        if(Math.abs(predParts[0]-actualParts[0])<=1)base+=SCORE_GOAL_DIFF;
-        if(Math.abs(predParts[1]-actualParts[1])<=1)base+=SCORE_GOAL_DIFF;
-        if(predParts[0]+predParts[1]===actualParts[0]+actualParts[1])base+=SCORE_TOTAL_GOALS;
-      }
-    }
-    // top-k 加权加分（top-2 及以后，与 prompt_evolve 一致）
-    let topKBonus=0;
-    const preds=m.first3Preds||[];
-    if(preds.length>1){
-      const positions=preds.slice(1);
-      const weights=positions.map((_,i)=>1/(i+1));
-      const totalW=weights.reduce((a,b)=>a+b,0);
-      if(totalW>0){
-        for(let i=0;i<positions.length;i++){
-          const w=weights[i]/totalW;
-          if(m.actualWinner&&positions[i].winner===m.actualWinner)topKBonus+=2.5*w;
-          if(m.actualPredScore&&positions[i].score===m.actualPredScore)topKBonus+=2.5*w;
-        }
-      }
-    }
-    topKBonus=Math.min(topKBonus,5);
-    totalRaw+=base+topKBonus;
-  }
-  const totalScore=Math.round(totalRaw*10/15);
-  const maxScore=Math.round(maxRaw*10/15);
   // 爆冷率
   let upsetTotal=0,upsetCount=0;
   if(REAL_DATA&&REAL_DATA.matches){
@@ -658,7 +622,13 @@ function renderAccuracyStats(allCards){
   if(!container)return;
   const winnerPct=withResult.length?Math.round(winnerCorrect/withResult.length*100):0;
   const scorePct=withResult.length?Math.round(scoreHit/withResult.length*100):0;
-  const scoreRate=maxScore?Math.round(totalScore/maxScore*100):0;
+  let combinedHit=0;
+  for(const m of withResult){
+    // 胜负命中或比分命中，任一命中即该场记1分
+    if((m.actualWinner&&m.winner===m.actualWinner)||m.scoreMatchRank!==null)combinedHit++;
+  }
+  const combinedMax=withResult.length;
+  const combinedPct=combinedMax?Math.round(combinedHit/combinedMax*100):0;
   const upsetPct=upsetTotal?Math.round(upsetCount/upsetTotal*100):0;
   const statsHtml=`<div class="stats-section">
     <div class="stats-row">
@@ -670,9 +640,9 @@ function renderAccuracyStats(allCards){
         <div class="stat-header"><span class="stat-label">比分命中</span><span class="stat-value" style="color:var(--primary)">${scoreHit}<span class="stat-total">/${withResult.length} (${scorePct}%)</span></span></div>
         <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scorePct}%"></span></div>
       </div>
-      <div class="stat-card" title="综合评分（与提示词进化一致）：胜负正确+4，比分命中+3，进球差±1内各+1，总进球数同+1（基础满分10）；top-2+加权加分（满分5）；归10化" onclick="showStatTooltip(this,event)">
-        <div class="stat-header"><span class="stat-label">综合分数</span><span class="stat-value" style="color:var(--primary)">${totalScore}<span class="stat-total">/${maxScore} (${scoreRate}%)</span></span></div>
-        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${scoreRate}%"></span></div>
+      <div class="stat-card" title="综合命中率＝命中场数÷已赛场次；胜负命中或比分命中任一命中即该场记1分" onclick="showStatTooltip(this,event)">
+        <div class="stat-header"><span class="stat-label">综合命中</span><span class="stat-value" style="color:var(--primary)">${combinedHit}<span class="stat-total">/${combinedMax} (${combinedPct}%)</span></span></div>
+        <div class="stat-bar"><span class="stat-bar-fill primary" style="width:${combinedPct}%"></span></div>
       </div>
       <div class="stat-card" title="已结束比赛中标记为「爆冷」或「大爆冷」的比例（基于赛前赔率与实力对比的客观评估，与本网页预测无关）" onclick="showStatTooltip(this,event)">
         <div class="stat-header"><span class="stat-label">赛事爆冷率</span><span class="stat-value" style="color:var(--green)">${upsetPct}<span class="stat-total">%</span></span></div>
