@@ -513,7 +513,7 @@ function updateHeroWithRealResult(){
   if(!vsDivider||!REAL_RESULT)return;
   const{teamA,teamB}=parseTopic(DATA.topic||'');
   const hs=REAL_RESULT.home_score,as_=REAL_RESULT.away_score;
-  const fmt=actualToPredFormat(teamA,teamB,hs,as_);
+  const fmt=actualToPredFormat(teamA,teamB,hs,as_,REAL_RESULT);
 
   // 计算匹配排名
   let winnerMatchRank=null,scoreMatchRank=null;
@@ -547,6 +547,7 @@ function updateHeroWithRealResult(){
     const uc=upsetData.level==='大爆冷'?'upset-major':'upset-minor';
     upsetTag=`<div class="upset-tag ${uc}">${esc(upsetData.level)}</div>`;
   }
+  const penaltyLine=REAL_RESULT.penalty_score_display?`<div class="header-penalty-score">点球 ${esc(REAL_RESULT.penalty_score_display)}</div>`:'';
   vsDivider.outerHTML=`<div class="header-real-score">
     ${upsetTag}
     <div class="header-score-line">
@@ -554,6 +555,7 @@ function updateHeroWithRealResult(){
       <span class="header-score-sep">:</span>
       <span class="header-score-num">${as_}</span>
     </div>
+    ${penaltyLine}
     <div class="header-acc-info">${accLines}</div>
   </div>`;
 
@@ -570,7 +572,15 @@ function updateHeroWithRealResult(){
   });
 }
 
-function actualToPredFormat(homeTeam,awayTeam,homeScore,awayScore){
+function actualToPredFormat(homeTeam,awayTeam,homeScore,awayScore,realResult=null){
+  const hp=realResult?.home_penalty,ap=realResult?.away_penalty;
+  const hasPenalty=hp!==undefined&&hp!==null&&hp!==''&&ap!==undefined&&ap!==null&&ap!=='';
+  const rrWinner=realResult?.winner||'';
+  if(homeScore===awayScore&&hasPenalty&&rrWinner){
+    const winner=rrWinner.includes(awayTeam)?awayTeam:homeTeam;
+    const pScore=winner===homeTeam?`${hp}-${ap}`:`${ap}-${hp}`;
+    return{winner,predScore:`${homeScore}-${awayScore}(点球${pScore})`};
+  }
   if(homeScore>awayScore)return{winner:homeTeam,predScore:`${homeScore}-${awayScore}`};
   if(awayScore>homeScore)return{winner:awayTeam,predScore:`${awayScore}-${homeScore}`};
   return{winner:'平局',predScore:`${homeScore}-${awayScore}`};
@@ -812,7 +822,7 @@ function renderHeader(){
   let middleHtml=`<div class="vs-divider"><div class="vs-text">VS</div></div>`;
   if(REAL_RESULT){
     const hs=REAL_RESULT.home_score,as_=REAL_RESULT.away_score;
-    const fmt=actualToPredFormat(teamA,teamB,hs,as_);
+    const fmt=actualToPredFormat(teamA,teamB,hs,as_,REAL_RESULT);
     // 计算匹配排名
     let winnerMatchRank=null,scoreMatchRank=null;
     const allPreds=DATA.top_predictions||[];
@@ -908,7 +918,7 @@ function renderPredictionHero(){
     // 计算真实比分（预测格式）
     let actualWinner=null,actualPredScore=null;
     if(REAL_RESULT){
-      const fmt=actualToPredFormat(teamA,teamB,REAL_RESULT.home_score,REAL_RESULT.away_score);
+      const fmt=actualToPredFormat(teamA,teamB,REAL_RESULT.home_score,REAL_RESULT.away_score,REAL_RESULT);
       actualWinner=fmt.winner;actualPredScore=fmt.predScore;
     }
     html+=`<div class="top-predictions">`;

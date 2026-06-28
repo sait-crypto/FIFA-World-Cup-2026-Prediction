@@ -8143,10 +8143,755 @@
         "generated_at": "2026-06-27T17:00:00.054988",
         "content": ""
       }
+    },
+    "2026-06-28_克罗地亚_vs_加纳": {
+      "date": "2026-06-28",
+      "home_team": "克罗地亚",
+      "away_team": "加纳",
+      "home_score": 2,
+      "away_score": 1,
+      "score_display": "2-1",
+      "match_stage": "小组赛L组第3轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "83'",
+            "team": "克罗地亚",
+            "type": "进球",
+            "player": "弗拉希奇",
+            "description": "第3个进球 - 弗拉希奇(克罗地亚) - 头球 (助攻: 莫德里奇)"
+          },
+          {
+            "time": "78'",
+            "team": "加纳",
+            "type": "进球",
+            "player": "卢卡森",
+            "description": "第2个进球 - 卢卡森(加纳) - 射门 (助攻: 努瓦马)"
+          },
+          {
+            "time": "32'",
+            "team": "克罗地亚",
+            "type": "进球",
+            "player": "苏契奇",
+            "description": "第1个进球！Goooooooal！苏契奇(克罗地亚 射门)打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "83'",
+              "team": "克罗地亚",
+              "player": "弗拉希奇"
+            },
+            {
+              "time": "78'",
+              "team": "加纳",
+              "player": "卢卡森"
+            },
+            {
+              "time": "32'",
+              "team": "克罗地亚",
+              "player": "苏契奇"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 5,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 54,
+            "right": 46
+          },
+          {
+            "title": "进攻",
+            "left": 89,
+            "right": 103
+          },
+          {
+            "title": "危险进攻",
+            "left": 35,
+            "right": 25
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lincoln Financial Field",
+      "city": "费城",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "克罗地亚排名远高于加纳（11 vs 73），且实际结果2-1小胜符合排名优势，赛前预测虽有分歧但克罗地亚胜出概率更高，比分差距小，不属于冷门。"
+        },
+        "generated_at": "2026-06-28T14:38:24.254929",
+        "content": ""
+      }
+    },
+    "2026-06-28_刚果(金)_vs_乌兹别克斯坦": {
+      "date": "2026-06-28",
+      "home_team": "刚果(金)",
+      "away_team": "乌兹别克斯坦",
+      "home_score": 3,
+      "away_score": 1,
+      "score_display": "3-1",
+      "match_stage": "小组赛K组第3轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+1'",
+            "team": "刚果民主共和国",
+            "type": "进球",
+            "player": "维萨",
+            "description": "第4个进球 - 维萨(刚果民主共和国) - 射门 (助攻: 埃利亚)"
+          },
+          {
+            "time": "78'",
+            "team": "刚果民主共和国",
+            "type": "进球",
+            "player": "马耶莱",
+            "description": "第3个进球 - 马耶莱(刚果民主共和国) - 射门"
+          },
+          {
+            "time": "68'",
+            "team": "刚果民主共和国",
+            "type": "进球",
+            "player": "维萨",
+            "description": "第2个进球 - 维萨(刚果民主共和国) - 点球"
+          },
+          {
+            "time": "10'",
+            "team": "乌兹别克斯坦",
+            "type": "进球",
+            "player": "肖穆罗多夫",
+            "description": "第1个进球！球进啦！肖穆罗多夫(乌兹别克斯坦 射门 (助攻: 莫兹戈沃伊))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+1'",
+              "team": "刚果民主共和国",
+              "player": "维萨"
+            },
+            {
+              "time": "78'",
+              "team": "刚果民主共和国",
+              "player": "马耶莱"
+            },
+            {
+              "time": "68'",
+              "team": "刚果民主共和国",
+              "player": "维萨"
+            },
+            {
+              "time": "10'",
+              "team": "乌兹别克斯坦",
+              "player": "肖穆罗多夫"
+            }
+          ],
+          "黄牌": 5,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 6,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 58,
+            "right": 42
+          },
+          {
+            "title": "进攻",
+            "left": 145,
+            "right": 90
+          },
+          {
+            "title": "危险进攻",
+            "left": 54,
+            "right": 45
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 14,
+            "right": 2
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "双方排名接近（46 vs 50），赛前预测分歧且刚果(金)略占优势，实际3-1获胜符合预期，技术统计全面占优，无冷门特征。"
+        },
+        "generated_at": "2026-06-28T14:38:38.668425",
+        "content": ""
+      }
+    },
+    "2026-06-28_哥伦比亚_vs_葡萄牙": {
+      "date": "2026-06-28",
+      "home_team": "哥伦比亚",
+      "away_team": "葡萄牙",
+      "home_score": 0,
+      "away_score": 0,
+      "score_display": "0-0",
+      "match_stage": "小组赛K组第3轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [],
+        "stats_summary": {
+          "进球": [],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 7,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 54,
+            "right": 46
+          },
+          {
+            "title": "进攻",
+            "left": 88,
+            "right": 83
+          },
+          {
+            "title": "危险进攻",
+            "left": 67,
+            "right": 38
+          },
+          {
+            "title": "射正",
+            "left": 6,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 11,
+            "right": 7
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Hard Rock Stadium",
+      "city": "迈阿密",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "世界排名第5的葡萄牙被排名第13的哥伦比亚逼平，且哥伦比亚在控球率（54%）、射正（6-2）等关键数据上占优，赛前预测虽有分歧但葡萄牙仍为热门，平局结果超出预期。"
+        },
+        "generated_at": "2026-06-28T14:38:46.309760",
+        "content": ""
+      }
+    },
+    "2026-06-28_巴拿马_vs_英格兰": {
+      "date": "2026-06-28",
+      "home_team": "巴拿马",
+      "away_team": "英格兰",
+      "home_score": 0,
+      "away_score": 2,
+      "score_display": "0-2",
+      "match_stage": "小组赛L组第3轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "67'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "凯恩",
+            "description": "第2个进球 - 凯恩(英格兰) - 头球 (助攻: 贝林厄姆)"
+          },
+          {
+            "time": "62'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "贝林厄姆",
+            "description": "第1个进球！球进啦！贝林厄姆(英格兰 射门 (助攻: 萨卡))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "67'",
+              "team": "英格兰",
+              "player": "凯恩"
+            },
+            {
+              "time": "62'",
+              "team": "英格兰",
+              "player": "贝林厄姆"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 10,
+          "越位": 8
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 32,
+            "right": 68
+          },
+          {
+            "title": "进攻",
+            "left": 54,
+            "right": 129
+          },
+          {
+            "title": "危险进攻",
+            "left": 21,
+            "right": 67
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 6
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 8
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 7
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "MetLife Stadium",
+      "city": "新泽西纽约",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "英格兰世界排名第4远高于巴拿马第34，赛前预测英格兰胜出且实际2-0完胜，技术统计全面占优，结果完全符合预期，无冷门迹象。"
+        },
+        "generated_at": "2026-06-28T14:38:31.321924",
+        "content": ""
+      }
+    },
+    "2026-06-28_约旦_vs_阿根廷": {
+      "date": "2026-06-28",
+      "home_team": "约旦",
+      "away_team": "阿根廷",
+      "home_score": 1,
+      "away_score": 3,
+      "score_display": "1-3",
+      "match_stage": "小组赛J组第3轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "80'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "梅西",
+            "description": "第4个进球 - 梅西(阿根廷) - 任意球"
+          },
+          {
+            "time": "55'",
+            "team": "约旦",
+            "type": "进球",
+            "player": "塔迈里",
+            "description": "第3个进球 - 塔迈里(约旦) - 射门"
+          },
+          {
+            "time": "31'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "劳塔罗",
+            "description": "第2个进球 - 劳塔罗(阿根廷) - 点球"
+          },
+          {
+            "time": "19'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "",
+            "description": "第1个进球！球进啦！洛塞尔索(阿根廷 任意球)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "80'",
+              "team": "阿根廷",
+              "player": "梅西"
+            },
+            {
+              "time": "55'",
+              "team": "约旦",
+              "player": "塔迈里"
+            },
+            {
+              "time": "31'",
+              "team": "阿根廷",
+              "player": "劳塔罗"
+            },
+            {
+              "time": "19'",
+              "team": "阿根廷",
+              "player": ""
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 8,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 3
+          },
+          {
+            "title": "控球率",
+            "left": 27,
+            "right": 73
+          },
+          {
+            "title": "进攻",
+            "left": 61,
+            "right": 122
+          },
+          {
+            "title": "危险进攻",
+            "left": 23,
+            "right": 46
+          },
+          {
+            "title": "射正",
+            "left": 1,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 2,
+            "right": 7
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 6
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "黄牌",
+            "left": 3,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "AT&T Stadium",
+      "city": "达拉斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "阿根廷世界排名第1远高于约旦第63，赛前预测一致看好阿根廷，最终3-1获胜且场面全面占优（控球率73%对27%，射正4对1），结果完全符合预期，无冷门迹象。"
+        },
+        "generated_at": "2026-06-28T14:38:08.245395",
+        "content": ""
+      }
+    },
+    "2026-06-28_阿尔及利亚_vs_奥地利": {
+      "date": "2026-06-28",
+      "home_team": "阿尔及利亚",
+      "away_team": "奥地利",
+      "home_score": 3,
+      "away_score": 3,
+      "score_display": "3-3",
+      "match_stage": "小组赛J组第3轮",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+6'",
+            "team": "奥地利",
+            "type": "进球",
+            "player": "卡莱季奇",
+            "description": "第6个进球 - 卡莱季奇(奥地利) - 头球 (助攻: 格雷戈里奇)"
+          },
+          {
+            "time": "90+3'",
+            "team": "阿尔及利亚",
+            "type": "进球",
+            "player": "马赫雷斯",
+            "description": "第5个进球 - 马赫雷斯(阿尔及利亚) - 射门 (助攻: 阿瓦尔)"
+          },
+          {
+            "time": "60'",
+            "team": "阿尔及利亚",
+            "type": "进球",
+            "player": "马赫雷斯",
+            "description": "第4个进球 - 马赫雷斯(阿尔及利亚) - 射门 (助攻: 阿瓦尔)"
+          },
+          {
+            "time": "55'",
+            "team": "奥地利",
+            "type": "进球",
+            "player": "萨比策",
+            "description": "第3个进球 - 萨比策(奥地利) - 射门 (助攻: 莱默)"
+          },
+          {
+            "time": "45'",
+            "team": "阿尔及利亚",
+            "type": "进球",
+            "player": "贝尔加利",
+            "description": "第2个进球 - 贝尔加利(阿尔及利亚) - 射门"
+          },
+          {
+            "time": "28'",
+            "team": "奥地利",
+            "type": "进球",
+            "player": "阿瑙托维奇",
+            "description": "第1个进球！Goooooooal！阿瑙托维奇(奥地利 射门 (助攻: 阿拉巴))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+6'",
+              "team": "奥地利",
+              "player": "卡莱季奇"
+            },
+            {
+              "time": "90+3'",
+              "team": "阿尔及利亚",
+              "player": "马赫雷斯"
+            },
+            {
+              "time": "60'",
+              "team": "阿尔及利亚",
+              "player": "马赫雷斯"
+            },
+            {
+              "time": "55'",
+              "team": "奥地利",
+              "player": "萨比策"
+            },
+            {
+              "time": "45'",
+              "team": "阿尔及利亚",
+              "player": "贝尔加利"
+            },
+            {
+              "time": "28'",
+              "team": "奥地利",
+              "player": "阿瑙托维奇"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 3,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 3
+          },
+          {
+            "title": "控球率",
+            "left": 65,
+            "right": 35
+          },
+          {
+            "title": "进攻",
+            "left": 139,
+            "right": 81
+          },
+          {
+            "title": "危险进攻",
+            "left": 43,
+            "right": 39
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 6
+          },
+          {
+            "title": "角球",
+            "left": 0,
+            "right": 3
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Arrowhead Stadium",
+      "city": "堪萨斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "双方排名接近（28 vs 24），赛前预测分歧较大（初始预测分布为平局1、奥地利3、阿尔及利亚4），最终3-3平局符合预期，且阿尔及利亚控球率65%占优但未取胜，属于正常结果。"
+        },
+        "generated_at": "2026-06-28T14:38:16.641243",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-27T17:00:32.178640",
-    "total_matches": 66
+    "last_updated": "2026-06-28T14:38:50.140237",
+    "total_matches": 72
   }
 }

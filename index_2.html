@@ -279,6 +279,7 @@ function updateThemeBtns(){
 function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
 /** 最小兼容清洗：数据已标准化，仅去除可能的残留前缀 */
 function cleanScore(score,winner){if(!score)return'';let s=score.trim();if(s.endsWith(' 胜'))s=s.slice(0,-2);else if(s.endsWith('胜'))s=s.slice(0,-1);if(s.startsWith('胜 '))s=s.slice(2);if(winner&&s.startsWith(winner+' '))s=s.slice(winner.length+1);s=s.replace(/^(\d+-\d+)\s+\S+$/,'$1');return s.trim()}
+function scoreParts(score){const m=(score||'').match(/^(\d+)-(\d+)/);return m?[m[1],m[2]]:[]}
 /** 点击统计数字时显示悬浮解释（移动端/无 hover 设备友好） */
 function showStatTooltip(el,ev){ev.stopPropagation();const tip=el.getAttribute('title');if(!tip)return;const old=document.querySelector('.stat-pop');if(old)old.remove();const pop=document.createElement('div');pop.className='stat-pop';pop.textContent=tip;pop.style.cssText='position:absolute;background:rgba(0,0,0,0.85);color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;max-width:260px;z-index:999;pointer-events:none;white-space:normal;line-height:1.5';document.body.appendChild(pop);const r=el.getBoundingClientRect();const pr=pop.getBoundingClientRect();pop.style.left=Math.max(4,r.left+window.scrollX+r.width/2-pr.width/2)+'px';pop.style.top=(r.top+window.scrollY-pr.height-6)+'px';setTimeout(()=>pop.remove(),2500)}
 function parseTopic(t){const p=t.split(/\s+vs\s+/i);return{teamA:p[0]?.trim()||t,teamB:p[1]?.split('（')[0]?.trim()||''}}
@@ -346,7 +347,15 @@ function findRealResult(teamA,teamB,date){
   }
   return null;
 }
-function actualToPredFormat(homeTeam,awayTeam,homeScore,awayScore){
+function actualToPredFormat(homeTeam,awayTeam,homeScore,awayScore,realResult=null){
+  const hp=realResult?.home_penalty,ap=realResult?.away_penalty;
+  const hasPenalty=hp!==undefined&&hp!==null&&hp!==''&&ap!==undefined&&ap!==null&&ap!=='';
+  const rrWinner=realResult?.winner||'';
+  if(homeScore===awayScore&&hasPenalty&&rrWinner){
+    const winner=rrWinner.includes(awayTeam)?awayTeam:homeTeam;
+    const pScore=winner===homeTeam?`${hp}-${ap}`:`${ap}-${hp}`;
+    return{winner,predScore:`${homeScore}-${awayScore}(点球${pScore})`};
+  }
   if(homeScore>awayScore)return{winner:homeTeam,predScore:`${homeScore}-${awayScore}`};
   if(awayScore>homeScore)return{winner:awayTeam,predScore:`${awayScore}-${homeScore}`};
   return{winner:'平局',predScore:`${homeScore}-${awayScore}`};
@@ -362,10 +371,10 @@ function extractCardData(data,filename){
   const realResult=findRealResult(teamA,teamB,meta.date||'');
   let realScore=null,actualWinner=null,actualPredScore=null,winnerMatchRank=null,scoreMatchRank=null,upset=null;
   if(realResult){
-    realScore=realResult.score_display;
+    realScore=realResult.full_score_display||realResult.score_display;
     const upsetData=(realResult.review||{}).upset;
     if(upsetData&&upsetData.level&&upsetData.level!=='正常')upset=upsetData;
-    const fmt=actualToPredFormat(teamA,teamB,realResult.home_score,realResult.away_score);
+    const fmt=actualToPredFormat(teamA,teamB,realResult.home_score,realResult.away_score,realResult);
     actualWinner=fmt.winner;
     actualPredScore=fmt.predScore;
     // 在全部 top_predictions 中查找排名
@@ -630,7 +639,7 @@ function renderCard(m){
     middleHtml='<div class="pred-middle-area">';
     preds.forEach((p,i)=>{
       const scoreStr=cleanScore(p.score,p.winner);
-      const parts=scoreStr.split('-');
+      const parts=scoreParts(scoreStr);
       const pSide=p.winner.includes(teamA)?'a':p.winner.includes(teamB)?'b':'x';
       let home=parts[0]||'',away=parts[1]||'';
       if(pSide==='b'){home=parts[1]||'';away=parts[0]||'';}
@@ -640,7 +649,7 @@ function renderCard(m){
     middleHtml+='</div>';
   }else if(m.winner){
     const scoreStr=cleanScore(m.score,m.winner);
-    const parts=scoreStr.split('-');
+    const parts=scoreParts(scoreStr);
     let home=parts[0]||'',away=parts[1]||'';
     if(ws==='b'){home=parts[1]||'';away=parts[0]||'';}
     const isHit=m.realScore&&m.scoreMatchRank!==null&&m.scoreMatchRank<=3;
