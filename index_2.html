@@ -295,13 +295,13 @@ function sideOf(agent,topic){
   if(w.includes(teamA))return'a';if(w.includes(teamB))return'b';return'x';
 }
 function saveScrollPos(cardEl){
-  // 同时保存卡片标识和像素位置
   const href=cardEl?.getAttribute('href')||'';
   sessionStorage.setItem(SCROLL_KEY,href);
   sessionStorage.setItem(SCROLL_KEY+'_y',String(window.scrollY));
+  const cardTop=cardEl?.getBoundingClientRect?.().top;
+  if(Number.isFinite(cardTop))sessionStorage.setItem(SCROLL_KEY+'_card_top',String(cardTop));
 }
 function restoreScrollPos(){
-  // 仅在浏览器返回（back_forward）或点击"返回赛程"时恢复，刷新页面不恢复
   const navEntry=performance.getEntriesByType('navigation')[0];
   const isBack=navEntry&&navEntry.type==='back_forward';
   const fromMatch=sessionStorage.getItem('from_match')==='1';
@@ -309,10 +309,12 @@ function restoreScrollPos(){
   if(!isBack&&!fromMatch){
     sessionStorage.removeItem(SCROLL_KEY);
     sessionStorage.removeItem(SCROLL_KEY+'_y');
+    sessionStorage.removeItem(SCROLL_KEY+'_card_top');
     return;
   }
   const saved=sessionStorage.getItem(SCROLL_KEY)||'';
   const savedY=sessionStorage.getItem(SCROLL_KEY+'_y')||'';
+  const savedCardTop=sessionStorage.getItem(SCROLL_KEY+'_card_top')||'';
   if(!saved&&!savedY)return;
   // 立即尝试像素位置（最快恢复）
   if(savedY&&parseInt(savedY)>0){
@@ -322,14 +324,22 @@ function restoreScrollPos(){
   const tryCard=(attempt)=>{
     const card=saved?document.querySelector(`.sched-card[href="${CSS.escape(saved)}"]`):null;
     if(card){
-      card.scrollIntoView({behavior:'instant',block:'center'});
+      const cardTop=parseFloat(savedCardTop);
+      if(Number.isFinite(cardTop)){
+        const targetY=window.scrollY+card.getBoundingClientRect().top-cardTop;
+        window.scrollTo(0,Math.max(0,Math.round(targetY)));
+      }else{
+        card.scrollIntoView({behavior:'instant',block:'center'});
+      }
       sessionStorage.removeItem(SCROLL_KEY);
       sessionStorage.removeItem(SCROLL_KEY+'_y');
+      sessionStorage.removeItem(SCROLL_KEY+'_card_top');
     }else if(attempt<20){
       setTimeout(()=>tryCard(attempt+1),250);
     }else{
       sessionStorage.removeItem(SCROLL_KEY);
       sessionStorage.removeItem(SCROLL_KEY+'_y');
+      sessionStorage.removeItem(SCROLL_KEY+'_card_top');
     }
   };
   setTimeout(()=>tryCard(0),200);
@@ -560,9 +570,9 @@ function renderAccuracyStats(allCards){
     if(m.scoreMatchRank!==null)totalScore+=3;
     const r=REAL_DATA&&Object.values(REAL_DATA.matches||{}).find(x=>x.home_team===m.teamA&&x.away_team===m.teamB);
     if(r){
-      const ap=actualToPredFormat(m.teamA,m.teamB,r.home_score,r.away_score);
-      const predParts=m.score.split('-').map(Number);
-      const actualParts=ap.predScore.split('-').map(Number);
+      const ap=actualToPredFormat(m.teamA,m.teamB,r.home_score,r.away_score,r);
+      const predParts=scoreParts(m.score).map(Number);
+      const actualParts=scoreParts(ap.predScore).map(Number);
       if(predParts.length===2&&actualParts.length===2){
         if(Math.abs(predParts[0]-actualParts[0])<=1)totalScore+=1;
         if(Math.abs(predParts[1]-actualParts[1])<=1)totalScore+=1;

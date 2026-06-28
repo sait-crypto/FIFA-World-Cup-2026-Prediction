@@ -643,6 +643,27 @@ function parseStructuredAnalysis(content){
   }
   return results;
 }
+function parseFallbackVerdictSections(content){
+  if(!content)return[];
+  const sections=[
+    {label:'裁定逻辑',emoji:'🧠',tag:'论点'},
+    {label:'对立场景',emoji:'🔀',tag:'对立场景分析'},
+    {label:'打破平局',emoji:'🎯',tag:'打破平局的关键因素'},
+    {label:'进球上限',emoji:'📈',tag:'进球上限分析'}
+  ];
+  const items=[];
+  for(const section of sections){
+    const re=new RegExp(`【${section.tag}】\\s*([\\s\\S]+?)(?=【|$)`,'s');
+    const m=re.exec(content);
+    if(!m)continue;
+    const full=m[1].trim();
+    if(!full)continue;
+    let short=full.replace(/\n+/g,' ').replace(/\s+/g,' ');
+    if(short.length>200)short=short.substring(0,200)+'...';
+    items.push({label:section.label,emoji:section.emoji,short,full,hasDetail:short!==full});
+  }
+  return items;
+}
 function initialPred(a){return a.prediction_history?.[0]||{}}
 function finalPred(a){return a.prediction_history?.[a.prediction_history.length-1]||{}}
 function hasChanged(a){return(a.prediction_history||[]).some((p,i)=>i>0&&p.changed)}
@@ -653,6 +674,7 @@ function isDraw(winner,t){const{teamA,teamB}=parseTopic(t||DATA.topic);return wi
 function winSuffix(winner){return (!winner||winner==='平局')?'':' 胜'}
 /** 清理比分中可能的残留前缀（数据已标准化，此函数仅做最小兼容清洗） */
 function cleanScore(score,winner){if(!score)return'';let s=score.trim();if(s.endsWith(' 胜'))s=s.slice(0,-2);else if(s.endsWith('胜'))s=s.slice(0,-1);if(s.startsWith('胜 '))s=s.slice(2);if(winner&&s.startsWith(winner+' '))s=s.slice(winner.length+1);s=s.replace(/^(\d+-\d+)\s+\S+$/,'$1');return s.trim()}
+function scoreDisplay(score,winner,decision=''){const base=cleanScore(score,winner);return base&&decision==='加时赛'?`${base}（加时）`:base}
 /** 将胜者优先比分转为主客场比分 */
 function homeAwayScore(score,winner){if(!score||!winner||isDraw(winner))return score||'';const{teamA,teamB}=parseTopic(DATA.topic);const parts=score.split('-');if(parts.length!==2)return score;if(winner.includes(teamA))return score;return parts[1].trim()+'-'+parts[0].trim()}
 
@@ -888,7 +910,7 @@ function renderPredictionHero(){
   html+=`<div class="pred-hero-main">`;
   if(fp){
     const winnerFlag=mediumFlagHtml(fp.winner);
-    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(cleanScore(fp.score,fp.winner))}${winSuffix(fp.winner)}</span></div>
+    html+=`<div class="pred-hero-result-line"><span class="pred-hero-result">${winnerFlag}${esc(fp.winner)}</span><span class="pred-hero-score">${esc(scoreDisplay(fp.score,fp.winner,fp.decision))}${winSuffix(fp.winner)}</span></div>
     <div class="pred-hero-conf"><div class="pred-hero-conf-bar"><div class="pred-hero-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="pred-hero-conf-label">准确度 ${fp.confidence||0}/10</span></div>`;
   }
   html+=`</div>`;
@@ -908,7 +930,7 @@ function renderPredictionHero(){
   html+=`<div class="pred-hero-stance">`;
   for(const a of agents){
     const s=sideOf(a,DATA.topic),f=finalPred(a);
-    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')} ${esc(cleanScore(f.score||'',f.winner))}${f.winner?winSuffix(f.winner):''}</span>`;
+    html+=`<span class="stance-chip side-${s}" onclick="event.stopPropagation();jumpToAnalyst('${esc(a.name)}')">${esc(a.name)} ${esc(f.winner||'')} ${esc(scoreDisplay(f.score||'',f.winner,f.decision))}${f.winner?winSuffix(f.winner):''}</span>`;
   }
   html+='</div>';
 
@@ -931,7 +953,7 @@ function renderPredictionHero(){
       if(actualWinner&&p.winner===actualWinner&&p.score===actualPredScore)itemCls+=' exact-score-match';
       html+=`<div class="top-pred-item ${itemCls}">
         <span class="top-pred-rank">${i+1}.</span>
-        <span class="top-pred-score">${smallFlagHtml(p.winner||'')} ${esc(p.winner)} ${esc(cleanScore(p.score,p.winner))}${winSuffix(p.winner)}</span>
+        <span class="top-pred-score">${smallFlagHtml(p.winner||'')} ${esc(p.winner)} ${esc(scoreDisplay(p.score,p.winner,p.decision))}${winSuffix(p.winner)}</span>
         <span class="top-pred-conf-label-text">准确度</span>
         <div class="top-pred-conf-bar"><div class="top-pred-conf-fill ${pClass}" style="width:${pPct}%"></div></div>
         <span class="top-pred-conf-label">${pConf}/10</span>
@@ -1132,7 +1154,7 @@ function renderAnalysts(){
     const stanceText=a.assigned_side?`支持${a.assigned_side}`:a.stance||'';
     const summary=profile.core_view||profile.initial||firstSummaries[a.name]||'';
 
-    const curWinner=final.winner||'',curScore=cleanScore(final.score||'',final.winner),curConf=final.confidence||0;
+    const curWinner=final.winner||'',curScore=scoreDisplay(final.score||'',final.winner,final.decision),curConf=final.confidence||0;
     const opinionStr=`${curWinner} ${curScore}${isDraw(curWinner)?'':' 胜'}`;
     const opinionSideCls=s==='a'?'side-a':s==='b'?'side-b':'side-x';
 
@@ -1208,7 +1230,7 @@ function showAnalystModal(name){
     const entry=history[hi];
     if(!first)html+='<span class="chain-arrow">→</span>';
     const cls=first?'initial':(entry.changed?'changed':'');
-    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')} ${esc(cleanScore(entry.score||'',entry.winner))}${entry.winner?winSuffix(entry.winner):''} 准${entry.confidence||''}</span>`;
+    html+=`<span class="chain-node ${cls}" data-speech-idx="${hi}" onclick="jumpToSpeech(${hi})">${esc(entry.winner||'')} ${esc(scoreDisplay(entry.score||'',entry.winner,entry.decision))}${entry.winner?winSuffix(entry.winner):''} 准${entry.confidence||''}</span>`;
     first=false;
   }
   html+='</div>';
@@ -1217,7 +1239,7 @@ function showAnalystModal(name){
   for(let si=0;si<speeches.length;si++){
     const sp=speeches[si];
     const actionLabel=sp.action+(sp.target?` → ${esc(sp.target)}`:'')+(sp.counter?' ↩️反质疑':'');
-    const predLabel=sp.prediction||(history[si]?history[si].winner+' '+cleanScore(history[si].score||'',history[si].winner)+(history[si].winner?winSuffix(history[si].winner):'')+' 准'+(history[si].confidence||''):'');
+    const predLabel=sp.prediction||(history[si]?history[si].winner+' '+scoreDisplay(history[si].score||'',history[si].winner,history[si].decision)+(history[si].winner?winSuffix(history[si].winner):'')+' 准'+(history[si].confidence||''):'');
     html+=`<div class="modal-speech" id="modal-speech-${si}">
       ${predLabel?`<div class="speech-opinion">${escAndBold(predLabel)}</div>`:''}
       <div class="speech-action">第${sp.round}轮 · ${esc(actionLabel)}</div>
@@ -1327,7 +1349,7 @@ function renderVerdict(){
       <div style="font-size:15px;font-weight:700;margin-bottom:8px">⚖️ 仲裁者裁定</div>`;
 
     html+=`<div class="verdict-final-box">
-      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}${score?` <span style="color:var(--text3);font-weight:400">|</span> 比分：${esc(cleanScore(score,winner))}`:''}</div>
+      <div class="vf-winner">${winnerSide!=='x'?smallFlagHtml(winnerSide==='a'?teamA:teamB):''} 胜方：${esc(winner)}${score?` <span style="color:var(--text3);font-weight:400">|</span> 比分：${esc(scoreDisplay(score,winner,DATA.final_prediction?.decision||''))}`:''}</div>
       ${confNum?`<div class="vf-conf-row"><div class="vf-conf-bar"><div class="vf-conf-fill ${confClass}" style="width:${confPct}%"></div></div><span class="vf-conf-text">准确度 ${confNum}/10</span></div>`:''}
     </div>`;
 
@@ -1342,6 +1364,7 @@ function renderVerdict(){
 
     // ── 结构化分析（从仲裁者裁定中提取） ──
     const structured=parseStructuredAnalysis(arbVerdict.content);
+    const structuredItems=structured.length?structured:parseFallbackVerdictSections(arbVerdict.content);
 
     // 从 DATA.summary 提取关键共识/核心分歧/决定因素的完整内容（最全面的版本）
     const summaryFulls={};
@@ -1358,10 +1381,10 @@ function renderVerdict(){
       }
     }
 
-    if(structured.length){
+    if(structuredItems.length){
       html+='<div class="structured-grid">';
-      for(let si=0;si<structured.length;si++){
-        const item=structured[si];
+      for(let si=0;si<structuredItems.length;si++){
+        const item=structuredItems[si];
         let fullContent=item.full;
         if(summaryFulls[item.label])fullContent=summaryFulls[item.label];
         const canExpand=item.hasDetail||(fullContent&&fullContent.replace(/\n+/g,' ').replace(/\s+/g,' ')!==item.short);
