@@ -9248,10 +9248,114 @@
         "generated_at": "2026-06-29T01:05:28.066579",
         "content": ""
       }
+    },
+    "2026-06-29_南非_vs_加拿大": {
+      "date": "2026-06-29",
+      "home_team": "南非",
+      "away_team": "加拿大",
+      "home_score": 0,
+      "away_score": 1,
+      "score_display": "0-1",
+      "full_score_display": "0-1",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "加拿大",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+2'",
+            "team": "加拿大",
+            "type": "进球",
+            "player": "欧斯塔基奥",
+            "description": "第1个进球！球进啦！欧斯塔基奥(加拿大 射门)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+2'",
+              "team": "加拿大",
+              "player": "欧斯塔基奥"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 8,
+          "角球": 5,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 58,
+            "right": 42
+          },
+          {
+            "title": "进攻",
+            "left": 85,
+            "right": 124
+          },
+          {
+            "title": "危险进攻",
+            "left": 20,
+            "right": 50
+          },
+          {
+            "title": "射正",
+            "left": 1,
+            "right": 7
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 1,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "SoFi Stadium",
+      "city": "洛杉矶",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "加拿大排名高于南非30位，赛前预测分歧较大（5:3），且加拿大仅1球小胜，场面占优但未形成碾压，符合预期强队小胜格局。"
+        },
+        "generated_at": "2026-06-29T18:05:10.675336",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-29T01:06:03.996895",
-    "total_matches": 72
+    "last_updated": "2026-06-29T18:05:18.424063",
+    "total_matches": 73
   }
 }
