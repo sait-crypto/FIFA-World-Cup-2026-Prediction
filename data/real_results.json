@@ -9352,10 +9352,514 @@
         "generated_at": "2026-06-29T18:05:10.675336",
         "content": ""
       }
+    },
+    "2026-06-30_巴西_vs_日本": {
+      "date": "2026-06-30",
+      "home_team": "巴西",
+      "away_team": "日本",
+      "home_score": 2,
+      "away_score": 1,
+      "score_display": "2-1",
+      "full_score_display": "2-1",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "巴西",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+6'",
+            "team": "巴西",
+            "type": "进球",
+            "player": "马丁内利",
+            "description": "第3个进球 - 马丁内利(巴西) - 射门 (助攻: 吉马良斯)"
+          },
+          {
+            "time": "56'",
+            "team": "巴西",
+            "type": "进球",
+            "player": "卡塞米罗",
+            "description": "第2个进球 - 卡塞米罗(巴西) - 头球 (助攻: 加布里埃尔)"
+          },
+          {
+            "time": "29'",
+            "team": "日本",
+            "type": "进球",
+            "player": "佐野海舟",
+            "description": "第1个进球！Goooooooal！佐野海舟(日本 射门)打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+6'",
+              "team": "巴西",
+              "player": "马丁内利"
+            },
+            {
+              "time": "56'",
+              "team": "巴西",
+              "player": "卡塞米罗"
+            },
+            {
+              "time": "29'",
+              "team": "日本",
+              "player": "佐野海舟"
+            }
+          ],
+          "黄牌": 5,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 8,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 69,
+            "right": 31
+          },
+          {
+            "title": "进攻",
+            "left": 133,
+            "right": 65
+          },
+          {
+            "title": "危险进攻",
+            "left": 88,
+            "right": 30
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 1
+          },
+          {
+            "title": "角球",
+            "left": 6,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "NRG Stadium",
+      "city": "休斯顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "巴西排名第6远高于日本第18，赛前预测巴西胜出且实际2-1获胜，技术统计全面占优，结果符合预期，非冷门。"
+        },
+        "generated_at": "2026-06-30T16:48:25.396709",
+        "content": ""
+      }
+    },
+    "2026-06-30_德国_vs_巴拉圭": {
+      "date": "2026-06-30",
+      "home_team": "德国",
+      "away_team": "巴拉圭",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "full_score_display": "1-1(点球3-4)",
+      "home_penalty": 3,
+      "away_penalty": 4,
+      "penalty_score_display": "3-4",
+      "winner": "巴拉圭",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "120'",
+            "team": "巴拉圭",
+            "type": "点球",
+            "player": "卡纳莱",
+            "description": "第6个点球得分 - 卡纳莱(巴拉圭)"
+          },
+          {
+            "time": "120'",
+            "team": "德国",
+            "type": "点球",
+            "player": "阿米里",
+            "description": "第5个点球得分 - 阿米里(德国)"
+          },
+          {
+            "time": "120'",
+            "team": "巴拉圭",
+            "type": "点球",
+            "player": "加拉尔萨",
+            "description": "第3个点球得分 - 加拉尔萨(巴拉圭)"
+          },
+          {
+            "time": "120'",
+            "team": "德国",
+            "type": "点球",
+            "player": "穆西亚拉",
+            "description": "第3个点球得分 - 穆西亚拉(德国)"
+          },
+          {
+            "time": "120'",
+            "team": "巴拉圭",
+            "type": "点球",
+            "player": "戈麦斯",
+            "description": "第2个点球得分 - G.戈麦斯(巴拉圭)"
+          },
+          {
+            "time": "120'",
+            "team": "德国",
+            "type": "点球",
+            "player": "基米希",
+            "description": "第2个点球得分 - 基米希(德国)"
+          },
+          {
+            "time": "120'",
+            "team": "巴拉圭",
+            "type": "点球",
+            "player": "毛里西奥",
+            "description": "第1个点球得分 - 毛里西奥(巴拉圭)"
+          },
+          {
+            "time": "54'",
+            "team": "德国",
+            "type": "进球",
+            "player": "哈弗茨",
+            "description": "第2个进球 - 哈弗茨(德国) - 头球 (助攻: 维尔茨)"
+          },
+          {
+            "time": "42'",
+            "team": "巴拉圭",
+            "type": "进球",
+            "player": "恩西索",
+            "description": "第1个进球！Goooooooal！恩西索(巴拉圭 头球 (助攻: 加拉尔萨))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "120'",
+              "team": "巴拉圭",
+              "player": "卡纳莱"
+            },
+            {
+              "time": "120'",
+              "team": "德国",
+              "player": "阿米里"
+            },
+            {
+              "time": "120'",
+              "team": "巴拉圭",
+              "player": "加拉尔萨"
+            },
+            {
+              "time": "120'",
+              "team": "德国",
+              "player": "穆西亚拉"
+            },
+            {
+              "time": "120'",
+              "team": "巴拉圭",
+              "player": "戈麦斯"
+            },
+            {
+              "time": "120'",
+              "team": "德国",
+              "player": "基米希"
+            },
+            {
+              "time": "120'",
+              "team": "巴拉圭",
+              "player": "毛里西奥"
+            },
+            {
+              "time": "54'",
+              "team": "德国",
+              "player": "哈弗茨"
+            },
+            {
+              "time": "42'",
+              "team": "巴拉圭",
+              "player": "恩西索"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 13,
+          "角球": 22,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 75,
+            "right": 25
+          },
+          {
+            "title": "进攻",
+            "left": 186,
+            "right": 64
+          },
+          {
+            "title": "危险进攻",
+            "left": 139,
+            "right": 39
+          },
+          {
+            "title": "射正",
+            "left": 6,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 7,
+            "right": 2
+          },
+          {
+            "title": "角球",
+            "left": 16,
+            "right": 6
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Gillette Stadium",
+      "city": "波士顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "德国（FIFA排名10）被巴拉圭（排名41）逼平，排名差距31位，且德国控球率75%、射正6-3、角球16-6全面占优却未能取胜，赛前预测多数看好德国，结果平局属明显冷门。"
+        },
+        "generated_at": "2026-06-30T16:48:33.547216",
+        "content": ""
+      }
+    },
+    "2026-06-30_荷兰_vs_摩洛哥": {
+      "date": "2026-06-30",
+      "home_team": "荷兰",
+      "away_team": "摩洛哥",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "full_score_display": "1-1(点球2-3)",
+      "home_penalty": 2,
+      "away_penalty": 3,
+      "penalty_score_display": "2-3",
+      "winner": "摩洛哥",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "120'",
+            "team": "摩洛哥",
+            "type": "点球",
+            "player": "",
+            "description": "第5个点球得分 - 赛巴里 (摩洛哥)"
+          },
+          {
+            "time": "120'",
+            "team": "摩洛哥",
+            "type": "点球",
+            "player": "",
+            "description": "第3个点球得分 - 塔勒比 (摩洛哥)"
+          },
+          {
+            "time": "120'",
+            "team": "荷兰",
+            "type": "点球",
+            "player": "韦霍斯特",
+            "description": "第3个点球得分 - 韦霍斯特(荷兰)"
+          },
+          {
+            "time": "120'",
+            "team": "摩洛哥",
+            "type": "点球",
+            "player": "",
+            "description": "第2个点球得分 - 拉希米 (摩洛哥)"
+          },
+          {
+            "time": "120'",
+            "team": "荷兰",
+            "type": "点球",
+            "player": "库普梅纳斯",
+            "description": "第1个点球得分 - 库普梅纳斯(荷兰)"
+          },
+          {
+            "time": "90+1'",
+            "team": "摩洛哥",
+            "type": "进球",
+            "player": "迪奥普",
+            "description": "第2个进球 - 迪奥普(摩洛哥) - 头球 (助攻: 塔勒比)"
+          },
+          {
+            "time": "72'",
+            "team": "荷兰",
+            "type": "进球",
+            "player": "加克波",
+            "description": "第1个进球！球进啦！加克波(荷兰 射门 (助攻: 萨默维尔))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "120'",
+              "team": "摩洛哥",
+              "player": ""
+            },
+            {
+              "time": "120'",
+              "team": "摩洛哥",
+              "player": ""
+            },
+            {
+              "time": "120'",
+              "team": "荷兰",
+              "player": "韦霍斯特"
+            },
+            {
+              "time": "120'",
+              "team": "摩洛哥",
+              "player": ""
+            },
+            {
+              "time": "120'",
+              "team": "荷兰",
+              "player": "库普梅纳斯"
+            },
+            {
+              "time": "90+1'",
+              "team": "摩洛哥",
+              "player": "迪奥普"
+            },
+            {
+              "time": "72'",
+              "team": "荷兰",
+              "player": "加克波"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 13,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 31,
+            "right": 69
+          },
+          {
+            "title": "进攻",
+            "left": 101,
+            "right": 152
+          },
+          {
+            "title": "危险进攻",
+            "left": 35,
+            "right": 46
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 1,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 8
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Estadio BBVA",
+      "city": "蒙特雷",
+      "country": "墨西哥",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "双方排名接近（第8 vs 第7），赛前预测分歧较大（5:3），平局结果符合预期，且摩洛哥虽场面占优但未取胜，不构成冷门。"
+        },
+        "generated_at": "2026-06-30T16:48:41.429696",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-29T18:05:18.424063",
-    "total_matches": 73
+    "last_updated": "2026-06-30T16:48:48.756467",
+    "total_matches": 76
   }
 }
