@@ -9856,10 +9856,389 @@
         "generated_at": "2026-06-30T16:48:41.429696",
         "content": ""
       }
+    },
+    "2026-07-01_墨西哥_vs_厄瓜多尔": {
+      "date": "2026-07-01",
+      "home_team": "墨西哥",
+      "away_team": "厄瓜多尔",
+      "home_score": 2,
+      "away_score": 0,
+      "score_display": "2-0",
+      "full_score_display": "2-0",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "墨西哥",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+5'",
+            "team": "厄瓜多尔",
+            "type": "红牌",
+            "player": "因卡皮耶",
+            "description": "第1张红牌 - 因卡皮耶(厄瓜多尔)"
+          },
+          {
+            "time": "31'",
+            "team": "墨西哥",
+            "type": "进球",
+            "player": "希门尼斯",
+            "description": "第2个进球 - R.希门尼斯(墨西哥) - 射门 (助攻: 基尼奥内斯)"
+          },
+          {
+            "time": "22'",
+            "team": "墨西哥",
+            "type": "进球",
+            "player": "基尼奥内斯",
+            "description": "第1个进球！球进啦！基尼奥内斯(墨西哥 射门 (助攻: 阿尔瓦拉多))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "31'",
+              "team": "墨西哥",
+              "player": "希门尼斯"
+            },
+            {
+              "time": "22'",
+              "team": "墨西哥",
+              "player": "基尼奥内斯"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 1,
+          "换人": 10,
+          "角球": 11,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 43,
+            "right": 57
+          },
+          {
+            "title": "进攻",
+            "left": 77,
+            "right": 85
+          },
+          {
+            "title": "危险进攻",
+            "left": 25,
+            "right": 57
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 9,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 8
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 1
+          }
+        ]
+      },
+      "venue": "Estadio Azteca",
+      "city": "墨西哥城",
+      "country": "墨西哥",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "墨西哥排名14高于厄瓜多尔23，赛前预测分歧较大（5:3至4:4），且墨西哥2-0获胜符合预期，技术统计上厄瓜多尔控球占优但射正少，未形成明显冷门。"
+        },
+        "generated_at": "2026-07-01T12:56:04.574825",
+        "content": ""
+      }
+    },
+    "2026-07-01_法国_vs_瑞典": {
+      "date": "2026-07-01",
+      "home_team": "法国",
+      "away_team": "瑞典",
+      "home_score": 3,
+      "away_score": 0,
+      "score_display": "3-0",
+      "full_score_display": "3-0",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "法国",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "74'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第3个进球 - 姆巴佩(法国) - 射门 (助攻: 奥利塞)"
+          },
+          {
+            "time": "53'",
+            "team": "法国",
+            "type": "进球",
+            "player": "巴尔科拉",
+            "description": "第2个进球 - 巴尔科拉(法国) - 射门 (助攻: 奥利塞)"
+          },
+          {
+            "time": "45'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第1个进球！球进啦！姆巴佩(法国 射门 (助攻: 登贝莱))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "74'",
+              "team": "法国",
+              "player": "姆巴佩"
+            },
+            {
+              "time": "53'",
+              "team": "法国",
+              "player": "巴尔科拉"
+            },
+            {
+              "time": "45'",
+              "team": "法国",
+              "player": "姆巴佩"
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 10,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 61,
+            "right": 39
+          },
+          {
+            "title": "进攻",
+            "left": 118,
+            "right": 80
+          },
+          {
+            "title": "危险进攻",
+            "left": 63,
+            "right": 33
+          },
+          {
+            "title": "射正",
+            "left": 12,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 9,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 9,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "MetLife Stadium",
+      "city": "新泽西",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "法国世界排名第3远高于瑞典第38，赛前预测法国胜出且最终3-0完胜，控球率61%对39%、射正12对3全面占优，结果完全符合预期，无冷门迹象。"
+        },
+        "generated_at": "2026-07-01T12:55:55.839968",
+        "content": ""
+      }
+    },
+    "2026-07-01_科特迪瓦_vs_挪威": {
+      "date": "2026-07-01",
+      "home_team": "科特迪瓦",
+      "away_team": "挪威",
+      "home_score": 1,
+      "away_score": 2,
+      "score_display": "1-2",
+      "full_score_display": "1-2",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "挪威",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "86'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "哈兰德",
+            "description": "第3个进球 - 哈兰德(挪威) - 射门 (助攻: P.贝格)"
+          },
+          {
+            "time": "74'",
+            "team": "科特迪瓦",
+            "type": "进球",
+            "player": "迪亚洛",
+            "description": "第2个进球 - 迪亚洛(科特迪瓦) - 射门 (助攻: 佩佩)"
+          },
+          {
+            "time": "39'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "努萨",
+            "description": "第1个进球！Goooooooal！努萨(挪威 射门 (助攻: 厄德高))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "86'",
+              "team": "挪威",
+              "player": "哈兰德"
+            },
+            {
+              "time": "74'",
+              "team": "科特迪瓦",
+              "player": "迪亚洛"
+            },
+            {
+              "time": "39'",
+              "team": "挪威",
+              "player": "努萨"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 8,
+          "角球": 17,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 45,
+            "right": 55
+          },
+          {
+            "title": "进攻",
+            "left": 59,
+            "right": 116
+          },
+          {
+            "title": "危险进攻",
+            "left": 68,
+            "right": 58
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 9,
+            "right": 2
+          },
+          {
+            "title": "角球",
+            "left": 14,
+            "right": 3
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "AT&T Stadium",
+      "city": "达拉斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "两队排名接近（33 vs 31），赛前预测分歧较大（挪威5胜3负），实际结果挪威2-1小胜符合预期，技术统计双方各有优势，无明显冷门特征。"
+        },
+        "generated_at": "2026-07-01T12:55:46.989179",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-06-30T16:48:48.756467",
-    "total_matches": 76
+    "last_updated": "2026-07-01T12:56:11.600553",
+    "total_matches": 79
   }
 }
