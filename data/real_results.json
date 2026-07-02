@@ -10235,10 +10235,413 @@
         "generated_at": "2026-07-01T12:55:46.989179",
         "content": ""
       }
+    },
+    "2026-07-02_比利时_vs_塞内加尔": {
+      "date": "2026-07-02",
+      "home_team": "比利时",
+      "away_team": "塞内加尔",
+      "home_score": 3,
+      "away_score": 2,
+      "score_display": "3-2",
+      "full_score_display": "3-2",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "比利时",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "120+5'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "第1个进球",
+            "description": "第1个进球(加时赛) - 蒂勒曼斯(比利时)"
+          },
+          {
+            "time": "89'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "蒂勒曼斯",
+            "description": "第4个进球 - 蒂勒曼斯(比利时) - 头球 (助攻: 特罗萨德)"
+          },
+          {
+            "time": "86'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "卢卡库",
+            "description": "第3个进球 - 卢卡库(比利时) - 射门 (助攻: 穆尼耶)"
+          },
+          {
+            "time": "51'",
+            "team": "塞内加尔",
+            "type": "进球",
+            "player": "萨尔",
+            "description": "第2个进球 - I.萨尔(塞内加尔) - 射门 (助攻: 尼亚卡特)"
+          },
+          {
+            "time": "25'",
+            "team": "塞内加尔",
+            "type": "进球",
+            "player": "迪亚拉",
+            "description": "第1个进球！Goooooooal！迪亚拉(塞内加尔 射门)打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "120+5'",
+              "team": "比利时",
+              "player": "第1个进球"
+            },
+            {
+              "time": "89'",
+              "team": "比利时",
+              "player": "蒂勒曼斯"
+            },
+            {
+              "time": "86'",
+              "team": "比利时",
+              "player": "卢卡库"
+            },
+            {
+              "time": "51'",
+              "team": "塞内加尔",
+              "player": "萨尔"
+            },
+            {
+              "time": "25'",
+              "team": "塞内加尔",
+              "player": "迪亚拉"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 14,
+          "角球": 6,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 52,
+            "right": 48
+          },
+          {
+            "title": "进攻",
+            "left": 131,
+            "right": 133
+          },
+          {
+            "title": "危险进攻",
+            "left": 72,
+            "right": 74
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 9,
+            "right": 11
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lumen Field",
+      "city": "西雅图",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "比利时排名第9、塞内加尔第15，排名差距仅6位，赛前预测分歧（5:3），最终比利时仅一球小胜，技术统计接近，符合预期，不构成爆冷。"
+        },
+        "generated_at": "2026-07-02T18:10:34.385411",
+        "content": ""
+      }
+    },
+    "2026-07-02_美国_vs_波黑": {
+      "date": "2026-07-02",
+      "home_team": "美国",
+      "away_team": "波黑",
+      "home_score": 2,
+      "away_score": 0,
+      "score_display": "2-0",
+      "full_score_display": "2-0",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "美国",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "82'",
+            "team": "美国",
+            "type": "进球",
+            "player": "蒂尔曼",
+            "description": "第2个进球 - 蒂尔曼(美国) - 射门"
+          },
+          {
+            "time": "64'",
+            "team": "美国",
+            "type": "红牌",
+            "player": "巴洛贡",
+            "description": "第1张红牌 - 巴洛贡(美国)"
+          },
+          {
+            "time": "45'",
+            "team": "美国",
+            "type": "进球",
+            "player": "巴洛贡",
+            "description": "第1个进球！球进啦！巴洛贡(美国 射门)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "82'",
+              "team": "美国",
+              "player": "蒂尔曼"
+            },
+            {
+              "time": "45'",
+              "team": "美国",
+              "player": "巴洛贡"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 1,
+          "换人": 8,
+          "角球": 7,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 48,
+            "right": 52
+          },
+          {
+            "title": "进攻",
+            "left": 108,
+            "right": 87
+          },
+          {
+            "title": "危险进攻",
+            "left": 44,
+            "right": 28
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 3
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 1,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Levi's Stadium",
+      "city": "旧金山",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "美国排名17远高于波黑排名64，且赛前预测美国胜率较高，最终2-0获胜符合预期，虽净胜2球但场面数据接近，不构成冷门。"
+        },
+        "generated_at": "2026-07-02T18:10:40.301320",
+        "content": ""
+      }
+    },
+    "2026-07-02_英格兰_vs_刚果(金)": {
+      "date": "2026-07-02",
+      "home_team": "英格兰",
+      "away_team": "刚果(金)",
+      "home_score": 2,
+      "away_score": 1,
+      "score_display": "2-1",
+      "full_score_display": "2-1",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "英格兰",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "86'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "凯恩",
+            "description": "第3个进球 - 凯恩(英格兰) - 射门 (助攻: 戈登)"
+          },
+          {
+            "time": "75'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "凯恩",
+            "description": "第2个进球 - 凯恩(英格兰) - 头球 (助攻: 戈登)"
+          },
+          {
+            "time": "7'",
+            "team": "刚果民主共和国",
+            "type": "进球",
+            "player": "西庞加",
+            "description": "第1个进球！Goooooooal！西庞加(刚果民主共和国 射门 (助攻: 姆本巴))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "86'",
+              "team": "英格兰",
+              "player": "凯恩"
+            },
+            {
+              "time": "75'",
+              "team": "英格兰",
+              "player": "凯恩"
+            },
+            {
+              "time": "7'",
+              "team": "刚果民主共和国",
+              "player": "西庞加"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 8,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 60,
+            "right": 40
+          },
+          {
+            "title": "进攻",
+            "left": 123,
+            "right": 78
+          },
+          {
+            "title": "危险进攻",
+            "left": 92,
+            "right": 29
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 3
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Mercedes-Benz Stadium",
+      "city": "亚特兰大",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "英格兰排名第4远高于刚果(金)第46，但赛前预测分歧较大（5:3），且英格兰仅以2-1小胜，净胜1球符合预期，技术统计占优但未形成碾压，属于正常结果。"
+        },
+        "generated_at": "2026-07-02T18:10:29.165780",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-07-01T12:56:11.600553",
-    "total_matches": 79
+    "last_updated": "2026-07-02T18:10:45.003898",
+    "total_matches": 82
   }
 }
