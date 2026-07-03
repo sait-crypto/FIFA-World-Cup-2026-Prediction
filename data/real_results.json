@@ -10638,10 +10638,382 @@
         "generated_at": "2026-07-02T18:10:29.165780",
         "content": ""
       }
+    },
+    "2026-07-03_瑞士_vs_阿尔及利亚": {
+      "date": "2026-07-03",
+      "home_team": "瑞士",
+      "away_team": "阿尔及利亚",
+      "home_score": 2,
+      "away_score": 0,
+      "score_display": "2-0",
+      "full_score_display": "2-0",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "瑞士",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "46'",
+            "team": "瑞士",
+            "type": "进球",
+            "player": "恩多耶",
+            "description": "第2个进球 - 恩多耶(瑞士) - 射门"
+          },
+          {
+            "time": "11'",
+            "team": "瑞士",
+            "type": "进球",
+            "player": "恩博洛",
+            "description": "第1个进球！球进啦！恩博洛(瑞士 射门 (助攻: 曼赞比))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "46'",
+              "team": "瑞士",
+              "player": "恩多耶"
+            },
+            {
+              "time": "11'",
+              "team": "瑞士",
+              "player": "恩博洛"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 6,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 44,
+            "right": 56
+          },
+          {
+            "title": "进攻",
+            "left": 91,
+            "right": 114
+          },
+          {
+            "title": "危险进攻",
+            "left": 33,
+            "right": 40
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "BC Place",
+      "city": "温哥华",
+      "country": "加拿大",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "瑞士排名19高于阿尔及利亚的28，赛前预测瑞士胜出（5:3），实际2-0获胜符合预期，虽净胜2球但排名差距不大且预测有分歧，属正常结果。"
+        },
+        "generated_at": "2026-07-03T16:56:11.164043",
+        "content": ""
+      }
+    },
+    "2026-07-03_葡萄牙_vs_克罗地亚": {
+      "date": "2026-07-03",
+      "home_team": "葡萄牙",
+      "away_team": "克罗地亚",
+      "home_score": 2,
+      "away_score": 1,
+      "score_display": "2-1",
+      "full_score_display": "2-1",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "葡萄牙",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+4'",
+            "team": "葡萄牙",
+            "type": "进球",
+            "player": "拉莫斯",
+            "description": "第3个进球 - 拉莫斯(葡萄牙) - 头球 (助攻: 莱奥)"
+          },
+          {
+            "time": "68'",
+            "team": "葡萄牙",
+            "type": "进球",
+            "player": "C罗",
+            "description": "第2个进球 - C罗(葡萄牙) - 点球"
+          },
+          {
+            "time": "53'",
+            "team": "克罗地亚",
+            "type": "进球",
+            "player": "佩里西奇",
+            "description": "53'- 第1个进球！球进啦！佩里西奇(克罗地亚 射门)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+4'",
+              "team": "葡萄牙",
+              "player": "拉莫斯"
+            },
+            {
+              "time": "68'",
+              "team": "葡萄牙",
+              "player": "C罗"
+            },
+            {
+              "time": "53'",
+              "team": "克罗地亚",
+              "player": "佩里西奇"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 14,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 60,
+            "right": 40
+          },
+          {
+            "title": "进攻",
+            "left": 119,
+            "right": 66
+          },
+          {
+            "title": "危险进攻",
+            "left": 45,
+            "right": 36
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 6
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 9,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "BMO Field",
+      "city": "多伦多",
+      "country": "加拿大",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "葡萄牙排名第5、克罗地亚第11，差距不大；赛前预测置信度仅5/10且分布接近；比分2-1符合预期，葡萄牙控球率60%占优但射正3-6落后，场面未形成碾压，故属正常结果。"
+        },
+        "generated_at": "2026-07-03T16:56:28.434953",
+        "content": ""
+      }
+    },
+    "2026-07-03_西班牙_vs_奥地利": {
+      "date": "2026-07-03",
+      "home_team": "西班牙",
+      "away_team": "奥地利",
+      "home_score": 3,
+      "away_score": 0,
+      "score_display": "3-0",
+      "full_score_display": "3-0",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "西班牙",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "89'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "奥亚萨瓦尔",
+            "description": "第3个进球 - 奥亚萨瓦尔(西班牙) - 射门 (助攻: 库库雷利亚)"
+          },
+          {
+            "time": "66'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "波罗",
+            "description": "第2个进球 - 波罗(西班牙) - 头球 (助攻: 巴埃纳)"
+          },
+          {
+            "time": "36'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "奥亚萨瓦尔",
+            "description": "第1个进球！Goooooooal！奥亚萨瓦尔(西班牙 射门 (助攻: 库库雷利亚))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "89'",
+              "team": "西班牙",
+              "player": "奥亚萨瓦尔"
+            },
+            {
+              "time": "66'",
+              "team": "西班牙",
+              "player": "波罗"
+            },
+            {
+              "time": "36'",
+              "team": "西班牙",
+              "player": "奥亚萨瓦尔"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 9,
+          "越位": 9
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 64,
+            "right": 36
+          },
+          {
+            "title": "进攻",
+            "left": 121,
+            "right": 66
+          },
+          {
+            "title": "危险进攻",
+            "left": 78,
+            "right": 25
+          },
+          {
+            "title": "射正",
+            "left": 10,
+            "right": 0
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 9,
+            "right": 0
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "SoFi Stadium",
+      "city": "洛杉矶",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "西班牙排名第2远高于奥地利第24，全场技术统计碾压（控球64%对36%、射正10对0），3-0大胜完全符合实力差距，赛前预测虽有分歧但实际结果无冷门迹象。"
+        },
+        "generated_at": "2026-07-03T16:56:20.074917",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-07-02T18:10:45.003898",
-    "total_matches": 82
+    "last_updated": "2026-07-03T16:56:35.563819",
+    "total_matches": 85
   }
 }
