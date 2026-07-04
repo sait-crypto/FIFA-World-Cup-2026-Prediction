@@ -220,6 +220,7 @@ a:hover{text-decoration:underline}
 .record-table .date-col{color:var(--text3);white-space:nowrap;width:80px}
 .record-table .score-col{font-weight:600;white-space:nowrap}
 .record-table .score-col.win{color:var(--green)}
+.record-table .score-col.draw{color:var(--yellow)}
 .record-table .score-col.lose{color:var(--red)}
 .record-table .comp-col{color:var(--text3);text-align:right}
 
@@ -997,10 +998,61 @@ function jumpToAnalyst(name){
   }
 }
 
-function buildRecordSummary(rec){
-  if(!rec.summary)return'';
-  const wm=rec.summary.match(/(\d+)胜/),dm=rec.summary.match(/(\d+)平/),lm=rec.summary.match(/(\d+)负/);
-  const w=wm?parseInt(wm[1]):0,d=dm?parseInt(dm[1]):0,l=lm?parseInt(lm[1]):0,t=w+d+l;
+function normalizeRecordTeamName(name){
+  return String(name||'').replace(/\s+/g,'').replace(/（/g,'(').replace(/）/g,')').trim();
+}
+function recordTeamMatches(a,b){
+  const x=normalizeRecordTeamName(a),y=normalizeRecordTeamName(b);
+  return !!x&&!!y&&(x===y||x.includes(y)||y.includes(x));
+}
+function recordTargetTeam(rec,teamA='',teamB=''){
+  const title=String(rec?.title||'').replace(/⚽/g,'').trim();
+  if(teamA&&title.includes(teamA))return teamA;
+  if(teamB&&title.includes(teamB))return teamB;
+  for(const suffix of ['近期战绩','战绩','近期表现']){
+    if(title.endsWith(suffix)){
+      const name=title.slice(0,-suffix.length).trim();
+      if(name)return name;
+    }
+  }
+  return '';
+}
+function parseRecordMatch(m){
+  const pm=String(m||'').match(/^(\d{4}-\d{2}-\d{2})\s+(.+?)\s+(\d+)\s*[-:]\s*(\d+)\s+(.+?)(?:\s+\(([^)]*)\))?(?:\s+\[[^\]]*\])?$/);
+  if(!pm)return null;
+  const[,date,home,homeScore,awayScore,away,comp]=pm;
+  return{date,home:home.trim(),away:away.trim(),homeScore:parseInt(homeScore,10),awayScore:parseInt(awayScore,10),score:`${homeScore}-${awayScore}`,comp};
+}
+function recordResultClass(parsed,targetTeam){
+  if(!parsed||!targetTeam)return'';
+  let targetScore,opponentScore;
+  if(recordTeamMatches(parsed.home,targetTeam)){targetScore=parsed.homeScore;opponentScore=parsed.awayScore}
+  else if(recordTeamMatches(parsed.away,targetTeam)){targetScore=parsed.awayScore;opponentScore=parsed.homeScore}
+  else return'';
+  if(targetScore>opponentScore)return'win';
+  if(targetScore<opponentScore)return'lose';
+  return'draw';
+}
+function recordSummaryStats(rec,targetTeam){
+  if(!rec?.matches?.length||!targetTeam)return null;
+  const stats={win:0,draw:0,lose:0,total:0};
+  for(const m of rec.matches){
+    const cls=recordResultClass(parseRecordMatch(m),targetTeam);
+    if(cls){stats[cls]++;stats.total++}
+  }
+  return stats.total?stats:null;
+}
+function summaryStatsFromText(summary){
+  if(!summary)return null;
+  const wm=summary.match(/(\d+)胜/),dm=summary.match(/(\d+)平/),lm=summary.match(/(\d+)负/);
+  const stats={win:wm?parseInt(wm[1]):0,draw:dm?parseInt(dm[1]):0,lose:lm?parseInt(lm[1]):0};
+  stats.total=stats.win+stats.draw+stats.lose;
+  return stats.total?stats:null;
+}
+function buildRecordSummary(rec,targetTeam=''){
+  const stats=recordSummaryStats(rec,targetTeam)||summaryStatsFromText(rec.summary);
+  if(!stats)return rec.summary?`<span class="record-summary">${esc(rec.summary)}</span>`:'';
+  const w=stats.win,d=stats.draw,l=stats.lose,t=stats.total;
   if(t>0){
     const wp=Math.round(w/t*100),dp=Math.round(d/t*100),lp=100-wp-dp;
     const winSeg=w>0?`<span class="win-seg" style="width:${wp}%"></span>`:'';
@@ -1011,17 +1063,16 @@ function buildRecordSummary(rec){
     const loseText=l>0?`<span class="l">${l}负</span>`:'';
     return`<span class="record-summary"><span class="record-summary-bar">${winSeg}${drawSeg}${loseSeg}</span><span class="record-summary-text">${winText}${drawText}${loseText}</span></span>`;
   }
-  return`<span class="record-summary">${esc(rec.summary)}</span>`;
+  return'';
 }
-function buildRecordTable(rec){
+function buildRecordTable(rec,targetTeam=''){
   if(!rec.matches.length)return'';
   let html=`<table class="record-table"><thead><tr><th class="date-col">日期</th><th>对阵</th><th class="comp-col">赛事</th></tr></thead><tbody>`;
   for(const m of rec.matches){
-    const pm=m.match(/^(\d{4}-\d{2}-\d{2})\s+(.+?)\s+(\d+-\d+)\s+(.+?)(?:\s+\((.+)\))?$/);
-    if(pm){
-      const[,date,teams,score,opp,comp]=pm;
-      const sp=score.split('-'),isW=parseInt(sp[0])>parseInt(sp[1]),isL=parseInt(sp[0])<parseInt(sp[1]);
-      html+=`<tr><td class="date-col">${date}</td><td>${esc(teams)} <span class="score-col ${isW?'win':isL?'lose':''}">${score}</span> ${esc(opp)}</td><td class="comp-col">${comp?esc(comp):''}</td></tr>`;
+    const parsed=parseRecordMatch(m);
+    if(parsed){
+      const resultCls=recordResultClass(parsed,targetTeam);
+      html+=`<tr><td class="date-col">${parsed.date}</td><td>${esc(parsed.home)} <span class="score-col ${resultCls}">${parsed.score}</span> ${esc(parsed.away)}</td><td class="comp-col">${parsed.comp?esc(parsed.comp):''}</td></tr>`;
     }else html+=`<tr><td colspan="3">${esc(m)}</td></tr>`;
   }
   return html+'</tbody></table>';
@@ -1111,12 +1162,11 @@ function renderContext(){
 
     // 历史战绩：每条单独一行
     for(const rec of historyRecs){
-      let teamTag='';
-      if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
+      const teamTag=recordTargetTeam(rec,teamA,teamB);
       html+='<div class="context-card">';
-      let summaryHtml=buildRecordSummary(rec);
+      let summaryHtml=buildRecordSummary(rec,teamTag);
       html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title)}${summaryHtml}</div>`;
-      html+=buildRecordTable(rec);
+      html+=buildRecordTable(rec,teamTag);
       html+='</div>';
     }
 
@@ -1124,12 +1174,11 @@ function renderContext(){
     if(recentRecs.length){
       html+=`<div class="record-grid">`;
       for(const rec of recentRecs){
-        let teamTag='';
-        if(rec.title.includes(teamA))teamTag=teamA;else if(rec.title.includes(teamB))teamTag=teamB;
-        let summaryHtml=buildRecordSummary(rec);
+        const teamTag=recordTargetTeam(rec,teamA,teamB);
+        let summaryHtml=buildRecordSummary(rec,teamTag);
         html+=`<div class="context-card">`;
         html+=`<div class="record-header">${teamTag?smallFlagHtml(teamTag):''} ${esc(rec.title)}${summaryHtml}</div>`;
-        html+=buildRecordTable(rec);
+        html+=buildRecordTable(rec,teamTag);
         html+='</div>';
       }
       html+=`</div>`;

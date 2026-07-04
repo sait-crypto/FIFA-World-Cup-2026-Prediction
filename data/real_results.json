@@ -11010,10 +11010,454 @@
         "generated_at": "2026-07-03T16:56:20.074917",
         "content": ""
       }
+    },
+    "2026-07-04_哥伦比亚_vs_加纳": {
+      "date": "2026-07-04",
+      "home_team": "哥伦比亚",
+      "away_team": "加纳",
+      "home_score": 1,
+      "away_score": 0,
+      "score_display": "1-0",
+      "full_score_display": "1-0",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "哥伦比亚",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "14'",
+            "team": "哥伦比亚",
+            "type": "进球",
+            "player": "阿里亚斯",
+            "description": "第1个进球！Goooooooal！阿里亚斯(哥伦比亚 射门 (助攻: 苏亚雷斯))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "14'",
+              "team": "哥伦比亚",
+              "player": "阿里亚斯"
+            }
+          ],
+          "黄牌": 5,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 5,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 60,
+            "right": 40
+          },
+          {
+            "title": "进攻",
+            "left": 85,
+            "right": 76
+          },
+          {
+            "title": "危险进攻",
+            "left": 33,
+            "right": 29
+          },
+          {
+            "title": "射正",
+            "left": 8,
+            "right": 0
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Arrowhead Stadium",
+      "city": "堪萨斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "哥伦比亚排名13远高于加纳的73，且赛前预测一致看好哥伦比亚，最终1-0小胜符合预期，技术统计也占优，无冷门迹象。"
+        },
+        "generated_at": "2026-07-04T19:58:26.576508",
+        "content": ""
+      }
+    },
+    "2026-07-04_澳大利亚_vs_埃及": {
+      "date": "2026-07-04",
+      "home_team": "澳大利亚",
+      "away_team": "埃及",
+      "home_score": 1,
+      "away_score": 1,
+      "score_display": "1-1",
+      "full_score_display": "1-1(点球2-4)",
+      "home_penalty": 2,
+      "away_penalty": 4,
+      "penalty_score_display": "2-4",
+      "winner": "埃及",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "120'",
+            "team": "埃及",
+            "type": "点球",
+            "player": "胡萨姆",
+            "description": "第4个点球得分 - 胡萨姆(埃及)"
+          },
+          {
+            "time": "120'",
+            "team": "埃及",
+            "type": "点球",
+            "player": "萨拉赫",
+            "description": "第3个点球得分 - 萨拉赫(埃及)"
+          },
+          {
+            "time": "120'",
+            "team": "澳大利亚",
+            "type": "点球",
+            "player": "马比尔",
+            "description": "第3个点球得分 - 马比尔(澳大利亚)"
+          },
+          {
+            "time": "120'",
+            "team": "埃及",
+            "type": "点球",
+            "player": "拉比亚",
+            "description": "第2个点球得分 - 拉比亚(埃及)"
+          },
+          {
+            "time": "120'",
+            "team": "澳大利亚",
+            "type": "点球",
+            "player": "欧文",
+            "description": "第2个点球得分 - 欧文(澳大利亚)"
+          },
+          {
+            "time": "120'",
+            "team": "埃及",
+            "type": "点球",
+            "player": "萨比尔",
+            "description": "第1个点球得分 - 萨比尔(埃及)"
+          },
+          {
+            "time": "55'",
+            "team": "澳大利亚",
+            "type": "进球",
+            "player": "哈尼",
+            "description": "第2个进球 - 哈尼(澳大利亚) - 乌龙球"
+          },
+          {
+            "time": "13'",
+            "team": "埃及",
+            "type": "进球",
+            "player": "阿舒尔",
+            "description": "第1个进球！球进啦！阿舒尔(埃及 头球 (助攻: 哈菲兹))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "120'",
+              "team": "埃及",
+              "player": "胡萨姆"
+            },
+            {
+              "time": "120'",
+              "team": "埃及",
+              "player": "萨拉赫"
+            },
+            {
+              "time": "120'",
+              "team": "澳大利亚",
+              "player": "马比尔"
+            },
+            {
+              "time": "120'",
+              "team": "埃及",
+              "player": "拉比亚"
+            },
+            {
+              "time": "120'",
+              "team": "澳大利亚",
+              "player": "欧文"
+            },
+            {
+              "time": "120'",
+              "team": "埃及",
+              "player": "萨比尔"
+            },
+            {
+              "time": "55'",
+              "team": "澳大利亚",
+              "player": "哈尼"
+            },
+            {
+              "time": "13'",
+              "team": "埃及",
+              "player": "阿舒尔"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 11,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 42,
+            "right": 58
+          },
+          {
+            "title": "进攻",
+            "left": 128,
+            "right": 130
+          },
+          {
+            "title": "危险进攻",
+            "left": 65,
+            "right": 71
+          },
+          {
+            "title": "射正",
+            "left": 1,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 4,
+            "right": 7
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "AT&T Stadium",
+      "city": "达拉斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "两队排名接近（27 vs 29），赛前预测分歧明显（初始4:4，终局5:3），技术统计埃及略占优但最终平局，结果符合预期，无明显冷门特征。"
+        },
+        "generated_at": "2026-07-04T19:58:10.890453",
+        "content": ""
+      }
+    },
+    "2026-07-04_阿根廷_vs_佛得角": {
+      "date": "2026-07-04",
+      "home_team": "阿根廷",
+      "away_team": "佛得角",
+      "home_score": 3,
+      "away_score": 2,
+      "score_display": "3-2",
+      "full_score_display": "3-2",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "阿根廷",
+      "match_stage": "1/16决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "111'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "第3个进球",
+            "description": "第3个进球(加时赛) - 博尔赫斯  (阿根廷) - 乌龙球"
+          },
+          {
+            "time": "103'",
+            "team": "佛得角",
+            "type": "进球",
+            "player": "第2个进球",
+            "description": "第2个进球(加时赛) - 卡布拉尔(佛得角)"
+          },
+          {
+            "time": "93'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "第1个进球",
+            "description": "第1个进球(加时赛) - L.马丁内斯(阿根廷)"
+          },
+          {
+            "time": "59'",
+            "team": "佛得角",
+            "type": "进球",
+            "player": "德罗伊",
+            "description": "第2个进球 - 德罗伊(佛得角) - 射门 (助攻: 门德斯)"
+          },
+          {
+            "time": "29'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "梅西",
+            "description": "第1个进球！球进啦！梅西(阿根廷 射门 (助攻: L.马丁内斯))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "111'",
+              "team": "阿根廷",
+              "player": "第3个进球"
+            },
+            {
+              "time": "103'",
+              "team": "佛得角",
+              "player": "第2个进球"
+            },
+            {
+              "time": "93'",
+              "team": "阿根廷",
+              "player": "第1个进球"
+            },
+            {
+              "time": "59'",
+              "team": "佛得角",
+              "player": "德罗伊"
+            },
+            {
+              "time": "29'",
+              "team": "阿根廷",
+              "player": "梅西"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 16,
+          "越位": 6
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 63,
+            "right": 37
+          },
+          {
+            "title": "进攻",
+            "left": 174,
+            "right": 91
+          },
+          {
+            "title": "危险进攻",
+            "left": 82,
+            "right": 35
+          },
+          {
+            "title": "射正",
+            "left": 10,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 8,
+            "right": 8
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Hard Rock Stadium",
+      "city": "迈阿密",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "世界排名第1的阿根廷仅以3-2险胜排名第67的佛得角，赛前预测虽倾向阿根廷但未达成共识，且佛得角攻入2球，技术统计显示阿根廷全面占优但比分接近，属于预期优势方未能大胜的爆冷情况。"
+        },
+        "generated_at": "2026-07-04T19:58:19.079488",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-07-03T16:56:35.563819",
-    "total_matches": 85
+    "last_updated": "2026-07-04T19:58:32.422021",
+    "total_matches": 88
   }
 }
