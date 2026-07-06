@@ -11454,10 +11454,528 @@
         "generated_at": "2026-07-04T19:58:19.079488",
         "content": ""
       }
+    },
+    "2026-07-05_加拿大_vs_摩洛哥": {
+      "date": "2026-07-05",
+      "home_team": "加拿大",
+      "away_team": "摩洛哥",
+      "home_score": 0,
+      "away_score": 3,
+      "score_display": "0-3",
+      "full_score_display": "0-3",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "摩洛哥",
+      "match_stage": "1/8决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+8'",
+            "team": "摩洛哥",
+            "type": "进球",
+            "player": "拉希米",
+            "description": "第3个进球 - 拉希米(摩洛哥) - 射门 (助攻: 迪亚斯)"
+          },
+          {
+            "time": "82'",
+            "team": "摩洛哥",
+            "type": "进球",
+            "player": "乌纳希",
+            "description": "第2个进球 - 乌纳希(摩洛哥) - 射门 (助攻: 迪亚斯)"
+          },
+          {
+            "time": "50'",
+            "team": "摩洛哥",
+            "type": "进球",
+            "player": "乌纳希",
+            "description": "第1个进球！球进啦！乌纳希(摩洛哥 射门 (助攻: 阿什拉夫))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+8'",
+              "team": "摩洛哥",
+              "player": "拉希米"
+            },
+            {
+              "time": "82'",
+              "team": "摩洛哥",
+              "player": "乌纳希"
+            },
+            {
+              "time": "50'",
+              "team": "摩洛哥",
+              "player": "乌纳希"
+            }
+          ],
+          "黄牌": 8,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 12,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 3
+          },
+          {
+            "title": "控球率",
+            "left": 45,
+            "right": 55
+          },
+          {
+            "title": "进攻",
+            "left": 105,
+            "right": 74
+          },
+          {
+            "title": "危险进攻",
+            "left": 70,
+            "right": 17
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 4
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 1
+          },
+          {
+            "title": "角球",
+            "left": 11,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 4,
+            "right": 4
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "NRG Stadium",
+      "city": "休斯顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "摩洛哥排名第7远高于加拿大第30，赛前预测摩洛哥胜出且实际3-0大胜，符合预期，非爆冷。"
+        },
+        "generated_at": "2026-07-06T20:16:32.635431",
+        "content": ""
+      }
+    },
+    "2026-07-05_巴拉圭_vs_法国": {
+      "date": "2026-07-05",
+      "home_team": "巴拉圭",
+      "away_team": "法国",
+      "home_score": 0,
+      "away_score": 1,
+      "score_display": "0-1",
+      "full_score_display": "0-1",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "法国",
+      "match_stage": "1/8决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "70'",
+            "team": "法国",
+            "type": "进球",
+            "player": "",
+            "description": "第1个进球！Goooooooal！姆巴佩(法国 点球)打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "70'",
+              "team": "法国",
+              "player": ""
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 6,
+          "角球": 14
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 24,
+            "right": 76
+          },
+          {
+            "title": "进攻",
+            "left": 63,
+            "right": 145
+          },
+          {
+            "title": "危险进攻",
+            "left": 17,
+            "right": 81
+          },
+          {
+            "title": "射正",
+            "left": 0,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 6
+          },
+          {
+            "title": "角球",
+            "left": 2,
+            "right": 12
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lincoln Financial Field",
+      "city": "费城",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "法国排名第3远高于巴拉圭第41，赛前预测一致看好法国，实际法国1-0小胜且场面完全压制（控球率76%对24%，射正5-0），比分符合预期，无冷门迹象。"
+        },
+        "generated_at": "2026-07-06T20:16:39.580535",
+        "content": ""
+      }
+    },
+    "2026-07-06_墨西哥_vs_英格兰": {
+      "date": "2026-07-06",
+      "home_team": "墨西哥",
+      "away_team": "英格兰",
+      "home_score": 2,
+      "away_score": 3,
+      "score_display": "2-3",
+      "full_score_display": "2-3",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "英格兰",
+      "match_stage": "1/8决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "69'",
+            "team": "墨西哥",
+            "type": "进球",
+            "player": "希门尼斯",
+            "description": "第5个进球 - R.希门尼斯(墨西哥) - 点球"
+          },
+          {
+            "time": "60'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "凯恩",
+            "description": "第4个进球 - 凯恩(英格兰) - 点球"
+          },
+          {
+            "time": "54'",
+            "team": "英格兰",
+            "type": "红牌",
+            "player": "昆萨",
+            "description": "第1张红牌 - 昆萨(英格兰)"
+          },
+          {
+            "time": "42'",
+            "team": "墨西哥",
+            "type": "进球",
+            "player": "基尼奥内斯",
+            "description": "第3个进球 - 基尼奥内斯(墨西哥) - 射门"
+          },
+          {
+            "time": "38'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "贝林厄姆",
+            "description": "第2个进球 - 贝林厄姆(英格兰) - 射门 (助攻: 凯恩)"
+          },
+          {
+            "time": "37'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "贝林厄姆",
+            "description": "第1个进球！球进啦！贝林厄姆(英格兰 头球 (助攻: 萨卡))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "69'",
+              "team": "墨西哥",
+              "player": "希门尼斯"
+            },
+            {
+              "time": "60'",
+              "team": "英格兰",
+              "player": "凯恩"
+            },
+            {
+              "time": "42'",
+              "team": "墨西哥",
+              "player": "基尼奥内斯"
+            },
+            {
+              "time": "38'",
+              "team": "英格兰",
+              "player": "贝林厄姆"
+            },
+            {
+              "time": "37'",
+              "team": "英格兰",
+              "player": "贝林厄姆"
+            }
+          ],
+          "黄牌": 5,
+          "红牌": 1,
+          "换人": 9,
+          "角球": 14,
+          "越位": 1
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "控球率",
+            "left": 67,
+            "right": 33
+          },
+          {
+            "title": "进攻",
+            "left": 126,
+            "right": 54
+          },
+          {
+            "title": "危险进攻",
+            "left": 82,
+            "right": 22
+          },
+          {
+            "title": "射正",
+            "left": 5,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 1
+          },
+          {
+            "title": "角球",
+            "left": 12,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 1
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 1
+          }
+        ]
+      },
+      "venue": "Estadio Azteca",
+      "city": "墨西哥城",
+      "country": "墨西哥",
+      "review": {
+        "upset": {
+          "level": "爆冷",
+          "reason": "排名第4的英格兰被排名第14的墨西哥全面压制（控球率33%对67%，危险进攻22对82），但最终3-2险胜，赛前预测五五开且场面数据明显劣势，属于爆冷。"
+        },
+        "generated_at": "2026-07-06T20:16:54.398721",
+        "content": ""
+      }
+    },
+    "2026-07-06_巴西_vs_挪威": {
+      "date": "2026-07-06",
+      "home_team": "巴西",
+      "away_team": "挪威",
+      "home_score": 1,
+      "away_score": 2,
+      "score_display": "1-2",
+      "full_score_display": "1-2",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "挪威",
+      "match_stage": "1/8决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+10'",
+            "team": "巴西",
+            "type": "进球",
+            "player": "内马尔",
+            "description": "第3个进球 - 内马尔(巴西) - 点球"
+          },
+          {
+            "time": "90'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "哈兰德",
+            "description": "第2个进球 - 哈兰德(挪威) - 射门 (助攻: 谢尔德鲁普)"
+          },
+          {
+            "time": "80'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "哈兰德",
+            "description": "第1个进球！Goooooooal！哈兰德(挪威 头球 (助攻: 谢尔德鲁普))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+10'",
+              "team": "巴西",
+              "player": "内马尔"
+            },
+            {
+              "time": "90'",
+              "team": "挪威",
+              "player": "哈兰德"
+            },
+            {
+              "time": "80'",
+              "team": "挪威",
+              "player": "哈兰德"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 8,
+          "角球": 10,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 34,
+            "right": 66
+          },
+          {
+            "title": "进攻",
+            "left": 74,
+            "right": 124
+          },
+          {
+            "title": "危险进攻",
+            "left": 58,
+            "right": 65
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "MetLife Stadium",
+      "city": "新泽西",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "大爆冷",
+          "reason": "巴西排名第6、挪威排名第31，排名差距25位，赛前预测巴西3-1胜且终局预测一致，但挪威2-1获胜，且挪威在控球率（66%对34%）、进攻（124对74）等关键数据上全面压制，属于明显弱队击败强队的大冷门。"
+        },
+        "generated_at": "2026-07-06T20:16:47.489492",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-07-04T19:58:32.422021",
-    "total_matches": 88
+    "last_updated": "2026-07-06T20:16:59.851407",
+    "total_matches": 92
   }
 }
