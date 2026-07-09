@@ -11972,10 +11972,594 @@
         "generated_at": "2026-07-06T20:16:47.489492",
         "content": ""
       }
+    },
+    "2026-07-07_美国_vs_比利时": {
+      "date": "2026-07-07",
+      "home_team": "美国",
+      "away_team": "比利时",
+      "home_score": 1,
+      "away_score": 4,
+      "score_display": "1-4",
+      "full_score_display": "1-4",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "比利时",
+      "match_stage": "1/8决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+3'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "卢卡库",
+            "description": "第5个进球 - 卢卡库(比利时) - 射门 (助攻: 范纳肯)"
+          },
+          {
+            "time": "57'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "范纳肯",
+            "description": "第4个进球 - 范纳肯(比利时) - 射门 (助攻: 德凯特拉雷)"
+          },
+          {
+            "time": "33'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "德凯特拉雷",
+            "description": "第3个进球 - 德凯特拉雷(比利时) - 头球 (助攻: 特罗萨德)"
+          },
+          {
+            "time": "31'",
+            "team": "美国",
+            "type": "进球",
+            "player": "蒂尔曼",
+            "description": "第2个进球 - 蒂尔曼(美国) - 任意球"
+          },
+          {
+            "time": "9'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "德凯特拉雷",
+            "description": "第1个进球！球进啦！德凯特拉雷(比利时 射门 (助攻: 拉斯坎))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+3'",
+              "team": "比利时",
+              "player": "卢卡库"
+            },
+            {
+              "time": "57'",
+              "team": "比利时",
+              "player": "范纳肯"
+            },
+            {
+              "time": "33'",
+              "team": "比利时",
+              "player": "德凯特拉雷"
+            },
+            {
+              "time": "31'",
+              "team": "美国",
+              "player": "蒂尔曼"
+            },
+            {
+              "time": "9'",
+              "team": "比利时",
+              "player": "德凯特拉雷"
+            }
+          ],
+          "黄牌": 2,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 8,
+          "越位": 2
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 4
+          },
+          {
+            "title": "控球率",
+            "left": 56,
+            "right": 44
+          },
+          {
+            "title": "进攻",
+            "left": 127,
+            "right": 93
+          },
+          {
+            "title": "危险进攻",
+            "left": 43,
+            "right": 33
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 7
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 4
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Lumen Field",
+      "city": "西雅图",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "比利时排名第9高于美国第17，赛前预测比利时胜出（5/8），实际4-1大胜符合预期，虽控球率稍低但射正7-2碾压，非爆冷。"
+        },
+        "generated_at": "2026-07-09T19:38:55.123709",
+        "content": ""
+      }
+    },
+    "2026-07-07_葡萄牙_vs_西班牙": {
+      "date": "2026-07-07",
+      "home_team": "葡萄牙",
+      "away_team": "西班牙",
+      "home_score": 0,
+      "away_score": 1,
+      "score_display": "0-1",
+      "full_score_display": "0-1",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "西班牙",
+      "match_stage": "1/8决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+1'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "梅里诺",
+            "description": "第1个进球！Goooooooal！梅里诺(西班牙 射门 (助攻: 托雷斯))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+1'",
+              "team": "西班牙",
+              "player": "梅里诺"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 10,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 45,
+            "right": 55
+          },
+          {
+            "title": "进攻",
+            "left": 106,
+            "right": 96
+          },
+          {
+            "title": "危险进攻",
+            "left": 38,
+            "right": 50
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 6
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 6
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 7
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "AT&T Stadium",
+      "city": "达拉斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "西班牙排名第2、葡萄牙第5，排名接近且赛前预测分歧较大（西班牙6:2葡萄牙），西班牙1-0小胜符合预期，技术统计西班牙稍占优但无碾压性优势，不属于冷门。"
+        },
+        "generated_at": "2026-07-09T19:38:47.450134",
+        "content": ""
+      }
+    },
+    "2026-07-08_瑞士_vs_哥伦比亚": {
+      "date": "2026-07-08",
+      "home_team": "瑞士",
+      "away_team": "哥伦比亚",
+      "home_score": 0,
+      "away_score": 0,
+      "score_display": "0-0",
+      "full_score_display": "0-0(点球4-3)",
+      "home_penalty": 4,
+      "away_penalty": 3,
+      "penalty_score_display": "4-3",
+      "winner": "瑞士",
+      "match_stage": "1/8决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "120'",
+            "team": "瑞士",
+            "type": "点球",
+            "player": "巴尔加斯",
+            "description": "第5个点球得分 - 巴尔加斯(瑞士)"
+          },
+          {
+            "time": "120'",
+            "team": "哥伦比亚",
+            "type": "点球",
+            "player": "迪亚斯",
+            "description": "第5个点球得分 - 迪亚斯(哥伦比亚)"
+          },
+          {
+            "time": "120'",
+            "team": "瑞士",
+            "type": "点球",
+            "player": "伊滕",
+            "description": "第4个点球得分 - 伊滕(瑞士)"
+          },
+          {
+            "time": "120'",
+            "team": "哥伦比亚",
+            "type": "点球",
+            "player": "坎帕斯",
+            "description": "第3个点球得分 - 坎帕斯(哥伦比亚)"
+          },
+          {
+            "time": "120'",
+            "team": "瑞士",
+            "type": "点球",
+            "player": "阿姆杜尼",
+            "description": "第2个点球得分 - 阿姆杜尼(瑞士)"
+          },
+          {
+            "time": "120'",
+            "team": "瑞士",
+            "type": "点球",
+            "player": "扎卡",
+            "description": "第1个点球得分 - 扎卡(瑞士)"
+          },
+          {
+            "time": "120'",
+            "team": "哥伦比亚",
+            "type": "点球",
+            "player": "金特罗",
+            "description": "第1个点球得分 - 金特罗(哥伦比亚)"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "120'",
+              "team": "瑞士",
+              "player": "巴尔加斯"
+            },
+            {
+              "time": "120'",
+              "team": "哥伦比亚",
+              "player": "迪亚斯"
+            },
+            {
+              "time": "120'",
+              "team": "瑞士",
+              "player": "伊滕"
+            },
+            {
+              "time": "120'",
+              "team": "哥伦比亚",
+              "player": "坎帕斯"
+            },
+            {
+              "time": "120'",
+              "team": "瑞士",
+              "player": "阿姆杜尼"
+            },
+            {
+              "time": "120'",
+              "team": "瑞士",
+              "player": "扎卡"
+            },
+            {
+              "time": "120'",
+              "team": "哥伦比亚",
+              "player": "金特罗"
+            }
+          ],
+          "黄牌": 5,
+          "红牌": 0,
+          "换人": 13,
+          "角球": 10,
+          "越位": 9
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 53,
+            "right": 47
+          },
+          {
+            "title": "进攻",
+            "left": 115,
+            "right": 104
+          },
+          {
+            "title": "危险进攻",
+            "left": 56,
+            "right": 33
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 3
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 8
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 7
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "BC Place",
+      "city": "温哥华",
+      "country": "加拿大",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "排名差距仅6位，赛前预测未达成共识（哥伦比亚微弱优势），实际0-0平局符合预期，技术统计接近，无爆冷特征。"
+        },
+        "generated_at": "2026-07-09T19:39:08.687092",
+        "content": ""
+      }
+    },
+    "2026-07-08_阿根廷_vs_埃及": {
+      "date": "2026-07-08",
+      "home_team": "阿根廷",
+      "away_team": "埃及",
+      "home_score": 3,
+      "away_score": 2,
+      "score_display": "3-2",
+      "full_score_display": "3-2",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "阿根廷",
+      "match_stage": "1/8决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+3'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "恩佐",
+            "description": "第5个进球 - 恩佐(阿根廷) - 头球 (助攻: 劳塔罗)"
+          },
+          {
+            "time": "84'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "梅西",
+            "description": "第4个进球 - 梅西(阿根廷) - 射门 (助攻: 蒙铁尔)"
+          },
+          {
+            "time": "79'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "罗梅罗",
+            "description": "第3个进球 - 罗梅罗(阿根廷) - 头球 (助攻: 梅西)"
+          },
+          {
+            "time": "67'",
+            "team": "埃及",
+            "type": "进球",
+            "player": "济科",
+            "description": "第2个进球 - 济科(埃及) - 射门 (助攻: 哈桑)"
+          },
+          {
+            "time": "15'",
+            "team": "埃及",
+            "type": "进球",
+            "player": "亚西尔",
+            "description": "第1个进球！Goooooooal！亚西尔(埃及 头球 (助攻: 阿提亚))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+3'",
+              "team": "阿根廷",
+              "player": "恩佐"
+            },
+            {
+              "time": "84'",
+              "team": "阿根廷",
+              "player": "梅西"
+            },
+            {
+              "time": "79'",
+              "team": "阿根廷",
+              "player": "罗梅罗"
+            },
+            {
+              "time": "67'",
+              "team": "埃及",
+              "player": "济科"
+            },
+            {
+              "time": "15'",
+              "team": "埃及",
+              "player": "亚西尔"
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 7,
+          "越位": 3
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 64,
+            "right": 36
+          },
+          {
+            "title": "进攻",
+            "left": 139,
+            "right": 77
+          },
+          {
+            "title": "危险进攻",
+            "left": 77,
+            "right": 18
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 6,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Mercedes-Benz Stadium",
+      "city": "亚特兰大",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "阿根廷排名第1远高于埃及第29，赛前预测一致看好阿根廷，实际3-2获胜符合预期，技术统计全面占优，净胜1球属正常结果。"
+        },
+        "generated_at": "2026-07-09T19:39:01.711239",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-07-06T20:16:59.851407",
-    "total_matches": 92
+    "last_updated": "2026-07-09T19:39:15.546515",
+    "total_matches": 96
   }
 }
