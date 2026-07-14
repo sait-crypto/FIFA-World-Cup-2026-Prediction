@@ -12556,10 +12556,528 @@
         "generated_at": "2026-07-09T19:39:01.711239",
         "content": ""
       }
+    },
+    "2026-07-10_法国_vs_摩洛哥": {
+      "date": "2026-07-10",
+      "home_team": "法国",
+      "away_team": "摩洛哥",
+      "home_score": 2,
+      "away_score": 0,
+      "score_display": "2-0",
+      "full_score_display": "2-0",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "法国",
+      "match_stage": "1/4决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "66'",
+            "team": "法国",
+            "type": "进球",
+            "player": "登贝莱",
+            "description": "第2个进球 - 登贝莱(法国) - 射门 (助攻: 姆巴佩)"
+          },
+          {
+            "time": "60'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第1个进球！Goooooooal！姆巴佩(法国 射门 (助攻: 杜埃))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "66'",
+              "team": "法国",
+              "player": "登贝莱"
+            },
+            {
+              "time": "60'",
+              "team": "法国",
+              "player": "姆巴佩"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 10
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 48,
+            "right": 52
+          },
+          {
+            "title": "进攻",
+            "left": 114,
+            "right": 82
+          },
+          {
+            "title": "危险进攻",
+            "left": 56,
+            "right": 35
+          },
+          {
+            "title": "射正",
+            "left": 8,
+            "right": 1
+          },
+          {
+            "title": "射偏",
+            "left": 9,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 5
+          },
+          {
+            "title": "点球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Gillette Stadium",
+      "city": "波士顿",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "法国排名第3、摩洛哥排名第7，差距仅4位，赛前预测分歧较大（法国5:3），且法国2-0获胜完全符合预测比分，技术统计法国占优但控球率略低，整体结果符合预期，无冷门特征。"
+        },
+        "generated_at": "2026-07-15T02:05:15.849152",
+        "content": ""
+      }
+    },
+    "2026-07-11_西班牙_vs_比利时": {
+      "date": "2026-07-11",
+      "home_team": "西班牙",
+      "away_team": "比利时",
+      "home_score": 2,
+      "away_score": 1,
+      "score_display": "2-1",
+      "full_score_display": "2-1",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "西班牙",
+      "match_stage": "1/4决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "88'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "梅里诺",
+            "description": "第3个进球 - 梅里诺(西班牙) - 射门"
+          },
+          {
+            "time": "41'",
+            "team": "比利时",
+            "type": "进球",
+            "player": "德凯特拉雷",
+            "description": "第2个进球 - 德凯特拉雷(比利时) - 头球 (助攻: 卡斯塔涅)"
+          },
+          {
+            "time": "30'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "法比安",
+            "description": "第1个进球！球进啦！法比安(西班牙 射门)取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "88'",
+              "team": "西班牙",
+              "player": "梅里诺"
+            },
+            {
+              "time": "41'",
+              "team": "比利时",
+              "player": "德凯特拉雷"
+            },
+            {
+              "time": "30'",
+              "team": "西班牙",
+              "player": "法比安"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 9,
+          "角球": 6,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 68,
+            "right": 32
+          },
+          {
+            "title": "进攻",
+            "left": 133,
+            "right": 71
+          },
+          {
+            "title": "危险进攻",
+            "left": 85,
+            "right": 25
+          },
+          {
+            "title": "射正",
+            "left": 8,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 4,
+            "right": 1
+          },
+          {
+            "title": "角球",
+            "left": 5,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "SoFi Stadium",
+      "city": "洛杉矶",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "西班牙排名第2、比利时排名第9，排名差距较小（7位），赛前预测分布为5-3且最终比分2-1符合多数预测，技术统计西班牙全面占优，结果属于预期内正常胜利。"
+        },
+        "generated_at": "2026-07-15T02:05:23.283885",
+        "content": ""
+      }
+    },
+    "2026-07-12_挪威_vs_英格兰": {
+      "date": "2026-07-12",
+      "home_team": "挪威",
+      "away_team": "英格兰",
+      "home_score": 1,
+      "away_score": 2,
+      "score_display": "1-2",
+      "full_score_display": "1-2",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "英格兰",
+      "match_stage": "1/4决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "93'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "第1个进球",
+            "description": "第1个进球(加时赛) - 贝林厄姆(英格兰)"
+          },
+          {
+            "time": "45+2'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "贝林厄姆",
+            "description": "第2个进球 - 贝林厄姆(英格兰) - 射门 (助攻: 戈登)"
+          },
+          {
+            "time": "36'",
+            "team": "挪威",
+            "type": "进球",
+            "player": "谢尔德鲁普",
+            "description": "第1个进球！Goooooooal！谢尔德鲁普(挪威 射门 (助攻: 厄德高))打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "93'",
+              "team": "英格兰",
+              "player": "第1个进球"
+            },
+            {
+              "time": "45+2'",
+              "team": "英格兰",
+              "player": "贝林厄姆"
+            },
+            {
+              "time": "36'",
+              "team": "挪威",
+              "player": "谢尔德鲁普"
+            }
+          ],
+          "黄牌": 1,
+          "红牌": 0,
+          "换人": 12,
+          "角球": 11,
+          "越位": 6
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 48,
+            "right": 52
+          },
+          {
+            "title": "进攻",
+            "left": 106,
+            "right": 118
+          },
+          {
+            "title": "危险进攻",
+            "left": 61,
+            "right": 62
+          },
+          {
+            "title": "射正",
+            "left": 4,
+            "right": 8
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 7,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Hard Rock Stadium",
+      "city": "迈阿密",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "英格兰排名第4远高于挪威第31，但赛前预测英格兰2-1小胜（置信度6/10），实际比分1-2符合预期，技术统计英格兰稍占优，净胜1球属正常结果。"
+        },
+        "generated_at": "2026-07-15T02:05:31.173764",
+        "content": ""
+      }
+    },
+    "2026-07-12_阿根廷_vs_瑞士": {
+      "date": "2026-07-12",
+      "home_team": "阿根廷",
+      "away_team": "瑞士",
+      "home_score": 3,
+      "away_score": 1,
+      "score_display": "3-1",
+      "full_score_display": "3-1",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "阿根廷",
+      "match_stage": "1/4决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "120+1'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "第2个进球",
+            "description": "第2个进球(加时赛) - 劳塔罗(阿根廷)"
+          },
+          {
+            "time": "112'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "第1个进球",
+            "description": "第1个进球(加时赛) - 阿尔瓦雷斯(阿根廷)"
+          },
+          {
+            "time": "72'",
+            "team": "瑞士",
+            "type": "红牌",
+            "player": "恩博洛",
+            "description": "第1张红牌 - 恩博洛(瑞士)"
+          },
+          {
+            "time": "68'",
+            "team": "瑞士",
+            "type": "进球",
+            "player": "恩多耶",
+            "description": "第2个进球 - 恩多耶(瑞士) - 射门 (助攻: R罗)"
+          },
+          {
+            "time": "10'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "麦卡利斯特",
+            "description": "第1个进球！球进啦！麦卡利斯特(阿根廷 头球 (助攻: 梅西))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "120+1'",
+              "team": "阿根廷",
+              "player": "第2个进球"
+            },
+            {
+              "time": "112'",
+              "team": "阿根廷",
+              "player": "第1个进球"
+            },
+            {
+              "time": "68'",
+              "team": "瑞士",
+              "player": "恩多耶"
+            },
+            {
+              "time": "10'",
+              "team": "阿根廷",
+              "player": "麦卡利斯特"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 1,
+          "换人": 12,
+          "角球": 10,
+          "越位": 7
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 3,
+            "right": 1
+          },
+          {
+            "title": "控球率",
+            "left": 59,
+            "right": 41
+          },
+          {
+            "title": "进攻",
+            "left": 119,
+            "right": 106
+          },
+          {
+            "title": "危险进攻",
+            "left": 65,
+            "right": 54
+          },
+          {
+            "title": "射正",
+            "left": 7,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 8,
+            "right": 3
+          },
+          {
+            "title": "角球",
+            "left": 8,
+            "right": 2
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 1
+          }
+        ]
+      },
+      "venue": "Arrowhead Stadium",
+      "city": "堪萨斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "阿根廷世界排名第1，瑞士第19，排名差距明显，且阿根廷3-1获胜符合预期，赛前预测虽有分歧但阿根廷胜率更高，技术统计全面占优，属于正常结果。"
+        },
+        "generated_at": "2026-07-15T02:05:37.555758",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-07-09T19:39:15.546515",
-    "total_matches": 96
+    "last_updated": "2026-07-15T02:05:43.419383",
+    "total_matches": 100
   }
 }
