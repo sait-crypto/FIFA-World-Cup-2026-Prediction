@@ -13074,10 +13074,254 @@
         "generated_at": "2026-07-15T02:05:37.555758",
         "content": ""
       }
+    },
+    "2026-07-15_法国_vs_西班牙": {
+      "date": "2026-07-15",
+      "home_team": "法国",
+      "away_team": "西班牙",
+      "home_score": 0,
+      "away_score": 2,
+      "score_display": "0-2",
+      "full_score_display": "0-2",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "西班牙",
+      "match_stage": "半决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "58'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "波罗",
+            "description": "第2个进球 - 波罗(西班牙) - 射门 (助攻: 奥尔莫)"
+          },
+          {
+            "time": "22'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "",
+            "description": "第1个进球！Goooooooal！奥亚萨瓦尔(西班牙 点球)打进本场比赛第一个进球！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "58'",
+              "team": "西班牙",
+              "player": "波罗"
+            },
+            {
+              "time": "22'",
+              "team": "西班牙",
+              "player": ""
+            }
+          ],
+          "黄牌": 3,
+          "红牌": 0,
+          "换人": 11,
+          "角球": 8,
+          "越位": 9
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 0,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 49,
+            "right": 51
+          },
+          {
+            "title": "进攻",
+            "left": 118,
+            "right": 109
+          },
+          {
+            "title": "危险进攻",
+            "left": 46,
+            "right": 23
+          },
+          {
+            "title": "射正",
+            "left": 3,
+            "right": 2
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 5
+          },
+          {
+            "title": "角球",
+            "left": 7,
+            "right": 1
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "黄牌",
+            "left": 2,
+            "right": 1
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "AT&T Stadium",
+      "city": "达拉斯",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "西班牙排名（2）高于法国（3），排名接近且赛前预测已有分歧（西班牙5:3法国），比分2-0虽净胜2球但场面数据（控球、射正等）接近，未构成明显冷门。"
+        },
+        "generated_at": "2026-07-16T17:07:19.043265",
+        "content": ""
+      }
+    },
+    "2026-07-16_英格兰_vs_阿根廷": {
+      "date": "2026-07-16",
+      "home_team": "英格兰",
+      "away_team": "阿根廷",
+      "home_score": 1,
+      "away_score": 2,
+      "score_display": "1-2",
+      "full_score_display": "1-2",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "阿根廷",
+      "match_stage": "半决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+2'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "劳塔罗",
+            "description": "第3个进球 - 劳塔罗(阿根廷) - 头球 (助攻: 梅西)"
+          },
+          {
+            "time": "85'",
+            "team": "阿根廷",
+            "type": "进球",
+            "player": "恩佐",
+            "description": "第2个进球 - 恩佐(阿根廷) - 射门 (助攻: 梅西)"
+          },
+          {
+            "time": "55'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "戈登",
+            "description": "第1个进球！球进啦！戈登(英格兰 射门 (助攻: 罗杰斯))取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+2'",
+              "team": "阿根廷",
+              "player": "劳塔罗"
+            },
+            {
+              "time": "85'",
+              "team": "阿根廷",
+              "player": "恩佐"
+            },
+            {
+              "time": "55'",
+              "team": "英格兰",
+              "player": "戈登"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 7,
+          "越位": 4
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 2
+          },
+          {
+            "title": "控球率",
+            "left": 36,
+            "right": 64
+          },
+          {
+            "title": "进攻",
+            "left": 77,
+            "right": 109
+          },
+          {
+            "title": "危险进攻",
+            "left": 39,
+            "right": 69
+          },
+          {
+            "title": "射正",
+            "left": 2,
+            "right": 5
+          },
+          {
+            "title": "射偏",
+            "left": 1,
+            "right": 7
+          },
+          {
+            "title": "角球",
+            "left": 1,
+            "right": 6
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 1,
+            "right": 3
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Mercedes-Benz Stadium",
+      "city": "亚特兰大",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "阿根廷排名第1、英格兰第4，排名接近；赛前预测双方支持率持平（4:4），结果阿根廷2-1小胜符合预期，技术统计阿根廷全面占优，无冷门迹象。"
+        },
+        "generated_at": "2026-07-16T17:07:26.647711",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-07-15T02:05:43.419383",
-    "total_matches": 100
+    "last_updated": "2026-07-16T17:07:33.296274",
+    "total_matches": 102
   }
 }
