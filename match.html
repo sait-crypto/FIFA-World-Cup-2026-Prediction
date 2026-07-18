@@ -1502,7 +1502,9 @@ function toggleEvidencePool(el){
 }
 
 function renderFooter(){
+  const graphButton=DATA.argument_graph?`<div style="margin-bottom:16px"><button class="viewer-open-btn" onclick="openGraphViewer()">查看真实公共图与个体认知演化</button></div>`:'';
   let html=`<div class="viewer-title">智能体辩论过程回放</div>
+    ${graphButton}
     <div class="viewer-toggle">
       <button class="toggle-btn active" id="toggle-embed" onclick="setMode('embed')">📦 嵌入模式</button>
       <button class="toggle-btn" id="toggle-link" onclick="setMode('link')">🔗 跳转模式</button>
@@ -1556,6 +1558,10 @@ function openViewer(){
   passDataToViewer();
   const jp=currentJsonFile?`?json=${encodeURIComponent(currentJsonFile)}`:'';
   window.open(CONFIG.VIEWER_FILE+jp,'_blank');
+}
+function openGraphViewer(){
+  const jp=currentJsonFile?`?json=${encodeURIComponent(currentJsonFile)}`:'';
+  window.open('argument_graph_viewer.html'+jp,'_blank');
 }
 </script>
 <button class="back-top" id="back-top" title="返回顶端"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg></button>
