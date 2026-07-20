@@ -13318,10 +13318,333 @@
         "generated_at": "2026-07-16T17:07:26.647711",
         "content": ""
       }
+    },
+    "2026-07-19_法国_vs_英格兰": {
+      "date": "2026-07-19",
+      "home_team": "法国",
+      "away_team": "英格兰",
+      "home_score": 4,
+      "away_score": 6,
+      "score_display": "4-6",
+      "full_score_display": "4-6",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "英格兰",
+      "match_stage": "季军赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "90+8'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "贝林厄姆",
+            "description": "第10个进球 - 贝林厄姆(英格兰) - 射门"
+          },
+          {
+            "time": "90+6'",
+            "team": "法国",
+            "type": "进球",
+            "player": "登贝莱",
+            "description": "第9个进球 - 登贝莱(法国) - 射门 (助攻: 于帕梅卡诺)"
+          },
+          {
+            "time": "87'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "萨卡",
+            "description": "第8个进球 - 萨卡(英格兰) - 点球"
+          },
+          {
+            "time": "66'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第7个进球 - 姆巴佩(法国) - 射门 (助攻: 奥利塞)"
+          },
+          {
+            "time": "54'",
+            "team": "法国",
+            "type": "进球",
+            "player": "巴尔科拉",
+            "description": "第6个进球 - 巴尔科拉(法国) - 射门 (助攻: 姆巴佩)"
+          },
+          {
+            "time": "48'",
+            "team": "法国",
+            "type": "进球",
+            "player": "姆巴佩",
+            "description": "第5个进球 - 姆巴佩(法国) - 射门 (助攻: 奥利塞)"
+          },
+          {
+            "time": "45+1'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "萨卡",
+            "description": "第4个进球 - 萨卡(英格兰) - 射门 (助攻: 埃泽)"
+          },
+          {
+            "time": "37'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "萨卡",
+            "description": "第3个进球 - 萨卡(英格兰) - 射门 (助攻: 拉什福德)"
+          },
+          {
+            "time": "18'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "孔萨",
+            "description": "第2个进球 - 孔萨(英格兰) - 头球 (助攻: 赖斯)"
+          },
+          {
+            "time": "3'",
+            "team": "英格兰",
+            "type": "进球",
+            "player": "",
+            "description": "第1个进球！球进啦！英格兰取得本场比赛领先！"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "90+8'",
+              "team": "英格兰",
+              "player": "贝林厄姆"
+            },
+            {
+              "time": "90+6'",
+              "team": "法国",
+              "player": "登贝莱"
+            },
+            {
+              "time": "87'",
+              "team": "英格兰",
+              "player": "萨卡"
+            },
+            {
+              "time": "66'",
+              "team": "法国",
+              "player": "姆巴佩"
+            },
+            {
+              "time": "54'",
+              "team": "法国",
+              "player": "巴尔科拉"
+            },
+            {
+              "time": "48'",
+              "team": "法国",
+              "player": "姆巴佩"
+            },
+            {
+              "time": "45+1'",
+              "team": "英格兰",
+              "player": "萨卡"
+            },
+            {
+              "time": "37'",
+              "team": "英格兰",
+              "player": "萨卡"
+            },
+            {
+              "time": "18'",
+              "team": "英格兰",
+              "player": "孔萨"
+            },
+            {
+              "time": "3'",
+              "team": "英格兰",
+              "player": ""
+            }
+          ],
+          "黄牌": 0,
+          "红牌": 0,
+          "换人": 10,
+          "角球": 7,
+          "越位": 6
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 4,
+            "right": 6
+          },
+          {
+            "title": "控球率",
+            "left": 46,
+            "right": 54
+          },
+          {
+            "title": "进攻",
+            "left": 75,
+            "right": 60
+          },
+          {
+            "title": "危险进攻",
+            "left": 55,
+            "right": 27
+          },
+          {
+            "title": "射正",
+            "left": 9,
+            "right": 11
+          },
+          {
+            "title": "射偏",
+            "left": 6,
+            "right": 2
+          },
+          {
+            "title": "角球",
+            "left": 3,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 1
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 0
+          }
+        ]
+      },
+      "venue": "Hard Rock Stadium",
+      "city": "迈阿密",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "法国与英格兰排名接近（第3 vs 第4），赛前预测分歧较大（5:3），英格兰净胜2球但场面数据接近，不构成明显冷门。"
+        },
+        "generated_at": "2026-07-20T20:32:23.910062",
+        "content": ""
+      }
+    },
+    "2026-07-20_西班牙_vs_阿根廷": {
+      "date": "2026-07-20",
+      "home_team": "西班牙",
+      "away_team": "阿根廷",
+      "home_score": 1,
+      "away_score": 0,
+      "score_display": "1-0",
+      "full_score_display": "1-0",
+      "home_penalty": null,
+      "away_penalty": null,
+      "penalty_score_display": "",
+      "winner": "西班牙",
+      "match_stage": "决赛",
+      "status": "已结束",
+      "match_situation": {
+        "赛况简介": "",
+        "key_events": [
+          {
+            "time": "106'",
+            "team": "西班牙",
+            "type": "进球",
+            "player": "第1个进球",
+            "description": "第1个进球(加时赛) - 托雷斯(西班牙)"
+          },
+          {
+            "time": "90+3'",
+            "team": "阿根廷",
+            "type": "红牌",
+            "player": "恩佐",
+            "description": "第1张红牌 - 恩佐(阿根廷)"
+          }
+        ],
+        "stats_summary": {
+          "进球": [
+            {
+              "time": "106'",
+              "team": "西班牙",
+              "player": "第1个进球"
+            }
+          ],
+          "黄牌": 4,
+          "红牌": 1,
+          "换人": 12,
+          "角球": 13,
+          "越位": 5
+        },
+        "技术统计": [
+          {
+            "title": "进球",
+            "left": 1,
+            "right": 0
+          },
+          {
+            "title": "控球率",
+            "left": 65,
+            "right": 35
+          },
+          {
+            "title": "进攻",
+            "left": 170,
+            "right": 77
+          },
+          {
+            "title": "危险进攻",
+            "left": 88,
+            "right": 20
+          },
+          {
+            "title": "射正",
+            "left": 12,
+            "right": 0
+          },
+          {
+            "title": "射偏",
+            "left": 5,
+            "right": 1
+          },
+          {
+            "title": "角球",
+            "left": 9,
+            "right": 4
+          },
+          {
+            "title": "点球",
+            "left": 0,
+            "right": 0
+          },
+          {
+            "title": "黄牌",
+            "left": 0,
+            "right": 5
+          },
+          {
+            "title": "红牌",
+            "left": 0,
+            "right": 1
+          }
+        ]
+      },
+      "venue": "MetLife Stadium",
+      "city": "新泽西",
+      "country": "美国",
+      "review": {
+        "upset": {
+          "level": "正常",
+          "reason": "西班牙排名第2、阿根廷排名第1，排名接近且赛前预测西班牙略占优势（5:3），最终1-0小胜符合预期，技术统计西班牙全面占优，无爆冷特征。"
+        },
+        "generated_at": "2026-07-20T20:32:24.236171",
+        "content": ""
+      }
     }
   },
   "meta": {
-    "last_updated": "2026-07-16T17:07:33.296274",
-    "total_matches": 102
+    "last_updated": "2026-07-20T20:34:50.722057",
+    "total_matches": 104
   }
 }
